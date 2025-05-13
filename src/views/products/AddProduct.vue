@@ -2,7 +2,7 @@
   <ion-page>
     <ToolBar>{{ t("Add Product") }}</ToolBar>
     <ion-content>
-      
+      <ion-text color="danger">Product Code already exist</ion-text>
       <div>
        
         <div v-if="previewUrl" >
@@ -30,12 +30,20 @@
 
         <ion-list>
           <ion-item>
-           <com-input label="Product Code" placeholder="Product Code" v-model="doc.product_code" type="BarcodeScanerInput" />
+            
+           <com-input label="Product Code" placeholder="Product Code" v-model="doc.product_code" type="BarcodeScanerInput" 
+
+           @ionChange = "onProductCodeChanged"
+           />
+           
 
           </ion-item>
           <ion-item>
             <ion-input label="Product Name En" placeholder="Product Name En" v-model="doc.product_name_en"
-              label-placement="fixed"></ion-input>
+              label-placement="fixed"
+              @ionInput="onProductNameChange"
+              :debounce="1000">
+              </ion-input>
           </ion-item>
           <ion-item>
             <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="doc.product_name_kh"
@@ -84,6 +92,8 @@ const fileInput = ref(null)
 const ionRouter = useIonRouter();
 const t = window.t;
 
+ 
+
 const { previewUrl, handleFileChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation,resetDoc,
   onRemovefile
  } = useAddProduct();
@@ -92,11 +102,19 @@ navigation.value = ionRouter
 const triggerFileInput = () => {
   fileInput.value.click()
 }
+ 
+function onProductCodeChanged(){
+ alert(123)
+}
+
 
 onMounted(async () => {
   if (route.params?.name) {
     await loadDoc(route.params?.name)
   }
+
+  
+ 
 
 })
 

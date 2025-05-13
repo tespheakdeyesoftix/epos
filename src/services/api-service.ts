@@ -131,7 +131,14 @@ export function updateDoc(DocType: string,name:string,params:any) {
 
 
 export async function uploadFile(
-docType: string, docname: string, fieldname: string, fileData: any, otherOption: any, p0: (completedBytes: any, totalBytes: any) => void) {
+    docType: string, 
+    docname: string, 
+    fieldname: string,
+     fileData: any,
+      otherOption: any,
+       p0: (completedBytes: any, totalBytes: any) => void
+) 
+{
     if (!frappe) {
         return { data: null, error: "Frappe is not defined" };
     }

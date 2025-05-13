@@ -6,6 +6,8 @@ import { useAuth } from '@/hooks/useAuth';
 import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
+import debounce from '@/directives/debounce.js'
+
 
 
 import Aura from '@primeuix/themes/aura';
@@ -211,6 +213,7 @@ async function init() {
 
   app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);
+  app.directive('debounce', debounce)
   app.directive('tooltip', Tooltip);
 
   await router.isReady();
