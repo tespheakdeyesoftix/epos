@@ -58,10 +58,14 @@ const startScanner = async () => {
 onMounted(async () => {
     const devices = await Html5Qrcode.getCameras()
   if (devices && devices.length) {
-    cameraList.value = devices
-    if(window.storageService.getItem("selectedCameraId")){
+    cameraList.value = devices;
+    selectedCameraId.value = window.storageService.getItem("selectedCameraId")
+ 
+    if(selectedCameraId.value && selectedCameraId.value.toString() !== "undefined"){
+    
         selectedCameraId.value = window.storageService.getItem("selectedCameraId")?.toString() // default to first camera
     }else {
+       
         selectedCameraId.value = devices[0].id // default to first camera
     }
 
