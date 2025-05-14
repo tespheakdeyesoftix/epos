@@ -1,6 +1,6 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
-import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi } from "@/services/api-service";
+import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi  } from "@/services/api-service";
 // Ensure the namespace exists
 globalThis.app = globalThis.app || {};
 
@@ -30,6 +30,9 @@ globalThis.app.postApi =  async function (api_url,param) {
 
 globalThis.app.getDocList =  async function (DocType,param) {
   return await getDocList(DocType,param)
+}
+globalThis.app.renameDoc =  async function (DocType,oldName,newName) {
+  return await postApi("epos_restaurant_2023.api.api.rename_doc",{data:{doctype:DocType, old_name:oldName,new_name:newName}})
 }
 
 
@@ -61,6 +64,16 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
         position: "top",
         swipeGesture:"vertical",
         color: "success"
+    });
+    toast.present();
+}
+  globalThis.app.showWarning = async function (message){
+    const toast = await toastController.create({
+        message: message,
+        duration: 5000,
+        position: "top",
+        swipeGesture:"vertical",
+        color: "warning"
     });
     toast.present();
 }

@@ -114,6 +114,7 @@ export function createDoc(DocType: string,params:any) {
   });
 }
 
+
 export function updateDoc(DocType: string,name:string,params:any) {
     if (!frappe) {
         return { data: null, error: "Frappe is not defined" };

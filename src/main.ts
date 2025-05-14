@@ -111,6 +111,7 @@ import ComSelect from '@/views/components/ComSelect.vue';
 import DocList from '@/views/components/document-list/DocList.vue';
 import Document from '@/views/components/document-list/Document.vue';
 import ComInput from '@/views/components/public/ComInput.vue';
+import Stack from '@/views/components/public/Stack.vue';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -210,6 +211,7 @@ async function init() {
   app.component('Document',Document)
   app.component('ComStatus',ComStatus)
   app.component('ComInput',ComInput)
+  app.component('Stack',Stack)
 
   app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);

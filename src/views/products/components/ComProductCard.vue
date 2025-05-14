@@ -24,13 +24,10 @@
                 </p>
                 
             </ion-label>
-
             <!-- Right-aligned Amount -->
             <div slot="end" class="amount-container">
                 <div class="amount"><com-currency :value="data?.price" />
-               
                 </div>
-                
             </div>
         </ion-item>
     </ion-card>
