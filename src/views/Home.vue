@@ -6,8 +6,8 @@
           <ion-img class="w-4rem" src="/assets/ePOS-logo.png"></ion-img>
           <h1 class="m-2">ePOS Restaurant</h1>
         </div>
-        <div>
-          <div class="p-2 flex jutify-content-center w-9">
+        <div class="flex justify-content-center" style="height: calc(100vh - 218px);">
+          <div class="p-2 flex jutify-content-center w-9 mt-5" style="height: fit-content;">
             <div class="grid">
               <ion-button class="col-6 m-0" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
