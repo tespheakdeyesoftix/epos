@@ -33,7 +33,7 @@
       <!-- Bottom Section -->
       <div class="menu-bottom">
         <div class="app-info">
-          <ion-label class="app-name">{{ t("eKeeper by eDoor Front Desk") }}</ion-label>
+          <ion-label class="app-name">{{ t("ePOS by ESTC") }}</ion-label>
           <ion-label class="app-version">{{ t("Version") }} 1.0.0</ion-label>
         </div>
         <ion-button expand="full" class="logout-button" shape="round" @click="onLogout">
