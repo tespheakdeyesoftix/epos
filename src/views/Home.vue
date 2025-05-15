@@ -9,25 +9,25 @@
         <div class="flex justify-content-center" style="height: calc(100vh - 218px);">
           <div class="p-2 flex jutify-content-center w-9 mt-5" style="height: fit-content;">
             <div class="grid">
-              <ion-button class="col-6 m-0" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="tertiary" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
                   Product
                 </div>
               </ion-button>
-              <ion-button class="col-6 m-0" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="success" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
                   Product
                 </div>
               </ion-button>
-              <ion-button class="col-6 m-0" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="warning" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
                   Product
                 </div>
               </ion-button>
-              <ion-button class="col-6 m-0" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="danger" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
                   Product
