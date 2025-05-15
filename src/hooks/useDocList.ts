@@ -16,9 +16,9 @@ export function useDocList(props: any) {
   const keyword = ref<string>(''); // Declare keyword type as string
   const startIndex = ref(0);
   const loadingMoreData = ref(false)
+  const defaultFilters = structuredClone(props.options.filters)
   let options = ref(props.options)
 
-  
   const orderBy  = ref({
       field: "modified",
       order: "asc",
@@ -138,6 +138,33 @@ export function useDocList(props: any) {
 
 }
 
+
+  async function onFilter(f){
+  canLoadMore.value = true
+  startIndex.value = 0;
+
+
+
+
+  options.value.filters = structuredClone(defaultFilters) || []
+ 
+  if(f){
+    Object.keys(f).forEach(key => {
+      options.value.filters.push([key,"=",f[key]])
+    });
+  }
+
+  const _loading = await app.showLoading();
+  const result = await getData();
+  
+  data.value = result;
+  await _loading.dismiss()
+
+ 
+
+
+}
+
   onMounted(async () => {
    
     
@@ -163,6 +190,7 @@ export function useDocList(props: any) {
     onLoadMore,
     onRefresh,
     getAligment,
-    onSort
+    onSort,
+    onFilter
   };
 }

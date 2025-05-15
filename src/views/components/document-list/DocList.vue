@@ -10,7 +10,11 @@
 
     <Loading v-if="loading" />
     <template v-else>
-
+        <slot name="filter">
+         
+                <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
+                
+        </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
         
@@ -94,12 +98,13 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import dayjs from 'dayjs';
+
  
-import relativeTime from "dayjs/plugin/relativeTime"; 
 import { useAttrs, watch } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
+import ComFilter from '@/views/components/document-list/ComFilter.vue';
  
 const attrs = useAttrs();
 const  t = window.t;
@@ -122,7 +127,7 @@ const props = defineProps({
 
 
 const { data, onRefresh, onLoadMore, onSearch, loading,getAligment,
-    onSort,options
+    onSort,options,onFilter
  } = useDocList(props)
 
  const selectedRow = defineModel("selectedRow")

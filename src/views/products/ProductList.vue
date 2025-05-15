@@ -28,6 +28,15 @@ const options = {
     orderBy:{
       field: "modified",
       order: "desc",
-  }
+  },
+  filters:[
+    ["disabled","=",0]
+  ],
+
+  filterOptions:[
+    {fieldname:"product_category", fieldtype:"Link",options:"Product Category", label:"Category"},
+    {fieldname:"revenue_group", fieldtype:"Link",options:"Revenue Group"}
+
+  ]
 }
 </script>
