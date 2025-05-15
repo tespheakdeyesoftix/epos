@@ -2,11 +2,12 @@
   <ion-page>
     <AppBar>{{ t("Home") }}</AppBar>
     <ion-content :fullscreen="true">
-        <div class="wrapper-cover flex justify-content-end flex-column align-items-center">
+        <div class="wrapper-cover flex justify-content-end flex-column align-items-center pb-2">
           <ion-img class="w-4rem" src="/assets/ePOS-logo.png"></ion-img>
-          <h1 class="m-2">ePOS Restaurant</h1>
+          <h1 class="mt-2 mb-0">ePOS Restaurant</h1>
+          <ion-text>Device: Hi IOS, Station: Siem Reap</ion-text>
         </div>
-        <div class="flex justify-content-center" style="height: calc(100vh - 218px);">
+        <div class="flex justify-content-center" style="height: calc(100vh - 277.5px);">
           <div class="p-2 flex jutify-content-center w-9 mt-5" style="height: fit-content;">
             <div class="grid">
               <ion-button class="col-6 m-0" color="tertiary" routerLink="/product-list">
@@ -47,9 +48,9 @@
 <style>
   .wrapper-cover { 
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('/assets/cover.jpg') no-repeat center center / cover;
+                url('/assets/swirl_pattern.png') no-repeat center center / cover;
     width: 100%;
-    height: 30%;
+    height: 25%;
     color: #fff;  
   }
 </style>
