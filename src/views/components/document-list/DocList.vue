@@ -2,8 +2,10 @@
     <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+ 
     <slot name="searchBar">
-        <ComSearchBar v-if="showSearchBar" @onSearch="onSearch" />
+        <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch" :showBarcodeScanner="options.showBarcodeScanner"/>
+
     </slot>
 
     <Loading v-if="loading" />
@@ -109,14 +111,9 @@ const props = defineProps({
     options: {
         type: Object,
         default: {
-            showSearchBar: {
-                type: Boolean,
-                default: true
-            },
-            fields: {
-                type: Object,
-                default: ["name"]
-            },
+            showSearchBar:true,
+            showBarcodeScanner:false,
+            fields: ["name"]
         }
     }
 

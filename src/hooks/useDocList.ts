@@ -17,6 +17,7 @@ export function useDocList(props: any) {
   const startIndex = ref(0);
   const loadingMoreData = ref(false)
   let options = ref(props.options)
+
   
   const orderBy  = ref({
       field: "modified",
@@ -103,9 +104,9 @@ export function useDocList(props: any) {
         });
       }
      
-      orFilters = filter;
+      options.value.orFilters = filter;
     }else {
-      orFilters = []
+      options.value.orFilters = []
     }
     data.value = await getData();
     loading.value = false;

@@ -31,7 +31,7 @@ inheritAttrs: false
 
 const model = defineModel();
 const t = window.t;
-
+const emit = defineEmits()
 defineExpose({
 focus: () => {
 
@@ -53,6 +53,7 @@ async function onScanBarcode() {
   })
   if (result) {
     model.value = result
+    emit("onBarcodeChange")
   }
 
 }

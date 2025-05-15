@@ -1,78 +1,32 @@
 <template>
   <ion-page>
     <ToolBar>{{ t("Add Product") }}</ToolBar>
-    <ion-content>
-      <ion-text color="danger">Product Code already exist</ion-text>
-      <div>
-       
-        <div v-if="previewUrl" >
-          <img :src="previewUrl" alt="Preview" style="width:300px" />
-        </div>
-        <div v-else>
-          <Img :src="doc?.photo" v-if="doc.photo"  width="300px"/>
-        </div>
-        <div class="button-row">
-    <ion-button expand="block" @click="triggerFileInput">
-      {{ t("Upload Photo") }}
-    </ion-button>
-    <ion-button expand="block" color="danger" @click="onRemovefile" :disabled="!doc.photo && !previewUrl">
-      {{ t("Remove File") }}
-    </ion-button>
-  </div>
-  <input
-    ref="fileInput"
-    type="file"
-    accept="image/*"
-    @change="handleFileChange"
-    style="display: none"
-  />
+    <ion-content color="light"  >
+      <ion-segment style="margin-top: 10px;"  >
+    <ion-segment-button value="product_information" content-id="product_information">
+      <ion-label>{{ t("Product Information") }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="product_price" content-id="product_price">
+      <ion-label>{{ t("Prices") }}</ion-label>
+    </ion-segment-button>
+ 
+  </ion-segment>
+  <ion-segment-view>
+    <ion-segment-content id="product_information">
+      <ComProductInformation/>
+    </ion-segment-content>
+    <ion-segment-content id="product_price">
+      <ComProductPrice />
 
-
-        <ion-list>
-          <ion-item>
-            
-           <com-input label="Product Code" placeholder="Product Code" v-model="doc.product_code" type="BarcodeScanerInput" 
-
-           @ionChange = "onProductCodeChanged"
-           />
-           
-
-          </ion-item>
-          <ion-item>
-            <ion-input label="Product Name En" placeholder="Product Name En" v-model="doc.product_name_en"
-              label-placement="fixed"
-              @ionInput="onProductNameChange"
-              :debounce="1000">
-              </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="doc.product_name_kh"
-              label-placement="fixed"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>{{ t("Product Category") }}
-              <ComSelect docType="Product Category" clear v-model="doc.product_category" modalType="Dialog" />
-            </ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>Revenue Group
-              <ComSelect docType="Revenue Group" clear v-model="doc.revenue_group" modalType="Dialog" />
-            </ion-label>
-          </ion-item>
-
-          <ion-item>
-            <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
-              label-placement="fixed"></ion-input>
-          </ion-item>
-        </ion-list>
-         
-      </div>
+    </ion-segment-content>
+    
+  </ion-segment-view>
+    
      
     </ion-content>
-    <ion-footer>
-      <ion-toolbar>
-        <ion-button class="ion-margin" @click="onSave" shape="round" expand="full" size="large">{{ t("Save")
+    <ion-footer >
+      <ion-toolbar color="tranparency">
+        <ion-button class="ion-margin" @click="onSave" shape="round" color="success" expand="full">{{ t("Save")
           }}</ion-button>
       </ion-toolbar>
     </ion-footer>
@@ -82,27 +36,32 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 
 import { useAddProduct } from "@/hooks/useAddProduct.js"
-import ComSelect from '../components/ComSelect.vue';
+
+import ComProductInformation from '@/views/products/components/ComProductInformation.vue';
+import ComProductPrice from '@/views/products/components/ComProductPrice.vue';
+
+import { useRouter } from 'vue-router';
+
+const vue_router = useRouter();
 
 import { useIonRouter } from '@ionic/vue';
  
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const fileInput = ref(null)
+
 const ionRouter = useIonRouter();
 const t = window.t;
 
  
 
 const { previewUrl, handleFileChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation,resetDoc,
-  onRemovefile
+  onRemovefile,router
  } = useAddProduct();
 navigation.value = ionRouter
+router.value = vue_router;
 
-const triggerFileInput = () => {
-  fileInput.value.click()
-}
- 
+
+
 function onProductCodeChanged(){
  alert(123)
 }

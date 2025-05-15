@@ -1,13 +1,18 @@
 
-import { getApi, getDoc,updateDoc,createDoc } from "@/services/api-service";
+
 import { onMounted, ref } from "vue";
 import { uploadFile } from '@/services/api-service.ts'
-const doc = ref({})
+const doc = ref({
+  cost:0,
+  price:0,
+  unit:"Unit",
+  product_price:[]})
 const selectedFile = ref(null)
 const previewUrl = ref(null)
 const uploadProgress = ref(0)
 const navigation = ref()
-
+const router = ref()
+const warningMessage = ref("")
 function handleFileChange(event) {
   const input = event.target;
   const file = input?.files?.[0] || null;
@@ -51,8 +56,9 @@ async function startUpload(docname) {
 }
 
 async function loadDoc(docname) {
+ 
   const loading = await window.showLoading()
-  const res = await getDoc("Product", docname)
+  const res = await app.getDoc("Product", docname)
   doc.value = res.data;
 await loading.dismiss()
 
@@ -62,17 +68,18 @@ async function onSave(){
   const loading = await window.showLoading();
   let res = null
   if(doc.value.name){
-     res= await updateDoc("Product", doc.value.name, doc.value)
+     res= await app.updateDoc("Product", doc.value.name, doc.value)
   }else {
-    res= await createDoc("Product", doc.value)
+    res= await app.createDoc("Product", doc.value)
 
   }
   if (res.data){
    await startUpload(res.data.name)
-   resetDoc()
+
    if (doc.value.name){
     navigation.value.navigate("/add-product", 'forward', 'replace');
   }
+  resetDoc()
     app.showSuccess(window.t("Save successfully"))
   }
 
@@ -82,9 +89,15 @@ async function onSave(){
 }
 
 function resetDoc(){
-  doc.value = {}
+  doc.value ={
+    cost:0,
+    price:0,
+    unit:"Unit",
+    product_price:[]}
+
   selectedFile.value = null
   previewUrl.value = null
+  warningMessage.value = ""
  
 
 }
@@ -100,12 +113,48 @@ async function onRemovefile(){
   
 }
 
+async function onProductCodeChange(){
+  warningMessage.value = ""
+   if(doc.value.product_code && (doc.value.name || "") != doc.value.product_code){
+      const res = await app.getDocList("Product",{
+        filters:[["product_code","=",doc.value.product_code]]
+      })
+      
+      if (res.data){
+       
+        if(res.data.length>0){
+         
+          app.showWarning(window.t(`Product Code ${doc.value.product_code} is already exist.` ))
+          warningMessage.value = window.t(`Product Code ${doc.value.product_code} is already exist.` )
+
+        }else{
+          if(doc.value.name){
+            const loading = await app.showLoading(window.t("Change Product Code"))
+            
+            const rename_res =await  app.renameDoc("Product",doc.value.name, doc.value.product_code)
+            if(rename_res.data){
+                router.value.replace("/add-product/" + rename_res.data.name)
+            }
+            await loading.dismiss()
+
+            
+          }
+          
+        }
+      }
+   }
+  
+}
+
 export function useAddProduct(props = null) {
   return {
     previewUrl,
     selectedFile,
     doc,
     navigation,
+    warningMessage,
+    router,
+    onProductCodeChange,
     onRemovefile,
     onSave,
     loadDoc,
