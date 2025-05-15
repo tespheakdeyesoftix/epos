@@ -8,32 +8,20 @@
           <ion-text>Device: Hi IOS, Station: Siem Reap</ion-text>
         </div>
         <div class="flex justify-content-center" style="height: calc(100vh - 277.5px);">
-          <div class="p-2 flex jutify-content-center w-9 mt-5" style="height: fit-content;">
+          <div class="p-2 w-9 mt-5" style="height: fit-content;">
             <div class="grid">
-              <ion-button class="col-6 m-0" color="tertiary" routerLink="/product-list">
-                <div class="flex flex-column justify-center items-center">
-                  <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
-                  Product
-                </div>
-              </ion-button>
               <ion-button class="col-6 m-0" color="success" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
                   Product
                 </div>
-              </ion-button>
-              <ion-button class="col-6 m-0" color="warning" routerLink="/product-list">
-                <div class="flex flex-column justify-center items-center">
-                  <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
-                  Product
-                </div>
-              </ion-button>
+              </ion-button> 
               <ion-button class="col-6 m-0" color="danger" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
-                  <ion-icon class="text-7xl" :icon="cartOutline" slot="start"></ion-icon>
-                  Product
+                  <ion-icon class="text-7xl" :icon="logOutOutline" slot="start"></ion-icon>
+                  Logout
                 </div>
-              </ion-button>
+              </ion-button> 
             </div>
           </div>
         </div>
@@ -42,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-  import { cartOutline } from 'ionicons/icons';
+  import { cartOutline, logOutOutline } from 'ionicons/icons';
   const t = window.t;
 </script>
 <style>
