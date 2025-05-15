@@ -59,7 +59,8 @@
                 </ion-label>
                 <!-- unit -->
                 <ion-label>{{ t("Unit") }}
-                    <ComSelect docType="Unit Of Measurement" clear v-model="doc.unit" modalType="Dialog" />
+                    <ComSelect docType="Unit Of Measurement"
+                     clear v-model="doc.unit" modalType="Dialog" />
                 </ion-label>
 
                 <!-- cost -->
@@ -98,5 +99,6 @@ const t = window.t;
 const triggerFileInput = () => {
     fileInput.value.click()
 }
+
 
 </script>

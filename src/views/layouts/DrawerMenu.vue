@@ -22,7 +22,7 @@
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item router-link="/Product List">
+          <ion-item router-link="/product-list">
           <ion-icon :icon="bedOutline" slot="start"></ion-icon>
           <ion-label>{{t("Product List")}}</ion-label>
         </ion-item>

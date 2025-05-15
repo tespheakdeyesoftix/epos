@@ -26,8 +26,13 @@
     </ion-content>
     <ion-footer >
       <ion-toolbar color="tranparency">
-        <ion-button class="ion-margin" @click="onSave" shape="round" color="success" expand="full">{{ t("Save")
+        <stack row :equal="true" gap="10px">
+          <ion-button :disabled="!doc.name"  @click="onDelete" shape="round" color="danger" expand="full">{{ t("Delete")
           }}</ion-button>
+        <ion-button   @click="onSave" shape="round" color="success" expand="full">{{ t("Save")
+          }}</ion-button>
+        </stack>
+     
       </ion-toolbar>
     </ion-footer>
   </ion-page>
@@ -68,6 +73,9 @@ function onProductCodeChanged(){
 
 
 onMounted(async () => {
+
+   
+ 
   if (route.params?.name) {
     await loadDoc(route.params?.name)
   }
