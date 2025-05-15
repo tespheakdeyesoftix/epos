@@ -3,8 +3,8 @@
     <ion-content fullscreen="true" class="home-content">
       <!-- Branding Section -->
       <div class="branding">
-        <ion-img src="/assets/logo.svg" alt="App Logo" class="app-logo"></ion-img>
-        <ion-text class="app-name">eKeeper</ion-text>
+        <ion-img src="/assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
+        <ion-text class="app-name">ePOS</ion-text>
       </div>
       <!-- Add Workspace Button -->
       
@@ -261,7 +261,7 @@ background: radial-gradient(circle, rgba(189,229,244,1) 0%, rgba(157,201,240,1) 
 
 .footer {
   --background: transparent; /* No background */
-  height: 90px;
+  height: 123px;
   box-shadow: none;           /* No shadow */
   
 }
