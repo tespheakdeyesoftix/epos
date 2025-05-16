@@ -4,6 +4,9 @@
             {{ t("Pending Order") }}
         </AppBar>
         <ion-content>
+            <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
             <ion-item :button="true">
                 <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
                 <ion-label>{{ selectedPOSProfile }} </ion-label>
@@ -48,7 +51,7 @@
         </ion-content>
     </ion-page>
 </template>
-<script setup>
+<script setup lang="ts" >
 import { computed, onMounted, ref } from 'vue';
 import { IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView } from '@ionic/vue';
 import { useApp } from "@/hooks/useApp"
@@ -71,10 +74,16 @@ const tableGroups = computed(() => {
     return data.value?.table_groups;
 })
 
+const onRefreshData = async (event: CustomEvent) => {
+  await getData();
+        event.target.complete();
+     
+};
+
 
 async function getData() {
 
-    const l = await app.showLoading();
+   
     const res = await app.postApi("epos_restaurant_2023.selling.page.pending_sale_order_b.pending_order.get_pending_order", {
         param: JSON.stringify({
             "business_branch": currentProperty.value.property_name,
@@ -89,7 +98,7 @@ async function getData() {
             selectedTableGroup.value = data.value.table_groups[0].group
         }
     }
-    await l.dismiss();
+  
 
 
 }
@@ -107,7 +116,10 @@ async function onChangePOSProfile() {
     if (result) {
         selectedPOSProfile.value = result
     }
+
+    const l = await app.showLoading();
     await getData();
+    await l.dismiss()
 
 
 }
@@ -143,9 +155,9 @@ onMounted(async () => {
         selectedPOSProfile.value = posProfiles.value[0].name
     }
 
-
+    const l = await app.showLoading();
     await getData()
-
+  await l.dismiss();
 })
 
 

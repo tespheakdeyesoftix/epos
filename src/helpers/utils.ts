@@ -1,5 +1,5 @@
 import {modalController,  toastController,loadingController, popoverController, PopoverOptions } from '@ionic/vue';
- 
+import ComScanBarcode from "@/views/components/ComScanBarcode.vue"
 import type { Component } from 'vue';
 export function imageUrl(imageUrl:string,baseUrl:string = ""){
     if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://") ){
@@ -120,5 +120,17 @@ export async function openModal(props:any) {
       return data
     }
     return false ;
+  };
+  
+
+  export async function onScanBarcode() {
+    const result = openModal({
+      component: ComScanBarcode,
+      componentProps: {
+        title: "Scan Barcode",
+      }
+    })
+    
+    return result;
   };
   

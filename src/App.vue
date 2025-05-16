@@ -27,12 +27,15 @@ const ionRouter = useIonRouter();
 
   // set ion router to app so it easy to access from compoennty
   app.setIonRouter(ionRouter)
+  app.setRoute(route)
  
   // Watch for route changes and update the title
   watch(() => route.meta.title, (newTitle) => {
     title.value = newTitle || 'ePOS';
    
   });
+
+ 
 
  
 

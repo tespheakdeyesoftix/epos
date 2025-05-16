@@ -117,7 +117,7 @@ const props = defineProps({
 
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
-    onSort, options
+    onSort, options,onFilter
 } = useDocList(props)
 
 const selectedRow = defineModel("selectedRow")

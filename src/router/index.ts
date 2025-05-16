@@ -59,6 +59,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/sales/SaleDetail.vue'),
     meta: { requiresAuth: true }
   },
+  
+  {
+    path: "/stock-adjustment",
+    component: () => import('@/views/stock-adjustment/StockAdjustment.vue'),
+    meta: { requiresAuth: true }
+  },
+
   {
     path: "/help",
     component: Help,
