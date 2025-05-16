@@ -1,5 +1,4 @@
 <template>
-    
     <ion-card class="ion-no-margin mb-3" button :routerLink="'/add-product/' + data.name">
         <ion-item lines="none">
             <!-- Avatar -->
@@ -7,7 +6,6 @@
                 <Img v-if="data.photo" :src="data.photo" />
                 <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data.product_name_en) }}</div>
             </ion-avatar>
-
             <!-- Middle Text -->
             <ion-label>
                 <h2 class="card-title">{{ data.product_name_en }} <ComStatus :status = "data.status" /></h2>

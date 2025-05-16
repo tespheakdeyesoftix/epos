@@ -10,7 +10,11 @@
 
     <Loading v-if="loading" />
     <template v-else>
-
+        <slot name="filter">
+         
+                <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
+                
+        </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
 

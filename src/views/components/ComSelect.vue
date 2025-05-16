@@ -1,8 +1,8 @@
 <template>
   <div @click="openSheetModal" style="display: inline;" v-if="!loading">
-    <ion-chip>
+    <ion-chip   v-bind="$attrs" >
     <ion-label v-if="model">{{ model  }}</ion-label>
-    <ion-label v-else>{{ t("Select") }}   {{(label || docType)}}</ion-label>
+    <ion-label v-else>{{(label || docType)}}</ion-label>
     <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear"></ion-icon>
   </ion-chip>
   </div>
@@ -42,10 +42,6 @@ const props = defineProps({
     type: Boolean,
     default: true
   },
-  color: {
-    type: String,
-    default: ""
-  },
   selectedColor: {
     type: String,
     default: "warning"
@@ -53,7 +49,7 @@ const props = defineProps({
 
   modalType: {
     modalType: String,
-    default: "sheet_modal"
+    default: "dialog"
   },
 
   labelPrefix: String,
@@ -76,6 +72,12 @@ const model= defineModel()
 const { getMeta } = useApp(props)
 
 const hasDefaultSlot = ref(slots.default);
+
+defineOptions({
+inheritAttrs: false
+})
+
+
 
 const isSelected = computed(()=>{
   if(props.multiple){

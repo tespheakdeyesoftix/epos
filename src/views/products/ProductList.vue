@@ -23,12 +23,21 @@ import ComProductCard from '@/views/products/components/ComProductCard.vue';
 import { add } from 'ionicons/icons';
 const t = window.t
 const options = {
-    showSearchBar: true,
-    showBarcodeScanner: true,
-    fields: ['name', 'product_name_en', 'product_name_kh', 'product_category', "photo", "price", "status", "modified", "modified_by"],
-    orderBy: {
-        field: "modified",
-        order: "desc",
-    }
+    showSearchBar:true,
+    showBarcodeScanner:true,
+    fields:['name','product_name_en','product_name_kh','product_category',"photo","price","status","modified","modified_by"],
+    orderBy:{
+      field: "modified",
+      order: "desc",
+  },
+  filters:[
+    ["disabled","=",0]
+  ],
+
+  filterOptions:[
+    {fieldname:"product_category", fieldtype:"Link",options:"Product Category", label:"Category"},
+    {fieldname:"revenue_group", fieldtype:"Link",options:"Revenue Group"}
+
+  ]
 }
 </script>
