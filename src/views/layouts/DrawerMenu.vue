@@ -2,17 +2,13 @@
   <ion-menu content-id="main-content">
     <ion-content>
       <!-- Profile Section -->
-      <div class="profile-section">
-      
-        <ion-avatar class="profile-avatar">
-          
+      <div class="profile-section"> 
+        <ion-avatar class="profile-avatar"> 
           <Img v-if="currentUser.photo" :src="currentUser.photo"/>
-          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
-
+          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div> 
         </ion-avatar>
         <ion-label class="profile-name">{{ currentUser.full_name }}</ion-label>
-      </div>
-
+      </div> 
       <!-- Menu List -->
       <ion-list class="menu-list">
         <ion-menu-toggle>
@@ -23,7 +19,7 @@
         </ion-menu-toggle>
         <ion-menu-toggle>
           <ion-item router-link="/Product List">
-          <ion-icon :icon="bedOutline" slot="start"></ion-icon>
+          <ion-icon :icon="cartOutline" slot="start"></ion-icon>
           <ion-label>{{t("Product List")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
@@ -37,7 +33,7 @@
           <ion-label class="app-version">{{ t("Version") }} 1.0.0</ion-label>
         </div>
         <ion-button expand="full" class="logout-button" shape="round" @click="onLogout">
-          <ion-icon :icon="logOutOutline" slot="start"></ion-icon>
+          <ion-icon class="text-white" :icon="logOutOutline" slot="start"></ion-icon>
           {{ t("Logout") }}
         </ion-button>
       </div>
@@ -59,21 +55,11 @@ import {
   IonMenuToggle
 } from '@ionic/vue';
 import {
-  homeOutline,
-  bedOutline,
-  clipboardOutline,
-  personCircleOutline,
-  settingsOutline,
+  homeOutline, 
   logOutOutline,
-  calendarOutline,
-  layersOutline,
-  archiveOutline,
-  brushOutline,
-  barChartOutline
-} from 'ionicons/icons';
-import { useApp } from '@/hooks/useApp';
-import { useAuth } from '@/hooks/useAuth';
-import { imageUrl } from "@/helpers/utils";
+  cartOutline
+} from 'ionicons/icons'; 
+import { useAuth } from '@/hooks/useAuth'; 
 const { logout, currentUser } = useAuth();
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -95,9 +81,10 @@ const onLogout = async () => {
   text-align: center;
  
   background: linear-gradient(135deg, #87CEFA, #1E90FF);
-  margin:-20px -13px 0px -14px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  /* margin:-20px -13px 0px -14px; */
+  /* border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px; */
+  padding: 20px 0;
 }
 
 /* Center Avatar */

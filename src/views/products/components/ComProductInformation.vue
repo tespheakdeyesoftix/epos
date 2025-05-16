@@ -1,12 +1,15 @@
 <template>
-
-    <div>
-
-        <div v-if="previewUrl">
-            <img :src="previewUrl" alt="Preview" style="width:300px" />
+    <div class="p-3">
+        <div class="my-2 flex justify-content-center" v-if="previewUrl">
+            <div class="border-1 p-2 border-round border-300">
+                <img src="/assets/placeholder.jpg" alt="Preview" style="width:300px" />
+            </div>
         </div>
-        <div v-else>
-            <Img :src="doc?.photo" v-if="doc.photo" width="300px" />
+        <div class="my-2 flex justify-content-center" v-else>
+            <div class="border-1 p-2 border-round border-300">
+                <Img class="border-round" :src="doc?.photo" v-if="doc.photo" width="300px" />
+                <img src="/assets/placeholder.jpg" alt="Preview" v-else style="width:300px" />
+            </div>
         </div>
         <stack row :equal="true" gap="10px">
             <ion-button expand="block" @click="triggerFileInput">
@@ -16,70 +19,47 @@
                 {{ t("Remove File") }}
             </ion-button>
         </stack>
-
-
         <input ref="fileInput" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
+        <stack class="pt-3" gap="20px">
+            <com-input :label="t('Product Code')" placeholder="Product Code" v-model="doc.product_code"
+                type="BarcodeScanerInput" label-placement="floating" fill="outline" @ionChange="onProductCodeChange"
+                @onBarcodeChange="onProductCodeChange" />
+            <Message severity="error" style="margin-top: -10px;" v-if="warningMessage"> {{ warningMessage }}</Message>
 
-
-        <stack class="ion-padding" gap="20px">
-            <com-input label="Product Code" placeholder="Product Code" v-model="doc.product_code"
-                    type="BarcodeScanerInput" 
-                    label-placement="floating" fill="outline" 
-                    @ionChange="onProductCodeChange"
-                     @onBarcodeChange="onProductCodeChange" 
-                    
-                      />
-                    <Message severity="error" style="margin-top: -10px;" v-if="warningMessage"> {{ warningMessage }}</Message>
-
-                    <ion-input 
-                        label="Product Name En" 
-                        placeholder="Product Name En" 
-                        v-model="doc.product_name_en"
-                        label-placement="floating" 
-                        fill="outline"
-
-                    
-                    >
+            <ion-input :label="t('Product Name En')" placeholder="Product Name En" v-model="doc.product_name_en"
+                label-placement="floating" fill="outline">
+            </ion-input>
+            <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="doc.product_name_kh"
+                label-placement="floating" fill="outline">
+            </ion-input>
+            <div class="relative fixed-input">
+                <ion-input :label="t('Product Category')" value="value" label-placement="floating" fill="outline">
                 </ion-input>
-                    <ion-input 
-                    label="Product Name Kh" 
-                    placeholder="Product Name Kh" 
-                    v-model="doc.product_name_kh"
-                    label-placement="floating" 
-                    fill="outline">
-                </ion-input>
- 
-
-                <ion-label>{{ t("Product Category") }}
+                <div class="selected_value">
                     <ComSelect docType="Product Category" clear v-model="doc.product_category" modalType="Dialog" />
-                </ion-label>
-                <!-- revenue group -->
-                <ion-label>Revenue Group
+                </div>
+            </div> 
+            <div class="relative fixed-input">
+                <ion-input :label="t('Revenue Group')" value="value" label-placement="floating" fill="outline">
+                </ion-input>
+                <div class="selected_value">
                     <ComSelect docType="Revenue Group" clear v-model="doc.revenue_group" modalType="Dialog" />
-                </ion-label>
-                <!-- unit -->
-                <ion-label>{{ t("Unit") }}
+                </div>
+            </div> 
+            <div class="relative fixed-input">
+                <ion-input :label="t('Unit')" value="value" label-placement="floating" fill="outline">
+                </ion-input>
+                <div class="selected_value">
                     <ComSelect docType="Unit Of Measurement" clear v-model="doc.unit" modalType="Dialog" />
-                </ion-label>
-
-                <!-- cost -->
-                <ion-input type="number" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
-                 label-placement="floating" 
-                        fill="outline"
-                ></ion-input>
-
-                <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
-                label-placement="floating" 
-                fill="outline"></ion-input>
-
-                <ion-textarea  fill="outline" label="Note" label-placement="floating" rows="5" v-model="doc.note"></ion-textarea>
+                </div>
+            </div> 
+            <ion-input type="number" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
+                label-placement="floating" fill="outline"></ion-input>
+            <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
+                label-placement="floating" fill="outline"></ion-input>
+            <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+                v-model="doc.note"></ion-textarea>
         </stack>
-
-        
-              
- 
-       
-
     </div>
 </template>
 <script setup>

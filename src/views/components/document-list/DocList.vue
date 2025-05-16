@@ -2,10 +2,10 @@
     <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
- 
-    <slot name="searchBar">
-        <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch" :showBarcodeScanner="options.showBarcodeScanner"/>
 
+    <slot name="searchBar">
+        <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch"
+            :showBarcodeScanner="options.showBarcodeScanner" />
     </slot>
 
     <Loading v-if="loading" />
@@ -13,58 +13,48 @@
 
 
         <slot v-if="data && data.length > 0" :item="data">
-        
-            <DataTable :value="data" 
-            tableStyle="min-width: 50rem"
-            selectionMode="single" 
-            v-model:selection="selectedRow"
-            showGridlines stripedRows 
-            @sort="onSort"
-            :lazy="true"
-            @row-dblclick="onRowDblClick"
-            :sortField="options.presort"
-            :sortOrder="options.sortOrder || 1"
-            >
-                <Column v-for="col of options.columns" 
-                :key="col.fieldname" :field="col.fieldname" :header="t(col.header)"
-                :headerClass="col.align || getAligment(col.fieldtype)" 
-                :bodyClass="col.align || getAligment(col.fieldtype)" 
-                 sortable
-                >
+
+            <DataTable :value="data" tableStyle="min-width: 50rem" selectionMode="single"
+                v-model:selection="selectedRow" showGridlines stripedRows @sort="onSort" :lazy="true"
+                @row-dblclick="onRowDblClick" :sortField="options.presort" :sortOrder="options.sortOrder || 1">
+                <Column v-for="col of options.columns" :key="col.fieldname" :field="col.fieldname"
+                    :header="t(col.header)" :headerClass="col.align || getAligment(col.fieldtype)"
+                    :bodyClass="col.align || getAligment(col.fieldtype)" sortable>
                     <template #body="slotProps">
                         <slot :name="col.fieldname" :item="slotProps.data" :index="col.field + '_' + index">
                             <!-- date column -->
                             <template v-if="col.fieldtype == 'Date'">
                                 {{ dayjs(slotProps.data[col.fieldname]).format("DD-MM-YYYY") }}
-                            
+
                             </template>
                             <template v-else-if="col.fieldtype == 'Datetime'">
                                 <span v-tooltip="`${dayjs(slotProps.data[col.fieldname])}`">
-                                    
+
                                     {{ dayjs(slotProps.data[col.fieldname]).fromNow() }}
-                                    
-                               
+
+
                                 </span>
-                                
+
                             </template>
                             <template v-else-if="col.fieldtype == 'Currency'">
-                                <ComCurrency :value="slotProps.data[col.fieldname]"/>
+                                <ComCurrency :value="slotProps.data[col.fieldname]" />
                             </template>
                             <template v-else-if="col.url">
-                                <router-link :to="`${col.url}/${slotProps.data[col.id_field] || slotProps.data[col.fieldname]}`">
-                                    {{ slotProps.data[col.fieldname] }} 
+                                <router-link
+                                    :to="`${col.url}/${slotProps.data[col.id_field] || slotProps.data[col.fieldname]}`">
+                                    {{ slotProps.data[col.fieldname] }}
                                 </router-link>
                             </template>
                             <template v-else>
                                 <span v-if="col.fieldname == 'owner' || col.fieldname == 'modified_by'">
                                     {{ slotProps.data[col.fieldname].split("@")[0] }}
-                                
+
                                 </span>
                                 <span v-else>
                                     {{ slotProps.data[col.fieldname] }}
-                                
+
                                 </span>
-                                 <!-- {{ getAligment(col.fieldtype) }} -->
+                                <!-- {{ getAligment(col.fieldtype) }} -->
                             </template>
 
                         </slot>
@@ -94,15 +84,15 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import dayjs from 'dayjs';
- 
-import relativeTime from "dayjs/plugin/relativeTime"; 
+
+import relativeTime from "dayjs/plugin/relativeTime";
 import { useAttrs, watch } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
- 
+
 const attrs = useAttrs();
-const  t = window.t;
+const t = window.t;
 
 
 const emit = defineEmits()
@@ -111,8 +101,8 @@ const props = defineProps({
     options: {
         type: Object,
         default: {
-            showSearchBar:true,
-            showBarcodeScanner:false,
+            showSearchBar: true,
+            showBarcodeScanner: false,
             fields: ["name"]
         }
     }
@@ -121,17 +111,17 @@ const props = defineProps({
 })
 
 
-const { data, onRefresh, onLoadMore, onSearch, loading,getAligment,
-    onSort,options
- } = useDocList(props)
+const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
+    onSort, options
+} = useDocList(props)
 
- const selectedRow = defineModel("selectedRow")
+const selectedRow = defineModel("selectedRow")
 
- watch(() => props.options, async (newVal, oldVal) => {
+watch(() => props.options, async (newVal, oldVal) => {
     options.value = props.options
-     await onRefresh()
-    
-   },{ deep: true })
+    await onRefresh()
+
+}, { deep: true })
 
 
 const onRefreshData = async (event: CustomEvent) => {
@@ -147,19 +137,17 @@ const onRefreshData = async (event: CustomEvent) => {
 };
 
 
-function onRowDblClick(event){
-    if(event.data){
+function onRowDblClick(event) {
+    if (event.data) {
         emit("onRowDblClick", event.data);
     }
 
-    
 
-  }
+
+}
 
 
 
 
 
 </script>
-
- 

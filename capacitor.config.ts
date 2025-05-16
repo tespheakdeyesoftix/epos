@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.estccomputer.ekeeper',
-  appName: 'ekeeper',
+  appId: 'com.estccomputer.epos',
+  appName: 'epos',
   webDir: 'dist',
   server: {
     cleartext: true, // Allow HTTP

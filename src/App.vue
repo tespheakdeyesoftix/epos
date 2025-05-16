@@ -22,12 +22,12 @@ import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
   import { useAuth } from '@/hooks/useAuth';
   const {isAuthenticated} = useAuth();
   const route = useRoute();
-  const title = ref(route.meta.title || 'eKeeper');
+  const title = ref(route.meta.title || 'ePOS');
   const hideTab = ref(false);
  
   // Watch for route changes and update the title
   watch(() => route.meta.title, (newTitle) => {
-    title.value = newTitle || 'eKeeper';
+    title.value = newTitle || 'ePOS';
    
   });
 

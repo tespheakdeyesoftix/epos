@@ -1,72 +1,61 @@
 <template>
-   <ion-page>
+  <ion-page>
     <ion-content fullscreen="true" class="home-content">
       <!-- Branding Section -->
-      <div class="branding">
-        <ion-img src="/assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
-        <ion-text class="app-name">ePOS</ion-text>
+      <div class="addws-page">
+        <div class="branding">
+          <ion-img src="/assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
+          <ion-text class="app-name">ePOS</ion-text>
+        </div>
+        <div style="height:calc(-317.5px + 100vh);background: transparent;" class="border-round-top-3xl p-3 -mt-5">
+          <!-- Add Workspace Button --> 
+          <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
+          <!-- Workspace List --> 
+          <ion-list class="workspace-list bg-transparent">
+            <ion-card
+              v-for="p in properties"
+              :key="p.property_code"
+              @click="onLogin(p)"
+              class="ripple-card border-round-2xl"  
+            >
+              <ion-card-header>
+                <div class="workspace-header">
+                  <!-- Workspace Avatar -->
+                  <ion-avatar class="workspace-logo">
+                    <Img :src="p.photo" :api_url="p.api_url"/>
+                  </ion-avatar> 
+                  <!-- Workspace Info (Two Lines) -->
+                  <div class="workspace-info">
+                    <ion-text class="workspace-name">{{ p.property_name }}</ion-text>
+                    <ion-text class="user-name">{{ p.username }}</ion-text>
+                  </div>
+
+                  <!-- Vertical Ellipsis Menu Button -->
+                  <ion-button fill="clear" @click.stop="onOpenMenu(p)">
+                    <ion-icon :icon="ellipsisVertical"></ion-icon>
+                  </ion-button> 
+                </div>
+              </ion-card-header>
+            </ion-card> 
+          </ion-list>
+        </div>
       </div>
-      <!-- Add Workspace Button -->
-      
-       
-      <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
-       <!-- Workspace List -->
- 
-
-      <ion-list class="workspace-list">
-        <ion-card
-  v-for="p in properties"
-  :key="p.property_code"
-  @click="onLogin(p)"
-  class="ripple-card" 
- 
->
-  <ion-card-header>
-    <div class="workspace-header">
-      <!-- Workspace Avatar -->
-      <ion-avatar class="workspace-logo">
-        <Img :src="p.photo" :api_url="p.api_url"/>
-      </ion-avatar>
-
-      
-      <!-- Workspace Info (Two Lines) -->
-      <div class="workspace-info">
-        <ion-text class="workspace-name">{{ p.property_name }}</ion-text>
-        <ion-text class="user-name">{{ p.username }}</ion-text>
-      </div>
-
-      <!-- Vertical Ellipsis Menu Button -->
-      <ion-button fill="clear" @click.stop="onOpenMenu(p)">
-        <ion-icon :icon="ellipsisVertical"></ion-icon>
-      </ion-button>
-
-      
-    </div>
-  </ion-card-header>
-</ion-card>
- 
-
-      </ion-list>
-    </ion-content>
-
+    </ion-content> 
     <!-- Footer -->
-    <ion-footer class="footer">
-
-
-  <ion-toolbar class="no-shadow">
-
-<ion-buttons class="language-buttons">
-      <ion-button v-for="(l, index) in languages" :key="index" @click="changeLanguage(l.lang)" :color="l.lang == locale?'danger':'default'" >
-        <ion-icon :src="l.icon" slot="start" />
-        {{ l.label }}
-      </ion-button>
-      </ion-buttons>
-    <div class="footer-text">
-      <ion-text class="powered-by">{{t("eKeeper by eDoor Front Desk")}}</ion-text>
-      <ion-text class="app-version">Version 1.0.0</ion-text>
-    </div>
-  </ion-toolbar>
-</ion-footer>
+    <ion-footer class="footer surface-ground"> 
+      <ion-toolbar class="no-shadow h-auto mb-2"> 
+        <ion-buttons class="language-buttons">
+          <ion-button v-for="(l, index) in languages" :key="index" @click="changeLanguage(l.lang)" :color="l.lang == locale?'danger':'default'" >
+            <ion-icon :src="l.icon" slot="start" />
+            {{ l.label }}
+          </ion-button>
+        </ion-buttons>
+        <div class="footer-text">
+          <ion-text class="powered-by">{{t("ePOS by ESTC")}}</ion-text>
+          <ion-text class="app-version">Version 1.0.0</ion-text>
+        </div>
+      </ion-toolbar>
+    </ion-footer>
   </ion-page>
 </template>
 
@@ -193,40 +182,28 @@ onIonViewWillEnter(() => {
 <style scoped>
 /* Branding Section with Gradient Background */
 .branding {
-  height: 30vh;
-  background: rgb(189,229,244);
-background: radial-gradient(circle, rgba(189,229,244,1) 0%, rgba(157,201,240,1) 51%, rgba(101,167,244,1) 100%);
+  height: 30vh; 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: white;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-}
-
+  color: white; 
+} 
 .app-logo {
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   margin-bottom: 12px;
 }
 
 .app-name {
   font-size: 36px;
   font-weight: bold;
-}
-
-/* Add Workspace Button */
-.add-workspace {
-  margin: 16px;
-}
+} 
 .workspace-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 12px;
+  justify-content: space-between; 
 }
 
 .workspace-logo {
@@ -261,7 +238,7 @@ background: radial-gradient(circle, rgba(189,229,244,1) 0%, rgba(157,201,240,1) 
 
 .footer {
   --background: transparent; /* No background */
-  height: 123px;
+  /* height: 123px; */
   box-shadow: none;           /* No shadow */
   
 }
@@ -293,8 +270,7 @@ background: radial-gradient(circle, rgba(189,229,244,1) 0%, rgba(157,201,240,1) 
 .language-buttons {
   display: flex;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
+  width: 100%; 
 }
 
 </style>
