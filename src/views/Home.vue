@@ -19,9 +19,9 @@
             </ion-button>
 
             <ion-button class="col-6 m-0" color="primary" routerLink="/stock-adjustment">
-              <div class="flex flex-column justify-center items-center">
-                <ion-icon class="text-7xl" :icon="cubeOutline" slot="start"></ion-icon>
-                Stock Adjustment
+              <div class="flex flex-column justify-center align-items-center py-2">
+                <ion-icon class="text-6xl mb-2" :icon="cubeOutline" slot="start"></ion-icon>
+                {{ t("Stock Adjustment")}}
               </div>
             </ion-button>
             <ion-button class="col-6 m-0" color="primary" routerLink="/pending-order">
