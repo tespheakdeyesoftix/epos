@@ -1,6 +1,5 @@
 <template>
-    <BaseModal>
-      {{ isScanning }}
+    <BaseModal> 
         <ion-select  @ionChange="startScanner" label="Select Camerar" placeholder="Select Camerar" v-model="selectedCameraId">
         <ion-select-option v-for="(d, index) in cameraList"  :key="index" :value="d.id" >{{ d.label }}</ion-select-option>
         
