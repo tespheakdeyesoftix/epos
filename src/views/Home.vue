@@ -11,27 +11,27 @@
         style="height: calc(-329.5px + 100vh);background:url(/assets/pettern1.png)">
         <div class="py-2 px-3 mt-3" style="height: fit-content;">
           <div class="grid">
-            <ion-button class="col-6 m-0" color="success" routerLink="/product-list">
+            <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
                 {{ t("Product") }}
               </div>
             </ion-button>
 
-            <ion-button class="col-6 m-0" color="primary" routerLink="/stock-adjustment">
+            <ion-button class="col-6 m-0" routerLink="/stock-adjustment">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="cubeOutline" slot="start"></ion-icon>
                 {{ t("Stock Adjustment")}}
               </div>
             </ion-button>
-            <ion-button class="col-6 m-0" color="primary" routerLink="/pending-order">
+            <ion-button class="col-6 m-0" routerLink="/pending-order">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
                 {{ t("Pending Order") }}
               </div>
             </ion-button>
 
-            <ion-button class="col-6 m-0" color="danger" @click="onLogout">
+            <ion-button class="col-6 m-0" @click="onLogout">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="logOutOutline" slot="start"></ion-icon>
                 {{ t("Logout") }}
@@ -71,8 +71,24 @@ const onLogout = async () => {
   color: #fff;
 }
 
-.menu-list ion-button {
+.menu-list ion-button:first-child {
   --border-radius: 1rem;
   font-weight: bold;
+  --background: #7F55B1;
+}
+.menu-list ion-button:nth-child(2) {
+  --border-radius: 1rem;
+  font-weight: bold;
+  --background: #328E6E;
+}
+.menu-list ion-button:nth-child(3) {
+  --border-radius: 1rem;
+  font-weight: bold;
+  --background: #8F87F1;
+}
+.menu-list ion-button:nth-child(4) {
+  --border-radius: 1rem;
+  font-weight: bold;
+  --background: #E52020;
 }
 </style>
