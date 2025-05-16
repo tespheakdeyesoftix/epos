@@ -7,12 +7,12 @@
           <h1 class="mt-2 mb-0">{{t("ePOS Restaurant")}}</h1>
           <ion-text>{{t("Device: Hi IOS, Station: Siem Reap")}}</ion-text>
         </div>
-        <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4" style="height: calc(-330.5px + 100vh);background:url(/assets/pettern1.png)">
-          <div class="p-2 w-9 mt-5" style="height: fit-content;">
+        <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4" style="height: calc(-329.5px + 100vh);background:url(/assets/pettern1.png)">
+          <div class="py-2 px-3 mt-3" style="height: fit-content;">
             <div class="grid">
-              <ion-button class="col-6 m-0 border-round-3xl" color="success" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="success" routerLink="/product-list">
                 <div class="flex flex-column justify-center align-items-center py-2">
-                  <ion-icon class="text-6xl" :icon="cartOutline" slot="start"></ion-icon>
+                  <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
                   {{t("Product")}}
                 </div>
               </ion-button> 
@@ -24,15 +24,15 @@
                 </div>
               </ion-button> 
               <ion-button class="col-6 m-0" color="primary" routerLink="/pending-order">
-                <div class="flex flex-column justify-center items-center">
-                  <ion-icon class="text-7xl" :icon="timeOutline" slot="start"></ion-icon>
-                  Pending Order
+                <div class="flex flex-column justify-center align-items-center py-2">
+                  <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
+                  {{t("Pending Order")}}
                 </div>
               </ion-button> 
 
               <ion-button class="col-6 m-0" color="danger" routerLink="/product-list">
                 <div class="flex flex-column justify-center align-items-center py-2">
-                  <ion-icon class="text-6xl" :icon="logOutOutline" slot="start"></ion-icon>
+                  <ion-icon class="text-6xl mb-2" :icon="logOutOutline" slot="start"></ion-icon>
                   {{t("Logout")}}
                 </div>
               </ion-button> 
@@ -57,5 +57,6 @@
   }
   .menu-list ion-button{
     --border-radius: 1rem;
+    font-weight: bold;
   }
 </style>

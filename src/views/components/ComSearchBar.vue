@@ -1,7 +1,7 @@
 <template>
 
-  <div class="flex align-items-center px-2 w-full" style="background:var(--ion-color-primary, #0054e9)">
-    <ion-searchbar class="flex-grow" :placeholder="t('Search')" @click="expandModal" v-model="keyword" :debounce="1000"
+  <div class="flex align-items-center px-2 w-full search__bar" style="background:var(--ion-search-background)">
+    <ion-searchbar class="flex-grow border-round-2xl" :placeholder="t('Search')" @click="expandModal" v-model="keyword" :debounce="1000"
       @ionInput="onSearch"></ion-searchbar>
 
     <ion-button fill="clear" @click="onScanBarcode" v-if="showBarcodeScanner">

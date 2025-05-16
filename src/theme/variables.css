@@ -67,9 +67,16 @@
 	--ion-title-font-size: 24px; /* Customize the font size for titles */
 	--ion-title-color: #e0e3ea; /* Customize the font size for titles */
 
- 
-	
+	/* background alternative */
+	--ion-search-background: #98b9ff;
+}
 
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ion-search-background: #000000;
+	}
 }
 
 body {
@@ -134,5 +141,6 @@ button.alert-button.alert-button-confirm {
 	transform: translateY(-43%);
 	width: -webkit-fill-available;
 }
-
-  
+.search__bar ion-searchbar{
+	--border-radius: 1.5rem;
+}
