@@ -51,5 +51,6 @@
   }
   .menu-list ion-button{
     --border-radius: 1rem;
+    font-weight: bold;
   }
 </style>

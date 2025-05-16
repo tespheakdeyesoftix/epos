@@ -79,11 +79,9 @@ const onLogout = async () => {
   align-items: center;
   justify-content: center;
   text-align: center;
- 
-  background: linear-gradient(135deg, #87CEFA, #1E90FF);
-  /* margin:-20px -13px 0px -14px; */
-  /* border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px; */
+  color: #fff;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                url(/assets/home-bg.jpeg) no-repeat center center / cover; 
   padding: 20px 0;
 }
 
