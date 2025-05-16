@@ -1,6 +1,11 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi  } from "@/services/api-service";
+import { showToast,showLoading, openModal,openPopOver } from '@/helpers/utils';
+import { ref } from 'vue';
+
+let ionRouter = ref();
+
 // Ensure the namespace exists
 globalThis.app = globalThis.app || {};
 
@@ -35,6 +40,25 @@ globalThis.app.renameDoc =  async function (DocType,oldName,newName) {
   return await postApi("epos_restaurant_2023.api.api.rename_doc",{data:{doctype:DocType, old_name:oldName,new_name:newName}})
 }
 
+
+// global variable
+ 
+ globalThis.app.openModal =  async function (props) {
+  return await openModal(props)
+}
+
+globalThis.app.openPopOver =  async function (props,event) {
+  return await openPopOver(props,event)
+}
+
+// utils function
+// ionRouter.navigate('/home', 'forward', 'replace');
+ 
+globalThis.app.ionRouter = null;
+ globalThis.app.setIonRouter = function(router){
+  
+  globalThis.app.ionRouter =router; 
+ }
 
 
  

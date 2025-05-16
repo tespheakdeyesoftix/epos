@@ -50,6 +50,16 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/pending-order",
+    component: () => import('@/views/pending_order/PendingOrder.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/sale-detail/:name",
+    component: () => import('@/views/sales/SaleDetail.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/help",
     component: Help,
     meta: { requiresAuth: true,title:"Help" }

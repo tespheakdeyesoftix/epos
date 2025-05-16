@@ -16,6 +16,14 @@
                   Product
                 </div>
               </ion-button> 
+              
+              <ion-button class="col-6 m-0" color="primary" routerLink="/pending-order">
+                <div class="flex flex-column justify-center items-center">
+                  <ion-icon class="text-7xl" :icon="timeOutline" slot="start"></ion-icon>
+                  Pending Order
+                </div>
+              </ion-button> 
+
               <ion-button class="col-6 m-0" color="danger" routerLink="/product-list">
                 <div class="flex flex-column justify-center items-center">
                   <ion-icon class="text-7xl" :icon="logOutOutline" slot="start"></ion-icon>
@@ -30,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-  import { cartOutline, logOutOutline } from 'ionicons/icons';
+  import { cartOutline, logOutOutline,timeOutline } from 'ionicons/icons';
   const t = window.t;
 </script>
 <style>

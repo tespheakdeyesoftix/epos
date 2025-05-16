@@ -1,6 +1,6 @@
-import {modalController,  toastController,loadingController } from '@ionic/vue';
+import {modalController,  toastController,loadingController, popoverController, PopoverOptions } from '@ionic/vue';
  
-
+import type { Component } from 'vue';
 export function imageUrl(imageUrl:string,baseUrl:string = ""){
     if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://") ){
         return imageUrl;
@@ -103,4 +103,22 @@ export async function openModal(props:any) {
     }
     return false 
   }
+  
+
+  export async function openPopOver(props:any,event?: Event) {
+   
+    const popover = await popoverController.create({
+      component:props.component,
+      componentProps:props.componentProps,
+      event,
+    });
+  
+    await popover.present();
+  
+    const {data,role} = await popover.onDidDismiss();
+    if(role=="confirm"){
+      return data
+    }
+    return false ;
+  };
   

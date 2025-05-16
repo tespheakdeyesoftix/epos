@@ -97,7 +97,7 @@ function resetDoc(){
 
   selectedFile.value = null
   previewUrl.value = null
-  warningMessage.value = ""
+  warningMessage.value = "`"
  
 
 }
