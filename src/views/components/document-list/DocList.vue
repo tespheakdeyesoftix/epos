@@ -11,7 +11,7 @@
     <Loading v-if="loading" />
     <template v-else>
         <slot name="filter">
-         
+       
                 <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
                 
         </slot>
@@ -94,6 +94,7 @@ import { useAttrs, watch } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
+import ComFilter from '@/views/components/document-list/ComFilter.vue';
 
 const attrs = useAttrs();
 const t = window.t;

@@ -124,7 +124,7 @@ async function onProductCodeChange(){
        
         if(res.data.length>0){
          
-          app.showWarning(window.t(`Product Code ${doc.value.product_code} is already exist.` ))
+        
           warningMessage.value = window.t(`Product Code ${doc.value.product_code} is already exist.` )
 
         }else{
