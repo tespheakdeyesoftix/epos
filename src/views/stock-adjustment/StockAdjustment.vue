@@ -2,28 +2,89 @@
     <ion-page>
         <ToolBar>{{ t("Stock Adjustment") }}</ToolBar>
         <ion-content class="ion-padding">
+        
+            <div class="product-select-with-scan">
+    <!-- Custom Select -->
  
-            <ComSelect docType="Product" @onSelected="onSelectProduct" >
-                select 
-            </ComSelect>
-            
-           
-            <ion-button  @click="onScanBarcode"  >
-                Scan Barcode
-      <ion-icon slot="icon-only"  :icon="scan"></ion-icon>
+        <ComSelect  csClass="search-by-product" 
+      ref="productSelect"
+      docType="Product"
+      v-model="selectedProduct"
+      @onSelected="onSelectProduct"
+    >
+    <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
+    <ion-text class="text-search" v-if="!productDoc.product_name_en"  > Search By Product Name ... </ion-text>
+    <ion-text class="text-search" v-else  > {{ productDoc.product_code }} -   {{ productDoc.product_name_en.length > 30 
+      ? productDoc.product_name_en.slice(0, 30) + '...' 
+      : productDoc.product_name_en }} </ion-text>
+    
+    </ComSelect>
+    <!-- Scan Button -->
+    <ion-button @click="onScanBarcode">
+      <ion-icon slot="icon-only" :icon="scan"></ion-icon>
     </ion-button>
-
-    <hr/>
-   
-        <div class="relative fixed-input">
-                <ion-input :label="t('Stock Location')" value="value" label-placement="floating" fill="outline">
-                </ion-input>
-                <div class="selected_value">
-                    <ComSelect docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog" @onSelected="onSelectWarehouse" />
+  </div>
+        <div class="relative fixed-input margin-top-10">
+                <div >
+                    <ComSelect csClass="search-by-product
+                    " docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog" @onSelected="onSelectWarehouse">
+                    <ion-icon class="magin-right" slot="icon-only" :icon="storefrontOutline"></ion-icon>
+                    <span v-if="!doc?.stock_location" class=" text-search">
+  {{ t('Pleas Select Stock Location') }}
+</span>
+                    <span class=" text-search">
+  {{ doc?.stock_location }}
+</span>
+                  
+                    </ComSelect>
                 </div>
             </div> 
+            <ion-card class="card-style">
+  <ion-card-header>
+    <div>
+         <strong>{{productDoc.product_name_en}}</strong> 
+    </div>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-item lines="none" class="product-row ion-no-padding">
+  <ion-label class="col-label">
+    <ion-text class="label-text" color="medium">Code</ion-text>
+    <ion-text class="value-text">{{ productDoc.product_code }}</ion-text>
+  </ion-label>
+
+  <ion-label class="col-label ion-text-end">
+    <ion-text class="label-text" color="medium">Name Kh</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc.product_name_kh }}</ion-text>
+  </ion-label>
+</ion-item>
+<ion-item lines="none" class="product-row ion-no-padding">
+  <ion-label class="col-label">
+    <ion-text class="label-text" color="medium">Product Category</ion-text>
+    <ion-text class="value-text">{{ productDoc.product_category }}</ion-text>
+  </ion-label>
+
+  <ion-label class="col-label ion-text-end">
+    <ion-text class="label-text" color="medium">Unit</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc.unit }}</ion-text>
+  </ion-label>
+</ion-item>
+<ion-item lines="none" class="product-row ion-no-padding">
+  <ion-label class="col-label">
+    <ion-text class="label-text" color="medium">Current Quantity</ion-text>
+    <ion-text class="value-text">{{ doc.current_quantity }}</ion-text>
+  </ion-label>
+
+  <ion-label class="col-label ion-text-end">
+    <ion-text class="label-text" color="medium">Unit</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc.unit }}</ion-text>
+  </ion-label>
+</ion-item>
+
+  </ion-card-content>
+</ion-card>
             <stack class="pt-3" gap="20px" v-if="doc.product_code">
-            <com-input :label="t('Product Code')" placeholder="Product Code" v-model="doc.product_code"
+            <!-- <com-input :label="t('Product Code')" placeholder="Product Code" v-model="doc.product_code"
                  label-placement="floating" fill="outline"  readonly/>
           
             <ion-input :label="t('Product Name En')" placeholder="Product Name En" v-model="productDoc.product_name_en"
@@ -31,7 +92,7 @@
             </ion-input>
             <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="productDoc.product_name_kh"
                 label-placement="floating" fill="outline" readonly>
-            </ion-input>
+            </ion-input> -->
             <ion-input label="Product Category" placeholder="Product Category" v-model="productDoc.product_category"
                 label-placement="floating" fill="outline" readonly>
             </ion-input>
@@ -73,7 +134,7 @@
 
 </template>
 <script setup>
-import { scan } from 'ionicons/icons';
+import { scan, search, storefront, storefrontOutline } from 'ionicons/icons';
 import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
  
 const t = window.t;
@@ -108,3 +169,67 @@ async function onSelectProduct(data){
 
  
 </script>
+<style scoped>
+.product-select-with-scan{
+    display: flex;
+    align-items: center;
+    gap:5px;
+}
+.search-by-product{
+    width: 100%;
+    display: flex !important;
+    padding: 0;
+    height: 34px;
+    border-radius: 53px;
+    padding-left: 12px;
+    background: #e7e7e7;
+    align-content: center;
+    align-items: center;
+    border: 1px solid #afafaf;
+}
+.text-search{
+    margin-left: 6px;
+    font-size: 12px;
+    color: #808080;
+}
+.margin-top-10{
+    margin-top: 10px;
+}
+.card-style{
+    margin: 0;
+    margin-top: 16px;
+    font-size: 17px !important;
+}
+.product-row {
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+  margin: 0;
+}
+
+.col-label {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* important for ellipsis */
+}
+
+.label-text {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.value-text {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.ellipsis-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+</style>

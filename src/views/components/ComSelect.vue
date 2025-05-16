@@ -1,5 +1,5 @@
 <template>
-  <div @click="openSheetModal" style="display: inline;" v-if="!loading">
+  <div @click="openSheetModal" :class="csClass" style="display: inline;" v-if="!loading">
     <slot>
     <ion-chip   v-bind="$attrs" >
     <ion-label v-if="model">{{ model  }}</ion-label>
@@ -27,6 +27,10 @@ const props = defineProps({
   valueField: {
     type: String,
     default: "name"
+  },
+  csClass: {
+    type: String,
+    default: ""
   },
   labelField: {
     type: String,
