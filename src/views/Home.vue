@@ -24,7 +24,7 @@
                 </div>
               </ion-button> 
 
-              <ion-button class="col-6 m-0" color="danger" routerLink="/product-list">
+              <ion-button class="col-6 m-0" color="danger" @click="onLogout">
                 <div class="flex flex-column justify-center align-items-center py-2">
                   <ion-icon class="text-6xl mb-2" :icon="logOutOutline" slot="start"></ion-icon>
                   {{t("Logout")}}
@@ -39,7 +39,21 @@
 
 <script setup lang="ts">
   import { cartOutline, logOutOutline,timeOutline } from 'ionicons/icons';
+  import { useAuth } from '@/hooks/useAuth'; 
+  import { 
+  IonContent, 
+  IonButton,
+  IonIcon,
+  useIonRouter, 
+} from '@ionic/vue';
   const t = window.t;
+  const { logout } = useAuth();
+
+  const ionRouter = useIonRouter();
+  const onLogout = async () => {
+    await logout();
+    ionRouter.navigate('/select-workspace', 'back', 'replace');
+  };
 </script>
 <style>
   .wrapper-cover { 

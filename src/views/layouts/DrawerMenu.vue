@@ -23,6 +23,12 @@
           <ion-label>{{t("Product List")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-item router-link="/pending-order">
+          <ion-icon :icon="timeOutline" slot="start"></ion-icon>
+          <ion-label>{{t("Pending Order")}}</ion-label>
+        </ion-item>
+        </ion-menu-toggle>
        
       </ion-list>
 
@@ -57,7 +63,8 @@ import {
 import {
   homeOutline, 
   logOutOutline,
-  cartOutline
+  cartOutline,
+  timeOutline
 } from 'ionicons/icons'; 
 import { useAuth } from '@/hooks/useAuth'; 
 const { logout, currentUser } = useAuth();
