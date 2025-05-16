@@ -1,30 +1,30 @@
 <template>
   <ion-page>
     <ToolBar>{{ t("Add Product") }}</ToolBar>
-    <ion-content color="light"  >
-      <ion-segment style="margin-top: 10px;"  >
-    <ion-segment-button value="product_information" content-id="product_information">
-      <ion-label>{{ t("Product Information") }}</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="product_price" content-id="product_price">
-      <ion-label>{{ t("Prices") }}</ion-label>
-    </ion-segment-button>
- 
-  </ion-segment>
-  <ion-segment-view>
-    <ion-segment-content id="product_information">
-      <ComProductInformation/>
-    </ion-segment-content>
-    <ion-segment-content id="product_price">
-      <ComProductPrice />
+    <ion-content color="light">
+      <ion-segment style="margin-top: 10px;">
+        <ion-segment-button value="product_information" content-id="product_information">
+          <ion-label>{{ t("Product Information") }}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="product_price" content-id="product_price">
+          <ion-label>{{ t("Prices") }}</ion-label>
+        </ion-segment-button>
 
-    </ion-segment-content>
-    
-  </ion-segment-view>
-    
-     
+      </ion-segment>
+      <ion-segment-view>
+        <ion-segment-content id="product_information">
+          <ComProductInformation />
+        </ion-segment-content>
+        <ion-segment-content id="product_price">
+          <ComProductPrice />
+
+        </ion-segment-content>
+
+      </ion-segment-view>
+
+
     </ion-content>
-    <ion-footer >
+    <ion-footer>
       <ion-toolbar color="tranparency">
         <stack row :equal="true" gap="10px">
           <ion-button :disabled="!doc.name"  @click="onDelete" shape="round" color="danger" expand="full">{{ t("Delete")
@@ -50,25 +50,25 @@ import { useRouter } from 'vue-router';
 const vue_router = useRouter();
 
 import { useIonRouter } from '@ionic/vue';
- 
+
 import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const ionRouter = useIonRouter();
 const t = window.t;
 
- 
 
-const { previewUrl, handleFileChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation,resetDoc,
-  onRemovefile,router
- } = useAddProduct();
+
+const { previewUrl, handleFileChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation, resetDoc,
+  onRemovefile, router
+} = useAddProduct();
 navigation.value = ionRouter
 router.value = vue_router;
 
 
 
-function onProductCodeChanged(){
- alert(123)
+function onProductCodeChanged() {
+  alert(123)
 }
 
 
@@ -80,12 +80,12 @@ onMounted(async () => {
     await loadDoc(route.params?.name)
   }
 
-  
- 
+
+
 
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
   resetDoc()
 })
 
@@ -96,12 +96,13 @@ onUnmounted(()=>{
 .wide-label {
   --label-width: 140px;
 }
+
 .button-row {
   display: flex;
   gap: 8px;
 }
+
 .button-row ion-button {
   flex: 1;
 }
-
 </style>

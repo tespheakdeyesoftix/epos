@@ -22,7 +22,7 @@ const ionRouter = useIonRouter();
   import { useAuth } from '@/hooks/useAuth';
   const {isAuthenticated} = useAuth();
   const route = useRoute();
-  const title = ref(route.meta.title || 'eKeeper');
+  const title = ref(route.meta.title || 'ePOS');
   const hideTab = ref(false);
 
   // set ion router to app so it easy to access from compoennty
@@ -30,7 +30,7 @@ const ionRouter = useIonRouter();
  
   // Watch for route changes and update the title
   watch(() => route.meta.title, (newTitle) => {
-    title.value = newTitle || 'eKeeper';
+    title.value = newTitle || 'ePOS';
    
   });
 

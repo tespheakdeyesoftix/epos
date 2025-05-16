@@ -120,7 +120,19 @@ button.alert-button.alert-button-confirm {
     border-radius: 50%;
     text-transform: uppercase;
 }
-
-  
+.addws-page {
+	background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(/assets/bg3.jpeg) repeat center center / cover;
+	height: 100%;
+}
+.fixed-input .native-input{
+	opacity: 0 !important;
+}  
+.fixed-input .selected_value {
+	position: absolute;
+	top: 50%;
+	z-index: 5;
+	transform: translateY(-43%);
+	width: -webkit-fill-available;
+}
 
   

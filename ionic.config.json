@@ -1,5 +1,5 @@
 {
-  "name": "ekeeper",
+  "name": "epos",
   "integrations": {
     "capacitor": {}
   },
