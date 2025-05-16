@@ -1,7 +1,7 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi  } from "@/services/api-service";
-import { showToast,showLoading, openModal,openPopOver } from '@/helpers/utils';
+import { showToast,showLoading, openModal,openPopOver,onScanBarcode } from '@/helpers/utils';
 import { ref } from 'vue';
 
 let ionRouter = ref();
@@ -46,6 +46,9 @@ globalThis.app.renameDoc =  async function (DocType,oldName,newName) {
  globalThis.app.openModal =  async function (props) {
   return await openModal(props)
 }
+ globalThis.app.onScanBarcode =  async function () {
+  return await onScanBarcode()
+}
 
 globalThis.app.openPopOver =  async function (props,event) {
   return await openPopOver(props,event)
@@ -58,6 +61,13 @@ globalThis.app.ionRouter = null;
  globalThis.app.setIonRouter = function(router){
   
   globalThis.app.ionRouter =router; 
+ }
+
+//  route
+globalThis.app.route = null;
+ globalThis.app.setRoute = function(route){
+ 
+  globalThis.app.route =route; 
  }
 
 

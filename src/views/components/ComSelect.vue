@@ -1,10 +1,12 @@
 <template>
   <div @click="openSheetModal" style="display: inline;" v-if="!loading">
+    <slot>
     <ion-chip   v-bind="$attrs" >
     <ion-label v-if="model">{{ model  }}</ion-label>
     <ion-label v-else>{{(label || docType)}}</ion-label>
     <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear"></ion-icon>
   </ion-chip>
+</slot>
   </div>
 </template>
 
