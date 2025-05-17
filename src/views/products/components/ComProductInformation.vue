@@ -53,7 +53,7 @@
                     <ComSelect docType="Unit Of Measurement" clear v-model="doc.unit" modalType="Dialog" />
                 </div>
             </div> 
-            <ion-input type="number" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
+            <ion-input type="number" :readonly="doc.name" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
                 label-placement="floating" fill="outline"></ion-input>
             <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
                 label-placement="floating" fill="outline"></ion-input>

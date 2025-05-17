@@ -1,8 +1,9 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
-import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi  } from "@/services/api-service";
-import { showToast,showLoading, openModal,openPopOver,onScanBarcode } from '@/helpers/utils';
+import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
+import { showToast,showLoading, openModal,openPopOver,onScanBarcode,getNumber } from '@/helpers/utils';
 import { ref } from 'vue';
+import { set } from 'lodash';
 
 let ionRouter = ref();
 
@@ -36,8 +37,12 @@ globalThis.app.postApi =  async function (api_url,param) {
 globalThis.app.getDocList =  async function (DocType,param) {
   return await getDocList(DocType,param)
 }
+
 globalThis.app.renameDoc =  async function (DocType,oldName,newName) {
   return await postApi("epos_restaurant_2023.api.api.rename_doc",{data:{doctype:DocType, old_name:oldName,new_name:newName}})
+}
+globalThis.app.submitDoc =  async function (doc) {
+  return await submitDoc(doc)
 }
 
 
@@ -68,6 +73,18 @@ globalThis.app.route = null;
  globalThis.app.setRoute = function(route){
  
   globalThis.app.route =route; 
+ }
+// vue router
+globalThis.app.router = null;
+ globalThis.app.setRouter = function(router){
+ 
+  globalThis.app.router =router; 
+ }
+
+ globalThis.app.setting = null;
+ globalThis.app.setSetting = function(setting){
+  
+  globalThis.app.setting =setting; 
  }
 
 
@@ -149,4 +166,10 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
         return false
         
         
+}
+
+
+ 
+globalThis.app.getNumber = function(n){
+  return getNumber(n, app.setting.float_precision);
 }

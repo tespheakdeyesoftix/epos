@@ -25,7 +25,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "dayjs": "^1.11.13",
     "echarts": "^5.6.0",
-    "frappe-js-sdk": "^1.7.0",
+    "frappe-js-sdk": "^1.9.0",
     "install": "^0.13.0",
     "ionicons": "^7.0.0",
     "lodash": "^4.17.21",

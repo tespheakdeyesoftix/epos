@@ -41,7 +41,8 @@ export function  useAuth(router:any = null) {
       currentUser.value =  response.data.message;
       isAuthenticated.value = true;
       window.storageService.setItem("current_user",JSON.stringify(currentUser.value));
-
+ 
+     
       return { data: response.data.message, error: null };  // Return data if successful
     } catch (error) {
       return { data: null, error };  // Return error if request fails
@@ -163,7 +164,7 @@ export function  useAuth(router:any = null) {
  
     try {
       const options = {
-        url: api_url + "api/method/edoor.mobile_api.api.check_user_login?property=" + property_name,
+        url: api_url + "api/method/epos_restaurant_2023.api.auth.check_user_login?property=" + property_name,
         headers:{
           'Content-Type': 'application/json',
         'Authorization': 'token ' + token.replaceAll('"',""),  

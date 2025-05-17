@@ -40,7 +40,8 @@ export function useComSelect(props: any) {
 
 
     }
-    const andFilter = []
+    const andFilter = props.filters || []
+    
     if (props.selected) {
       if (!props.multiple) {
 

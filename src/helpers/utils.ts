@@ -134,3 +134,17 @@ export async function openModal(props:any) {
     return result;
   };
   
+  
+export   function getNumber(num:number, decimalDigits:number) {
+    const rounded = Number(num).toFixed(decimalDigits); // Round to given decimal digits
+    const parts = rounded.split('.');
+  
+    if (!parts[1] || /^0+$/.test(parts[1])) {
+      return parts[0]; 
+    }
+  
+    
+    const trimmedDecimals = parts[1].replace(/0+$/, '');
+    return `${parts[0]}.${trimmedDecimals}`;
+}
+  

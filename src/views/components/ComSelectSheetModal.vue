@@ -21,7 +21,7 @@
       </ion-toolbar>
       <ion-progress-bar v-if="loadingMoreData" type="indeterminate"></ion-progress-bar>
     </ion-header>
-
+ 
     <ComSearchBar @click="expandModal" @onSearch="Search" />
     <ion-button class="my-2 mx-3" :disabled="data.filter(r => r.selected).length == 0" shape="round" fill="outline" color="info"
       @click="onClearSelect">{{ t("Clear Selected") }}</ion-button>
@@ -55,7 +55,7 @@
 <script setup>
 import { useComSelect } from '@/hooks/useComSelect';
 import { modalController } from '@ionic/vue';
-import { checkmarkOutline, closeOutline, expand } from "ionicons/icons";
+import { checkmarkOutline, closeOutline, expand, filter } from "ionicons/icons";
 import ComSelectCard from "@/views/components/ComSelectCard.vue"
 
 import ComSearchBar from '@/views/components/ComSearchBar.vue';
@@ -68,6 +68,7 @@ const props = defineProps({
   selectedValue: String,//this return string value only
   selectedValues: Object,//this return array string of values
   selected: Object,//this is the object json of select data,
+  filters:Object,
   valueField: {
     type: String,
     default: "name"

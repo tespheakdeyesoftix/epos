@@ -1,7 +1,23 @@
 <template>
   <ion-page>
-    <ToolBar>{{ t("Add Product") }}</ToolBar>
+    <ToolBar>
+      <template v-if="!doc.name">
+        {{ t("Add Product") }}
+      </template>
+      <template v-else>
+        {{ doc.name  }} - {{ doc.product_name_en }}
+      </template>
+      
+
+      <template #end>
+       
+        <ion-button v-if="doc.name" @click="onOpenActionMenu($event)">
+          <ion-icon :icon="ellipsisVertical" slot="icon-only" />
+        </ion-button>
+      </template>
+    </ToolBar>
     <ion-content color="light">
+     
       <ion-segment style="margin-top: 10px;">
         <ion-segment-button value="product_information" content-id="product_information">
           <ion-label>{{ t("Product Information") }}</ion-label>
@@ -44,9 +60,9 @@ import { useAddProduct } from "@/hooks/useAddProduct.js"
 
 import ComProductInformation from '@/views/products/components/ComProductInformation.vue';
 import ComProductPrice from '@/views/products/components/ComProductPrice.vue';
-
+import { ellipsisVertical } from 'ionicons/icons'
 import { useRouter } from 'vue-router';
-
+import ComProductActionMenu from "@/views/products/components/ComProductActionMenu.vue"
 const vue_router = useRouter();
 
 import { useIonRouter } from '@ionic/vue';
@@ -66,11 +82,16 @@ navigation.value = ionRouter
 router.value = vue_router;
 
 
-
-function onProductCodeChanged() {
-  alert(123)
+function onOpenActionMenu($event){
+  app.openPopOver({
+    component:ComProductActionMenu,
+    componentProps:{
+      product: doc.value
+    }
+  }, $event)
 }
 
+ 
 
 onMounted(async () => {
 

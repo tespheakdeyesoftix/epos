@@ -8,7 +8,7 @@ export function useStockAdjustment(props = null) {
     new_cost:0,
     current_cost:0,
     current_quantity:0,
-    new_quantity:0,
+    new_quantity:0.00,
     unit:"Unit"
   }
   )
@@ -43,6 +43,7 @@ export function useStockAdjustment(props = null) {
       if (stockProductRes.data){
         if(stockProductRes.data.length>0){
           doc.value.current_quantity = stockProductRes.data[0].quantity
+          doc.value.new_quantity = stockProductRes.data[0].quantity
           doc.value.current_cost = stockProductRes.data[0].cost
           doc.value.new_cost= stockProductRes.data[0].cost
 
@@ -57,12 +58,14 @@ export function useStockAdjustment(props = null) {
 
   async function onSave(){
     const loading = await app.showLoading("Saving Data...")
-    const res = app.createDoc("Single Product Adjustment",doc.value)
+    const res = await app.createDoc("Single Product Adjustment",doc.value)
 
     if (res.data){
+      await app.submitDoc(res.data);
       onCancel();
-      doc.stock_location = res.data.stock_location;
+      doc.value.stock_location = res.data.stock_location;
     }
+    app.router.replace("/stock-adjustment")
     await loading.dismiss();
   }
 
