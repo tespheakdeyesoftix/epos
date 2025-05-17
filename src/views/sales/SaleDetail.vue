@@ -2,34 +2,52 @@
     <ion-page>
         <ToolBar>{{ t("Sale Detail") }}</ToolBar>
         <ion-content class="ion-padding">
-            <ion-card button="true">
+            <ion-card button="true" class="m-0">
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
-                            <ion-col>
+                            <ion-col size="auto">
                                 <ion-chip class="m-0">
                                     <ion-avatar>
-                                        <img :alt="doc?.customer_name"
-                                            src="/assets/avatar.svg" />
+                                        <img :alt="doc?.customer_name" src="/assets/avatar.svg" />
                                     </ion-avatar>
-                                    <ion-label>{{ doc?.customer_name}}</ion-label>
+                                    <ion-label>{{ doc?.customer_name }}</ion-label>
                                 </ion-chip>
                                 <ion-card-subtitle>{{ doc?.customer }} / {{ doc?.phone_number }}</ion-card-subtitle>
                             </ion-col>
-                            <ion-col>
-                                <ion-button shape="round" size="small">
+                            <ion-col class="text-right">
+                                <ion-button shape="round" size="small" style="--background:#533B4D">
                                     <ion-icon slot="icon-only" :icon="searchOutline"></ion-icon>
                                 </ion-button>
-                                <ion-button shape="round" size="small">
+                                <ion-button shape="round" size="small" style="--background:#7F55B1">
                                     <ion-icon slot="icon-only" :icon="personAddOutline"></ion-icon>
                                 </ion-button>
-                                <ion-button shape="round" size="small">
+                                <ion-button shape="round" size="small" style="--background:#328E6E">
                                     <ion-icon slot="icon-only" :icon="scanCircleOutline"></ion-icon>
                                 </ion-button>
                             </ion-col>
-                        </ion-row> 
+                        </ion-row>
                     </ion-grid>
-                    
+
+                </ion-card-content>
+            </ion-card>
+
+            <ion-card class="mt-3 mx-0">
+                <ion-card-header>
+                    <ion-card-title>{{t("Table # ")}}: {{doc.tbl_number}}</ion-card-title>
+                    <!-- <ion-card-subtitle>xxx</ion-card-subtitle> -->
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-list>
+                        <ion-item v-for="(d, index) in doc.sale_products" :key="index">
+                            {{ d }}
+                            <ion-thumbnail slot="start">
+                                <img alt="Silhouette of mountains"
+                                    src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                            </ion-thumbnail>
+                            <ion-label>Item</ion-label>
+                        </ion-item>
+                    </ion-list>
                 </ion-card-content>
             </ion-card>
         </ion-content>
