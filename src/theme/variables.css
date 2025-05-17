@@ -149,12 +149,35 @@ button.alert-button.alert-button-confirm {
 }
 .table-plan-select .sale-length{
 	position: absolute;
-	top: -2px;
-	right: -2px;
+	top: 0;
+	right: 0;
 }
-/* ion-button.table__button{
-	--padding-start:0;
-	--padding-end:0;
-	--padding-top:0;
-	--padding-bottom:0;
-} */
+ 
+.product-item-card .card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+    padding-left: 10px;
+}
+
+.product-item-card .card-subtitle {
+    font-size: 0.875rem;
+    margin: 0;
+    padding-left: 10px;
+    line-height: 1.4;
+}
+
+
+.product-item-card .amount-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-width: 70px;
+}
+
+.product-item-card .amount {
+    font-weight: bold;
+    font-size: 1rem;
+    
+    text-align: right;
+}
