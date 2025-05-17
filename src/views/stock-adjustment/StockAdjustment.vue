@@ -84,38 +84,23 @@
   </ion-card-content>
 </ion-card>
             <stack class="pt-3" gap="20px" v-if="doc.product_code">
-            <!-- <com-input :label="t('Product Code')" placeholder="Product Code" v-model="doc.product_code"
-                 label-placement="floating" fill="outline"  readonly/>
-          
-            <ion-input :label="t('Product Name En')" placeholder="Product Name En" v-model="productDoc.product_name_en"
-                label-placement="floating" fill="outline" readonly >
-            </ion-input>
-            <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="productDoc.product_name_kh"
-                label-placement="floating" fill="outline" readonly>
-            </ion-input> -->
-            <ion-input label="Product Category" placeholder="Product Category" v-model="productDoc.product_category"
-                label-placement="floating" fill="outline" readonly>
-            </ion-input>
-            <ion-input label="Unit" placeholder="Unit" v-model="productDoc.unit"
-                label-placement="floating" fill="outline" readonly>
-            </ion-input>
-             
-            <ion-input type="Number" :label="t('Current Quantity')" :placeholder="t('Current Quantity')" v-model="doc.current_quantity"
-                label-placement="floating" fill="outline" readonly></ion-input>
-                
-            <ion-input type="Number" :label="t('New Quantity')"
+            
+            <com-input type="number" :label="t('New Quantity')"
              :placeholder="t('New Quantity')" v-model="doc.new_quantity"
-                label-placement="floating" fill="outline"  ></ion-input>
+                label-placement="floating" fill="outline"  ></com-input>
 
-            <ion-input type="Number" label="Current Cost" placeholder="Current Cost" v-model="doc.current_cost"
-                label-placement="floating" fill="outline" readonly></ion-input>
-                
+                <Message severity="info" v-if="(doc.new_quantity - doc.current_quantity)!=0" >{{ t("Different Quantity") }}: {{ doc.new_quantity - doc.current_quantity }}</Message>
 
-            <ion-input type="Number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
-                label-placement="floating" fill="outline"></ion-input>
 
-            <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
-                v-model="doc.note"></ion-textarea>
+            <com-input type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
+                label-placement="floating" fill="outline"></com-input>
+                <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
+
+            
+               
+          <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+          :value="doc.note"
+          @ionInput="e => doc.note = e.target.value"></ion-textarea>
         </stack>
 
         </ion-content>
@@ -137,13 +122,18 @@
 import { scan, search, storefront, storefrontOutline } from 'ionicons/icons';
 import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
  
+import Message from 'primevue/message';
+
 const t = window.t;
 
 const {doc,productDoc,loadData,getStockLocationProduct,onCancel,onSave} = useStockAdjustment()
 async function onScanBarcode() {
   const result = await app.onScanBarcode();
-  doc.value.product_code = result
-  await loadData();
+  if(result){
+    doc.value.product_code = result
+    await loadData();
+  }
+  
 
 }
 
