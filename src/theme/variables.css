@@ -144,3 +144,17 @@ button.alert-button.alert-button-confirm {
 .search__bar ion-searchbar{
 	--border-radius: 1.5rem;
 }
+.table-plan-select ion-segment{
+	--background: #EFF3EA;
+}
+.table-plan-select .sale-length{
+	position: absolute;
+	top: -2px;
+	right: -2px;
+}
+/* ion-button.table__button{
+	--padding-start:0;
+	--padding-end:0;
+	--padding-top:0;
+	--padding-bottom:0;
+} */
