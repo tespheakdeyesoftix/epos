@@ -13,6 +13,7 @@ const props = defineProps({
 })
 
 function formatNumber(){
+    
     return app.getNumber(props.value, app.setting.float_precision)
 }
 

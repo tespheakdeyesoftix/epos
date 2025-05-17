@@ -9,10 +9,9 @@ const setting = ref()
 async function getSetting() {
 
  
-  const res = await getApi("epos_restaurant_2023.api.setting.get_settings")
+  const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings")
   if (res.data) {
 
-  
     setting.value = res.data
     app.setSetting(res.data)
     

@@ -140,9 +140,7 @@ async function onSaveWorkspace() {
  
     const loginResponse = await login({...formData.value,api_url: response.data.app_url,property_name:checkPropertyCodeResponse.data.property_name});
     
-  
-    alert(1)
-    console.log(loginResponse)
+
     if (loginResponse.error){
         await loadingLogin.dismiss();
         return;
@@ -155,7 +153,7 @@ async function onSaveWorkspace() {
         password:formData.value.password,
         api_url:response.data.app_url
     }
-    alert(2)
+ 
     updatePropertyToStorage(property);
 
     // save current property to local storage 

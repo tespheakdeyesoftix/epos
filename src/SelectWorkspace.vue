@@ -110,8 +110,10 @@ async function onLogin(p: any) {
 
   await loading.dismiss()
   if(response){
-    setFrappeAppUrl(p.api_url);
+    
     currentProperty.value = p;
+
+
     ionRouter.navigate('/home', 'forward', 'replace');
   }
   
