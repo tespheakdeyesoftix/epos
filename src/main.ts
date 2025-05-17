@@ -7,7 +7,7 @@ import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
 import debounce from '@/directives/debounce.js'
-
+import { setFrappeAppUrl } from '@/services/api-service';
 
 
 import Aura from '@primeuix/themes/aura';
@@ -101,6 +101,7 @@ import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
 import ComCurrency from '@/views/components/public/ComCurrency.vue';
+import ComNumber from '@/views/components/public/ComNumber.vue';
 import ComStatus from '@/views/components/public/ComStatus.vue';
 import BaseModal from '@/views/components/BaseModal.vue';
 import i18n from '../i18n'; // Import i18n config
@@ -116,6 +117,7 @@ import Stack from '@/views/components/public/Stack.vue';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/km' // import Khmer locale
+import { useApp } from './hooks/useApp';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
@@ -132,7 +134,9 @@ window.showError = (message: string) => showToast(message, "danger");
 window.showLoading = (message: string='Loading') => showLoading(message);
 window.openModal = ( props:object) =>openModal(props);
 
-const  {checkUserLogin} = useAuth(router);
+const  {checkUserLogin,isAuthenticated} = useAuth(router);
+const {getSetting} = useApp()
+
 const app = createApp(App)
 .use(IonicVue)
 
@@ -141,8 +145,13 @@ const app = createApp(App)
 async function init() {
   
   // check if have current login user then login
- 
+
   await checkUserLogin();
+  if (isAuthenticated.value){
+    await getSetting()
+  }
+
+
   
   // set frappe app
 
@@ -207,6 +216,7 @@ async function init() {
 
   app.component('Img',Img)
   app.component('ComCurrency',ComCurrency)
+  app.component('ComNumber',ComNumber)
   app.component('DocList',DocList)
   app.component('Document',Document)
   app.component('ComStatus',ComStatus)

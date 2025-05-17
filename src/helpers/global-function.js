@@ -1,8 +1,9 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import { showToast,showLoading, openModal,openPopOver,onScanBarcode } from '@/helpers/utils';
+import { showToast,showLoading, openModal,openPopOver,onScanBarcode,getNumber } from '@/helpers/utils';
 import { ref } from 'vue';
+import { set } from 'lodash';
 
 let ionRouter = ref();
 
@@ -78,6 +79,12 @@ globalThis.app.router = null;
  globalThis.app.setRouter = function(router){
  
   globalThis.app.router =router; 
+ }
+
+ globalThis.app.setting = null;
+ globalThis.app.setSetting = function(setting){
+  
+  globalThis.app.setting =setting; 
  }
 
 
@@ -159,4 +166,10 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
         return false
         
         
+}
+
+
+ 
+globalThis.app.getNumber = function(n){
+  return getNumber(n, app.setting.float_precision);
 }

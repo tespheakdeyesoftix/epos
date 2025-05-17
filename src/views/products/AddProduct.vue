@@ -86,7 +86,7 @@ function onOpenActionMenu($event){
   app.openPopOver({
     component:ComProductActionMenu,
     componentProps:{
-      product_code: doc.value.name
+      product: doc.value
     }
   }, $event)
 }

@@ -8,6 +8,7 @@
         <!-- Custom Select -->
 
         <ComSelect csClass="search-by-product" ref="productSelect" docType="Product" v-model="selectedProduct"
+          :filters="[['is_inventory_product','=',1],['disabled','=',0]]"
           @onSelected="onSelectProduct">
           <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
           <ion-text class="text-search" v-if="!productDoc?.product_name_en"> Search By Product Name ... </ion-text>
@@ -80,12 +81,12 @@
           <ion-item lines="none" class="product-row ion-no-padding">
             <ion-label class="col-label">
               <ion-text class="label-text" color="medium">Current Quantity</ion-text>
-              <ion-text class="value-text">{{ doc?.current_quantity }}</ion-text>
+              <ion-text class="value-text"><ComNumber :value="doc?.current_quantity"/></ion-text>
             </ion-label>
 
             <ion-label class="col-label ion-text-end">
               <ion-text class="label-text" color="medium">Current Cost</ion-text>
-              <ion-text class="value-text ellipsis-text">{{ doc?.current_cost }}</ion-text>
+              <ion-text class="value-text ellipsis-text"><ComCurrency :value="doc?.current_cost"/></ion-text>
             </ion-label>
           </ion-item>
   </ion-card-content>
@@ -96,12 +97,13 @@
             
             <com-input type="number" :label="t('New Quantity')"
              :placeholder="t('New Quantity')" v-model="doc.new_quantity"
+             :minFractionDigits="_app.setting.float_precision"
                 label-placement="floating" fill="outline" mode="md"  ></com-input>
+             
+                <Message severity="info" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0" >{{ t("Different Quantity") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/></Message>
 
-                <Message severity="info" v-if="(doc.new_quantity - doc.current_quantity)!=0" >{{ t("Different Quantity") }}: {{ doc.new_quantity - doc.current_quantity }}</Message>
 
-
-            <com-input type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
+            <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
                 label-placement="floating" fill="outline" mode="md"></com-input>
                 <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
 
@@ -140,6 +142,7 @@ import Message from 'primevue/message';
 import { onMounted } from 'vue';
 
 const t = window.t;
+const _app = app;
 
 const { doc, productDoc, loadData, getStockLocationProduct, onCancel, onSave } = useStockAdjustment()
 async function onScanBarcode() {
@@ -180,6 +183,7 @@ onMounted(async ()=>{
   }
 
 })
+
 
  
 </script>
