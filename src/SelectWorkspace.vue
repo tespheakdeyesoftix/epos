@@ -43,7 +43,7 @@
     </ion-content> 
     <!-- Footer -->
     <ion-footer class="footer surface-ground"> 
-      <ion-toolbar class="no-shadow h-auto mb-2"> 
+      <ion-toolbar class="no-shadow h-auto mb-2 pt-2"> 
         <ion-buttons class="language-buttons">
           <ion-button v-for="(l, index) in languages" :key="index" @click="changeLanguage(l.lang)" :color="l.lang == locale?'danger':'default'" >
             <ion-icon :src="l.icon" slot="start" />
@@ -238,7 +238,7 @@ onIonViewWillEnter(() => {
 
 .footer {
   --background: transparent; /* No background */
-  /* height: 123px; */
+  height: 100px;
   box-shadow: none;           /* No shadow */
   
 }

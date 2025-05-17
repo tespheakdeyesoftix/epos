@@ -43,7 +43,7 @@ watch(() => route.meta.title, (newTitle) => {
 });
 watch(() => isAuthenticated.value, async (newValue,oldValue) => {
 if(newValue){
-  alert("do me")
+ 
     await getSetting()
    
 }

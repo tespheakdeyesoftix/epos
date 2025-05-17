@@ -11,6 +11,12 @@
         style="height: calc(-329.5px + 100vh);background:url(/assets/pettern1.png)">
         <div class="py-2 px-3 mt-3" style="height: fit-content;">
           <div class="grid">
+            <ion-button class="col-6 m-0" routerLink="/dashboard">
+              <div class="flex flex-column justify-center align-items-center py-2">
+                <ion-icon class="text-6xl mb-2" :icon="gridOutline" slot="start"></ion-icon>
+                {{ t("Dashboard") }}
+              </div>
+            </ion-button>
             <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
@@ -52,7 +58,7 @@ import {
   IonIcon,
   useIonRouter,
 } from '@ionic/vue';
-import { cartOutline, logOutOutline, timeOutline, cubeOutline } from 'ionicons/icons';
+import { cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline } from 'ionicons/icons';
 const t = window.t;
 const { logout } = useAuth();
 
