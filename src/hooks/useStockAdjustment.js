@@ -61,10 +61,11 @@ export function useStockAdjustment(props = null) {
     const res = await app.createDoc("Single Product Adjustment",doc.value)
 
     if (res.data){
-       
+      await app.submitDoc(res.data);
       onCancel();
       doc.value.stock_location = res.data.stock_location;
     }
+    app.router.replace("/stock-adjustment")
     await loading.dismiss();
   }
 

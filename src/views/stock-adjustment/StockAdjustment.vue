@@ -1,6 +1,9 @@
 <template>
     <ion-page>
-        <ToolBar>{{ t("Stock Adjustment") }}</ToolBar>
+        <ToolBar>{{ t("Stock Adjustment") }}
+
+       
+        </ToolBar>
         <ion-content class="ion-padding">
         
             <div class="product-select-with-scan">
@@ -11,6 +14,7 @@
       docType="Product"
       v-model="selectedProduct"
       @onSelected="onSelectProduct"
+      :filters="[['is_inventory_product','=',1],['disabled','=',0]]"
     >
     <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
     <ion-text class="text-search" v-if="!productDoc?.product_name_en"  > Search By Product Name ... </ion-text>
@@ -123,6 +127,7 @@ import { scan, search, storefront, storefrontOutline } from 'ionicons/icons';
 import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
  
 import Message from 'primevue/message';
+import { onMounted } from 'vue';
 
 const t = window.t;
 
@@ -156,6 +161,15 @@ async function onSelectProduct(data){
     await loadData();
 }
 
+
+onMounted(async ()=>{
+   
+  if(app.route.params.product_code){
+    doc.value.product_code = app.route.params.product_code
+    await loadData();
+  }
+
+})
 
  
 </script>

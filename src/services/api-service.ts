@@ -114,6 +114,20 @@ export function createDoc(DocType: string,params:any) {
   });
 }
 
+export function submitDoc(doc:any) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+
+    return db.submit(doc)
+  .then((doc) =>({ data: doc, error: null }))
+  .catch((error) => {
+    handleErrorMessage(error);
+    return { data: null, error }
+  });
+}
+
 
 export function updateDoc(DocType: string,name:string,params:any) {
     if (!frappe) {

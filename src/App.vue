@@ -25,9 +25,14 @@ const ionRouter = useIonRouter();
   const title = ref(route.meta.title || 'ePOS');
   const hideTab = ref(false);
 
+  import { useRouter } from 'vue-router';
+ 
+const router = useRouter();
+
   // set ion router to app so it easy to access from compoennty
   app.setIonRouter(ionRouter)
   app.setRoute(route)
+  app.setRouter(router)
  
   // Watch for route changes and update the title
   watch(() => route.meta.title, (newTitle) => {
