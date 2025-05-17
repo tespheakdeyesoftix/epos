@@ -92,7 +92,7 @@ const onLogout = async () => {
   font-weight: bold;
   --background: #8F87F1;
 }
-.menu-list ion-button:nth-child(4) {
+.menu-list ion-button:last-child {
   --border-radius: 1rem;
   font-weight: bold;
   --background: #E52020;

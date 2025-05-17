@@ -10,45 +10,37 @@
             <ion-item :button="true">
                 <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
                 <ion-label>{{ selectedPOSProfile }} </ion-label>
-                <ion-button shape="round" size="default" fill="clear" color="secondary" @click="onChangePOSProfile">{{
+                <ion-button shape="round" size="small" style="--background: #3D8D7A;" @click="onChangePOSProfile">{{
                     t("Change Profile")
-                    }}</ion-button>
+                }}</ion-button>
             </ion-item>
-            <div v-if="data?.table_groups" class="ion-padding">
+            <div v-if="data?.table_groups" class="ion-padding table-plan-select">
                 <ion-segment mode="ios" v-model="selectedTableGroup" :value="selectedTableGroup" class="mb-2">
-
                     <ion-segment-button v-for="(g, index) in tableGroups" :key="index" :value="g.group"
                         :content-id="g.id">
                         <ion-label>{{ g.group }}</ion-label>
-                    </ion-segment-button>
-
-
-
+                    </ion-segment-button> 
                 </ion-segment>
-                <ion-segment-view>
-
-                    <ion-segment-content v-for="(g, index) in tableGroups" :key="'content_' + index" :id="g.id">
-
-                        <ion-button @click="onTableClick(t, $event)" size="large"
-                            :style="{ '--background': t.background }" v-for="(t, index) in g.tables"
-                            :key="'tbl_' + index">
-
-                            {{ t.tbl_number }} <ion-badge color="danger" v-if="t.sales && t.sales.length > 0">{{
-                                t.sales.length }}</ion-badge>
-
-                            <ComCurrency :value="t.total_amount" v-if="t.total_amount" />
-
-                        </ion-button>
-
-
-                    </ion-segment-content>
-
+                <ion-segment-view class="pt-3"> 
+                    <ion-segment-content v-for="(g, index) in tableGroups" :key="'content_' + index" :id="g.id"> 
+                        <div class="flex flex-wrap">
+                            <div class="relative" v-for="(t, index) in g.tables" :key="'tbl_' + index">
+                                <ion-button @click="onTableClick(t, $event)" size="large" shape="round"
+                                    :style="{ '--background': t.background }" class="table__button">  
+                                    {{ t.tbl_number }}{{t?.total_amount?'-':''}}
+                                    <ComCurrency :value="t.total_amount" v-if="t.total_amount" />    
+                                </ion-button> 
+                                <div class="sale-length">
+                                    <ion-badge color="danger" mode="ios" v-if="t.sales && t.sales.length > 0">
+                                        {{t.sales.length }}
+                                    </ion-badge> 
+                                </div>
+                            </div>
+                        </div>
+                    </ion-segment-content> 
                 </ion-segment-view>
-            </div>
-
-
-            <!-- change outlet modal -->
-
+            </div> 
+            <!-- change outlet modal --> 
         </ion-content>
     </ion-page>
 </template>
@@ -61,6 +53,7 @@ import { storefrontOutline } from 'ionicons/icons';
 
 import ComChangePOSProfile from "@/views/pending_order/components/ComChangePOSProfile.vue"
 import ComSelectSaleOrder from "@/views/pending_order/components/ComSelectSaleOrder.vue"
+import Stack from '../components/public/Stack.vue';
 
 const t = window.t;
 const data = ref([])
