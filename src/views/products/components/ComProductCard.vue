@@ -1,5 +1,5 @@
 <template>
-    <ion-card class="ion-no-margin mb-3" button :routerLink="'/add-product/' + data.name">
+    <ion-card class="ion-no-margin mb-3 product-item-card" button :routerLink="'/add-product/' + data.name">
         <ion-item lines="none">
             <!-- Avatar -->
             <ion-avatar>
@@ -42,35 +42,4 @@ import { useRoute } from "vue-router";
 import { getAvatarLetter } from "@/helpers/utils"
 import dayjs from "dayjs";
 const t = window.t;
-</script>
-
-<style scoped>
-.card-title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: 4px;
-    padding-left: 10px;
-}
-
-.card-subtitle {
-    font-size: 0.875rem;
-    margin: 0;
-    padding-left: 10px;
-    line-height: 1.4;
-}
-
-
-.amount-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    min-width: 70px;
-}
-
-.amount {
-    font-weight: bold;
-    font-size: 1rem;
-    
-    text-align: right;
-}
-</style>
+</script> 
