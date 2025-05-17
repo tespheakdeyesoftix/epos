@@ -17,8 +17,8 @@
 
         </ComSelect>
         <!-- Scan Button -->
-        <ion-button @click="onScanBarcode">
-          <ion-icon slot="icon-only" :icon="scan"></ion-icon>
+        <ion-button  @click="onScanBarcode">
+          <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
         </ion-button>
       </div>
       <div class="relative fixed-input mt-2">
@@ -38,7 +38,15 @@
         </div>
       </div>
       <ion-card v-if="productDoc" class="mt-3 m-0">
-        <Img v-if="productDoc?.photo" class="max-image" :src="productDoc?.photo" />
+        <div v-if="productDoc?.photo" class="flex justify-content-center m-2">
+  <Img
+    v-if="productDoc?.photo"
+     class="w-full h-full object-cover max-image"
+    :src="productDoc.photo"
+    :key="productDoc.photo"
+  />
+</div>
+
         <ion-card-header class="pb-1 pt-3 px-3">
           <div>
             <strong>{{ productDoc?.product_name_en }}</strong>
@@ -81,44 +89,31 @@
           </ion-item>
   </ion-card-content>
 </ion-card>
-<ion-card v-if="productDoc" class="mt-3 m-0">
+<ion-card v-if="doc.stock_location" class="mt-3 m-0">
 <ion-card-content>
-            <stack class="pt-3" gap="20px" v-if="doc.product_code">
+            <stack class="pt-3" gap="10px" v-if="doc.product_code">
             
             <com-input type="number" :label="t('New Quantity')"
              :placeholder="t('New Quantity')" v-model="doc.new_quantity"
-                label-placement="floating" fill="outline"  ></com-input>
+                label-placement="floating" fill="outline" mode="md"  ></com-input>
 
                 <Message severity="info" v-if="(doc.new_quantity - doc.current_quantity)!=0" >{{ t("Different Quantity") }}: {{ doc.new_quantity - doc.current_quantity }}</Message>
 
 
             <com-input type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
-                label-placement="floating" fill="outline"></com-input>
+                label-placement="floating" fill="outline" mode="md"></com-input>
                 <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
 
             
                
           <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
           :value="doc.note"
-          @ionInput="e => doc.note = e.target.value"></ion-textarea>
+          @ionInput="e => doc.note = e.target.value" mode="md"></ion-textarea>
         </stack>
 
         </ion-card-content>
       </ion-card>
-      <ion-card v-if="productDoc" class="mt-3 m-0">
-      <ion-card-content>
-        <stack class="pt-3" gap="20px" v-if="doc.product_code">
-         
-<ion-input type="Number" :label="t('New Quantity')" :placeholder="t('New Quantity')" v-model="doc.new_quantity"
-  label-placement="floating" fill="outline"></ion-input>
-
-<ion-input type="Number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
-  label-placement="floating" fill="outline"></ion-input>
-
-<ion-textarea fill="outline" label="Note" label-placement="floating" rows="5" v-model="doc.note"></ion-textarea>
-</stack>
-      </ion-card-content>
-      </ion-card>
+    
       
 
     </ion-content>
@@ -222,7 +217,8 @@ async function onSelectProduct(data) {
 }
 
 .max-image {
-  max-height: 100px;
+  max-height: 150px;
+  object-fit: contain;
 }
 
 .label-text {
