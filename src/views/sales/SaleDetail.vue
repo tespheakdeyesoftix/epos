@@ -44,17 +44,17 @@
                             <h2 class="card-subtitle">{{d.quantity}} x <com-currency :value="d.price"/></h2>
                             <h2 v-if="d.modifiers && !d.is_timer_product" class="card-subtitle">{{d.modifiers}} (<com-currency :value="d.modifiers_price * d.quantity"/>)</h2>
                              
-                            <h2 class="card-subtitle" v-if="d.time_in || d.time_out">
-                                <ion-icon :icon="timeOutline"></ion-icon> {{ dayjs(d.time_in).format('hh:mm A') }} {{d?.time_out?'-':''}} {{ dayjs(d.time_out).format('hh:mm A') }}
+                            <h2 class="card-subtitle flex align-items-center gap-1" v-if="d.time_in || d.time_out">
+                                <ion-icon size="small" :icon="timeOutline"></ion-icon> {{ dayjs(d.time_in).format('hh:mm A') }} {{d?.time_out?'-':''}} {{ dayjs(d.time_out).format('hh:mm A') }}
                             </h2> 
-                            <h2 class="card-subtitle" v-else>
-                                <ion-icon :icon="timeOutline" ></ion-icon> {{ dayjs(d.creation).format('hh:mm:ss A') }}
+                            <h2 class="card-subtitle flex align-items-center gap-1" v-else>
+                                <ion-icon size="small" :icon="timeOutline" ></ion-icon> {{ dayjs(d.creation).format('hh:mm:ss A') }}
                             </h2>
                         </ion-label>
-                        <div slot="end" class="amount-container">
-                            <div class="amount"><com-currency :value="d?.price" />
-                            </div>
-                        </div>
+                        <ion-label slot="end" class="amount-container flex flex-column align-items-center">
+                            <div class="amount"><com-currency :value="d?.price" /></div>
+                            <ion-chip color="primary">{{ d.quantity }}</ion-chip>
+                        </ion-label>
                     </ion-item> 
                 </ion-card>
             </template>
@@ -99,19 +99,10 @@ onMounted(async () => {
     margin: 0;
     padding-left: 10px;
     line-height: 1.4;
-}
-
-.amount-container {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    /* min-width: 70px; */
-}
-
+} 
 .amount {
     font-weight: bold;
-    font-size: 1rem;
-    
+    font-size: 1.1rem;
     text-align: right;
 }
 </style>
