@@ -2,7 +2,8 @@
  
   <ion-input v-bind="$attrs" 
                      ref="ionInputRef"
-                     v-model="model"
+                    :value="model"
+                    @ionInput="onInput"
                    >
                    <ion-button v-if="type=='BarcodeScanerInput'" @click="onScanBarcode"  fill="clear" slot="end" aria-label="Show/hide">
                      <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
@@ -41,6 +42,15 @@ nativeInput?.select()
 }
 })
 
+function onInput($event){
+  
+ if(props.type === "number"){
+  model.value = Number($event.detail.value)
+ }else {
+  model.value = $event.detail.value
+ }
+}
+
 
 
 async function onScanBarcode() {
@@ -52,6 +62,9 @@ async function onScanBarcode() {
     }
   })
   if (result) {
+    if(props.type == "number"){
+      model.value = Number(result)
+    }
     model.value = result
     emit("onBarcodeChange")
   }

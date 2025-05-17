@@ -79,6 +79,29 @@
               <ion-text class="value-text ellipsis-text">{{ doc?.current_cost }}</ion-text>
             </ion-label>
           </ion-item>
+  </ion-card-content>
+</ion-card>
+<ion-card v-if="productDoc" class="mt-3 m-0">
+<ion-card-content>
+            <stack class="pt-3" gap="20px" v-if="doc.product_code">
+            
+            <com-input type="number" :label="t('New Quantity')"
+             :placeholder="t('New Quantity')" v-model="doc.new_quantity"
+                label-placement="floating" fill="outline"  ></com-input>
+
+                <Message severity="info" v-if="(doc.new_quantity - doc.current_quantity)!=0" >{{ t("Different Quantity") }}: {{ doc.new_quantity - doc.current_quantity }}</Message>
+
+
+            <com-input type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
+                label-placement="floating" fill="outline"></com-input>
+                <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
+
+            
+               
+          <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+          :value="doc.note"
+          @ionInput="e => doc.note = e.target.value"></ion-textarea>
+        </stack>
 
         </ion-card-content>
       </ion-card>
@@ -115,18 +138,20 @@
 </template>
 <script setup>
 import { scan, search, storefront, storefrontOutline } from 'ionicons/icons';
-
-import InputText from 'primevue/inputtext';
-
-import { useStockAdjustment } from "@/hooks/useStockAdjustment.js"
+import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
+ 
+import Message from 'primevue/message';
 
 const t = window.t;
 
 const { doc, productDoc, loadData, getStockLocationProduct, onCancel, onSave } = useStockAdjustment()
 async function onScanBarcode() {
   const result = await app.onScanBarcode();
-  doc.value.product_code = result
-  await loadData();
+  if(result){
+    doc.value.product_code = result
+    await loadData();
+  }
+  
 
 }
 
