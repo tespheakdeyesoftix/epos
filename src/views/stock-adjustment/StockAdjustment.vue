@@ -13,10 +13,10 @@
       @onSelected="onSelectProduct"
     >
     <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
-    <ion-text class="text-search" v-if="!productDoc.product_name_en"  > Search By Product Name ... </ion-text>
-    <ion-text class="text-search" v-else  > {{ productDoc.product_code }} -   {{ productDoc.product_name_en.length > 30 
-      ? productDoc.product_name_en.slice(0, 30) + '...' 
-      : productDoc.product_name_en }} </ion-text>
+    <ion-text class="text-search" v-if="!productDoc?.product_name_en"  > Search By Product Name ... </ion-text>
+    <ion-text class="text-search" v-else  > {{ productDoc?.product_code }} -   {{ productDoc?.product_name_en.length > 30 
+      ? productDoc?.product_name_en.slice(0, 30) + '...' 
+      : productDoc?.product_name_en }} </ion-text>
     
     </ComSelect>
     <!-- Scan Button -->
@@ -42,7 +42,7 @@
             <ion-card class="card-style">
   <ion-card-header>
     <div>
-         <strong>{{productDoc.product_name_en}}</strong> 
+         <strong>{{productDoc?.product_name_en}}</strong> 
     </div>
   </ion-card-header>
 
@@ -50,34 +50,34 @@
     <ion-item lines="none" class="product-row ion-no-padding">
   <ion-label class="col-label">
     <ion-text class="label-text" color="medium">Code</ion-text>
-    <ion-text class="value-text">{{ productDoc.product_code }}</ion-text>
+    <ion-text class="value-text">{{ productDoc?.product_code }}</ion-text>
   </ion-label>
 
   <ion-label class="col-label ion-text-end">
     <ion-text class="label-text" color="medium">Name Kh</ion-text>
-    <ion-text class="value-text ellipsis-text">{{ productDoc.product_name_kh }}</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc?.product_name_kh }}</ion-text>
   </ion-label>
 </ion-item>
 <ion-item lines="none" class="product-row ion-no-padding">
   <ion-label class="col-label">
     <ion-text class="label-text" color="medium">Product Category</ion-text>
-    <ion-text class="value-text">{{ productDoc.product_category }}</ion-text>
+    <ion-text class="value-text">{{ productDoc?.product_category }}</ion-text>
   </ion-label>
 
   <ion-label class="col-label ion-text-end">
     <ion-text class="label-text" color="medium">Unit</ion-text>
-    <ion-text class="value-text ellipsis-text">{{ productDoc.unit }}</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc?.unit }}</ion-text>
   </ion-label>
 </ion-item>
 <ion-item lines="none" class="product-row ion-no-padding">
   <ion-label class="col-label">
     <ion-text class="label-text" color="medium">Current Quantity</ion-text>
-    <ion-text class="value-text">{{ doc.current_quantity }}</ion-text>
+    <ion-text class="value-text">{{ doc?.current_quantity }}</ion-text>
   </ion-label>
 
   <ion-label class="col-label ion-text-end">
     <ion-text class="label-text" color="medium">Unit</ion-text>
-    <ion-text class="value-text ellipsis-text">{{ productDoc.unit }}</ion-text>
+    <ion-text class="value-text ellipsis-text">{{ productDoc?.unit }}</ion-text>
   </ion-label>
 </ion-item>
 
