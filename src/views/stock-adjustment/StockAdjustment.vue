@@ -7,15 +7,18 @@
       <div class="product-select-with-scan">
         <!-- Custom Select -->
 
-        <ComSelect csClass="search-by-product" ref="productSelect" docType="Product" v-model="selectedProduct"
-          :filters="[['is_inventory_product','=',1],['disabled','=',0]]"
+        <ComSelect csClass="search-by-product justify-content-between" ref="productSelect" docType="Product" v-model="selectedProduct"
           @onSelected="onSelectProduct">
-          <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
-          <ion-text class="text-search" v-if="!productDoc?.product_name_en"> Search By Product Name ... </ion-text>
-          <ion-text class="text-search" v-else> {{ productDoc?.product_code }} - {{ productDoc?.product_name_en.length >
+          <div class="flex align-item-center">
+            <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
+          <ion-text class="text-search" v-if="!productDoc?.product_name_en">
+            {{ t('Search By Product Name') }}</ion-text>
+          <ion-text class="text-black text-sm ml-2" v-else> {{ productDoc?.product_code }} - {{ productDoc?.product_name_en.length >
             30
             ? productDoc?.product_name_en.slice(0, 30) + '...'
             : productDoc?.product_name_en }} </ion-text>
+          </div>
+         
  <ion-button fill="clear"  @click.stop="onScanBarcode">
           <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
         </ion-button>
@@ -25,14 +28,13 @@
       </div>
       <div class="relative fixed-input mt-2">
         <div>
-          <ComSelect csClass="search-by-product
-                    " docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog"
+          <ComSelect csClass="search-by-product" docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog"
             @onSelected="onSelectWarehouse">
             <ion-icon class="magin-right" slot="icon-only" :icon="storefrontOutline"></ion-icon>
             <span v-if="!doc?.stock_location" class=" text-search">
               {{ t('Pleas Select Stock Location') }}
             </span>
-            <span class=" text-search">
+            <span class="text-black text-sm ml-2">
               {{ doc?.stock_location }}
             </span>
 
@@ -58,23 +60,23 @@
         <ion-card-content>
           <ion-item lines="none" class="product-row ion-no-padding">
             <ion-label class="col-label">
-              <ion-text class="label-text" color="medium">Code</ion-text>
+              <ion-text class="label-text" color="medium">{{ $t('Code') }} </ion-text>
               <ion-text class="value-text">{{ productDoc?.product_code }}</ion-text>
             </ion-label>
 
             <ion-label class="col-label ion-text-end">
-              <ion-text class="label-text" color="medium">Name Kh</ion-text>
+              <ion-text class="label-text" color="medium">{{ $t('Name Kh') }} </ion-text>
               <ion-text class="value-text ellipsis-text">{{ productDoc?.product_name_kh }}</ion-text>
             </ion-label>
           </ion-item>
           <ion-item lines="none" class="product-row ion-no-padding">
             <ion-label class="col-label">
-              <ion-text class="label-text" color="medium">Product Category</ion-text>
+              <ion-text class="label-text" color="medium">{{ $t('Product Category') }}</ion-text>
               <ion-text class="value-text">{{ productDoc?.product_category }}</ion-text>
             </ion-label>
 
             <ion-label class="col-label ion-text-end">
-              <ion-text class="label-text" color="medium">Unit</ion-text>
+              <ion-text class="label-text" color="medium">{{ $t('Unit') }}</ion-text>
               <ion-text class="value-text ellipsis-text">{{ productDoc?.unit }}</ion-text>
             </ion-label>
           </ion-item>
@@ -109,7 +111,7 @@
 
             
                
-          <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+          <ion-textarea fill="outline" :label="$t('Note')" label-placement="floating" rows="5"
           :value="doc.note"
           @ionInput="e => doc.note = e.target.value" mode="md"></ion-textarea>
         </stack>
@@ -140,6 +142,7 @@ import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
  
 import Message from 'primevue/message';
 import { onMounted } from 'vue';
+import ComCurrency from '../components/public/ComCurrency.vue';
 
 const t = window.t;
 const _app = app;
