@@ -1,56 +1,7 @@
 <template>
-    <ion-page>
-        <ToolBar>{{ t("Stock Adjustment") }}
-
-       
-        </ToolBar>
-        <ion-content class="ion-padding">
-        
-            <div class="product-select-with-scan">
-    <!-- Custom Select -->
- 
-        <ComSelect  csClass="search-by-product" 
-      ref="productSelect"
-      docType="Product"
-      v-model="selectedProduct"
-      @onSelected="onSelectProduct"
-      :filters="[['is_inventory_product','=',1],['disabled','=',0]]"
-    >
-    <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
-    <ion-text class="text-search" v-if="!productDoc?.product_name_en"  > Search By Product Name ... </ion-text>
-    <ion-text class="text-search" v-else  > {{ productDoc?.product_code }} -   {{ productDoc?.product_name_en.length > 30 
-      ? productDoc?.product_name_en.slice(0, 30) + '...' 
-      : productDoc?.product_name_en }} </ion-text>
-    
-    </ComSelect>
-    <!-- Scan Button -->
-    <ion-button @click="onScanBarcode">
-      <ion-icon slot="icon-only" :icon="scan"></ion-icon>
-    </ion-button>
-  </div>
-        <div class="relative fixed-input margin-top-10">
-                <div >
-                    <ComSelect csClass="search-by-product
-                    " docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog" @onSelected="onSelectWarehouse">
-                    <ion-icon class="magin-right" slot="icon-only" :icon="storefrontOutline"></ion-icon>
-                    <span v-if="!doc?.stock_location" class=" text-search">
-  {{ t('Pleas Select Stock Location') }}
-</span>
-                    <span class=" text-search">
-  {{ doc?.stock_location }}
-</span>
-                  
-                    </ComSelect>
-                </div>
-            </div> 
-            <ion-card class="card-style">
-  <ion-card-header>
-    <div>
-         <strong>{{productDoc?.product_name_en}}</strong> 
-    </div>
-  </ion-card-header>
   <ion-page>
-    <ToolBar>{{ t("Stock Adjustment") }}</ToolBar>
+    <ToolBar>{{ t("Stock Adjustment") }}
+    </ToolBar>
     <ion-content class="ion-padding">
 
       <div class="product-select-with-scan">
@@ -64,12 +15,12 @@
             30
             ? productDoc?.product_name_en.slice(0, 30) + '...'
             : productDoc?.product_name_en }} </ion-text>
-
-        </ComSelect>
-        <!-- Scan Button -->
-        <ion-button  @click="onScanBarcode">
+ <ion-button fill="clear"  @click.stop="onScanBarcode">
           <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
         </ion-button>
+        </ComSelect>
+        <!-- Scan Button -->
+       
       </div>
       <div class="relative fixed-input mt-2">
         <div>
@@ -231,7 +182,6 @@ onMounted(async ()=>{
 })
 
  
-
 </script>
 <style scoped>
 .product-select-with-scan {
