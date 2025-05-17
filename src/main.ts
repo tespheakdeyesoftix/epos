@@ -101,6 +101,7 @@ import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
 import ComCurrency from '@/views/components/public/ComCurrency.vue';
+import ComPopOver from '@/views/components/public/ComPopOver.vue';
 import ComNumber from '@/views/components/public/ComNumber.vue';
 import ComStatus from '@/views/components/public/ComStatus.vue';
 import BaseModal from '@/views/components/BaseModal.vue';
@@ -216,6 +217,7 @@ async function init() {
 
   app.component('Img',Img)
   app.component('ComCurrency',ComCurrency)
+  app.component('ComPopOver',ComPopOver)
   app.component('ComNumber',ComNumber)
   app.component('DocList',DocList)
   app.component('Document',Document)

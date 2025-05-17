@@ -75,6 +75,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/stock-adjustment/StockAdjustment.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/stock-adjustment-history",
+    component: () => import('@/views/stock-adjustment/StockAdjustmentHistory.vue'),
+    meta: { requiresAuth: true }
+  },
 
   {
     path: "/help",

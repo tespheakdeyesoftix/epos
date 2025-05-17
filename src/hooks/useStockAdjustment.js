@@ -51,6 +51,8 @@ export function useStockAdjustment(props = null) {
           doc.value.current_quantity = 0
           doc.value.current_cost = 0
           doc.value.new_cost= 0
+          doc.value.new_quantity = 0
+          doc.value.new_cost= 0
         }
       }
      
@@ -64,6 +66,7 @@ export function useStockAdjustment(props = null) {
       await app.submitDoc(res.data);
       onCancel();
       doc.value.stock_location = res.data.stock_location;
+      app.showSuccess(window.t("Update successfully"))
     }
     app.router.replace("/stock-adjustment")
     await loading.dismiss();
@@ -76,7 +79,7 @@ export function useStockAdjustment(props = null) {
       current_quantity:0,
       new_quantity:0
     }
- productDoc.value = {}
+ productDoc.value = null
   }
 
   return {

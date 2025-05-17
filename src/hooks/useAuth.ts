@@ -20,7 +20,6 @@ export function  useAuth(router:any = null) {
  
 
  async function login(data: any) {
-     
     try {
       const options = {
         url: data.api_url + "api/method/epos_restaurant_2023.api.auth.login",
@@ -37,11 +36,10 @@ export function  useAuth(router:any = null) {
         handleErrorMessage(response.data)
         throw new Error( response.data);
       }
-
       currentUser.value =  response.data.message;
-      isAuthenticated.value = true;
       window.storageService.setItem("current_user",JSON.stringify(currentUser.value));
- 
+      setFrappeAppUrl(data.api_url);
+      isAuthenticated.value = true;
      
       return { data: response.data.message, error: null };  // Return data if successful
     } catch (error) {

@@ -1,12 +1,25 @@
 <template>
   <ion-page>
     <ToolBar>{{ t("Stock Adjustment") }}
+      <template #end>
+        
+        <ComPopOver >
+          <ion-button >
+          <ion-icon :icon="ellipsisVertical" slot="icon-only" />
+        </ion-button>
+        <template #content="{close }">
+          <ion-list>
+        <ion-item   button :router-link="'/stock-adjustment-history'" @click="close" >
+          {{ t("Stock Adjustment History")  }}
+        </ion-item>
+      </ion-list>
+        </template>
+        </ComPopOver>
+      </template>
     </ToolBar>
     <ion-content class="ion-padding">
-
       <div class="product-select-with-scan">
         <!-- Custom Select -->
-
         <ComSelect csClass="search-by-product justify-content-between" ref="productSelect" docType="Product" v-model="selectedProduct"
           @onSelected="onSelectProduct">
           <div class="flex align-item-center">
@@ -93,7 +106,7 @@
           </ion-item>
   </ion-card-content>
 </ion-card>
-<ion-card v-if="doc.stock_location" class="mt-3 m-0">
+<ion-card v-if="doc.stock_location && doc.product_code" class="mt-3 m-0">
 <ion-card-content>
             <stack class="pt-3" gap="10px" v-if="doc.product_code">
             
@@ -142,8 +155,8 @@ import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
  
 import Message from 'primevue/message';
 import { onMounted } from 'vue';
-import ComCurrency from '../components/public/ComCurrency.vue';
-
+ 
+import { ellipsisVertical,timeOutline  } from 'ionicons/icons'
 const t = window.t;
 const _app = app;
 
