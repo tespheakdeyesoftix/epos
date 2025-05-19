@@ -76,7 +76,8 @@ const t = window.t;
 
 
 const { previewUrl, handleFileChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation, resetDoc,
-  onRemovefile, router
+  onRemovefile, router,
+  onDelete
 } = useAddProduct();
 navigation.value = ionRouter
 router.value = vue_router;

@@ -146,6 +146,20 @@ async function onProductCodeChange(){
   
 }
 
+
+async function onDelete(){
+  const isConfirm = await app.onConfirm()
+  
+  if(!isConfirm) return ;
+
+  const l = await app.showLoading()
+  const res = await app.deleteDoc("Product",doc.value.name);
+  if(res.data){
+    app.router.back();
+  }
+  await l.dismiss();
+}
+
 export function useAddProduct(props = null) {
   return {
     previewUrl,
@@ -159,7 +173,8 @@ export function useAddProduct(props = null) {
     onSave,
     loadDoc,
     handleFileChange,
-    resetDoc
+    resetDoc,
+    onDelete
 
   }
 

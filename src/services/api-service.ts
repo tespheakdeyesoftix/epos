@@ -99,6 +99,20 @@ export function getDoc(DocType: string,DocName:string) {
   });
 }
 
+export function deleteDoc(DocType: string,DocName:string) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+
+    return db.deleteDoc(DocType, DocName)
+  .then((msg) =>({ data: msg, error: null }))
+  .catch((error) => {
+    handleErrorMessage(error);
+    return { data: null, error }
+  });
+}
+
 
 export function createDoc(DocType: string,params:any) {
     if (!frappe) {
