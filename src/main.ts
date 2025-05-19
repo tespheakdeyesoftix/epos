@@ -7,7 +7,23 @@ import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
 import debounce from '@/directives/debounce.js'
-import { setFrappeAppUrl } from '@/services/api-service';
+import VueECharts from 'vue-echarts'
+import { use } from 'echarts/core'
+import {
+  CanvasRenderer
+} from 'echarts/renderers'
+import {
+  BarChart,
+  LineChart,
+  PieChart
+} from 'echarts/charts'
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  LegendComponent
+} from 'echarts/components'
+
 
 
 import Aura from '@primeuix/themes/aura';
@@ -138,6 +154,21 @@ window.openModal = ( props:object) =>openModal(props);
 const  {checkUserLogin,isAuthenticated} = useAuth(router);
 const {getSetting} = useApp()
 
+
+use([
+  CanvasRenderer,
+  BarChart,
+  LineChart,
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  LegendComponent
+])
+
+
+
+
 const app = createApp(App)
 .use(IonicVue)
 
@@ -229,6 +260,8 @@ async function init() {
   app.directive('longPress', longPress);
   app.directive('debounce', debounce)
   app.directive('tooltip', Tooltip);
+  app.component('v-chart', VueECharts)
+
 
   await router.isReady();
   

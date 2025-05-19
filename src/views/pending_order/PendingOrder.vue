@@ -4,7 +4,7 @@
             {{ t("Pending Order") }}
         </AppBar>
         <ion-content>
-            <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
+            <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
             <ion-item :button="true">
@@ -44,16 +44,15 @@
         </ion-content>
     </ion-page>
 </template>
-<script setup lang="ts">
+<script setup>
 import { computed, onMounted, ref } from 'vue';
 import { IonLabel, IonSegment, IonSegmentButton, IonSegmentContent, IonSegmentView } from '@ionic/vue';
 import { useApp } from "@/hooks/useApp"
 const { currentProperty } = useApp()
 import { storefrontOutline } from 'ionicons/icons';
-
 import ComChangePOSProfile from "@/views/pending_order/components/ComChangePOSProfile.vue"
 import ComSelectSaleOrder from "@/views/pending_order/components/ComSelectSaleOrder.vue"
-import Stack from '../components/public/Stack.vue';
+ 
 
 const t = window.t;
 const data = ref([])
@@ -68,7 +67,7 @@ const tableGroups = computed(() => {
     return data.value?.table_groups;
 })
 
-const onRefreshData = async (event: CustomEvent) => {
+const onRefreshData = async (event) => {
     await getData();
     event.target.complete();
 

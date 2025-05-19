@@ -6,8 +6,8 @@
       <ion-card style="border-radius: 20px; display: flex; flex-direction: column; align-items: center;">
         <ion-card-content>
           <div style="display: flex; justify-content: center; align-items: center;">
-            <template v-if="currentUser.photo">
-              <Img :src="currentUser.photo" width="150" style="border-radius: 50%;" />
+            <template v-if="currentUser?.photo">
+              <Img :src="currentUser?.photo" :width="150" style="border-radius: 50%;" />
             </template>
             <template v-else>
               <ion-avatar style="width: 150px; height: 150px; background: lightgray; display: flex; justify-content: center; align-items: center; border-radius: 50%;">

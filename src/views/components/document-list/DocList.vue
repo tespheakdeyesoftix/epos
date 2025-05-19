@@ -1,5 +1,5 @@
 <template>
-    <ion-refresher slot="fixed" @ionRefresh="onRefreshData($event)">
+    <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
@@ -84,7 +84,7 @@
     </template>
 
 </template>
-<script setup lang="ts">
+<script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import dayjs from 'dayjs';
@@ -129,17 +129,15 @@ watch(() => props.options, async (newVal, oldVal) => {
 }, { deep: true })
 
 
-const onRefreshData = async (event: CustomEvent) => {
-    await onRefresh(event)
-    if (attrs.onOnRefresh) {
-        emit("onRefresh", event)
-    } else {
-        event.target.complete();
-    }
-
-
-
+const onRefreshData = async (event) => {
+  await onRefresh(event);
+  if (attrs.onOnRefresh) {
+    emit("onRefresh", event);
+  } else {
+    event.target.complete();
+  }
 };
+
 
 
 function onRowDblClick(event) {

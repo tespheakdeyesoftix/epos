@@ -1,10 +1,10 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
-import { getApi, getDoc,updateDoc,createDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import { showToast,showLoading, openModal,openPopOver,onScanBarcode,getNumber } from '@/helpers/utils';
+import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
+import { showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber } from '@/helpers/utils';
 import { ref } from 'vue';
 import { set } from 'lodash';
-
+ 
 let ionRouter = ref();
 
 // Ensure the namespace exists
@@ -18,6 +18,10 @@ globalThis.app.getDoc =  async function (DocType,DocName) {
 
 globalThis.app.createDoc =  async function (DocType,params) {
   return await createDoc(DocType,params)
+}
+
+globalThis.app.deleteDoc =  async function (DocType,DocName) {
+  return await deleteDoc(DocType,DocName)
 }
 
 globalThis.app.updateDoc =  async function (DocType,name,params) {
@@ -50,6 +54,12 @@ globalThis.app.submitDoc =  async function (doc) {
  
  globalThis.app.openModal =  async function (props) {
   return await openModal(props)
+}
+
+
+ globalThis.app.onConfirm =  async function (title="Confirm", message ="Are you sure you want to process this action?",options=[]) {
+  const isConfirm = await onConfirm(title,message,options);
+  return isConfirm
 }
  globalThis.app.onScanBarcode =  async function () {
   return await onScanBarcode()

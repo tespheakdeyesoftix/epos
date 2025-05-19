@@ -12,7 +12,17 @@ declare global {
       showLoading(message: string): void;
       openModal(props:object): void;
     }
+
+    interface GlobalThis {
+      app: AppNamespace;
+    }
+  
+    // Allow using `app` directly
+    const app: AppNamespace;
+    
   }
+
+  
   
   export {};
   
