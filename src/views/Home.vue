@@ -36,6 +36,12 @@
                 {{ t("Pending Order") }}
               </div>
             </ion-button>
+            <!-- <ion-button class="col-6 m-0" routerLink="/sale">
+              <div class="flex flex-column justify-center align-items-center py-2">
+                <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
+                {{ t("Sale") }}
+              </div>
+            </ion-button> -->
 
             <ion-button class="col-6 m-0" @click="onLogout">
               <div class="flex flex-column justify-center align-items-center py-2">
