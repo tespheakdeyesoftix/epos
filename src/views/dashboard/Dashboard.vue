@@ -6,6 +6,7 @@
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
             <stack>
+             
                 <ComDashboardKPI :data="ctrl.kpiData" />
                 
                 <ComDashboardChart :data="ctrl.chartData" />

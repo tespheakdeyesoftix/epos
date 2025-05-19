@@ -1,4 +1,4 @@
-import {modalController,  toastController,loadingController, popoverController, PopoverOptions } from '@ionic/vue';
+import {modalController,alertController,  toastController,loadingController, popoverController, PopoverOptions } from '@ionic/vue';
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue"
 import type { Component } from 'vue';
 export function imageUrl(imageUrl:string,baseUrl:string = ""){
@@ -104,6 +104,48 @@ export async function openModal(props:any) {
     return false 
   }
   
+
+  
+export async function onConfirm( title:string="Confirm", message:string="Are you sure you want to process this action?",options:Object=[]) {
+   
+  let defaultButtons = [
+      {
+        text: window.t('Cancel'),
+        role: 'cancel',
+         
+      },
+      {
+        text: window.t('OK'),
+        role: 'confirm',
+        cssClass: 'alert-button-confirm',
+        
+      },
+    ]
+    if(options.buttons){
+      defaultButtons = options.buttons;
+    }
+    
+    const al = await alertController.create({
+        header: window.t(title),
+        subHeader:options.subHeader || "",
+        message: window.t(message),
+        buttons: defaultButtons
+      });
+  
+      await al.present();
+        const { data, role } = await al.onWillDismiss();
+       
+        if (role=="confirm"){
+          
+            return true
+        }
+        return false
+        
+        
+}
+
+
+
 
   export async function openPopOver(props:any,event?: Event) {
    
