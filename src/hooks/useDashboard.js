@@ -10,17 +10,16 @@ export function useDashboard(props = null) {
     const selectedPOSProfiles = ref([])
 
     async function getKpiData() {
-
-        
         const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.sale_kpi",
             {
                 param:
                 {
                     pos_profiles: selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
-                    business_branch:app.property_name
+                    business_branch:app.property_name,
                 }
             }
         )
+        console.log(res.data)
         if (res.data) {
             kpiData.value = res.data
         }
