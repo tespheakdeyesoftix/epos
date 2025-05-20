@@ -59,7 +59,7 @@ const getImage = async () => {
     
     const response = await CapacitorHttp.request({
       method: 'GET',
-      url: `${serverUrl}api/method/edoor.api.image_resizer.resize_image?image_path=${props.src}&width=${props.width==0?150:props.width}&height=${props.height}`
+      url: `${serverUrl}api/method/epos_restaurant_2023.api.image_resizer.resize_image?image_path=${props.src}&width=${props.width==0?150:props.width}&height=${props.height}`
     });
 
     if(response.status==200){

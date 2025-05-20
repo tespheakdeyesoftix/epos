@@ -196,7 +196,7 @@ export async function uploadFile(
                     console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
                 }
             },
-            "edoor.api.upload.upload_file"
+            "epos_restaurant_2023.api.upload.upload_file"
         )
         .then(async (result:any) =>{
             

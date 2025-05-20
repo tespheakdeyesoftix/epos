@@ -50,7 +50,7 @@ export function useApp() {
           return existingDoctype
         }
     
-        const response =await getApi("edoor.api.frontdesk.get_meta",{
+        const response =await getApi("epos_restaurant_2023.api.api.get_meta",{
           doctype:doctype
         });
         

@@ -1,11 +1,11 @@
 <template>
     <div class="px-1 mt-1">
-        <span>
-            
-            <strong>Daily Sale Chart</strong> </span>
-    <div class="mt-1 bg-green-100 border-round-lg " style="width: 100%;height: 350px;" v-if="data">
-        <v-chart :option="option" autoresize />
-    </div>
+        <ion-text color="primary" class="ion-content">
+            <h2>{{ t("Daily Sale Chart") }}</h2>
+        </ion-text>
+        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 350px;" v-if="data">
+            <v-chart :option="option" autoresize />
+        </div>
     </div>
 </template>
 
@@ -14,9 +14,8 @@ import { ref, computed } from 'vue'
 const props = defineProps({
     data: Object
 })
-
+const t = window.t;
 const option = computed(() => {
-
     if (props.data.value) {
         return {
             grid: {
@@ -40,14 +39,14 @@ const option = computed(() => {
                 {
                     data: props.data.value.map(r => r.value),
                     type: 'bar',
-                  
+
                     barWidth: '60%',
-    label: {
-      show: true,
-      position: 'top', // show label above bar
-      color: '#000',   // label text color (optional)
-      fontSize: 12     // label font size (optional)
-    }
+                    label: {
+                        show: true,
+                        position: 'top', // show label above bar
+                        color: '#000',   // label text color (optional)
+                        fontSize: 12     // label font size (optional)
+                    }
                 }
             ]
         }

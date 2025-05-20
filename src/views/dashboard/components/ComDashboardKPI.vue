@@ -1,20 +1,41 @@
 <template>
-    <div class="block mt-3">
- <ion-button id="open-modal" expand="block">Open Modal</ion-button>
-     <ion-modal ref="modal" trigger="open-modal">
-      <ion-content>
-HIIIIIIIIIIIIIIIII
-      </ion-content>
-    </ion-modal>
- 
-    <div class="grid px-2">
-      <ComCardKPI
+ <div class="ion-padding" >
+  <stack row   itemClass="col-6 xs:col-12 md:col-3 lg:col-3" equal>
+    <ComCardKPI
   mainClass="bg-blue-500"
   :icon="cashOutline"
   :isCurrency="true"
   label="Total Revenue"
   :value="data?.value?.total_revenue"
 />
+    <ComCardKPI
+  mainClass="bg-blue-500"
+  :icon="cashOutline"
+  :isCurrency="true"
+  label="Total Revenue"
+  :value="data?.value?.total_revenue"
+/>
+    <ComCardKPI
+  mainClass="bg-blue-500"
+  :icon="cashOutline"
+  :isCurrency="true"
+  label="Total Revenue"
+  :value="data?.value?.total_revenue"
+/>
+    <ComCardKPI
+  mainClass="bg-blue-500"
+  :icon="cashOutline"
+  :isCurrency="true"
+  label="Total Revenue"
+  :value="data?.value?.total_revenue"
+/>
+     
+ 
+  </stack>
+<!--   
+
+  <div class="grid px-2">
+     
  
     </div>
         <div class="grid px-2" style="margin-top: 1px;">
@@ -30,8 +51,11 @@ HIIIIIIIIIIIIIIIII
   label="Deleted Bill / QTY"
   :value="data?.value?.totale_deleted_bill + ' / ' + data?.value?.total_deleted_quantity"
 />
-    </div>
-       </div>
+    </div> -->
+  </div>
+ 
+ 
+  
 </template>
 <script setup>
 import {cashOutline, folderOpenOutline, trashBinOutline} from 'ionicons/icons';
