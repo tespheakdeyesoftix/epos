@@ -80,6 +80,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/stock-adjustment/StockAdjustmentHistory.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/sale",
+    component: () => import('@/views/sales/SaleList.vue'),
+    meta: { requiresAuth: true }
+  },
 
   {
     path: "/help",
