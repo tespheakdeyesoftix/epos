@@ -1,50 +1,13 @@
-
-<template>
-  <div>
-    <label>Select Camera:</label>
-    <select v-model="selectedDeviceId" @change="switchCamera">
-      <option
-        v-for="device in devices"
-        :key="device.deviceId"
-        :value="device.deviceId"
-      >
-        {{ device.label || 'Camera' }}
-      </option>
-    </select>
-
-    <video
-      ref="videoRef"
-      autoplay
-      muted
-      playsinline
-      style="width: 100%; margin-top: 10px"
-    ></video>
-
-    <p>Scanned Code: {{ code }}</p>
-  </div>
-</template>
-
 <script setup>
-import { BrowserMultiFormatReader   } from '@zxing/browser';
-import { BarcodeFormat, DecodeHintType } from '@zxing/library' 
+import { BrowserMultiFormatReader } from '@zxing/browser';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import beep from '/assets/beep.mp3'
-
-const hints = new Map()
-  hints.set(DecodeHintType.POSSIBLE_FORMATS, [
-    BarcodeFormat.QR_CODE,
-    BarcodeFormat.CODE_128,
-    BarcodeFormat.EAN_13,
-    
-
-  ])
-
 const videoRef = ref(null);
 const code = ref('');
 const devices = ref([]);
 const selectedDeviceId = ref(null);
 const beepSound = new Audio(beep)
-let codeReader = new BrowserMultiFormatReader(hints);
+let codeReader = new BrowserMultiFormatReader();
 let currentStream = null;
 
 const stopStream = () => {
@@ -65,9 +28,6 @@ const startScanner = async (deviceId) => {
     const constraints = {
       video: {
         deviceId: deviceId ? { exact: deviceId } : undefined,
-        facingMode: 'environment',
-    width: { ideal: 640 },
-    height: { ideal: 480 },
       }
     };
 
@@ -116,3 +76,28 @@ onBeforeUnmount(() => {
   stopStream();
 });
 </script>
+
+<template>
+  <div>
+    <label>Select Camera:</label>
+    <select v-model="selectedDeviceId" @change="switchCamera">
+      <option
+        v-for="device in devices"
+        :key="device.deviceId"
+        :value="device.deviceId"
+      >
+        {{ device.label || 'Camera' }}
+      </option>
+    </select>
+
+    <video
+      ref="videoRef"
+      autoplay
+      muted
+      playsinline
+      style="width: 100%; margin-top: 10px"
+    ></video>
+
+    <p>Scanned Code: {{ code }}</p>
+  </div>
+</template>

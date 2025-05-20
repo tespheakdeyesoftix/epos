@@ -1,7 +1,7 @@
 <template>
   <BaseModal title="Scan Barcode">
-    <ComScanBarcodeIOS v-if="isPlatform('ios')" />
-    <ComScanBarcodeAndroid v-else/>
+    <ComScanBarcodeIOS />
+    
   </BaseModal>
 </template>
 <script setup>

@@ -10,6 +10,7 @@
         <div style="height:calc(-317.5px + 100vh);background: transparent;" class="border-round-top-3xl p-3 -mt-5">
           <!-- Add Workspace Button --> 
           <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
+          <ion-button size="large" expand="full" class="add-workspace" shape="round" @click="Test">{{ t("Scan Barcode") }}</ion-button>
           <!-- Workspace List --> 
           <ion-list class="workspace-list bg-transparent">
             <ion-card
@@ -162,6 +163,10 @@ onIonViewWillEnter(() => {
     properties.value = JSON.parse(strProperties);
   }
 });
+
+function Test(){
+  app.onScanBarcode();
+}
 </script>
 
  
