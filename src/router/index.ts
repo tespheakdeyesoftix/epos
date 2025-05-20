@@ -95,8 +95,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  // history: createWebHistory(import.meta.env.VITE_BASE_URL),
-  history: createWebHistory('/eposx/'),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes
 })
 
