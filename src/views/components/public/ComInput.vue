@@ -22,7 +22,7 @@
 <script setup>
 import { IonIcon } from '@ionic/vue';
 import { scan } from 'ionicons/icons';
- import ComScanBarcode from "@/views/components/ComScanBarcode.vue"
+ import ComScanBarcode from "@/views/components/ComScanBarcodeAndroid.vue"
 import { ref } from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
