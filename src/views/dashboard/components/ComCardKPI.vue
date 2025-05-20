@@ -1,6 +1,6 @@
 <template>
-  <div :class="['col flex   align-items-center border-round-lg shadow-2', mainClass]">
-    <div class="flex border-circle p-2" style="background-color: #0000002e !important;">
+  <div :class="['col flex   align-items-center border-round-lg shadow-2 gap-2 h-full', mainClass]">
+    <div class="flex border-circle p-2 " style="background-color: #0000002e !important;">
       <ion-icon :icon="icon" class="text-xl text-white"></ion-icon>
     </div>
     <div class="text-white">
