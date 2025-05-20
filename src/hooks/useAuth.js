@@ -8,7 +8,7 @@ import { CapacitorHttp } from '@capacitor/core';
 const isAuthenticated = ref(false);
 const currentUser = ref();
 
-export function useAuth(router = null) {
+export function useAuth() {
   const appCtrl = useApp();
 
   async function login(data) {
@@ -108,7 +108,7 @@ export function useAuth(router = null) {
         if (checkResponse.data === "Guest") {
           isAuthenticated.value = false;
           window.storageService.removeItem("current_user");
-          router.push('/select-workspance');
+          app.router.push('/select-workspance');
         } else {
           if (checkResponse.data) {
             isAuthenticated.value = true;
@@ -117,7 +117,7 @@ export function useAuth(router = null) {
           } else {
             window.storageService.removeItem("current_user");
             isAuthenticated.value = false;
-            router.push('/select-workspace');
+            app.router.push('/select-workspace');
           }
         }
       }
