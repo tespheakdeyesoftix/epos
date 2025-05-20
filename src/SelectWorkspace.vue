@@ -58,70 +58,56 @@
     </ion-footer>
   </ion-page>
 </template>
-
-<script setup lang="ts">
+<script setup>
 import {
-  IonPage, 
-  IonContent, 
-  IonButton, 
-  IonCard, 
+  IonPage,
+  IonContent,
+  IonButton,
+  IonCard,
   IonCardHeader,
-  IonCardSubtitle,
-   IonIcon, 
-   actionSheetController, 
-   alertController,
+  IonIcon,
+  actionSheetController,
+  alertController,
   useIonRouter,
   loadingController,
   onIonViewWillEnter
 } from '@ionic/vue';
+
 import { onMounted, ref } from 'vue';
-import { imageUrl } from '@/helpers/utils';
-import { ellipsisVertical, logoIonic } from 'ionicons/icons';
+import { ellipsisVertical } from 'ionicons/icons';
 import { useAuth } from './hooks/useAuth';
 import { useApp } from './hooks/useApp';
-import { setFrappeAppUrl } from '@/services/api-service';
 import { useI18n } from 'vue-i18n';
+
 const { t, locale } = useI18n();
 
-const result = ref({})
-
-import { CapacitorHttp, HttpResponse } from '@capacitor/core';
- 
-
-const {currentProperty,languages,currentLanguage} = useApp()
+const result = ref({});
+const { currentProperty, languages } = useApp();
 const ionRouter = useIonRouter();
 const properties = ref([]);
-const { login,isAuthenticated } = useAuth()
+const { login, isAuthenticated } = useAuth();
 
-const changeLanguage = ( lang:string) => {
-      locale.value = lang;
-      window.localStorage.setItem("lang",locale.value)
+const changeLanguage = (lang) => {
+  locale.value = lang;
+  window.localStorage.setItem('lang', locale.value);
 };
 
-
-async function onLogin(p: any) {
-
+async function onLogin(p) {
   const loading = await loadingController.create({
     message: t('Loging In...'),
   });
 
   await loading.present();
   const response = await login(p);
+  await loading.dismiss();
 
-  await loading.dismiss()
-  if(response){
-    
+  if (response) {
     currentProperty.value = p;
-
-
     ionRouter.navigate('/home', 'forward', 'replace');
   }
-  
 }
 
-
-
-async function onOpenMenu(p: any) {
+async function onOpenMenu(p) {
   const actionSheet = await actionSheetController.create({
     header: 'Action Menu',
     buttons: [
@@ -129,55 +115,51 @@ async function onOpenMenu(p: any) {
         text: t('Edit Property'),
         handler: async () => {
           ionRouter.navigate('/add-workspace/' + p.property_code, 'forward', 'push');
-
-        }
+        },
       },
       {
         text: t('Remove Property'),
         cssClass: 'remove-property-btn',
         handler: async () => {
-
           const alert = await alertController.create({
             header: 'Delete property',
             message: 'Are you sure you want to delete this property?',
             buttons: [
-              {
-                text: 'Cancel',
-                role: 'cancel',
-              },
+              { text: 'Cancel', role: 'cancel' },
               {
                 text: 'OK',
                 cssClass: 'alert-button-confirm',
-              }
-            ]
+              },
+            ],
           });
 
           await alert.present();
           const result = await alert.onWillDismiss();
-          if (result.role != "cancel") {
-            properties.value = properties.value.filter((r: any) => r.property_code != p.property_code)
-            window.storageService.setItem("properties", JSON.stringify(properties.value))
+
+          if (result.role !== 'cancel') {
+            properties.value = properties.value.filter(
+              (r) => r.property_code !== p.property_code
+            );
+            window.storageService.setItem('properties', JSON.stringify(properties.value));
           }
-
-
-
-        }
+        },
       },
     ],
   });
+
   await actionSheet.present();
 }
 
 onIonViewWillEnter(() => {
-  if(isAuthenticated){
+  if (isAuthenticated) {
     ionRouter.navigate('/home', 'forward', 'replace');
   }
-  const strProperties = window.storageService.getItem("properties");
-  if (strProperties) {
-    properties.value = JSON.parse(strProperties)
-  }
-})
 
+  const strProperties = window.storageService.getItem('properties');
+  if (strProperties) {
+    properties.value = JSON.parse(strProperties);
+  }
+});
 </script>
 
  

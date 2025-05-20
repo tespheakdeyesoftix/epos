@@ -12,11 +12,11 @@
 
 
 </template>
-<script lang="ts" setup>
+<script   setup>
       import {  IonRippleEffect ,IonText,useIonRouter } from '@ionic/vue';
-      import { useI18n } from 'vue-i18n';
+      
  
-const { t} = useI18n();
+ const t = window.t;
       const ionRouter = useIonRouter();
       const props = defineProps({
         label:String,

@@ -151,7 +151,7 @@ window.showError = (message: string) => showToast(message, "danger");
 window.showLoading = (message: string='Loading') => showLoading(message);
 window.openModal = ( props:object) =>openModal(props);
 
-const  {checkUserLogin,isAuthenticated} = useAuth(router);
+const  {checkUserLogin,isAuthenticated} = useAuth();
 const {getSetting} = useApp()
 
 

@@ -221,22 +221,25 @@ export async function removeAttachment(docType: string, docname: string, file_ur
     }
 
     try {
-        const response = await frappe.call({
-            method: "frappe.desk.form.utils.remove_attach",
-            args: {
+        const call = frappe.call();
+        const response = await call.get( "frappe.desk.form.utils.remove_attach", {
                 doctype: docType,
                 docname: docname,
                 file_url: file_url
             }
-        });
+        );
 
-        window.showSuccess(window.t("File removed successfully"));
+        // Ensure translated message is a string
+        const message = window.t?.("File removed successfully") || "File removed successfully";
+        window.showSuccess(message);
+
         return { data: response, error: null };
     } catch (error) {
         console.error("Error removing file:", error);
         return { data: null, error };
     }
 }
+
 
 
 

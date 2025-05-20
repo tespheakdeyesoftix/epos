@@ -36,6 +36,12 @@
                 {{ t("Pending Order") }}
               </div>
             </ion-button>
+            <!-- <ion-button class="col-6 m-0" routerLink="/sale">
+              <div class="flex flex-column justify-center align-items-center py-2">
+                <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
+                {{ t("Sale") }}
+              </div>
+            </ion-button> -->
 
             <ion-button class="col-6 m-0" @click="onLogout">
               <div class="flex flex-column justify-center align-items-center py-2">
@@ -76,25 +82,20 @@ const onLogout = async () => {
   height: 35%;
   color: #fff;
 }
-
-.menu-list ion-button:first-child {
+.menu-list ion-button {
   --border-radius: 1rem;
   font-weight: bold;
+}
+.menu-list ion-button:first-child {
   --background: #7F55B1;
 }
 .menu-list ion-button:nth-child(2) {
-  --border-radius: 1rem;
-  font-weight: bold;
   --background: #328E6E;
 }
 .menu-list ion-button:nth-child(3) {
-  --border-radius: 1rem;
-  font-weight: bold;
   --background: #8F87F1;
 }
 .menu-list ion-button:last-child {
-  --border-radius: 1rem;
-  font-weight: bold;
   --background: #E52020;
 }
 </style>
