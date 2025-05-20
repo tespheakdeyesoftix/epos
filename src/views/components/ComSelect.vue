@@ -118,7 +118,13 @@ const openSheetModal = async () => {
   if (role === 'confirm') {
     
     selected.value = data;
+    if(props.multiple){
+      model.value = data;
+  }
+  else {
     model.value = data.name;
+  }
+   
     emit("onSelected", data)
   }
 };

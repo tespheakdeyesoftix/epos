@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <ToolBar>{{ t("Sale Detail") }}</ToolBar>
+        <ToolBar>{{ t("Sale Detail") }} - {{ doc?.name }}</ToolBar>
         <ion-content class="ion-padding">
             <ion-card button="true" class="mx-0">
                 <ion-card-content class="py-3 px-0">
@@ -82,12 +82,12 @@ async function loadData() {
 
 }
 onMounted(async () => {
-    alert(1)
+    
     await loadData()
 })
 
 const getSaleProducts = computed(() => { 
-    alert(2)
+   
     if (!doc.value?.sale_products) return []
     return Enumerable.from(doc?.value.sale_products).orderByDescending("$.modified").toArray()
 })

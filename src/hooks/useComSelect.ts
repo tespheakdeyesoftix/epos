@@ -50,7 +50,6 @@ export function useComSelect(props: any) {
         andFilter.push([props.valueField, "not in", props.selected.map((r:any)=>r[props.valueField])])
       }
     }
-
     const response = await getDocList(props.docType, {
       fields: fields,
       filters: andFilter,
@@ -153,7 +152,7 @@ export function useComSelect(props: any) {
     // this method is use to put selcted result to the top
     if (props.selected) {
       if (props.multiple) {
-
+        
         data.value = [...props.selected.map((s: any) => ({ ...s, selected: true }))]
 
       } else {

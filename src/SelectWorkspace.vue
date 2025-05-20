@@ -103,6 +103,8 @@ async function onLogin(p) {
 
   if (response) {
     currentProperty.value = p;
+    app.setCurrentProperty(p)
+    
     ionRouter.navigate('/home', 'forward', 'replace');
   }
 }

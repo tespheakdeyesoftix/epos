@@ -9,7 +9,7 @@
           </ion-button>
         </ion-buttons>
         <!-- Title (Centered) -->
-        <ion-title>{{ t("Select") }} - {{ title ?? docType }} {{ loadingMoreData }}</ion-title>
+        <ion-title>{{ t("Select") }} - {{ title ?? docType }}</ion-title>
         <!-- Confirm Button (Right) -->
         <ion-buttons v-if="multiple" slot="end">
           <ion-button shape="round" fill="solid" color="primary" @click="confirmSelection" size="medium">
