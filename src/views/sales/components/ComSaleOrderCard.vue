@@ -1,6 +1,6 @@
 <template>
     
-    <ion-card class="ion-no-margin mb-3" button :routerLink="'/sale/' + data.name">
+    <ion-card class="ion-no-margin mb-3" :routerLink="'/sale-detail/' + data.name" >
         <ion-item lines="none">
              
 
@@ -38,7 +38,6 @@ const props = defineProps({
 
 import { ref } from "vue";
  
-import { getAvatarLetter } from "@/helpers/utils"
 import dayjs from "dayjs";
  
 const t = window.t;

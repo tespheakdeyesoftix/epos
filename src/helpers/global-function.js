@@ -87,15 +87,22 @@ globalThis.app.route = null;
 // vue router
 globalThis.app.router = null;
  globalThis.app.setRouter = function(router){
- 
   globalThis.app.router =router; 
  }
 
  globalThis.app.setting = null;
- globalThis.app.setSetting = function(setting){
-  
-  globalThis.app.setting =setting; 
+  globalThis.app.setSetting = function(setting){
+    globalThis.app.setting =setting; 
  }
+
+
+ globalThis.app.current_property = null;
+ globalThis.app.setCurrentProperty = function(property){
+  globalThis.app.current_property =property; 
+  globalThis.app.property_name = property.property_name
+ }
+ 
+ globalThis.app.property_name  = ""
 
 
  

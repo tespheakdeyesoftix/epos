@@ -113,6 +113,7 @@ export function useAuth() {
           if (checkResponse.data) {
             isAuthenticated.value = true;
             appCtrl.currentProperty.value = property;
+            app.setCurrentProperty(property);
             setFrappeAppUrl(property.api_url);
           } else {
             window.storageService.removeItem("current_user");

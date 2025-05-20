@@ -36,6 +36,9 @@ app.setRoute(route)
 app.setRouter(router)
 
 
+
+
+
 // Watch for route changes and update the title
 watch(() => route.meta.title, (newTitle) => {
   title.value = newTitle || 'ePOS';
@@ -45,6 +48,7 @@ watch(() => isAuthenticated.value, async (newValue,oldValue) => {
 if(newValue){
  
     await getSetting()
+    
    
 }
 
