@@ -37,8 +37,9 @@ export function useDashboard(props = null) {
     }
 
     async function getRecentData() {
-        const res = await app.getDocList("Sale")
-
+        const res = await app.getDocList("Sale",{
+             fields:["name","tbl_number","status","grand_total","owner","creation"]
+        })
         if (res.data) {
             recentData.value = res.data
 

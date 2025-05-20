@@ -1,11 +1,6 @@
 <template>
     <div class="block mt-3">
- <ion-button id="open-modal" expand="block">Open Modal</ion-button>
-     <ion-modal ref="modal" trigger="open-modal">
-      <ion-content>
-HIIIIIIIIIIIIIIIII
-      </ion-content>
-    </ion-modal>
+
  
     <div class="grid px-2">
       <ComCardKPI
@@ -36,15 +31,7 @@ HIIIIIIIIIIIIIIIII
 <script setup>
 import {cashOutline, folderOpenOutline, trashBinOutline} from 'ionicons/icons';
 import ComCardKPI from './ComCardKPI.vue';
- import {
-    IonModal,
-    IonContent
-  } from '@ionic/vue';
-  import { ref } from 'vue';
 
-  const modal = ref();
-
-  const dismiss = () => modal.value.$el.dismiss();
 const props = defineProps({
     data:Object
 }) 
