@@ -60,15 +60,7 @@
 <script setup>
 import {cashOutline, folderOpenOutline, trashBinOutline} from 'ionicons/icons';
 import ComCardKPI from './ComCardKPI.vue';
- import {
-    IonModal,
-    IonContent
-  } from '@ionic/vue';
-  import { ref } from 'vue';
 
-  const modal = ref();
-
-  const dismiss = () => modal.value.$el.dismiss();
 const props = defineProps({
     data:Object
 }) 
