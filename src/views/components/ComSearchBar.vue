@@ -18,7 +18,7 @@
 <script setup>
 import { ref } from "vue";
 import { scan } from "ionicons/icons";
-import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
+import ComScanBarcode from "@/views/components/ComScanBarcodeAndroid.vue";
 
 const props = defineProps({
   showBarcodeScanner: Boolean,
