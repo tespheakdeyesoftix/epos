@@ -137,15 +137,24 @@
     "minutes ago": "នាទីមុន",
     "hours ago": "ម៉ោងមុន",
     "a day ago": "ម្សិលមិញ",
-    "Product": "ផលិតផល",
+    "Products": "ផលិតផល",
     "Stock Adjustment History": "ប្រវត្តិកែស្តុក",
     "Quantity": "បរិមាណ",
     "Search By Product Name": "ស្វែងរកតាមឈ្មោះផលិតផល",
-    "Please Select Stock Location": "សូមជ្រើសរើសទីតាំងស្តុក",
+    "Pleas Select Stock Location": "សូមជ្រើសរើសទីតាំងស្តុក",
     "Code": "កូដ",
     "Current Quantity": "បរិមាណបច្ចុប្បន្ន",
-    "New Quantity": "បរិមាណថ្មី"
-     
+    "New Quantity": "បរិមាណថ្មី",
+    "Prices": "តម្លៃ",
+    "Product Price": "តម្លៃផលិតផល",
+    "Price Rule": "",
+    "Delete":"លុប",
+    "Save":"រក្សាទុក",
+    "Cancel":"បោះបង់",
+    "Category": "ប្រភេទ",
+    "Cost": ""
+    
+    
 
     
   } 
