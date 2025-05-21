@@ -1,5 +1,5 @@
 <template>
-
+ 
       <img   :src="imgData" :width="width==0?undefined:width" :height="height==0?undefined:height"/>
   
   </template>

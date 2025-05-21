@@ -82,7 +82,7 @@ import { useI18n } from 'vue-i18n';
 const { t, locale } = useI18n();
 
 const result = ref({});
-const { currentProperty, languages } = useApp();
+const { currentProperty, languages,getSetting } = useApp();
 const ionRouter = useIonRouter();
 const properties = ref([]);
 const { login, isAuthenticated } = useAuth();
@@ -104,6 +104,8 @@ async function onLogin(p) {
   if (response) {
     currentProperty.value = p;
     app.setCurrentProperty(p)
+    
+    await getSetting()
     
     ionRouter.navigate('/home', 'forward', 'replace');
   }
@@ -162,6 +164,9 @@ onIonViewWillEnter(() => {
     properties.value = JSON.parse(strProperties);
   }
 });
+
+ 
+ 
 </script>
 
  

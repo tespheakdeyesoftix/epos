@@ -1,8 +1,9 @@
 <template>
     <div class="p-3">
+        
         <div class="my-2 flex justify-content-center" v-if="previewUrl">
             <div class="border-1 p-2 border-round border-300">
-                <img src="/assets/placeholder.jpg" alt="Preview" style="width:300px" />
+                <img :src="previewUrl" alt="Preview" style="width:300px" />
             </div>
         </div>
         <div class="my-2 flex justify-content-center" v-else>
@@ -29,35 +30,26 @@
             <ion-input :label="t('Product Name En')" placeholder="Product Name En" v-model="doc.product_name_en"
                 label-placement="floating" fill="outline">
             </ion-input>
-            <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="doc.product_name_kh"
+            <ion-input :label="t('Product Name Kh')" placeholder="Product Name Kh" v-model="doc.product_name_kh"
                 label-placement="floating" fill="outline">
             </ion-input>
-            <div class="relative fixed-input">
-                <ion-input :label="t('Product Category')" value="value" label-placement="floating" fill="outline">
-                </ion-input>
-                <div class="selected_value">
-                    <ComSelect docType="Product Category" clear v-model="doc.product_category" modalType="Dialog" />
-                </div>
-            </div> 
-            <div class="relative fixed-input">
-                <ion-input :label="t('Revenue Group')" value="value" label-placement="floating" fill="outline">
-                </ion-input>
-                <div class="selected_value">
-                    <ComSelect docType="Revenue Group" clear v-model="doc.revenue_group" modalType="Dialog" />
-                </div>
-            </div> 
-            <div class="relative fixed-input">
-                <ion-input :label="t('Unit')" value="value" label-placement="floating" fill="outline">
-                </ion-input>
-                <div class="selected_value">
-                    <ComSelect docType="Unit Of Measurement" clear v-model="doc.unit" modalType="Dialog" />
-                </div>
-            </div> 
+
+            <ComSelectInput  docType="Product Category"  v-model="doc.product_category" 
+            :label="t('Product Category')" placeholder="Product Category"
+            />
+            <ComSelectInput  docType="Revenue Group"  v-model="doc.revenue_group" 
+            :label="t('Revenue Group')" placeholder="Revenue Group"
+            />
+            <ComSelectInput  docType="Unit Of Measurement"  v-model="doc.unit" 
+            :label="t('Unit')" placeholder="Unit"
+            />
+                 
+           
             <ion-input type="number" :readonly="doc.name" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
                 label-placement="floating" fill="outline"></ion-input>
-            <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
+            <ion-input type="number" :label="t('Price')" placeholder="Selling Price" v-model="doc.price"
                 label-placement="floating" fill="outline"></ion-input>
-            <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+            <ion-textarea fill="outline" :label="t('Note')" label-placement="floating" rows="5"
                 v-model="doc.note"></ion-textarea>
         </stack>
     </div>
@@ -73,6 +65,7 @@ const { previewUrl, warningMessage,
 
 import Message from 'primevue/message';
 import { ref } from "vue";
+ 
 const fileInput = ref(null)
 const t = window.t;
 const triggerFileInput = () => {

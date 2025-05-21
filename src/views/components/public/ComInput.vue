@@ -22,7 +22,6 @@
 <script setup>
 import { IonIcon } from '@ionic/vue';
 import { scan } from 'ionicons/icons';
- import ComScanBarcode from "@/views/components/ComScanBarcodeAndroid.vue"
 import { ref } from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
@@ -72,13 +71,7 @@ function onInput($event){
 
 
 async function onScanBarcode() {
-  const result = await window.openModal({
-    
-    component: ComScanBarcode,
-    componentProps:{
-      title: "Scan Barcode",
-    }
-  })
+  const result =  await app.onScanBarcode();
   if (result) {
     if(props.type == "number"){
       model.value = Number(result)

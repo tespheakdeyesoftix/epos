@@ -1,9 +1,9 @@
 <template>
-  <ion-app>
+  <ion-app >
     <DrawerMenu v-if="isAuthenticated" />
     <ion-content :fullscreen="true" id="main-content">
 
-      <ion-router-outlet />
+      <ion-router-outlet v-if="!loading"/>
 
 
     </ion-content>
@@ -20,13 +20,13 @@ import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { useApp } from "./hooks/useApp";
 const ionRouter = useIonRouter();
+const  {checkUserLogin,isAuthenticated} = useAuth();
 
-const { isAuthenticated } = useAuth();
 const route = useRoute();
 const title = ref(route.meta.title || 'ePOS');
 const hideTab = ref(false);
 const {getSetting} = useApp();
-
+const loading = ref(true)
 
 const router = useRouter();
 
@@ -44,17 +44,17 @@ watch(() => route.meta.title, (newTitle) => {
   title.value = newTitle || 'ePOS';
 
 });
-watch(() => isAuthenticated.value, async (newValue,oldValue) => {
-if(newValue){
  
-    await getSetting()
+
+onMounted(async ()=>{
+  loading.value = true 
+  await checkUserLogin();
+ 
+  if (isAuthenticated.value){
     
-   
-}
-
-});
-
- 
-
+    await getSetting()
+  }
+  loading.value = false
+})
 
 </script>

@@ -1,16 +1,14 @@
 <script setup>
 import { BrowserMultiFormatReader } from '@zxing/browser';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-
+import beep from '/assets/beep.mp3'
 const videoRef = ref(null);
 const code = ref('');
 const devices = ref([]);
 const selectedDeviceId = ref(null);
-
+const beepSound = new Audio(beep)
 let codeReader = new BrowserMultiFormatReader();
 let currentStream = null;
-
-const emit = defineEmits()
 
 const stopStream = () => {
   if (currentStream) {
@@ -25,7 +23,6 @@ const stopStream = () => {
 
 const startScanner = async (deviceId) => {
   stopStream();
-  window.storageService.setItem('selectedCameraId', deviceId)
 
   try {
     const constraints = {
@@ -37,15 +34,14 @@ const startScanner = async (deviceId) => {
     await codeReader.decodeFromConstraints(constraints, videoRef.value, (result) => {
       if (result) {
         code.value = result.getText();
-        
-        emit("onScanBarcode",  code.value)
-
+        beepSound.currentTime = 0
+        beepSound.play()
       }
     });
 
     currentStream = videoRef.value?.srcObject;
   } catch (err) {
-    alert('Failed to start scanner:' +  err.toString());
+    console.error('Failed to start scanner:', err);
   }
 };
 
@@ -53,16 +49,13 @@ const getCameras = async () => {
   const videoDevices = await BrowserMultiFormatReader.listVideoInputDevices();
   devices.value = videoDevices;
 
- 
+  // Default to back camera if available
+  const backCamera = videoDevices.find(device =>
+    device.label.toLowerCase().includes('back') ||
+    device.label.toLowerCase().includes('environment')
+  );
 
- 
-  const savedCameraId = window.storageService.getItem('selectedCameraId')
-    if (savedCameraId && savedCameraId !== 'undefined') {
-      selectedDeviceId.value = savedCameraId.toString()
-    } else {
-      selectedDeviceId.value = videoDevices[0]?.deviceId;
-    }
-
+  selectedDeviceId.value = backCamera?.deviceId || videoDevices[0]?.deviceId;
 
   if (selectedDeviceId.value) {
     await startScanner(selectedDeviceId.value);
@@ -86,21 +79,16 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-     
-    <ion-select
-      @ionChange="switchCamera"
-      label="Select Camera"
-      placeholder="Select Camera"
-    v-model="selectedDeviceId"
-    >
-      <ion-select-option
-        v-for="(d, index) in devices"
-        :key="index"
-        :value="d.deviceId"
+    <label>Select Camera:</label>
+    <select v-model="selectedDeviceId" @change="switchCamera">
+      <option
+        v-for="device in devices"
+        :key="device.deviceId"
+        :value="device.deviceId"
       >
-      {{ d.label || 'Camera' }}
-      </ion-select-option>
-    </ion-select>
+        {{ device.label || 'Camera' }}
+      </option>
+    </select>
 
     <video
       ref="videoRef"

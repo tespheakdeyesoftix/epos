@@ -22,9 +22,8 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Html5Qrcode } from 'html5-qrcode'
-import { modalController } from '@ionic/vue'
 import beep from '/assets/beep.mp3'
-
+const emit = defineEmits();
 const result = ref('')
 let scanner = null
 
@@ -61,10 +60,9 @@ const startScanner = async () => {
       beepSound.currentTime = 0
       beepSound.play()
       result.value = decodedText
-
+      
       scanner.stop()
-      modalController.dismiss(result.value, 'confirm')
-
+      emit("onScanBarcode", result.value)
       setTimeout(() => {
         isScanning.value = false
       }, 1000)

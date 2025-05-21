@@ -1,7 +1,7 @@
 <template>
     
     <span >
-      {{ formatNumber() }}
+      {{ formatNumber().toLocaleString('en-US') }}
     </span>
 
 </template>

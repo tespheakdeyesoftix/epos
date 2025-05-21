@@ -1,7 +1,7 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import { showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber } from '@/helpers/utils';
+import { showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import { ref } from 'vue';
 import { set } from 'lodash';
  
@@ -189,4 +189,8 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
  
 globalThis.app.getNumber = function(n){
   return getNumber(n, app.setting.float_precision);
+}
+
+globalThis.app.currencyFormat = function(number,format){
+  return currencyFormat(number,format);
 }
