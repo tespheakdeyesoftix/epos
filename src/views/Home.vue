@@ -95,6 +95,9 @@ const onLogout = async () => {
 .menu-list ion-button:nth-child(3) {
   --background: #8F87F1;
 }
+.menu-list ion-button:nth-child(4) {
+  --background: #213448;
+}
 .menu-list ion-button:last-child {
   --background: #E52020;
 }
