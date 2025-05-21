@@ -3,7 +3,7 @@
         <ion-text color="primary" class="ion-content">
             <h2>{{ t("Daily Sale Chart") }}</h2>
         </ion-text>
-        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 350px;" v-if="data">
+        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 300px;" v-if="data">
             <v-chart :option="option" autoresize />
         </div>
     </div>

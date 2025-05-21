@@ -3,9 +3,10 @@
     <AppBar>{{ t("Home") }}</AppBar>
     <ion-content :fullscreen="true">
       <div class="wrapper-cover flex justify-content-end flex-column align-items-center pb-5">
-        <ion-img class="w-4rem" src="/assets/ePOS-logo.png"></ion-img>
-        <h1 class="mt-2 mb-0">{{ t("ePOS Restaurant") }}</h1>
-        <ion-text>{{ t("Device: Hi IOS, Station: Siem Reap") }}</ion-text>
+        <ion-avatar style="width: 100px; height: 100px;" > 
+        <Img :src="setting.app_logo"/>
+        </ion-avatar>
+        <h1 class="mt-2 mb-0">{{ t(setting.app_name) }}</h1>
       </div>
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
         style="height: calc(-329.5px + 100vh);background:url(/assets/pettern1.png)">
@@ -19,7 +20,7 @@
             </ion-button>
             <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
-                <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
+                <ion-icon class="text-6xl mb-2" :icon="pricetagOutline" slot="start"></ion-icon>
                 {{ t("Product") }}
               </div>
             </ion-button>
@@ -38,7 +39,7 @@
             </ion-button>
             <ion-button class="col-6 m-0" routerLink="/sale">
               <div class="flex flex-column justify-center align-items-center py-2">
-                <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
+                <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
                 {{ t("Sale") }}
               </div>
             </ion-button>
@@ -64,10 +65,10 @@ import {
   IonIcon,
   useIonRouter,
 } from '@ionic/vue';
-import { cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline } from 'ionicons/icons';
+import {pricetagOutline, cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline, cardOutline } from 'ionicons/icons';
 const t = window.t;
 const { logout } = useAuth();
-
+const setting = app.setting;
 const ionRouter = useIonRouter();
 const onLogout = async () => {
   await logout();

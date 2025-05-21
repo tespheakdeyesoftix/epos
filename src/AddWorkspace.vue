@@ -73,11 +73,13 @@ import { setFrappeAppUrl } from "@/services/api-service";
 import { useRoute } from "vue-router";
 import { showWarning } from "@/helpers/utils";
 import { useI18n } from "vue-i18n";
+import { useAuth } from "@/hooks/useAuth";
+import { useApp } from "@/hooks/useApp";
 const { t } = useI18n();
 
 const route = useRoute();
+const { getSetting } = useApp();
 
-import { useAuth } from "@/hooks/useAuth";
 const ionRouter = useIonRouter();
 
 const { login, checkPropertyCode } = useAuth();
@@ -169,6 +171,7 @@ async function onSaveWorkspace() {
 
   await loadingLogin.dismiss();
 
+   await getSetting()
   // navigate to home page
   ionRouter.navigate("/home", "forward", "replace");
 }

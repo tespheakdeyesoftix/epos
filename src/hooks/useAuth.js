@@ -89,6 +89,7 @@ export function useAuth() {
   }
 
   async function checkUserLogin() {
+    let returnUrl = ""
     const loading = await loadingController.create({
       message: window.t('Loading...'),
     });
@@ -108,6 +109,7 @@ export function useAuth() {
         if (checkResponse.data === "Guest") {
           isAuthenticated.value = false;
           window.storageService.removeItem("current_user");
+
           app.router.push('/select-workspance');
         } else {
           if (checkResponse.data) {
@@ -115,6 +117,7 @@ export function useAuth() {
             appCtrl.currentProperty.value = property;
             app.setCurrentProperty(property);
             setFrappeAppUrl(property.api_url);
+            app.router.push('/home');
           } else {
             window.storageService.removeItem("current_user");
             isAuthenticated.value = false;

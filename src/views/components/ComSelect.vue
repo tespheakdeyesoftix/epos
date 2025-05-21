@@ -1,5 +1,5 @@
 <template>
-  <div @click="openSheetModal" :class="csClass" style="display: inline;" v-if="!loading">
+  <div @click.stop="openSheetModal" :class="csClass" style="display: inline;" v-if="!loading">
     <slot>
     <ion-chip   v-bind="$attrs" >
     <ion-label v-if="model">{{ model  }}</ion-label>
@@ -93,9 +93,11 @@ const isSelected = computed(()=>{
     return selected;
   }
 })
-
+let isOpenModal = false
 const openSheetModal = async () => {
-
+   if (isOpenModal) return
+   isOpenModal = true
+  //end prevent double fire click
   const modalOption = {
     component: ComSelectSheetModal,
     swipeToClose: false,
@@ -127,6 +129,7 @@ const openSheetModal = async () => {
    
     emit("onSelected", data)
   }
+  isOpenModal = false
 };
 
 function getLabel() {

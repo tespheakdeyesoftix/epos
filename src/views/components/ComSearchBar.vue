@@ -18,8 +18,7 @@
 <script setup>
 import { ref } from "vue";
 import { scan } from "ionicons/icons";
-import ComScanBarcode from "@/views/components/ComScanBarcodeAndroid.vue";
-
+ 
 const props = defineProps({
   showBarcodeScanner: Boolean,
 });
@@ -33,12 +32,7 @@ function onSearch() {
 }
 
 async function onScanBarcode() {
-  const result = await window.openModal({
-    component: ComScanBarcode,
-    componentProps: {
-      title: "Scan Barcode",
-    },
-  });
+  const result = await app.onScanBarcode()
 
   if (result) {
     keyword.value = result;

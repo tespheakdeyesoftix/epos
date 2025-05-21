@@ -129,6 +129,7 @@ import ComSelect from '@/views/components/ComSelect.vue';
 import DocList from '@/views/components/document-list/DocList.vue';
 import Document from '@/views/components/document-list/Document.vue';
 import ComInput from '@/views/components/public/ComInput.vue';
+import ComSelectInput from '@/views/components/public/ComSelectInput.vue';
 import Stack from '@/views/components/public/Stack.vue';
 
 import dayjs from 'dayjs'
@@ -151,7 +152,7 @@ window.showError = (message: string) => showToast(message, "danger");
 window.showLoading = (message: string='Loading') => showLoading(message);
 window.openModal = ( props:object) =>openModal(props);
 
-const  {checkUserLogin,isAuthenticated} = useAuth();
+
 const {getSetting} = useApp()
 
 
@@ -178,13 +179,8 @@ async function init() {
   
   // check if have current login user then login
 
-  await checkUserLogin();
-  if (isAuthenticated.value){
-    await getSetting()
-  }
+ 
 
-
-  
   // set frappe app
 
  
@@ -254,6 +250,7 @@ async function init() {
   app.component('Document',Document)
   app.component('ComStatus',ComStatus)
   app.component('ComInput',ComInput)
+  app.component('ComSelectInput',ComSelectInput)
   app.component('Stack',Stack)
 
   app.component('BaseModal',BaseModal)

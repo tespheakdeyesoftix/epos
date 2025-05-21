@@ -13,6 +13,7 @@ async function getSetting() {
   if (res.data) {
 
     setting.value = res.data
+    
     app.setSetting(res.data)
     
   }

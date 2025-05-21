@@ -167,3 +167,52 @@ export function getNumber(num, decimalDigits) {
   const trimmedDecimals = parts[1].replace(/0+$/, '');
   return `${parts[0]}.${trimmedDecimals}`;
 }
+
+export function currencyFormat(number, format) {
+  // Match the number format part (e.g., #,###,##0.00, #,###,##0.###)
+  const numberPattern = /[#0.,]+/;
+  const match = format.match(numberPattern);
+  if (!match) return number.toString();
+
+  const numFormat = match[0];
+  const startIndex = format.indexOf(numFormat);
+  const endIndex = startIndex + numFormat.length;
+
+  const prefix = format.slice(0, startIndex).trim();
+  const suffix = format.slice(endIndex).trim();
+
+  // Parse decimal part from format
+  let minFractionDigits = 0;
+  let maxFractionDigits = 0;
+
+  const decimalMatch = numFormat.match(/\.(0+|#+)$/);
+  if (decimalMatch) {
+    const decimalPart = decimalMatch[1];
+    if (decimalPart[0] === '0') {
+      // Fixed decimals - number of zeros = exact decimals
+      minFractionDigits = decimalPart.length;
+      maxFractionDigits = decimalPart.length;
+    } else if (decimalPart[0] === '#') {
+      // Optional decimals - number of # = max decimals, min 0
+      minFractionDigits = 0;
+      maxFractionDigits = decimalPart.length;
+    }
+  }
+
+  // Format number accordingly
+  const formattedNumber = number.toLocaleString('en-US', {
+    minimumFractionDigits: minFractionDigits,
+    maximumFractionDigits: maxFractionDigits,
+  });
+
+  // Compose final string with currency symbol position
+  if (prefix && !suffix) {
+    return `${prefix} ${formattedNumber}`;
+  } else if (!prefix && suffix) {
+    return `${formattedNumber} ${suffix}`;
+  } else if (prefix && suffix) {
+    return `${prefix} ${formattedNumber} ${suffix}`;
+  } else {
+    return formattedNumber;
+  }
+}

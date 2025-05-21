@@ -2,9 +2,11 @@
   <ion-menu content-id="main-content">
     <ion-content>
       <!-- Profile Section -->
+       
       <div class="profile-section"> 
+       
         <ion-avatar class="profile-avatar"> 
-          <Img v-if="currentUser.photo" :src="currentUser.photo"/>
+          <Img v-if="currentUser?.photo"  :src="currentUser?.photo"/>
           <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div> 
         </ion-avatar>
         <ion-label class="profile-name">{{ currentUser.full_name }}</ion-label>
@@ -18,8 +20,14 @@
         </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
+        <ion-item router-link="/dashboard">
+          <ion-icon :icon="gridOutline" slot="start"></ion-icon>
+          <ion-label>{{t("Dashboard")}}</ion-label>
+        </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
           <ion-item router-link="/product-list">
-          <ion-icon :icon="cartOutline" slot="start"></ion-icon>
+          <ion-icon :icon="pricetagOutline" slot="start"></ion-icon>
           <ion-label>{{t("Product List")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
@@ -33,6 +41,13 @@
           <ion-item router-link="/pending-order">
           <ion-icon :icon="timeOutline" slot="start"></ion-icon>
           <ion-label>{{t("Pending Order")}}</ion-label>
+        </ion-item>
+        </ion-menu-toggle>
+        
+        <ion-menu-toggle>
+          <ion-item router-link="/sale">
+          <ion-icon :icon="cartOutline" slot="start"></ion-icon>
+          <ion-label>{{t("Sale")}}</ion-label>
         </ion-item>
         </ion-menu-toggle>
        
@@ -71,7 +86,9 @@ import {
   logOutOutline,
   cartOutline,
   timeOutline,
-  cubeOutline
+  cubeOutline,
+  gridOutline,
+  pricetagOutline
 } from 'ionicons/icons'; 
 import { useAuth } from '@/hooks/useAuth'; 
 const { logout, currentUser } = useAuth();

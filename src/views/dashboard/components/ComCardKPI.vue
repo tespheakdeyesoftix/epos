@@ -1,16 +1,19 @@
 <template>
   <div :class="['col flex   align-items-center border-round-lg shadow-2 gap-2 h-full', mainClass]">
-    <div class="flex border-circle p-2 " style="background-color: #0000002e !important;">
+    <div class="flex border-circle p-2" style="background-color: #0000002e !important;">
       <ion-icon :icon="icon" class="text-xl text-white"></ion-icon>
     </div>
     <div class="text-white">
       <div class="text-sm">{{ label }}</div>
-      <div class="text-md font-semibold">
+      <ion-text >
+        <h2>
         <ComCurrency v-if="isCurrency" :value="value" />
         <span v-else>
              {{ value }}
         </span>
-       </div>
+      </h2>
+      </ion-text>
+     
     </div>
   </div>
 </template>
