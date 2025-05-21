@@ -21,7 +21,7 @@
             <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="pricetagOutline" slot="start"></ion-icon>
-                {{ t("Product") }}
+                {{ t("Productss") }}
               </div>
             </ion-button>
 
@@ -95,6 +95,9 @@ const onLogout = async () => {
 }
 .menu-list ion-button:nth-child(3) {
   --background: #8F87F1;
+}
+.menu-list ion-button:nth-child(4) {
+  --background: #213448;
 }
 .menu-list ion-button:last-child {
   --background: #E52020;

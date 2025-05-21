@@ -71,8 +71,8 @@
                             <img :alt="doc?.customer_name" src="/assets/avatar.svg" />
                         </ion-avatar>
                         <ion-label>
-                            <div>{{ doc?.customer_name }}</div>
-                            <div>{{ doc?.customer }} {{ doc?.phone_number ? '/' : '' }} {{ doc?.phone_number }}</div>
+                            <h2 class="card-title">{{ doc?.customer_name }}</h2>
+                            <h2 class="card-title">Code: {{ doc?.customer }} / Tel: {{ doc?.phone_number }}</h2>
                         </ion-label>
                     </ion-item>
                 </ion-card-content>
@@ -80,18 +80,16 @@
             <!-- group product -->
             <template v-if="getSaleProducts.length > 0">
                 <template v-for="(g, index) in getSaleProductGroupByKey" :key="index">
-                    <div class="bg-red-700 text-white flex items-center justify-between"
-                        style="font-size: 10px; padding: 2px;">
-                        <div>
-                            <ion-icon size="small" :icon="timeOutline"></ion-icon>
-                            {{ dayjs(g.order_time).format('HH:mm:ss') }}
+                    <div class="bg-red-700 text-white flex justify-content-between text-xs p-1 align-items-center" >
+                        <div class="flex align-items-center gap-1">
+                            <ion-icon size="small" :icon="timeOutline" ></ion-icon>
+                            {{dayjs(g.order_time).format('DD-MM-YYYY HH:mm:ss')}}
                         </div>
-                        <div><v-icon icon="mdi-account-outline" size="small" class="mr-1"></v-icon>{{ g.order_by }}
-                        </div>
+                        <div class="flex align-items-center gap-1"><ion-icon size="small" :icon="personOutline" ></ion-icon> {{ g.order_by }}</div>
                     </div>
                     <!-- product section -->
                     <div>
-                        <template v-for="(d, index) in doc?.sale_products" :key="index">
+                        <template v-for="(d, index) in getSaleProductItems(g)" :key="index">
                             <ion-card class="ion-no-margin mb-2">
                                 <ion-item lines="none">
                                     <ion-avatar>
@@ -101,26 +99,18 @@
                                     </ion-avatar>
                                     <ion-label>
                                         <h2 class="card-title">{{ d.product_code }} - {{ d.product_name }}</h2>
-                                        <h2 class="card-subtitle">{{ d.quantity }} x <com-currency :value="d.price" />
-                                        </h2>
-                                        <h2 v-if="d.modifiers && !d.is_timer_product" class="card-subtitle">
-                                            {{ d.modifiers }} (<com-currency :value="d.modifiers_price * d.quantity" />)
-                                        </h2>
-
-                                        <h2 class="card-subtitle flex align-items-center gap-1"
-                                            v-if="d.time_in || d.time_out">
-                                            <ion-icon size="small" :icon="timeOutline"></ion-icon> {{
-                                                dayjs(d.time_in).format('hh:mm A') }} {{ d?.time_out ? '-' : '' }} {{
-                                                dayjs(d.time_out).format('hh:mm A') }}
-                                        </h2>
-                                        <h2 class="card-subtitle flex align-items-center gap-1" v-else>
-                                            <ion-icon size="small" :icon="timeOutline"></ion-icon> {{
-                                                dayjs(d.creation).format('hh:mm:ss A') }}
-                                        </h2>
+                                        <p class="card-subtitle">{{d.quantity}} x <com-currency :value="d.price"/></p>
+                                        <p v-if="d.modifiers && !d.is_timer_product" class="card-subtitle">{{d.modifiers}} (<com-currency :value="d.modifiers_price * d.quantity"/>)</p>
+                                        
+                                        <p class="card-subtitle flex align-items-center gap-1" v-if="d.time_in || d.time_out">
+                                            <ion-icon size="small" :icon="timeOutline"></ion-icon> {{ dayjs(d.time_in).format('hh:mm A') }} {{d?.time_out?'-':''}} {{ dayjs(d.time_out).format('hh:mm A') }}
+                                        </p> 
+                                        <p class="card-subtitle flex align-items-center gap-1" v-else>
+                                            <ion-icon :icon="timeOutline" ></ion-icon> {{ dayjs(d.creation).format('hh:mm:ss A') }}
+                                        </p>
                                     </ion-label>
                                     <ion-label slot="end" class="amount-container flex flex-column align-items-center">
-                                        <div class="amount"><com-currency :value="d?.price" /></div>
-                                        <ion-chip color="primary">{{ d.quantity }}</ion-chip>
+                                        <ion-label color="primary"><com-currency :value="d?.price" /></ion-label>
                                     </ion-label>
                                 </ion-item>
                             </ion-card>
@@ -279,7 +269,7 @@
 
 </template>
 <script setup>
-import { dice, searchOutline, personAddOutline, scanCircleOutline, timeOutline } from 'ionicons/icons';
+import { timeOutline, personOutline} from 'ionicons/icons';
 import { onMounted, ref, computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import dayjs from 'dayjs';
@@ -319,7 +309,16 @@ const getSaleProducts = computed(() => {
 
     if (!doc.value?.sale_products) return []
     return Enumerable.from(doc?.value.sale_products).orderByDescending("$.modified").toArray()
+
 })
+
+function getSaleProductItems(groupByKey) {
+    if (groupByKey) {
+        return Enumerable.from(doc?.value.sale_products).where(`$.order_by=='${groupByKey.order_by}' && $.order_time=='${groupByKey.order_time}'`).orderByDescending("$.modified").toArray()
+    } else {
+        return Enumerable.from(doc?.value.sale_products).orderByDescending("$.modified").toArray();
+    }
+}
 
 const getSaleProductGroupByKey = computed(() => {
     if (!doc?.value.sale_products) {
@@ -332,6 +331,7 @@ const getSaleProductGroupByKey = computed(() => {
         return []
     }
 })
+
 </script>
 <style scoped>
 .card-title {

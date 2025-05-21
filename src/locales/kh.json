@@ -101,6 +101,29 @@
     "Parking Area":"កន្លែងចតឡាន",
     "Ongoing": "ដំណើរការ",
     "Complete": "បញ្ចប់",
-    "Cancelled": "បានលុបចោល"
+    "Cancelled": "បានលុបចោល",
+    "Product List": "បញ្ជីផលិតផល",
+    "Add Product": "បន្ថែមផលិតផល",
+    "Upload Photo": "បង្ហោះរូបថត",
+    "Remove File": "លុបរូប",
+    "Product Information": "ព័ត៌មានអំពីផលិតផល",
+    "Prices": "តម្លៃ",
+    "Price": "តម្លៃ",
+    "Product Name En": "ឈ្មោះផលិតផលជាភាសាអង់គ្លេស",
+    "Product Name Kh": "ឈ្មោះផលិតផលខ្មែរ",
+    "Product Category": "ប្រភេទផលិតផល",
+    "Revenue Group": "ប្រភេទក្រុមចំណូល",
+    "Unit": "ឯកតា",
+    "Cost": "តម្លៃដើម",
+    "Product Price": "តម្លៃផលិតផល",
+    "Price Rule": "ច្បាប់តម្លៃ",
+    "Conversion Factor": "កត្តាបំប្លែង",
+    "Dekete Product": "លុបផលិតផល",
+    "Add Price": "បន្ថែមតម្លៃ",
+    "Delete": "លុប",
+    "Delete Price": "លុបតម្លៃ",
+    "Save": "រក្សាទុក",
+    "Note": "ចំណាំ"
+
     
   } 

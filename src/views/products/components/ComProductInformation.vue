@@ -30,7 +30,7 @@
             <ion-input :label="t('Product Name En')" placeholder="Product Name En" v-model="doc.product_name_en"
                 label-placement="floating" fill="outline">
             </ion-input>
-            <ion-input label="Product Name Kh" placeholder="Product Name Kh" v-model="doc.product_name_kh"
+            <ion-input :label="t('Product Name Kh')" placeholder="Product Name Kh" v-model="doc.product_name_kh"
                 label-placement="floating" fill="outline">
             </ion-input>
 
@@ -47,9 +47,9 @@
            
             <ion-input type="number" :readonly="doc.name" :label="t('Cost')" :placeholder="t('Cost')" v-model="doc.cost"
                 label-placement="floating" fill="outline"></ion-input>
-            <ion-input type="number" label="Price" placeholder="Selling Price" v-model="doc.price"
+            <ion-input type="number" :label="t('Price')" placeholder="Selling Price" v-model="doc.price"
                 label-placement="floating" fill="outline"></ion-input>
-            <ion-textarea fill="outline" label="Note" label-placement="floating" rows="5"
+            <ion-textarea fill="outline" :label="t('Note')" label-placement="floating" rows="5"
                 v-model="doc.note"></ion-textarea>
         </stack>
     </div>
