@@ -56,81 +56,36 @@
       </div>
       <ion-card v-if="productDoc" class="mt-3 m-0">
         <div v-if="productDoc?.photo" class="flex justify-content-center m-2">
-  <Img
-    v-if="productDoc?.photo"
-     class="w-full h-full object-cover max-image"
-    :src="productDoc.photo"
-    :key="productDoc.photo"
-  />
+        <div style="padding: 5px;">
+          <Img width="100%" v-if="productDoc?.photo" :src="productDoc.photo" :key="productDoc.photo"/>
+        </div>
+ 
 </div>
-
-        <ion-card-header class="pb-1 pt-3 px-3">
-          <div>
-            <strong>{{ productDoc?.product_name_en }}</strong>
+         <div style="font-size: 18px;text-align: center;margin-top: -20px;">
+            <p>{{ productDoc?.product_code }} - {{ productDoc?.product_name_en }}</p>
           </div>
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-item lines="none" class="product-row ion-no-padding">
-            <ion-label class="col-label">
-              <ion-text class="label-text" color="medium">{{ $t('Code') }} </ion-text>
-              <ion-text class="value-text">{{ productDoc?.product_code }}</ion-text>
-            </ion-label>
-
-            <ion-label class="col-label ion-text-end">
-              <ion-text class="label-text" color="medium">{{ $t('Name Kh') }} </ion-text>
-              <ion-text class="value-text ellipsis-text">{{ productDoc?.product_name_kh }}</ion-text>
-            </ion-label>
-          </ion-item>
-          <ion-item lines="none" class="product-row ion-no-padding">
-            <ion-label class="col-label">
-              <ion-text class="label-text" color="medium">{{ $t('Product Category') }}</ion-text>
-              <ion-text class="value-text">{{ productDoc?.product_category }}</ion-text>
-            </ion-label>
-
-            <ion-label class="col-label ion-text-end">
-              <ion-text class="label-text" color="medium">{{ $t('Unit') }}</ion-text>
-              <ion-text class="value-text ellipsis-text">{{ productDoc?.unit }}</ion-text>
-            </ion-label>
-          </ion-item>
-          <ion-item lines="none" class="product-row ion-no-padding">
-            <ion-label class="col-label">
-              <ion-text class="label-text" color="medium">Current Quantity</ion-text>
-              <ion-text class="value-text"><ComNumber :value="doc?.current_quantity"/></ion-text>
-            </ion-label>
-
-            <ion-label class="col-label ion-text-end">
-              <ion-text class="label-text" color="medium">Current Cost</ion-text>
-              <ion-text class="value-text ellipsis-text"><ComCurrency :value="doc?.current_cost"/></ion-text>
-            </ion-label>
-          </ion-item>
-  </ion-card-content>
+           <div style="font-size: 18px;text-align: center;margin-top: -10px;margin-bottom: -10px;">
+            <p><ComNumber :value="doc?.current_quantity"/> {{ productDoc?.unit }} / <ComCurrency :value="doc?.current_cost"/></p>
+          </div>
+        
 </ion-card>
 <ion-card v-if="doc.stock_location && doc.product_code" class="mt-3 m-0">
 <ion-card-content>
-            <stack class="pt-3" gap="10px" v-if="doc.product_code">
-            
-            <com-input type="number" :label="t('New Quantity')"
-             :placeholder="t('New Quantity')" v-model="doc.new_quantity"
-             :minFractionDigits="_app.setting.float_precision"
-                label-placement="floating" fill="outline" mode="md"  ></com-input>
-             
-                <Message severity="info" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0" >{{ t("Different Quantity") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/></Message>
-
-
-            <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost"
-                label-placement="floating" fill="outline" mode="md"></com-input>
-                <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
-
-            
-               
-          <ion-textarea fill="outline" :label="$t('Note')" label-placement="floating" rows="5"
+<stack v-if="doc.product_code" row gap="10px">
+  <div>
+    <com-input type="number" :label="t('New Quantity')" :placeholder="t('New Quantity')" v-model="doc.new_quantity" :minFractionDigits="_app.setting.float_precision" label-placement="floating" fill="outline" mode="md"  ></com-input>  
+    <Message severity="info" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0" >{{ t("Different Quantity") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/></Message>
+  </div>
+  <div >
+    <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost" label-placement="floating" fill="outline" mode="md"></com-input> 
+    <Message severity="info" v-if="(doc.new_cost - doc.current_cost)!=0" >{{ t("Different Cost") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/></Message>
+  </div>
+</stack>
+<ion-textarea fill="outline" :label="$t('Note')" label-placement="floating" rows="5"
           :value="doc.note"
           @ionInput="e => doc.note = e.target.value" mode="md"></ion-textarea>
-        </stack>
-
-        </ion-card-content>
-      </ion-card>
+</ion-card-content>
+</ion-card>
     
       
 
