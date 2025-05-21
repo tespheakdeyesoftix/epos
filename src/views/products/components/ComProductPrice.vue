@@ -1,7 +1,7 @@
 <template>
     <ion-card v-for="(p, index) in doc.product_price" :key="index">
         <ion-card-header>
-            <ion-card-title>{{ t("Product Price:") }} {{ index + 1 }}</ion-card-title>
+            <ion-card-title>{{ t("Product Price") }}: {{ index + 1 }}</ion-card-title>
 
         </ion-card-header>
         <ion-card-content>
