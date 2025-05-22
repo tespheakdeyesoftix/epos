@@ -157,7 +157,7 @@
     "New Quantity": "បរិមាណថ្មី",
     "Prices": "តម្លៃ",
     "Product Price": "តម្លៃផលិតផល",
-    "Price Rule": "",
+    "Price Rule": "Price Rule",
     "Delete":"លុប",
     "Save":"រក្សាទុក",
     "Cancel":"បោះបង់",
@@ -172,7 +172,15 @@
     "Total Discount" :"បញ្ចុះតម្លៃសរុប",
     "Items Discount":"បញ្ចុះតម្លៃលើទំនិញ",
     "Sale Discount": "លក់បញ្ចុះតម្លៃ",
-    "Discountable Amount": "ចំនួនទឹកប្រាក់ដែលអាចបញ្ចុះតម្លៃ"
+    "Discountable Amount": "ចំនួនទឹកប្រាក់ដែលអាចបញ្ចុះតម្លៃ",
+    "Add Price":"បញ្ចូលតម្លៃ",
+    "Delete Price": "លុបតម្លៃ",
+    "QTY": "ចំនួន",
+    "Discount": "បញ្ចុះតម្លៃ",
+    "Tax": "ពន្ធ",
+    "Total Orders": "បញ្ជាទិញសរុប",
+    "Total Amt": "ចំនួនទឹកប្រាក់សរុប",
+    "Profit": "ប្រាក់ចំណេញ"
     
      
   } 
