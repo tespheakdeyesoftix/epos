@@ -7,7 +7,7 @@
     </stack>
     
    <ComSaleOrderCard v-for="(d,index) in data.value" :key="index" :data="d"/> 
-   <ion-button style="float: right;" class="mt-2" fill="clear" routerLink="/sale">{{ t("View all orders") }}</ion-button>
+   <ion-button  expand="full" fill="clear" routerLink="/sale">{{ t("View all orders") }}</ion-button>
 </template>
 <script setup>
 import ComSaleOrderCard  from "@/views/sales/components/ComSaleOrderCard.vue"
