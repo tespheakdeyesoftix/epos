@@ -21,11 +21,7 @@
             <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="pricetagOutline" slot="start"></ion-icon>
-<<<<<<< Updated upstream
                 {{ t("Products") }}
-=======
-                {{ t("Product") }}
->>>>>>> Stashed changes
               </div>
             </ion-button>
 
