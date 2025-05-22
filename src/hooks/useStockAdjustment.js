@@ -20,10 +20,9 @@ export function useStockAdjustment(props = null) {
     const loading = await app.showLoading();
     const productRes = await app.getDoc("Product",doc.value.product_code)
     if(productRes){
-
       productDoc.value = productRes.data
     }
-
+    getStockLocation()
     if(doc.value.stock_location){
     await getStockLocationProduct();
     }
@@ -31,8 +30,21 @@ export function useStockAdjustment(props = null) {
     await loading.dismiss();
   }
 
+    async function getStockLocation(){
+      const location = await app.getDocList("Stock Location", {
+        filters:[
+          ["disabled","=",0]
+        ],
+        fields:["name"]
+      })
+      if (location.data){
+        if(location.data.length > 0){
+          doc.value.stock_location = location.data[0].name
+        } 
+      }
+  }
+
   async function getStockLocationProduct(){
-   
       const stockProductRes = await app.getDocList("Stock Location Product", {
         filters:[
           ["product_code","=",doc.value.product_code],
@@ -55,7 +67,6 @@ export function useStockAdjustment(props = null) {
           doc.value.new_cost= 0
         }
       }
-     
   }
 
   async function onSave(){
