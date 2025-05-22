@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { IonPage, IonContent, IonCard, IonCardContent, IonAvatar, IonIcon } from '@ionic/vue';
 import { personOutline } from 'ionicons/icons';
-import AppBar from '../layouts/AppBar.vue';
+import AppBar from './layouts/AppBar.vue';
 import { useAuth } from '@/hooks/useAuth';
 import Img from "@/views/components/Img.vue";
 
