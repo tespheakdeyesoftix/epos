@@ -46,7 +46,7 @@
             modalType="Dialog" @onSelected="onSelectWarehouse">
             <ion-icon class="magin-right" slot="icon-only" :icon="storefrontOutline"></ion-icon>
             <span v-if="!doc?.stock_location" class=" text-search">
-              {{ t('Pleas Select Stock Location') }}
+              {{ t('Stock Location') }}
             </span>
             <span class="text-black text-sm ml-2">
               {{ doc?.stock_location }}
@@ -60,50 +60,38 @@
           <div style="padding: 5px;">
             <Img width="100%" v-if="productDoc?.photo" :src="productDoc.photo" :key="productDoc.photo" />
           </div>
-
         </div>
-        <div style="font-size: 18px;text-align: center;margin-top: -20px;">
-          <p>{{ productDoc?.product_code }} - {{ productDoc?.product_name_en }}</p>
-        </div>
-        <div style="font-size: 18px;text-align: center;margin-top: -10px;margin-bottom: -10px;">
-          <p>
-            <ComNumber :value="doc?.current_quantity" /> {{ productDoc?.unit }} /
-            <ComCurrency :value="doc?.current_cost" />
-          </p>
-        </div>
-
-      </ion-card>
-      <ion-card v-if="doc.stock_location && doc.product_code" class="mt-3 m-0">
-        <ion-card-content>
-          <stack gap="10px">
-            <stack v-if="doc.product_code" row gap="10px">
-              <div>
-                <com-input type="number" :label="t('New Quantity')" :placeholder="t('New Quantity')"
-                  v-model="doc.new_quantity" :minFractionDigits="_app.setting.float_precision"
-                  label-placement="floating" fill="outline" mode="md"></com-input>
-                <Message severity="info"
-                  v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity, _app.setting.float_precision)) != 0">{{
-                    t("Different Quantity") }}:
-                  <ComNumber :value="doc.new_quantity - doc.current_quantity" />
-                </Message>
-              </div>
-              <div>
-                <com-input :minFractionDigits="_app.setting.currency_precision" type="number" label="New Cost"
-                  placeholder="New Cost" v-model="doc.new_cost" label-placement="floating" fill="outline"
-                  mode="md"></com-input>
-                <Message severity="info" v-if="(doc.new_cost - doc.current_cost) != 0">{{ t("Different Cost") }}:
-                  <ComCurrency :value="doc.new_cost - doc.current_cost" />
-                </Message>
-              </div>
-            </stack>
-            <ion-textarea fill="outline" :label="$t('Note')" label-placement="floating" rows="5" :value="doc.note"
-              @ionInput="e => doc.note = e.target.value" mode="md"></ion-textarea>
-          </stack>
-        </ion-card-content>
-
-      </ion-card>
-
-
+         <div style="font-size: 18px;text-align: center;margin-top: -25px;">
+            <p>{{ productDoc?.product_code }} - {{ productDoc?.product_name_en }}</p>
+          </div>
+           <div style="font-size: 18px;text-align: center;margin-top: -10px;margin-bottom: -10px;">
+            <p><ComNumber :value="doc?.current_quantity"/> {{ productDoc?.unit }} / <ComCurrency :value="doc?.current_cost"/></p>
+          </div>
+        
+</ion-card>
+<ion-card v-if="doc.stock_location && doc.product_code" class="mt-3 m-0">
+<ion-card-content>
+<div style="display: flex;" class="pt-3" gap="10px" v-if="doc.product_code">
+  <div style="margin-right: 15px;margin-top: -10px;">
+    <com-input type="number" :label="t('New Quantity')" :placeholder="t('New Quantity')" v-model="doc.new_quantity" :minFractionDigits="_app.setting.float_precision" label-placement="floating" fill="outline" mode="md"  ></com-input>  
+      <div class="diff-message" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0">
+        {{ t("Different") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/>
+      </div>
+  </div>
+  <div style="margin-right: 5px;margin-top: -10px;">
+    <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost" label-placement="floating" fill="outline" mode="md"></com-input> 
+      <div  v-if="(doc.new_cost - doc.current_cost)!=0" class="diff-message">
+        {{ t("Different") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/>
+      </div>
+  </div>
+</div>
+</ion-card-content>
+<div style="margin-left: 15px;margin-right: 15px;margin-bottom: 15px;">
+  <ion-textarea fill="outline" :label="$t('Note')" label-placement="floating" rows="5" :value="doc.note" @ionInput="e => doc.note = e.target.value" mode="md"></ion-textarea>
+</div>
+</ion-card>
+    
+      
 
     </ion-content>
     <ion-footer>
@@ -175,6 +163,14 @@ onMounted(async () => {
 
 </script>
 <style scoped>
+.diff-message {
+  font-size: 14px;
+  text-align: center;
+  color: #00aaff;
+  margin-top: 2px;
+  margin-bottom: -5px;
+}
+
 .product-select-with-scan {
   display: flex;
   align-items: center;

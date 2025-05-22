@@ -160,17 +160,13 @@
     "Prices": "តម្លៃ",
     "Product Price": "តម្លៃផលិតផល",
     "Product": "ផលិតផល",
-    "Price Rule": "",
+
     "Delete":"លុប",
     "Save":"រក្សាទុក",
     "Cancel":"បោះបង់",
     "Category": "ប្រភេទ",
     "Cost": "ចំណាយ",
-    "Tbl #": "លេខតុ",
     "Grand Total": "តម្លៃសរុប",
-    "Shift Name": "ឈ្មោះវេន",
-    "Show More": "បង្ហាញបន្ថែម",
-    "Hide Info": "លាក់ព័ត៌មាន",
     "Product Name Kh": "ឈ្មោះផលិតផលជាភាសាខ្មែរ",
     "Product Name En": "ឈ្មោះផលិតផលជាអង់គ្លេស",
     "Revenue Group": "ក្រុមចំណូល",
@@ -190,5 +186,19 @@
    "Last Quarter": "ត្រីមាសមុន" ,
    "This Year": "ឆ្នាំនេះ" ,
    "Date Range": "ចន្លោះថ្ងៃ" ,
-   "Last Year": "ឆ្នាំមុន" 
+   "Last Year": "ឆ្នាំមុន" ,
+    "Total Discount" :"បញ្ចុះតម្លៃសរុប",
+    "Items Discount":"បញ្ចុះតម្លៃលើទំនិញ",
+    "Sale Discount": "លក់បញ្ចុះតម្លៃ",
+    "Discountable Amount": "ចំនួនទឹកប្រាក់ដែលអាចបញ្ចុះតម្លៃ",
+    "Add Price":"បញ្ចូលតម្លៃ",
+    "Delete Price": "លុបតម្លៃ",
+    "QTY": "ចំនួន",
+    "Discount": "បញ្ចុះតម្លៃ",
+    "Tax": "ពន្ធ",
+    "Total Orders": "បញ្ជាទិញសរុប",
+    "Total Amt": "ចំនួនទឹកប្រាក់សរុប",
+    "Profit": "ប្រាក់ចំណេញ"
+    
+     
   } 
