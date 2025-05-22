@@ -216,3 +216,68 @@ export function currencyFormat(number, format) {
     return formattedNumber;
   }
 }
+
+
+export function generateUIJsonFromMeta(metaFields) {
+  const layout = [];
+  let currentTab = { tab: "Main", children: [] };
+  let currentSection = { section: "", children: [] };
+  let currentColumn = { column: "Column 1", children: [] };
+  let columnCount = 1;
+
+  let skipSection = false;
+
+  for (const field of metaFields) {
+    if (field.fieldtype === "Tab Break") {
+      // Push everything in current structure
+      if (!skipSection && currentColumn.children.length > 0) currentSection.children.push(currentColumn);
+      if (!skipSection && currentSection.children.length > 0) currentTab.children.push(currentSection);
+      if (currentTab.children.length > 0) layout.push(currentTab);
+
+      // Reset structures
+      currentTab = { tab: field.label || "Tab", children: [] };
+      currentSection = { section: "", children: [] };
+      currentColumn = { column: "Column 1", children: [] };
+      columnCount = 1;
+      skipSection = false;
+      continue;
+    }
+
+    if (field.fieldtype === "Section Break") {
+      // Push existing content before breaking section
+      if (!skipSection && currentColumn.children.length > 0) currentSection.children.push(currentColumn);
+      if (!skipSection && currentSection.children.length > 0) currentTab.children.push(currentSection);
+
+      // Setup new section
+      currentSection = { section: field.label || "", children: [] };
+      currentColumn = { column: "Column 1", children: [] };
+      columnCount = 1;
+
+      // Determine whether to skip this section
+      skipSection = field.hidden ? true : false;
+      continue;
+    }
+
+    if (field.fieldtype === "Column Break") {
+      if (skipSection) continue;
+
+      currentSection.children.push(currentColumn);
+      columnCount++;
+      currentColumn = { column: `Column ${columnCount}`, children: [] };
+      continue;
+    }
+
+    if (field.hidden || skipSection) {
+      continue; // Skip hidden fields or fields under hidden sections
+    }
+
+    currentColumn.children.push({ ...field });
+  }
+
+  // Push remaining content if valid
+  if (!skipSection && currentColumn.children.length > 0) currentSection.children.push(currentColumn);
+  if (!skipSection && currentSection.children.length > 0) currentTab.children.push(currentSection);
+  if (currentTab.children.length > 0) layout.push(currentTab);
+
+  return layout;
+}
