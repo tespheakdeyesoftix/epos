@@ -21,11 +21,7 @@
             <ion-button class="col-6 m-0" routerLink="/product-list">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="pricetagOutline" slot="start"></ion-icon>
-<<<<<<< Updated upstream
-                {{ t("Products") }}
-=======
                 {{ t("Product") }}
->>>>>>> Stashed changes
               </div>
             </ion-button>
 
@@ -88,7 +84,7 @@ const onLogout = async () => {
   ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
 </script>
-<style>
+<style scoped>
 .wrapper-cover {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url(/assets/home-bg.jpeg) no-repeat center center / cover;

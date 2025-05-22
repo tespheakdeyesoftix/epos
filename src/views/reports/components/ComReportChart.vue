@@ -1,4 +1,5 @@
 <template>
+ 
   <div class="px-1 mt-1">
         <div class="mt-1 bg-gray-100 border-round-lg pt-2" style="width: 100%;height: 350px;" v-if="data">
             <v-chart :option="option" autoresize />
@@ -9,7 +10,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 const props = defineProps({
-    data: Object
+    data: Object,
+    chartSeries:String
 })
 const t = window.t;
 
@@ -50,9 +52,13 @@ function getChartSeries(){
   ...rest,
   data: values,
   type:props.data.type,
-  //label:getSeriesLabel()
+  label:getSeriesLabel()
 }));
 
+if(props.chartSeries){
+    let chartSeries = props.chartSeries.split(",")
+    datasets = datasets.filter(x=>chartSeries.includes(x.name))
+}
 
 return datasets;
 }

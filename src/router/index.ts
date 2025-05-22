@@ -53,10 +53,17 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/sale",
+    component: () => import('@/views/sales/SaleList.vue'),
+    meta: { requiresAuth: true }
+  },
+  
+  {
     path: "/sale-detail/:name",
     component: () => import('@/views/sales/SaleDetail.vue'),
     meta: { requiresAuth: true }
   },
+
   {
     path: "/dashboard",
     component: () => import('@/views/dashboard/Dashboard.vue'),

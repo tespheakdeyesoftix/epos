@@ -5,7 +5,7 @@
             <ion-col v-for="(d,index) in data" :key="index">
                 <ion-label>{{ d.label }}</ion-label>
                 <ion-text :style="{color:(d.indicator || 'blue')}">
-                    <h2>
+                    <h5>
                         
                         <template v-if="d.datatype=='Currency'">
                             <ComCurrency :value="d.value"/>
@@ -16,7 +16,7 @@
                         <span v-else>
                         {{d.value}}
                         </span>
-                    </h2>
+                    </h5>
                 </ion-text>
             </ion-col>
         </ion-row>
