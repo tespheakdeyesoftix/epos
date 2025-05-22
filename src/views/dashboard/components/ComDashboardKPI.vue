@@ -15,7 +15,7 @@
 <script setup>
 import { cashOutline, folderOpenOutline, trashBinOutline } from 'ionicons/icons';
 import ComCardKPI from './ComCardKPI.vue';
-
+const t = window.t;
 const props = defineProps({
   data: Object
 }) 
