@@ -4,7 +4,7 @@
       <ion-icon :icon="icon" class="text-xl text-white"></ion-icon>
     </div>
     <div class="text-white">
-      <div class="text-sm">{{ label }}</div>
+      <div class="text-sm">{{ t(label) }}</div>
       <ion-text >
         <h2>
         <ComCurrency v-if="isCurrency" :value="value" />
@@ -20,7 +20,7 @@
 
 <script setup>
 import ComCurrency from '@/views/components/public/ComCurrency.vue';
-
+const t = window.t;
 
 defineProps({
   mainClass: {

@@ -2,47 +2,48 @@
   <ion-page>
     <ToolBar>{{ t("Stock Adjustment") }}
       <template #end>
-        
-        <ComPopOver >
-          <ion-button >
-          <ion-icon :icon="ellipsisVertical" slot="icon-only" />
-        </ion-button>
-        <template #content="{close }">
-          <ion-list>
-        <ion-item   button :router-link="'/stock-adjustment-history'" @click="close" >
-          {{ t("Stock Adjustment History")  }}
-        </ion-item>
-      </ion-list>
-        </template>
+
+        <ComPopOver>
+          <ion-button>
+            <ion-icon :icon="ellipsisVertical" slot="icon-only" />
+          </ion-button>
+          <template #content="{ close }">
+            <ion-list>
+              <ion-item button :router-link="'/stock-adjustment-history'" @click="close">
+                {{ t("Stock Adjustment History") }}
+              </ion-item>
+            </ion-list>
+          </template>
         </ComPopOver>
       </template>
     </ToolBar>
     <ion-content class="ion-padding">
       <div class="product-select-with-scan">
         <!-- Custom Select -->
-        <ComSelect csClass="search-by-product justify-content-between" ref="productSelect" docType="Product" v-model="selectedProduct"
-          @onSelected="onSelectProduct">
+        <ComSelect csClass="search-by-product justify-content-between" ref="productSelect" docType="Product"
+          v-model="selectedProduct" @onSelected="onSelectProduct">
           <div class="flex align-item-center">
             <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
-          <ion-text class="text-search" v-if="!productDoc?.product_name_en">
-            {{ t('Search By Product Name') }}</ion-text>
-          <ion-text class="text-black text-sm ml-2" v-else> {{ productDoc?.product_code }} - {{ productDoc?.product_name_en.length >
-            30
-            ? productDoc?.product_name_en.slice(0, 30) + '...'
-            : productDoc?.product_name_en }} </ion-text>
+            <ion-text class="text-search" v-if="!productDoc?.product_name_en">
+              {{ t('Search By Product Name') }}</ion-text>
+            <ion-text class="text-black text-sm ml-2" v-else> {{ productDoc?.product_code }} - {{
+              productDoc?.product_name_en.length >
+                30
+                ? productDoc?.product_name_en.slice(0, 30) + '...'
+                : productDoc?.product_name_en }} </ion-text>
           </div>
-         
- <ion-button fill="clear"  @click.stop="onScanBarcode">
-          <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
-        </ion-button>
+
+          <ion-button fill="clear" @click.stop="onScanBarcode">
+            <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
+          </ion-button>
         </ComSelect>
         <!-- Scan Button -->
-       
+
       </div>
       <div class="relative fixed-input mt-2">
         <div>
-          <ComSelect csClass="search-by-product" docType="Stock Location" :clear="false" v-model="doc.stock_location" modalType="Dialog"
-            @onSelected="onSelectWarehouse">
+          <ComSelect csClass="search-by-product" docType="Stock Location" :clear="false" v-model="doc.stock_location"
+            modalType="Dialog" @onSelected="onSelectWarehouse">
             <ion-icon class="magin-right" slot="icon-only" :icon="storefrontOutline"></ion-icon>
             <span v-if="!doc?.stock_location" class=" text-search">
               {{ t('Stock Location') }}
@@ -56,11 +57,10 @@
       </div>
       <ion-card v-if="productDoc" class="mt-3 m-0">
         <div v-if="productDoc?.photo" class="flex justify-content-center m-2">
-        <div style="padding: 5px;">
-          <Img width="100%" v-if="productDoc?.photo" :src="productDoc.photo" :key="productDoc.photo"/>
+          <div style="padding: 5px;">
+            <Img width="100%" v-if="productDoc?.photo" :src="productDoc.photo" :key="productDoc.photo" />
+          </div>
         </div>
- 
-</div>
          <div style="font-size: 18px;text-align: center;margin-top: -25px;">
             <p>{{ productDoc?.product_code }} - {{ productDoc?.product_name_en }}</p>
           </div>
@@ -110,23 +110,23 @@
 </template>
 <script setup>
 import { scan, search, storefront, storefrontOutline } from 'ionicons/icons';
-import {useStockAdjustment} from "@/hooks/useStockAdjustment.js"
- 
+import { useStockAdjustment } from "@/hooks/useStockAdjustment.js"
+
 import Message from 'primevue/message';
 import { onMounted } from 'vue';
- 
-import { ellipsisVertical,timeOutline  } from 'ionicons/icons'
+
+import { ellipsisVertical, timeOutline } from 'ionicons/icons'
 const t = window.t;
 const _app = app;
 
 const { doc, productDoc, loadData, getStockLocationProduct, onCancel, onSave } = useStockAdjustment()
 async function onScanBarcode() {
   const result = await app.onScanBarcode();
-  if(result){
+  if (result) {
     doc.value.product_code = result
     await loadData();
   }
-  
+
 
 }
 
@@ -150,9 +150,9 @@ async function onSelectProduct(data) {
 }
 
 
-onMounted(async ()=>{
-   
-  if(app.route.params.product_code){
+onMounted(async () => {
+
+  if (app.route.params.product_code) {
     doc.value.product_code = app.route.params.product_code
     await loadData();
   }
@@ -160,7 +160,7 @@ onMounted(async ()=>{
 })
 
 
- 
+
 </script>
 <style scoped>
 .diff-message {

@@ -4,9 +4,7 @@ import { RouteRecordRaw } from 'vue-router';
 import SelectWorkspace from '@/SelectWorkspace.vue'
 import AddWorkspace from '@/AddWorkspace.vue';
 import Home from '@/views/Home.vue';
- 
-import Help from '@/views/pages/Help.vue';
-import { useAuth } from '@/hooks/useAuth';
+ import { useAuth } from '@/hooks/useAuth';
 
 const ctrl = useAuth();
 const routes: Array<RouteRecordRaw> = [
@@ -80,17 +78,27 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/stock-adjustment/StockAdjustmentHistory.vue'),
     meta: { requiresAuth: true }
   },
+  
   {
-    path: "/sale",
-    component: () => import('@/views/sales/SaleList.vue'),
+    path: "/page/:doctype/new",
+    component: () => import('@/views/pages/Form.vue'),
+    meta: { requiresAuth: true }
+  },
+  
+  {
+    path: "/report",
+    component: () => import('@/views/reports/ReportList.vue'),
+    meta: { requiresAuth: true }
+  },
+  
+  {
+    path: "/report/:report_name",
+    component: () => import('@/views/reports/ServerReport.vue'),
     meta: { requiresAuth: true }
   },
 
-  {
-    path: "/help",
-    component: Help,
-    meta: { requiresAuth: true,title:"Help" }
-  },
+
+  
  
 ]
 

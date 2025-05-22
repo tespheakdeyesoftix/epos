@@ -28,11 +28,11 @@ const options = {
   filters:[["docstatus","=",1]],
 
   filterOptions:[
-    {fieldname:"pos_profile", fieldtype:"Link",options:"POS Profile", label:"POS Profile"},
-    {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:"Working Day"},
-    {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:"Cashier Shift"},
-    {fieldname:"table_id", fieldtype:"Link",options:"Tables Number", label:"Table"},
-    {fieldname:"outlet", fieldtype:"Link",options:"Outlet", label:"Outlet"},
+    {fieldname:"pos_profile", fieldtype:"Link",options:"POS Profile", label:t('POS Profile')},
+    {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
+    {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
+    {fieldname:"table_id", fieldtype:"Link",options:"Tables Number", label:t("Table #")},
+    {fieldname:"outlet", fieldtype:"Link",options:"Outlet", label:t("Outlet")},
   ]
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <stack row itemClass="col-6 sm:col-6 lg:col-3 p-2 " >
-    <ComCardKPI mainClass="bg-blue-500" :icon="cashOutline" :isCurrency="true" label="Total Revenue"
+    <ComCardKPI mainClass="bg-blue-500" :icon="cashOutline" :isCurrency="true" label="Today Revenue"
       :value="data?.value?.today_revenue" />
    
    <ComCardKPI mainClass="bg-yellow-500" :icon="folderOpenOutline" label="Today Bill / QTY"
@@ -15,7 +15,7 @@
 <script setup>
 import { cashOutline, folderOpenOutline, trashBinOutline } from 'ionicons/icons';
 import ComCardKPI from './ComCardKPI.vue';
-
+const t = window.t;
 const props = defineProps({
   data: Object
 }) 

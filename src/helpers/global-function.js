@@ -1,9 +1,10 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import { showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
+import { generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import { ref } from 'vue';
-import { set } from 'lodash';
+import { useApp } from '@/hooks/useApp';
+const {getMeta} = useApp()
  
 let ionRouter = ref();
 
@@ -193,4 +194,12 @@ globalThis.app.getNumber = function(n){
 
 globalThis.app.currencyFormat = function(number,format){
   return currencyFormat(number,format);
+}
+
+globalThis.app.getMeta = async function(doctype){
+  return await getMeta(doctype);
+}
+globalThis.app.generateUIJsonFromMeta = async function(doctype){
+  const meta  =  await getMeta(doctype);
+  return  generateUIJsonFromMeta(meta.fields)
 }
