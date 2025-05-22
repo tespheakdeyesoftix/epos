@@ -105,9 +105,10 @@
     "Dashboard": "ផ្ទាំងគ្រប់គ្រង",
     "Stock Adjustment": "កែសម្រួលស្តុក",
     "Sale": "លក់",
-    "Product List": "បញ្ជីផលិតផល",
+    "Product List": "តារាងបញ្ចីទំនិញ",
     "Last modified:": "កែប្រែដោយ",
     "Sale Detail:": "ព័ត៌មានលក់",
+    "Sale Detail": "ព័ត៌មានលក់",
     "Branch": "សាខា",
     "Bill Number": "លេខវិក័យប័ត្រ",
     "Posting Date": "កាលបរិច្ឆេទបញ្ចូល",
@@ -131,7 +132,7 @@
     "Product Category": "ប្រភេទផលិតផល",
     "Unit":"ឯកតា",
     "Price":"តម្លៃ",
-    "Note": "ចំណាំ",
+    "Note": "កំណត់ចំណាំ",
     "Created By": "បង្កើតដោយ",
     "days ago": "ថ្ងៃមុន",
     "minutes ago": "នាទីមុន",
@@ -152,9 +153,16 @@
     "Save":"រក្សាទុក",
     "Cancel":"បោះបង់",
     "Category": "ប្រភេទ",
-    "Cost": ""
-    
-    
-
-    
+    "Cost": "ចំណាយ",
+    "Tbl #": "លេខតុ",
+    "Grand Total": "តម្លៃសរុប",
+    "Shift Name": "ឈ្មោះវេន",
+    "Show More": "បង្ហាញបន្ថែម",
+    "Hide Info": "លាក់ព័ត៌មាន",
+    "Product Name Kh": "ឈ្មោះផលិតផលជាភាសាខ្មែរ",
+    "Product Name En": "ឈ្មោះផលិតផលជាអង់គ្លេស",
+    "Revenue Group": "ក្រុមចំណូល",
+    "Product Information": "ព័ត៌៌មានផលិតផល",
+    "On Date": "នៅថ្ងៃទី"
+     
   } 
