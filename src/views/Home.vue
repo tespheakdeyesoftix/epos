@@ -47,7 +47,7 @@
             
             <ion-button class="col-6 m-0" routerLink="/report">
               <div class="flex flex-column justify-center align-items-center py-2">
-                <ion-icon class="text-6xl mb-2" :icon="cartOutline" slot="start"></ion-icon>
+                <ion-icon class="text-6xl mb-2" :icon="barChartOutline" slot="start"></ion-icon>
                 {{ t("Reports") }}
               </div>
             </ion-button>
@@ -74,7 +74,7 @@ import {
   IonIcon,
   useIonRouter,
 } from '@ionic/vue';
-import {pricetagOutline, cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline, cardOutline } from 'ionicons/icons';
+import {pricetagOutline, cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline, cardOutline, barChartOutline } from 'ionicons/icons';
 const t = window.t;
 const { logout } = useAuth();
 const setting = app.setting;

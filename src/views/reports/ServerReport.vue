@@ -23,15 +23,23 @@
 </template>
     </ToolBar>
     <ion-content class="ion-padding">
-     
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
+                <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
       <stack>
 
            <ComReportFilter @onFilter="onPreviewReport" :filterOptions="query.filterOptions"/>
-        
-           <ComReportSummary v-if="showSummary" :data="reportData?.report_summary"/>
+            <template v-if="reportData?.result?.length>0">
+              <ComReportSummary v-if="showSummary" :data="reportData?.report_summary"/>
            <ComReportChart v-if="showReportChart" :data="reportData?.chart" :chartSeries="query.chart_series"/>
            <ComReportData :data="reportData?.result" :columns="reportData?.columns"/>
-          </stack>
+
+            </template>
+            <template v-else>
+              
+              <ion-text v-if="reportData">Nothing to Show</ion-text>
+            </template>
+           </stack>
         </ion-content>
         </ion-page>
 </template>
@@ -43,14 +51,12 @@ import ComReportSummary from "@/views/reports/components/ComReportSummary.vue"
 import ComReportData from "@/views/reports/components/ComReportData.vue"
 import {  settingsOutline } from "ionicons/icons"
 import { ref } from "vue"
-const {reportData}  = useServerReport();
+const {reportData,onPreviewReport,onRefresh}  = useServerReport();
 const t = window.t;
 const query = app.route.query;
 const showSummary = ref(true)
 const showReportChart = ref(true)
-function onPreviewReport(filter){
-  alert("you preview report")
-}
+
 
 function onToggleSumamry(close){
   showSummary.value = !showSummary.value;
@@ -60,5 +66,12 @@ function onToggleReportChart(close){
   showReportChart.value = !showReportChart.value;
    close();
 }
+
+const handleRefresh = async (event) => {
+    await onRefresh()
+  event.target.complete();
+};
+
+
 
 </script>

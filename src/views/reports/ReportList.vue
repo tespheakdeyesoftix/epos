@@ -11,17 +11,15 @@
                 <h1 class="mt-2 mb-0">{{ t("Reports") }}</h1>
             </div>
 
-
-
-
+ 
 
             <ion-item-group>
-                <template v-for="(g, index) in reports" :key="index" >
+                <template v-for="(g, index) in reports?.filter(p=>!p.parent_mobile_reports)" :key="index" >
                     <ion-item-divider>
-                    <ion-label class="text-2xl text-blue-400">{{ t(g.group) }}</ion-label>
+                    <ion-label class="text-2xl text-blue-400">{{ t(g.report_title) }}</ion-label>
                 </ion-item-divider>
-                <ion-item  v-for="(d, index) in g.reports" :key="'report_' + index"  button :routerLink="d.url">
-                    <ion-label>{{ d.title }}</ion-label>
+                <ion-item  v-for="(d, index) in reports.filter(x=>x.parent_mobile_reports==g.name)" :key="'report_' + index"  button :routerLink="getReportUrl(d)">
+                    <ion-label>{{ t(d.report_title) }}</ion-label>
                 </ion-item>
                 </template>
                 
@@ -30,62 +28,41 @@
     </ion-page>
 </template>
 <script setup>
+
 import { barChartOutline, documentOutline } from 'ionicons/icons';
+import { onMounted, ref } from 'vue';
 
 const t = window.t
 
+const reports =ref([])
+  
+async function getReport(){
+    const res =await app.getDocList("Mobile Reports",{
+        fields:["name","parent_mobile_reports","report_title","report_url","filter_options"],
+        orderBy: {
+            field: 'sort_order',
+            order: 'asc',
+        },
+        limit: 10000
+    })
 
-
-
-
-const reports = [
-    {
-        group: "Sale Reports",
-        reports: [
-            {
-                title: "Sale Summary by Category",
-                url: "/report/Sale Summary Report?title=Sale Summary By Category&filter_based_on=date_range&row_group=Category&chart_type=bar&show_summary=1&chart_series=Revenue&filterOptions=" + getFilterOption() 
-            },
-            {
-                title: "Sale Summary by Product",
-                url: "/report/Sale Summary Report?title=Sale Summary By Product&filter_based_on=date_range&row_group=Product&chart_type=bar&show_summary=1&chart_series=Revenue"
-            },
-            
-            {
-                title: "Sale Summary by Date",
-                url: "/report/Sale%20Summary%20Report?title=Sale%20Summary%20By%20Product&filter_based_on=date_range&row_group=Date&chart_type=bar&show_summary=1&chart_series=Revenue"
-            },
-
-            {
-                title: "Hourly Sale Revenue",
-                url: "/report/Hourly Sale Revenue?title=Hourly Sale Revenue&filter_based_on=date_range&row_group=Product&chart_type=bar&show_summary=1"
-            },
-            {
-                title: "Daily Sale Transaction",
-                url: "/report/Daily%20Sale%20Transaction?title=Daily Sale Transaction&start_date=2025-05-01&end_date=2025-05-22&show_summary=1"
-            },
-            {
-                title: "Sale Payment Type Breakdown",
-                url: "/report/Sale Payment Type Breakdown Report?title=Sale Payment Type Breakdown&Sale%20Payment%20Type%20Breakdown%20Report?filter_based_on=Fiscal%20Year&start_date=2025-01-01&end_date=2025-05-22&from_fiscal_year=2025&row_group=Date&column_group=Payment%20Type%20Group&chart_type=bar&show_summary=1"
-            },
-            {
-                title: "Top Sale Product",
-                url: "/report/Top%20Sale%20Products%20Report?title=Top Sale Product&filter_based_on=Fiscal%20Year&start_date=2025-01-01&end_date=2025-12-31&from_fiscal_year=2025&row_group=Product&chart_type=bar&order_by=Amount&order_type=DESC&top=10&show_summary=1"
-            },
-        ]
-
+    if(res.data){
+        reports.value = res.data
     }
 
-]
-
-function getFilterOption(){
-    const option = [
-    {f:"sale_date",ft:"Date",default:"This Month"},
-    {f:"outlet",ft:"Link",options:"Outlet"},
-    {f:"pos_profile",ft:"Link",options:"POS Profile"},
-]
-return JSON.stringify(option)
 }
+
+function getReportUrl(p){
+    let url = p.report_url + "&title=" + p.report_title
+    url = url + "&filterOptions=" + p.filter_options
+    return url;
+}
+onMounted(async ()=>{
+    const loading = await app.showLoading();
+    await getReport()
+    await loading.dismiss()
+
+})
 
 </script>
 

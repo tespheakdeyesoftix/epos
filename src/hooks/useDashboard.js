@@ -45,7 +45,11 @@ export function useDashboard(props = null) {
 
         const res = await app.getDocList("Sale", {
             fields: ["name", "posting_date", "grand_total", "customer", "customer_name", "closed_date", "closed_by", "tbl_number"],
-            filters: f
+            filters: f,
+            orderBy: {
+                field: 'creation',
+                order: 'desc',
+            }
         })
 
         if (res.data) {

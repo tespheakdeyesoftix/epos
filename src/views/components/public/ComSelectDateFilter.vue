@@ -2,7 +2,7 @@
   <slot>
  <ion-chip @click="onSelectDate" :color="model?'secondary':''">
    
-        {{ t(getLabel) }}
+        {{ t(getLabel) }}   
         <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear" ></ion-icon>
   </ion-chip>
 </slot>
@@ -19,7 +19,11 @@ const props = defineProps({
     default:"Select Date"
   },
   clear:Boolean,
-  defaultTimespan:String
+  defaultTimespan:String,
+  showOperator:{
+    type:Boolean,
+    default:true
+  }
 })
 const model = defineModel()
 const emit = defineEmits()
@@ -39,7 +43,8 @@ async function  onSelectDate(){
   const result = await app.openModal({
     component:ComSelectDateModal,
     initialBreakpoint:0.65,
-    breakpoints : [0,0.35, 0.5,0.65, 0.75, 0.95]
+    breakpoints : [0,0.35, 0.5,0.65, 0.75, 0.95],
+    componentProps:{showOperator:props.showOperator}
   })
   if(result){
     model.value = result

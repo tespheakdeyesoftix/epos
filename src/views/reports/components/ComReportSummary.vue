@@ -3,7 +3,7 @@
 
         <ion-row>
             <ion-col v-for="(d,index) in data" :key="index">
-                <ion-label>{{ d.label }}</ion-label>
+                <ion-label>{{ t(d.label) }}</ion-label>
                 <ion-text :style="{color:(d.indicator || 'blue')}">
                     <h5>
                         

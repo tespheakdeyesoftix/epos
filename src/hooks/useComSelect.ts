@@ -5,8 +5,8 @@ import { InfiniteScrollCustomEvent, modalController } from "@ionic/vue";
 
 import { useApp } from "./useApp";
 export function useComSelect(props: any) {
-  const { getMeta,getDoctypeDefaultFields } = useApp();
-  const loading = ref(true);
+  const { getDoctypeDefaultFields } = useApp();
+  const loading = ref(false);
   const meta = ref<any>()
   const canLoadMore = ref(true);
   const pageSize = ref(20);
@@ -161,9 +161,27 @@ export function useComSelect(props: any) {
 
       }
     }
-    meta.value = await getMeta(props.docType);
-    const result = await getData();
-    data.value.push(...result);
+    if(props.docType){
+      meta.value = await app.getMeta(props.docType);
+      const result = await getData();
+      data.value.push(...result);
+    }else {
+      if(props.options){
+        const dataType = app.checkArrayType(props.options) || "";
+        if(["number","string"].includes(dataType)){
+          data.value = props.options.map(x=>{
+            return {
+              name:x
+            }
+          })
+        }else {
+          data.value = props.options || []
+        }
+        
+      }
+      
+    }
+   
 
 
   })

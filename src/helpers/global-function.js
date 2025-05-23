@@ -1,7 +1,7 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import {selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
+import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 import dayjs from 'dayjs';
@@ -214,4 +214,8 @@ globalThis.app.getTimespanRange =  function(timespan){
 globalThis.app.onSelectDate =  async function(props=null){
  
   return await selectDate(props)
+}
+globalThis.app.checkArrayType =    function(value){
+ 
+  return   checkArrayType(value)
 }

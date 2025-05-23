@@ -66,7 +66,7 @@ export function useApp() {
 
   async function getDoctypeDefaultFields(docType:string){
     let fields = ["name"]
-    const meta = await getMeta(docType)
+    const meta = await app.getMeta(docType)
     if (meta.image_field) {
       fields.push(meta.image_field)
     }

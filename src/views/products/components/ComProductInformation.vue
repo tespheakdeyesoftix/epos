@@ -20,7 +20,9 @@
                 {{ t("Remove File") }}
             </ion-button>
         </stack>
-        <input ref="fileInput" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
+        <input ref="fileInput" type="file" accept="image/*"       
+  
+        @change="handleFileChange" style="display: none" />
         <stack class="pt-3" gap="20px">
             <com-input :label="t('Product Code')" placeholder="Product Code" v-model="doc.product_code"
                 type="BarcodeScanerInput" label-placement="floating" fill="outline" @ionChange="onProductCodeChange"

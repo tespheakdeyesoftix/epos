@@ -5,7 +5,7 @@
             <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
-            <ComSelect docType="POS Profile"  :filters="[['is_edoor_profile','=',0]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
+            <ComSelect docType="POS Profile"  :filters="[['is_edoor_profile','=',0],['business_branch','=',property_name]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
                 <ion-item :button="true"> 
                 <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
                 <ion-label>{{ selectProfile }}</ion-label>
@@ -34,7 +34,7 @@ import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
 const ctrl = useDashboard()
 const {selectedPOSProfiles,onChangePOSProfile,onRefresh} =  useDashboard()
-
+const property_name = app.property_name;
 const selectProfile = computed(()=>{
 
     if(selectedPOSProfiles.value?.length==0){

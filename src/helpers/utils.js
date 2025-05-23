@@ -391,3 +391,25 @@ export function getTimespanRange(timespan) {
   }
 }
 
+
+export function checkArrayType(value) {
+  if (!Array.isArray(value)) {
+    return null;
+  }
+
+  if (value.every(item => typeof item === 'string')) {
+    return "string"
+  }
+
+  if (value.every(item => typeof item === 'number')) {
+    return "number"
+  }
+
+  if (value.every(item => typeof item === 'object' && item !== null && !Array.isArray(item))) {
+    return "json"
+  }
+
+  return 'mix';
+}
+
+
