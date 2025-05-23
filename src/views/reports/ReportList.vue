@@ -44,7 +44,7 @@ const reports = [
         reports: [
             {
                 title: "Sale Summary by Category",
-                url: "/report/Sale Summary Report?title=Sale Summary By Category&filter_based_on=date_range&row_group=Category&chart_type=bar&show_summary=1&chart_series=Revenue&filterOptions=" +getFilterOption() 
+                url: "/report/Sale Summary Report?title=Sale Summary By Category&filter_based_on=date_range&row_group=Category&chart_type=bar&show_summary=1&chart_series=Revenue&filterOptions=" + getFilterOption() 
             },
             {
                 title: "Sale Summary by Product",
@@ -80,7 +80,7 @@ const reports = [
 
 function getFilterOption(){
     const option = [
-    {f:"sale_datexxx",ft:"Datesss",default:"This Month"},
+    {f:"sale_date",ft:"Date",default:"This Month"},
     {f:"outlet",ft:"Link",options:"Outlet"},
     {f:"pos_profile",ft:"Link",options:"POS Profile"},
 ]
