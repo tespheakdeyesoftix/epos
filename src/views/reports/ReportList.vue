@@ -68,6 +68,10 @@ const reports = [
                 title: "Sale Payment Type Breakdown",
                 url: "/report/Sale Payment Type Breakdown Report?title=Sale Payment Type Breakdown&Sale%20Payment%20Type%20Breakdown%20Report?filter_based_on=Fiscal%20Year&start_date=2025-01-01&end_date=2025-05-22&from_fiscal_year=2025&row_group=Date&column_group=Payment%20Type%20Group&chart_type=bar&show_summary=1"
             },
+            {
+                title: "Top Sale Product",
+                url: "/report/Top%20Sale%20Products%20Report?title=Top Sale Product&filter_based_on=Fiscal%20Year&start_date=2025-01-01&end_date=2025-12-31&from_fiscal_year=2025&row_group=Product&chart_type=bar&order_by=Amount&order_type=DESC&top=10&show_summary=1"
+            },
         ]
 
     }
