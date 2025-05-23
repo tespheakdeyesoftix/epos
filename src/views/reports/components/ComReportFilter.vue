@@ -2,8 +2,8 @@
   {{ options }}
  <div v-if="options">
   <template v-for="(d,index) in options" :key="index">
-    <!-- <ComSelect v-if="d.ft='Link'" :docType="d.options" v-model="filter[d.f]"/> -->
-    <ComSelect v-if="d" :docType="d.options" v-model="filter[d.f]"/>    
+    <ComSelect v-if="d.ft=='Link'" :docType="d.options" v-model="filter[d.f]"/>
+        
     <span v-else>{{ d }}</span>
   </template>
  </div>

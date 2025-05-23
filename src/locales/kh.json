@@ -137,7 +137,8 @@
     "Remove File": "លុបឯកសារ",
  
     "Show more": "បង្ហាញព័ត៌មានទាំងអស់",
- 
+    "Show More": "បង្ហាញព័ត៌មានទាំងអស់",
+    "Hide Info":"លាក់ព័ត៌មាន",
     "Product Category": "ប្រភេទផលិតផល",
  
     "Unit":"ឯកតា",
@@ -197,8 +198,19 @@
     "Discount": "បញ្ចុះតម្លៃ",
     "Tax": "ពន្ធ",
     "Total Orders": "បញ្ជាទិញសរុប",
-    "Total Amt": "ចំនួនទឹកប្រាក់សរុប",
-    "Profit": "ប្រាក់ចំណេញ"
-    
-     
+    "Total Amt": "ទឹកប្រាក់សរុប",
+    "Profit": "ប្រាក់ចំណេញ",
+    "Total Revenue": "ប្រាក់ចំណូលសរុប",
+    "Total Cost":"ចំណាយសរុប",
+    "Total Gross Profit": "ប្រាក់ចំណេញសរុប",
+    "Date":"កាលបរិច្ឆេទ",
+    "Total Commission":"កម្រៃជើងសារសរុប",
+    "Credit Card":"កាតឥណទាន",
+    "Total Payment": "ទូទាត់ប្រាក់សរុប",
+    "Other": "ផ្សេងទៀត",
+    "User":"អ្នកប្រើប្រាស់",
+    "Customer": "អតិថិជន",
+    "Revenue": "ប្រាក់ចំណូល",
+    "Sale Reports":"របាយការណ៌លក់",
+    "Show/Hide Chart": "បង្ហាញ/លាក់ក្រាហ្វ"
   } 
