@@ -16,7 +16,7 @@ const props = defineProps({
 })
 const t = window.t;
 const option = computed(() => {
-    if (props.data.value) {
+    if (props.data) {
         return {
             grid: {
                 left: 20,
@@ -30,14 +30,14 @@ const option = computed(() => {
             },
             xAxis: {
                 type: 'category',
-                data: props.data.value.map(r => r.day)
+                data: props.data.map(r => r.day)
             },
             yAxis: {
                 type: 'value'
             },
             series: [
                 {
-                    data: props.data.value.map(r => r.value),
+                    data: props.data.map(r => r.value),
                     type: 'bar',
 
                     barWidth: '60%',

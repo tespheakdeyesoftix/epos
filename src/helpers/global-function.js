@@ -1,9 +1,10 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
-import { generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
+import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
+import dayjs from 'dayjs';
 const {getMeta} = useApp()
  
 let ionRouter = ref();
@@ -202,4 +203,19 @@ globalThis.app.getMeta = async function(doctype){
 globalThis.app.generateUIJsonFromMeta = async function(doctype){
   const meta  =  await getMeta(doctype);
   return  generateUIJsonFromMeta(meta.fields)
+}
+
+globalThis.app.getTimespanRange =  function(timespan){
+ 
+  const dates =   getTimespanRange(timespan)
+  return {start_date:dayjs(dates.startDate).format("YYYY-MM-DD"),end_date:dayjs(dates.endDate).format("YYYY-MM-DD")}
+}
+
+globalThis.app.onSelectDate =  async function(props=null){
+ 
+  return await selectDate(props)
+}
+globalThis.app.checkArrayType =    function(value){
+ 
+  return   checkArrayType(value)
 }

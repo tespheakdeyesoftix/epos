@@ -1,5 +1,6 @@
 import { modalController, alertController, toastController, loadingController, popoverController } from '@ionic/vue';
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
+import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
@@ -74,6 +75,18 @@ export async function showLoading(message = "Loading") {
 
   await loading.present();
   return loading;
+}
+
+export async function selectDate(props=null) {
+
+ 
+  const modal = await  app.openModal({
+    component: ComSelectDate,
+    componentProps: props,
+    backdropDismiss: false,
+    cssClass:"modal-select-date"
+  })
+  return modal;
 }
 
 export async function openModal(props) {
@@ -281,3 +294,122 @@ export function generateUIJsonFromMeta(metaFields) {
 
   return layout;
 }
+
+
+export function getTimespanRange(timespan) {
+  const now = new Date();
+  const startOfDay = d => new Date(d.setHours(0, 0, 0, 0));
+  const endOfDay = d => new Date(d.setHours(23, 59, 59, 999));
+  const addDays = (d, n) => new Date(d.setDate(d.getDate() + n));
+  const start = new Date(now);
+  const end = new Date(now);
+
+  const getQuarterRange = (date) => {
+    const quarter = Math.floor(date.getMonth() / 3);
+    const start = new Date(date.getFullYear(), quarter * 3, 1);
+    const end = new Date(start.getFullYear(), start.getMonth() + 3, 0);
+    return { startDate: startOfDay(start), endDate: endOfDay(end) };
+  };
+
+  switch (timespan) {
+    case "Today":
+      
+      return { startDate: startOfDay(start), endDate: endOfDay(end) };
+    case "Yesterday":
+      return {
+        startDate: startOfDay(addDays(start, -1)),
+        endDate: endOfDay(addDays(end, -1)),
+      };
+    case "Tomorrow":
+      return {
+        startDate: startOfDay(addDays(start, 1)),
+        endDate: endOfDay(addDays(end, 1)),
+      };
+    case "This Week": {
+      const day = now.getDay(); // 0 (Sun) - 6 (Sat)
+      const diffToMonday = now.getDate() - day + (day === 0 ? -6 : 1);
+      const monday = new Date(now.setDate(diffToMonday));
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      return { startDate: startOfDay(monday), endDate: endOfDay(sunday) };
+    }
+    case "Last Week": {
+      const current = new Date();
+      const day = current.getDay();
+      const diffToMonday = current.getDate() - day + (day === 0 ? -6 : 1);
+      const lastMonday = new Date(current.setDate(diffToMonday - 7));
+      const lastSunday = new Date(lastMonday);
+      lastSunday.setDate(lastMonday.getDate() + 6);
+      return { startDate: startOfDay(lastMonday), endDate: endOfDay(lastSunday) };
+    }
+    case "Next Week": {
+      const current = new Date();
+      const day = current.getDay();
+      const diffToMonday = current.getDate() - day + (day === 0 ? -6 : 1);
+      const nextMonday = new Date(current.setDate(diffToMonday + 7));
+      const nextSunday = new Date(nextMonday);
+      nextSunday.setDate(nextMonday.getDate() + 6);
+      return { startDate: startOfDay(nextMonday), endDate: endOfDay(nextSunday) };
+    }
+    case "This Month": {
+      const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+      const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      return { startDate: startOfDay(firstDay), endDate: endOfDay(lastDay) };
+    }
+    case "Last Month": {
+      const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+      const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+      return { startDate: startOfDay(firstDay), endDate: endOfDay(lastDay) };
+    }
+    case "Next Month": {
+      const firstDay = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+      const lastDay = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+      return { startDate: startOfDay(firstDay), endDate: endOfDay(lastDay) };
+    }
+    case "This Quarter":
+      return getQuarterRange(new Date());
+    case "Last Quarter": {
+      const currentQuarter = Math.floor(now.getMonth() / 3);
+      const lastQuarterStartMonth = (currentQuarter - 1 + 4) % 4 * 3;
+      const lastQuarterYear = currentQuarter === 0 ? now.getFullYear() - 1 : now.getFullYear();
+      const start = new Date(lastQuarterYear, lastQuarterStartMonth, 1);
+      const end = new Date(lastQuarterYear, lastQuarterStartMonth + 3, 0);
+      return { startDate: startOfDay(start), endDate: endOfDay(end) };
+    }
+    case "This Year": {
+      const start = new Date(now.getFullYear(), 0, 1);
+      const end = new Date(now.getFullYear(), 11, 31);
+      return { startDate: startOfDay(start), endDate: endOfDay(end) };
+    }
+    case "Last Year": {
+      const start = new Date(now.getFullYear() - 1, 0, 1);
+      const end = new Date(now.getFullYear() - 1, 11, 31);
+      return { startDate: startOfDay(start), endDate: endOfDay(end) };
+    }
+    default:
+      return null;
+  }
+}
+
+
+export function checkArrayType(value) {
+  if (!Array.isArray(value)) {
+    return null;
+  }
+
+  if (value.every(item => typeof item === 'string')) {
+    return "string"
+  }
+
+  if (value.every(item => typeof item === 'number')) {
+    return "number"
+  }
+
+  if (value.every(item => typeof item === 'object' && item !== null && !Array.isArray(item))) {
+    return "json"
+  }
+
+  return 'mix';
+}
+
+

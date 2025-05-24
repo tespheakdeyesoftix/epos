@@ -35,7 +35,7 @@ const isScanning = ref(false)
 
 const getCameraConfig = () => ({
   fps: 30,
-  qrbox: 350,
+  qrbox: 250,
   experimentalFeatures: {
     useBarCodeDetectorIfSupported: true
   }

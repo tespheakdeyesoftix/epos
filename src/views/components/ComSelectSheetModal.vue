@@ -22,10 +22,11 @@
       <ion-progress-bar v-if="loadingMoreData" type="indeterminate"></ion-progress-bar>
     </ion-header>
  
-    <ComSearchBar @click="expandModal" @onSearch="Search" />
+    <ComSearchBar @click="expandModal" @onSearch="Search" v-if="docType"/>
     <ion-button class="my-2 mx-3" :disabled="data.filter(r => r.selected).length == 0" shape="round" fill="outline" color="info"
       @click="onClearSelect">{{ t("Clear Selected") }}</ion-button>
     <ion-content>
+
       <div class="spinner-container" v-if="loading">
         <ion-spinner></ion-spinner>
       </div>
@@ -33,13 +34,13 @@
         <ion-list>
 
           <ComSelectCard v-for="(d, index) in data" :key="index" :data="d" @onSelect="onSelect(d)"
-            :valueField="valueField" :labelField="meta.title_field" :descriptionFields="meta.search_fields"
-            :photoField="meta.image_field" :selectedValue="selectedValue" :selectedValues="selectedValues" />
+            :valueField="valueField" :labelField="meta?.title_field" :descriptionFields="meta?.search_fields"
+            :photoField="meta?.image_field" :selectedValue="selectedValue" :selectedValues="selectedValues" />
 
         </ion-list>
 
         <!-- Infinite Scroll -->
-        <div style="padding-bottom: 50px;">
+        <div style="padding-bottom: 50px;" v-if="docType">
           <ion-infinite-scroll @ionInfinite="onLoadMore" threshold="0">
             <ion-infinite-scroll-content loading-text="Loading more..."></ion-infinite-scroll-content>
           </ion-infinite-scroll>
@@ -63,6 +64,7 @@ const t = window.t;
 
 const props = defineProps({
   docType: String,
+  options:Object,
   title: String,
   multiple: Boolean,
   selectedValue: String,//this return string value only

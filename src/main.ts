@@ -75,7 +75,9 @@ import {
   IonText,
   IonInput,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
+  IonItemGroup,
+  IonItemDivider
 } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -117,6 +119,8 @@ import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
 import ComCurrency from '@/views/components/public/ComCurrency.vue';
+import ComSelectDateFilter from '@/views/components/public/ComSelectDateFilter.vue';
+import ComDatePicker from '@/views/components/public/ComDatePicker.vue';
 import ComPopOver from '@/views/components/public/ComPopOver.vue';
 import ComNumber from '@/views/components/public/ComNumber.vue';
 import ComStatus from '@/views/components/public/ComStatus.vue';
@@ -240,10 +244,14 @@ async function init() {
   app.component('ion-input',IonInput)
   app.component('ion-select',IonSelect)
   app.component('ion-select-option',IonSelectOption)
+  app.component('ion-item-group',IonItemGroup)
+  app.component('ion-item-divider',IonItemDivider)
   
 
   app.component('Img',Img)
   app.component('ComCurrency',ComCurrency)
+  app.component('ComSelectDateFilter',ComSelectDateFilter)
+  app.component('ComDatePicker',ComDatePicker)
   app.component('ComPopOver',ComPopOver)
   app.component('ComNumber',ComNumber)
   app.component('DocList',DocList)

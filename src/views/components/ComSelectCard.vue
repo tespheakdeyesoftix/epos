@@ -1,6 +1,9 @@
 <template>
  
-    <ion-item @click="onSelect" button  >
+ <ion-item @click="onSelect" button v-if="['number','string'].includes(dataType)" >
+    {{ data }}
+</ion-item>
+ <ion-item @click="onSelect" button v-else >
             <ion-avatar slot="start" v-if="photoField">
                 <Img :src="data[photoField]"   v-if="data[photoField]" />
                 <div class="avatar-placeholder" :style="{ backgroundColor: getRandomColor() }" v-else>{{
@@ -12,6 +15,7 @@
             </ion-label>
             <ion-icon slot="end" :icon="checkmarkCircle" v-if="data.selected" size="medium" color="primary" />
           </ion-item>
+    
 </template>
 <script lang="ts" setup>
 import { computed } from "vue";
@@ -39,8 +43,13 @@ const props = defineProps({
     selectedValues:Object
 
 })
+
+
 const emit = defineEmits();
 
+const dataType = computed(()=>{
+    return (typeof props.data);
+})
  
 const description = computed(() => {
 

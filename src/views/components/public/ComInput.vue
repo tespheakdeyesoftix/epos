@@ -1,7 +1,10 @@
 <template>
- <template v-if="type=='number'" >
+ <template v-if="type=='numberx'" >
   <FloatLabel variant="on">
-    <InputNumber inputId="on_label" :placeholder="placeholder" v-model="model"    :minFractionDigits="minFractionDigits"  fluid />
+    <InputNumber inputId="on_label" :placeholder="placeholder" v-model="model"    :minFractionDigits="minFractionDigits"  fluid
+    @focus="onSelectAll"
+    ref="inputRef"
+    />
     <label for="on_label">{{ label }}</label>
 </FloatLabel>
  
@@ -12,6 +15,9 @@
                      ref="ionInputRef"
                     :value="model"
                     @ionInput="onInput"
+                    :type="type"
+                    :placeholder="placeholder"
+                    :label="label"
                    >
                    <ion-button v-if="type=='BarcodeScanerInput'" @click="onScanBarcode"  fill="clear" slot="end" aria-label="Show/hide">
                      <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
@@ -26,6 +32,7 @@ import { ref } from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
+const inputRef = ref(null)
 
 
 const props = defineProps({
@@ -40,8 +47,6 @@ type:{
    default:"text"
 }
 })
-
- 
 
 defineOptions({
 inheritAttrs: false
@@ -82,7 +87,13 @@ async function onScanBarcode() {
 
 }
 
-
+ 
+const onSelectAll = (event) => {
+  // Wait for next tick to ensure input is focused before selecting
+  setTimeout(() => {
+    event.target.select();
+  }, 0);
+};
 
 
 </script>
