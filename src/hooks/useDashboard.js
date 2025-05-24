@@ -19,7 +19,7 @@ export function useDashboard(props = null) {
                 }
             }
         )
-        console.log(res.data)
+        
         if (res.data) {
             kpiData.value = res.data
         }
