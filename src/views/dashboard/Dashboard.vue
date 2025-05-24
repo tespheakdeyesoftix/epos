@@ -19,8 +19,9 @@
             <stack class="ion-padding">
                 <ComDashboardKPI :data="kpiData" />
                 <ComDashboardChart :data="chartData" />
+                <ComPaymentBreakDown :data="paymentbreakdown"/>
                 <ComRecentOrder :data="recentData" />
-                <ComPaymentBreakDown/>
+                
             </stack>
              
         </ion-content>
@@ -37,7 +38,7 @@ import { storefrontOutline } from 'ionicons/icons';
 
 import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
-const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData} =  useDashboard()
+const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData,paymentbreakdown} =  useDashboard()
 const property_name = app.property_name;
 const selectProfile = computed(()=>{
 
