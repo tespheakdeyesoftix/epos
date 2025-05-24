@@ -12,47 +12,47 @@
 <script setup>
 import { ref, computed } from 'vue'
 const t = window.t;
+
 const props = defineProps({
     data: Object
 })
+
 const option = computed(() => {
     if (props.data) {
         return {
-            grid: {
-                left: 20,
-                right: 20,
-                top: 40,
-                bottom: 30,
-                containLabel: true
-            },
             tooltip: {
-                trigger: 'axis' // Shows tooltip for the whole category axis
+                trigger: 'item',
+                formatter: '{b}: {c} ({d}%)'
             },
-            xAxis: {
-                type: 'category',
-                data: props.data.map(r => r.payment_type)
-            },
-            yAxis: {
-                type: 'value'
+            legend: {
+                orient: 'horizontal',
+                bottom: 0,
+                left: 'center'
             },
             series: [
                 {
-                    data: props.data.map(r => r.base_amount),
-                    type: 'bar',
-
-                    barWidth: '60%',
+                    name: t("Payment Type"),
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    data: props.data.map(r => ({
+                        name: r.payment_type,
+                        value: r.base_amount
+                    })),
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
                     label: {
-                        show: true,
-                        position: 'top', // show label above bar
-                        color: '#000',   // label text color (optional)
-                        fontSize: 12     // label font size (optional)
+                        formatter: '{b}: {d}%'
                     }
                 }
             ]
         }
-
     }
-    return []
-
+    return {}
 })
 </script>
