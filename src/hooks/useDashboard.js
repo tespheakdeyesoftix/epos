@@ -7,6 +7,7 @@ export function useDashboard(props = null) {
     const kpiData = ref()
     const chartData = ref()
     const recentData = ref([])
+    const paymentbreakdown = ref([])
     const selectedPOSProfiles = ref([])
 
     async function getKpiData() {
@@ -58,11 +59,23 @@ export function useDashboard(props = null) {
 
         }
     }
+     async function getPaymentBreakDown() {
+        const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.payment_breakdown", {
+            param: {
+                pos_profiles:selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
+                business_branch:app.property_name
+            }
+        })
+        if (res.data) {
+            chartData.value = res.data
+        }
+    }
 
     async function onRefresh() {
         await getKpiData();
         await getChartData()
         await getRecentData()
+        await getPaymentBreakDown()
 
     }
 
@@ -84,6 +97,7 @@ export function useDashboard(props = null) {
         getKpiData,
         getChartData,
         getRecentData,
+        getPaymentBreakDown,
         onChangePOSProfile
     }
 
