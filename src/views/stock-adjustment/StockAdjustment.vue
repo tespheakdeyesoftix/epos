@@ -20,8 +20,10 @@
     <ion-content class="ion-padding">
       <div class="product-select-with-scan">
         <!-- Custom Select -->
-        <ComSelect csClass="search-by-product justify-content-between" ref="productSelect" docType="Product"
-          v-model="selectedProduct" @onSelected="onSelectProduct">
+        <ComSelect csClass="search-by-product justify-content-between" 
+        ref="productSelect" docType="Product"
+          v-model="selectedProduct" @onSelected="onSelectProduct"
+           :filters="[['is_inventory_product','=',1]]">
           <div class="flex align-item-center">
             <ion-icon class="magin-right" slot="icon-only" :icon="search"></ion-icon>
             <ion-text class="text-search" v-if="!productDoc?.product_name_en">
