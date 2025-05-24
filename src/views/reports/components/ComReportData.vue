@@ -3,8 +3,8 @@
   <DataTable :value="data?.filter(item => !Array.isArray(item))" tableStyle="min-width: 50rem" stripedRows >
     <Column v-for="col of reportColumns" :key="col.field" :field="col.field"
      :header="t(col.label)"
-     :headerClass="col.align"
-     :bodyClass="col.align"
+     :headerClass="[`${col.align}`,'p-1','white-space-nowrap']"
+     :bodyClass="[`${col.align}`,'p-1','white-space-nowrap']"
      >
         <template #body="slotProps">
             <ComCurrency v-if="col.fieldtype=='Currency'" :value="slotProps.data[col.field]" />

@@ -10,8 +10,49 @@
 </template>
 
 <script setup>
+import { ref, computed } from 'vue'
 const t = window.t;
+
 const props = defineProps({
     data: Object
+})
+
+const option = computed(() => {
+    if (props.data) {
+        return {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c} ({d}%)'
+            },
+            legend: {
+                orient: 'horizontal',
+                bottom: 0,
+                left: 'center'
+            },
+            series: [
+                {
+                    name: t("Payment Type"),
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    data: props.data.map(r => ({
+                        name: r.payment_type,
+                        value: r.base_amount
+                    })),
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    },
+                    label: {
+                        formatter: '{b}: {d}%'
+                    }
+                }
+            ]
+        }
+    }
+    return {}
 })
 </script>

@@ -9,7 +9,7 @@
         <h1 class="mt-2 mb-0">{{ t(setting.app_name) }}</h1>
       </div>
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
-        style="height: calc(-329.5px + 100vh);background:url(/assets/pettern1.png)">
+        style="background:url(/assets/pettern1.png)">
         <div class="py-2 px-3 mt-3" style="height: fit-content;">
           <div class="grid">
             <ion-button class="col-6 m-0" routerLink="/dashboard">

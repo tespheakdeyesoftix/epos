@@ -16,11 +16,11 @@
             <ion-item-group>
                 <template v-for="(g, index) in reports?.filter(p=>!p.parent_mobile_reports)" :key="index" >
                     <ion-item-divider>
-                    <ion-label class="text-2xl text-blue-400">{{ t(g.report_title) }}</ion-label>
-                </ion-item-divider>
-                <ion-item  v-for="(d, index) in reports.filter(x=>x.parent_mobile_reports==g.name)" :key="'report_' + index"  button :routerLink="getReportUrl(d)">
-                    <ion-label>{{ t(d.report_title) }}</ion-label>
-                </ion-item>
+                        <ion-label class="">{{ t(g.report_title) }}</ion-label>
+                    </ion-item-divider>
+                    <ion-item  v-for="(d, index) in reports.filter(x=>x.parent_mobile_reports==g.name)" :key="'report_' + index"  button :routerLink="getReportUrl(d)">
+                        <ion-label>{{ t(d.report_title) }}</ion-label>
+                    </ion-item>
                 </template>
                 
             </ion-item-group>
@@ -73,5 +73,8 @@ onMounted(async ()=>{
     width: 100%;
     height: 30%;
     color: #fff;
+}
+ion-item-divider{
+    --background: #D4C9BE;
 }
 </style>

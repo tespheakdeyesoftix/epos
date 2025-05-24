@@ -6,8 +6,8 @@ import { ref } from "vue";
 export function useDashboard(props = null) {
     const kpiData = ref()
     const chartData = ref()
+    const paymentbreakdown = ref()
     const recentData = ref([])
-    const paymentbreakdown = ref([])
     const selectedPOSProfiles = ref([])
 
     async function getKpiData() {
@@ -38,6 +38,18 @@ export function useDashboard(props = null) {
             chartData.value = res.data
         }
     }
+    async function getPaymentBreakDown() {
+    const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.payment_breakdown", {
+        param: {
+            pos_profiles: selectedPOSProfiles.value.length == 0 ? [] : selectedPOSProfiles.value.map(r => r.name),
+            business_branch: app.property_name
+        }
+    })
+    if (res.data) {
+        paymentbreakdown.value = res.data
+    }
+}
+
 
     async function getRecentData() {
         const f= [["docstatus", "=", 1],["business_branch",'=',app.property_name]]
@@ -59,23 +71,14 @@ export function useDashboard(props = null) {
 
         }
     }
-     async function getPaymentBreakDown() {
-        const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.payment_breakdown", {
-            param: {
-                pos_profiles:selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
-                business_branch:app.property_name
-            }
-        })
-        if (res.data) {
-            chartData.value = res.data
-        }
-    }
+     
 
     async function onRefresh() {
         await getKpiData();
         await getChartData()
-        await getRecentData()
         await getPaymentBreakDown()
+        await getRecentData()
+         
 
     }
 
@@ -91,13 +94,15 @@ export function useDashboard(props = null) {
     return {
         kpiData,
         chartData,
+        paymentbreakdown,
         recentData,
         selectedPOSProfiles,
         onRefresh,
         getKpiData,
         getChartData,
-        getRecentData,
         getPaymentBreakDown,
+        getRecentData,
+        
         onChangePOSProfile
     }
 
