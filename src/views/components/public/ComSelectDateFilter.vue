@@ -23,9 +23,14 @@ const props = defineProps({
   showOperator:{
     type:Boolean,
     default:true
-  }
+  },
+  modalType: {
+    modalType: String,
+    default: "dialog"
+  },
 })
 const model = defineModel()
+const docFilter = defineModel("docFilter")
 const emit = defineEmits()
 const t = window.t;
 const getLabel=computed(()=>{
@@ -39,16 +44,28 @@ const getLabel=computed(()=>{
   }
   return props.label;
 })
+
 async function  onSelectDate(){
-  const result = await app.openModal({
+  const option = {
     component:ComSelectDateModal,
-    initialBreakpoint:0.65,
-    breakpoints : [0,0.35, 0.5,0.65, 0.75, 0.95],
+   
     componentProps:{showOperator:props.showOperator}
-  })
+  }
+  if(props.modalType == "sheet_modal"){
+    option.initialBreakpoint=0.65
+    option.breakpoints = [0,0.35, 0.5,0.65, 0.75, 0.95];
+  }
+  const result = await app.openModal(option)
   if(result){
     model.value = result
     emit("onSelect",result);
+  }
+}
+
+
+function getDocFilterModel(){
+  if(model.value.operator=="between"){
+    return []
   }
 }
 

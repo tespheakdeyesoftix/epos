@@ -1,5 +1,5 @@
 <template>
- <template v-if="type=='number'" >
+ <template v-if="type=='numberx'" >
   <FloatLabel variant="on">
     <InputNumber inputId="on_label" :placeholder="placeholder" v-model="model"    :minFractionDigits="minFractionDigits"  fluid
     @focus="onSelectAll"
@@ -15,6 +15,9 @@
                      ref="ionInputRef"
                     :value="model"
                     @ionInput="onInput"
+                    :type="type"
+                    :placeholder="placeholder"
+                    :label="label"
                    >
                    <ion-button v-if="type=='BarcodeScanerInput'" @click="onScanBarcode"  fill="clear" slot="end" aria-label="Show/hide">
                      <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>

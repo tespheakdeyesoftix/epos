@@ -2,7 +2,6 @@
   <ion-page>
     <ToolBar>{{ t("Stock Adjustment") }}
       <template #end>
-
         <ComPopOver>
           <ion-button>
             <ion-icon :icon="ellipsisVertical" slot="icon-only" />
@@ -76,12 +75,14 @@
 <div style="display: flex;" class="pt-3" gap="10px" v-if="doc.product_code">
   <div style="margin-right: 15px;margin-top: -10px;">
     <com-input type="number" :label="t('New Quantity')" :placeholder="t('New Quantity')" v-model="doc.new_quantity" :minFractionDigits="_app.setting.float_precision" label-placement="floating" fill="outline" mode="md"  ></com-input>  
+     
+
       <div class="diff-message" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0">
         {{ t("Different") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/>
       </div>
   </div>
   <div style="margin-right: 5px;margin-top: -10px;">
-    <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" label="New Cost" placeholder="New Cost" v-model="doc.new_cost" label-placement="floating" fill="outline" mode="md"></com-input> 
+    <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" :label="t('New Cost')" :placeholder="t('New Cost')" v-model="doc.new_cost" label-placement="floating" fill="outline" mode="md"></com-input> 
       <div  v-if="(doc.new_cost - doc.current_cost)!=0" class="diff-message">
         {{ t("Different") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/>
       </div>

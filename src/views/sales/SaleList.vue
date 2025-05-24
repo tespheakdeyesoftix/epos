@@ -2,10 +2,8 @@
     <ion-page>
         <AppBar>{{ t("Sale") }}</AppBar>
         <ion-content>
-            
             <DocList docType="Sale" :options="options">
                 <template v-slot:default="{ item }">
-                    
                     <ComSaleOrderCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
             </DocList>
@@ -28,7 +26,7 @@ const options = {
   filters:[["docstatus","=",1]],
 
   filterOptions:[
-    {fieldname:"posting_date", fieldtype:"Date", label:t('Sale Date')},
+    {fieldname:"posting_date", fieldtype:"Date", label:t('Sale Date'),clear:true,modal_type:'sheet_modal'},
     {fieldname:"pos_profile", fieldtype:"Link",options:"POS Profile", label:t('POS Profile')},
     {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},

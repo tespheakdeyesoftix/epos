@@ -26,6 +26,7 @@ export function useDocList(props) {
   }
 
   async function getData() {
+    
     const response = await getDocList(props.docType, {
       fields: options.value.fields,
       filters: options.value.filters,
@@ -119,20 +120,33 @@ export function useDocList(props) {
   }
 
   async function onFilter(f) {
+
     canLoadMore.value = true;
     startIndex.value = 0;
 
     options.value.filters = structuredClone(defaultFilters) || [];
-
     if (f) {
       Object.keys(f).forEach((key) => {
-        options.value.filters.push([key, "=", f[key]]);
+        const fieldType = options.value.filterOptions.find(x=>x.fieldname == key).fieldtype;
+        if(fieldType == "Date"){
+           
+
+          if(f[key].operator == "between"){
+         
+            options.value.filters.push([key, "between", [f[key].start_date,f[key].end_date]]);
+          }else {
+            options.value.filters.push([key, f[key].operator, f[key].start_date]);
+          }
+          
+        }else {
+          options.value.filters.push([key, "=", f[key]]);
+        }
+        
       });
     }
 
     const _loading = await app.showLoading();
     const result = await getData();
-
     data.value = result;
     await _loading.dismiss();
   }

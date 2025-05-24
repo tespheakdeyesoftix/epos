@@ -12,7 +12,7 @@
          
 <stack  gap="10px">
     <stack  gap="10px">
-         <ion-select v-if="showOperator" v-model="operator" label="Operation" label-placement="floating" fill="outline">
+         <ion-select v-if="showOperator" v-model="operator" label="Operator" label-placement="floating" fill="outline">
     <ion-select-option v-for="(op, index) in operators" :key="index" :value="op.value">{{ t(op.label) }}</ion-select-option>
     
   </ion-select>
@@ -69,7 +69,7 @@ const operators = [
     {label:"Greater than and Equal",value:">="},
     {label:"Less than",value:"<"},
     {label:"Less than and Equal",value:"<="},
-    {label:"Between",value:"between"},
+    {label:"Between Date",value:"between"},
 ]
 
 async function onselectTimespan(timespan){
