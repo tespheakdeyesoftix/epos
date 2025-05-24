@@ -16,9 +16,10 @@
             </ion-item>
         </ComSelect>
             <stack class="ion-padding">
-                <ComDashboardKPI :data="ctrl.kpiData" />
-                <ComDashboardChart :data="ctrl.chartData" />
-                <ComRecentOrder :data="ctrl.recentData" />
+               
+                <ComDashboardKPI :data="kpiData" />
+                <ComDashboardChart :data="chartData" />
+                <ComRecentOrder :data="recentData" />
             </stack>
         </ion-content>
     </ion-page>
@@ -32,8 +33,7 @@ import { storefrontOutline } from 'ionicons/icons';
 
 import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
-const ctrl = useDashboard()
-const {selectedPOSProfiles,onChangePOSProfile,onRefresh} =  useDashboard()
+const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData} =  useDashboard()
 const property_name = app.property_name;
 const selectProfile = computed(()=>{
 
@@ -59,9 +59,7 @@ async function onSelectOutlet(data){
 
 onMounted(async () => {
     const loading = await app.showLoading()
-    await ctrl.getRecentData()
-    await ctrl.getKpiData()
-    await ctrl.getChartData()
+    await onRefresh()
     await loading.dismiss()
 })
 
