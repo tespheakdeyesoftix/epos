@@ -1,10 +1,11 @@
 <template>
      <ion-button shape="round" class="ion-margin" expand="full" @click="AddPrice">{{ t("Add Price") }}</ion-button>
-    <ion-card v-for="(p, index) in doc.product_price" :key="index">
+     <transition-group name="fade" tag="div">
+    <ion-card v-for="(p, index) in doc.product_price" :key="p.id || index">
         <ion-card-header>
             <div style="display: flex;width: 100%;margin-bottom: 5px;">
                 <div style="width: 100%;margin-top: 10px;">
-                    <ion-card-title>{{ t("Product Price") }}: {{ index + 1 }} </ion-card-title>
+                    <ion-card-title>{{ t("Product Price") }}: {{(doc.product_price || []).length - index }} </ion-card-title>
                 </div>
                 <div>
                     <button class="overlay-button" @click="DeletePrice(index)" v-if="doc?.photo">
@@ -41,8 +42,29 @@
             </Stack>
         </ion-card-content>
     </ion-card>
+    </transition-group>
 </template>
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.2s ease;
+}
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
+}
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 .overlay-button {
   position: absolute;
   top: 15px;
@@ -90,7 +112,8 @@ function AddPrice() {
         portion: "Normal",
         conversion_factor: 1,
         unit: 'Unit',
-        price: 0
+        price: 0,
+        id: Date.now()
     })
 }
 function DeletePrice(index) {

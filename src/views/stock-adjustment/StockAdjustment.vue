@@ -60,10 +60,10 @@
         <div class="flex justify-content-center m-2">
           <div style="padding: 5px;">
             <Img width="100%" v-if="productDoc?.photo" :src="productDoc.photo" :key="productDoc.photo" />
-            <Img width="100%" src="/files/noimage.jpg" v-else/>
+            <Img width="100%" src="/files/placeholder.jpg" v-else/>
           </div>
         </div>
-         <div style="font-size: 18px;text-align: center;margin-top: -10px;">
+         <div style="font-size: 18px;text-align: center;margin-top: -15px;">
             <p>{{ productDoc?.product_code }} - {{ productDoc?.product_name_en }}</p>
           </div>
            <div style="font-size: 18px;text-align: center;margin-top: -10px;margin-bottom: -10px;">

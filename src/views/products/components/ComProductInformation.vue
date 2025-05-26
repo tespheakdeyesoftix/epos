@@ -17,8 +17,8 @@
             </button>
         </div>
         <div class="image-container" v-else>
-            <img :src="doc?.photo" class="image" v-if="doc?.photo"/>
-            <img src="/assets/placeholder.jpg" alt="Preview" v-else style="width:300px" />
+            <Img :src="doc?.photo" class="image" v-if="doc?.photo"/>
+            <Img src="/files/placeholder.jpg" alt="Preview" v-else style="width:300px" class="image" />
             <button class="overlay-button" @click="onRemovefile" v-if="doc?.photo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 
@@ -74,7 +74,8 @@
 }
 .image-container {
   position: relative;
-  max-width: 300px;
+  max-width: 250px;
+  min-height: 250px;
   margin-bottom: 10px;
   margin: 0 auto;
   border: 1px solid #cfcfcf;
@@ -83,8 +84,12 @@
 
 .image {
   width: 100%;
+  height: 100%;
+  min-height: 250px;
+  max-width: 250px;
   display: block;
-  border-radius: 10px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .overlay-button {
