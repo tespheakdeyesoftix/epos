@@ -1,9 +1,10 @@
 <template>
+     <ion-button shape="round" class="ion-margin" expand="full" @click="AddPrice">{{ t("Add Price") }}</ion-button>
     <ion-card v-for="(p, index) in doc.product_price" :key="index">
         <ion-card-header>
             <div style="display: flex;width: 100%;margin-bottom: 5px;">
                 <div style="width: 100%;margin-top: 10px;">
-                    <ion-card-title>{{ t("Product Price") }}: {{ index + 1 }}</ion-card-title>
+                    <ion-card-title>{{ t("Product Price") }}: {{ index + 1 }} </ion-card-title>
                 </div>
                 <div>
                     <button class="overlay-button" @click="DeletePrice(index)" v-if="doc?.photo">
@@ -30,7 +31,7 @@
                 <!-- price rule -->
                 <ComSelectInput docType="Price Rule"  v-model="p.price_rule" :label="t('Price Rule')" />
                  <!-- unit -->
-                <ComSelectInput docType="Unit Of Measurement"  v-model="p.unit" :label="t('Unit')" />
+                <ComSelectInput docType="Unit Of Measurement"  v-model="p.unit" :label="t('Unit')" @onSelected="onSelectUnit(p.unit,index)"/>
                 <!-- ocnversion factor -->
                 <ion-input type="number" :label="t('Conversion Factor')" :placeholder="t('Conversion Factor')"
                     v-model="p.conversion_factor" label-placement="floating" fill="outline"></ion-input>
@@ -40,9 +41,6 @@
             </Stack>
         </ion-card-content>
     </ion-card>
-
-    <ion-button shape="round" class="ion-margin" expand="full" @click="AddPrice">{{ t("Add Price") }}</ion-button>
-
 </template>
 <style scoped>
 .overlay-button {
@@ -73,10 +71,22 @@ import { useAddProduct } from "@/hooks/useAddProduct.js"
 import Stack from "@/views/components/public/Stack.vue"
 const { doc } = useAddProduct();
 
+async function onSelectUnit(unit,index) {
+    let con = (await app.getDocList("Unit of Measurement Conversion", { 
+        filters: [["from_uom", "=", unit], ["to_uom", "=", doc.value.unit]],
+        fields:["name","conversion"],
+     })).data
+    if((con || []).length > 0){
+        doc.value.product_price[index].conversion_factor = con[0].conversion
+    }
+    else{
+        doc.value.product_price[index].conversion_factor = 1
+    }
+}
 
 const t = window.t;
 function AddPrice() {
-    doc.value.product_price.push({
+    doc.value.product_price.unshift({
         portion: "Normal",
         conversion_factor: 1,
         unit: 'Unit',

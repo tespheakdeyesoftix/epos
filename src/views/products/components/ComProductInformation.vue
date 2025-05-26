@@ -33,7 +33,7 @@
                 </svg>
             </button>
         </div>
-        <ion-button style="margin-top: 10px;" expand="block" @click="triggerFileInput">
+        <ion-button style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput">
             {{ t("Upload Photo") }}
         </ion-button>
         <input ref="fileInput" type="file" accept="image/*" @change="handleFileChange" style="display: none" />

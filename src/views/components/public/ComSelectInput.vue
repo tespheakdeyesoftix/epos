@@ -1,6 +1,6 @@
 <template>
     <div style="position:relative">
-    <ComSelect :docType="docType" clear v-model="model" modalType="Dialog">
+    <ComSelect :docType="docType" clear v-model="model" modalType="Dialog" @onSelected="onSelect">
         <ion-button style="position: absolute;  right: 0px;top:5px;z-index: 999999999"  v-if="model"   @click.stop="onClear($event)" fill="clear" aria-label="Show/hide">
                 <ion-icon slot="icon-only" :icon="closeOutline" aria-hidden="true"></ion-icon>
             </ion-button>
@@ -31,7 +31,9 @@ const props = defineProps({
 }
 )
 
-
+async function onSelect(data) {
+   emit("onSelected", data)
+}
 
 defineOptions({
     inheritAttrs: false
@@ -53,7 +55,5 @@ function onClear(event) {
   event.stopPropagation(); // <-- prevent event bubbling manually
   model.value = null; // or whatever logic you use to clear
 }
-
-
 
 </script>
