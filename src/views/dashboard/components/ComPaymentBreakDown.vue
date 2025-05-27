@@ -33,7 +33,7 @@ const option = computed(() => {
                 {
                     name: t("Payment Type"),
                     type: 'pie',
-                    radius: '70%',
+                    radius: ['40%', '70%'],
                     center: ['50%', '50%'],
                     data: props.data.map(r => ({
                         name: r.payment_type,
@@ -47,7 +47,10 @@ const option = computed(() => {
                         }
                     },
                     label: {
-                        formatter: '{b}: {d}%'
+                        formatter:function (params) {
+                            
+                            return  params.name + ": "  + getInputAmount( params.name)
+                        }
                     }
                 }
             ]
@@ -55,4 +58,8 @@ const option = computed(() => {
     }
     return {}
 })
+
+function getInputAmount(payment_type){
+    return  props.data.find(x=>x.payment_type == payment_type).input_amount
+}
 </script>

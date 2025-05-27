@@ -114,7 +114,7 @@
     "Posting Date": "កាលបរិច្ឆេទបញ្ចូល",
     "Table #": "លេខតុ",
     "To Date": "ដល់",
-    
+    "Price Rule":"កម្រិតតម្លៃ",
     "Select": "ជ្រើសរើស",
     "Today Revenue": "ចំណូលថ្ងៃនេះ",
     "Today Bill / QTY": "ចនួនវិកយប័ត្រ/ចំនួន",
@@ -124,6 +124,7 @@
     "Cashier Shift": "វេនអ្នកគិតលុយ",
     "Total Quantity": "ចំនួនសរុប",
     "Created by": "បង្កើតដោយ",
+    "Show/Hide Summary": "បង្ហាញ/លាក់ព័ត៌មានសង្ខេប",
     "Closed by": "បិទដោយ",
     "Start Date": "ថ្ងៃចាប់ផ្តើម",
     "End Date": "ថ្ងៃបញ្ចប់",

@@ -9,21 +9,19 @@
                 <com-input label="Barcode" placeholder="Product Code" v-model="p.barcode" type="BarcodeScanerInput"
                     label-placement="floating" fill="outline" />
                 <!-- price rule -->
-                <div class="relative fixed-input">
-                    <ion-input :label="t('Price Rule')" value="value" label-placement="floating"
-                        fill="outline"></ion-input>
-                    <div class="selected_value">
-                        <ComSelect docType="Price Rule" clear v-model="p.price_rule" modalType="Dialog" />
-                    </div>
-                </div>
+               
+                <ComSelectInput  docType="Price Rule"  v-model="p.price_rule" 
+                :label="t('Price Rule')" :placeholder="t('Price Rule')"
+                />
+                
+ 
 
-                <!-- unit -->
-                <div class="relative fixed-input">
-                    <ion-input :label="t('Unit')" value="value" label-placement="floating" fill="outline"></ion-input>
-                    <div class="selected_value">
-                        <ComSelect docType="Unit Of Measurement" clear v-model="p.unit" modalType="Dialog" />
-                    </div>
-                </div>
+              
+
+                <ComSelectInput  docType="Unit Of Measurement"  v-model="p.unit" 
+                :label="t('Unit')" :placeholder="t('Unit')"
+                />
+
                 <!-- ocnversion factor -->
                 <ion-input type="number" :label="t('Conversion Factor')" :placeholder="t('Conversion Factor')"
                     v-model="p.conversion_factor" label-placement="floating" fill="outline"></ion-input>

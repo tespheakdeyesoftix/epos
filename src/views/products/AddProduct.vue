@@ -33,7 +33,6 @@
         </ion-segment-content>
         <ion-segment-content id="product_price">
           <ComProductPrice />
-
         </ion-segment-content>
 
       </ion-segment-view>
