@@ -5,14 +5,12 @@
     </div>
     <div class="text-white">
       <div class="text-sm">{{ t(label) }}</div>
-      <ion-text >
-        <h2>
+      <div class="text-lg font-semibold" >
         <ComCurrency v-if="isCurrency" :value="value" />
-        <span v-else>
+        <span class="text-lg" v-else>
              {{ value }}
         </span>
-      </h2>
-      </ion-text>
+    </div>
      
     </div>
   </div>
