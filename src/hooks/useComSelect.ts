@@ -169,7 +169,7 @@ export function useComSelect(props: any) {
       if(props.options){
         const dataType = app.checkArrayType(props.options) || "";
         if(["number","string"].includes(dataType)){
-          data.value = props.options.map(x=>{
+          data.value = props.options.map((x: any)=>{
             return {
               name:x
             }

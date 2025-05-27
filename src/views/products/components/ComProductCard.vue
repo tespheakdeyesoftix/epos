@@ -1,16 +1,16 @@
 <template>
-    <ion-card class="ion-no-margin mb-3 product-item-card" button :routerLink="'/add-product/' + data.name">
+   <div style="margin-bottom: -10px;">
+     <ion-card class="ion-no-margin mb-3 product-item-card" button :routerLink="'/add-product/' + data.name">
         <ion-item lines="none">
             <!-- Avatar -->
-            <ion-avatar>
+            <ion-avatar style="height: 50px;width: 50px;">
                 <Img v-if="data.photo" :src="data.photo" />
                 <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data.product_name_en) }}</div>
             </ion-avatar>
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data.product_name_en }} <ComStatus :status = "data.status" /></h2>
+                <h2 class="card-title">{{ data.product_name_en }}</h2>
                 <h2 class="card-subtitle">{{data.name}}</h2>
-                <h2 class="card-subtitle">{{ data.product_category }}</h2>
                  
             
                 <p class="card-subtitle">
@@ -29,6 +29,7 @@
             </div>
         </ion-item>
     </ion-card>
+   </div>
 </template>
 
 <script setup>
