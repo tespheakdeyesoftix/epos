@@ -34,10 +34,7 @@
         <ion-segment-content id="product_price">
           <ComProductPrice />
         </ion-segment-content>
-
       </ion-segment-view>
-
-
     </ion-content>
     <ion-footer>
       <ion-toolbar color="tranparency">

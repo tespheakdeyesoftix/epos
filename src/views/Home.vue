@@ -45,13 +45,13 @@
               </div>
             </ion-button>
             
-            <ion-button class="col-6 m-0" routerLink="/report">
+            <!-- <ion-button class="col-6 m-0" routerLink="/report">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="barChartOutline" slot="start"></ion-icon>
                 {{ t("Reports") }}
               </div>
             </ion-button>
-            
+             -->
             <ion-button class="col-6 m-0" @click="onLogout">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="logOutOutline" slot="start"></ion-icon>
