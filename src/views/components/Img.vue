@@ -1,5 +1,4 @@
 <template>
- 
       <img   :src="imgData" :width="width==0?undefined:width" :height="height==0?undefined:height"/>
   
   </template>
@@ -39,16 +38,27 @@ if (!serverUrl){
  
  
 const getImage = async () => {
-  
+    
   if (props.src?.startsWith("https://") || props.src?.startsWith("http://") ){
-        return props.src;
+     
+    imgData.value =  props.src;
+    return;
   }
+
+  if (!props.src){
+     imgData.value  = "/assets/placeholder.jpg"
+     return;
+  }
+
+  
 
   // check if image start with http or https
   if(isPlatform("mobileweb") || isPlatform("desktop") ){
-    imgData.value= imageUrl(props.src);
+     
+  
     
-    return
+    imgData.value =  imageUrl(props.src);
+    return;
   } else if( 
     (isPlatform("android") && isPlatform("mobile")) ||
     (isPlatform("iphone") && isPlatform("ios") && isPlatform("mobile"))
@@ -65,6 +75,7 @@ const getImage = async () => {
     if(response.status==200){
       
       imgData.value = response.data.message.image
+      return;
     }
     
   } catch (err) {
@@ -73,12 +84,13 @@ const getImage = async () => {
   }
 
 
- 
+ imgData.value = "/assets/placeholder.jpg"
 };
 
 // Load the image when component is mounted
 onMounted(async () => {
-  getImage()
+   await getImage()
+  
 });
 </script>
  

@@ -37,9 +37,8 @@
             <ion-button   style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput('brows')">
             {{ t("Upload Photo") }}
         </ion-button>
-        
+    
             <ion-button   style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput('camera')">
-                
             {{ t("Take Photo") }}
         </ion-button>
 
