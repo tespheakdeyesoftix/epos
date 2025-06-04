@@ -33,10 +33,21 @@
                 </svg>
             </button>
         </div>
-        <ion-button style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput">
+        <stack row equal>
+            <ion-button   style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput('brows')">
+            {{ t("Upload Photo") }}
+        </ion-button>
+    
+            <ion-button   style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput('camera')">
             {{ t("Take Photo") }}
         </ion-button>
-        <input ref="fileInput"  capture="environment" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
+
+      
+        </stack>
+        
+  
+        <input ref="fileInput"   type="file" accept="image/*" @change="handleFileChange" style="display: none" />
+        <input ref="fileInputCamera"  capture="environment" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
         <div>
             <com-input class="input-field" :label="t('Product Code')" v-model="doc.product_code" type="BarcodeScanerInput" label-placement="floating" fill="outline" @ionChange="onProductCodeChange" @onBarcodeChange="onProductCodeChange" />
             <div v-if="warningMessage" >
@@ -117,6 +128,7 @@
 <script setup>
 
 import { useAddProduct } from "@/hooks/useAddProduct.js"
+import Stack from "@/views/components/public/Stack.vue";
 
 const { previewUrl, warningMessage,
     handleFileChange, onProductCodeChange, startUpload, loadDoc, doc, selectedFile, onSave, navigation, resetDoc,
@@ -127,8 +139,14 @@ import Message from 'primevue/message';
 import { ref } from "vue";
  
 const fileInput = ref(null)
+const fileInputCamera = ref(null)
 const t = window.t;
-const triggerFileInput = () => {
-    fileInput.value.click()
+const triggerFileInput = (type='brows') => {
+    if(type=="brows"){
+        fileInput.value.click()
+    }else {
+        fileInputCamera.value.click()
+    }
+    
 }
 </script>
