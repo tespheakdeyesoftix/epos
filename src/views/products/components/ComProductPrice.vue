@@ -32,12 +32,10 @@
                 <!-- price rule -->
                
                 <ComSelectInput  docType="Price Rule"  v-model="p.price_rule" 
-                :label="t('Price Rule')" :placeholder="t('Price Rule')"
-                /> 
+                :label="t('Price Rule')" :placeholder="t('Price Rule')"/> 
 
-                <ComSelectInput  docType="Unit Of Measurement"  v-model="p.unit" 
-                :label="t('Unit')" :placeholder="t('Unit')"
-                />
+                <ComSelectInput style="margin-top: 5px;" docType="Unit Of Measurement"  v-model="p.unit" 
+                :label="t('Unit')" :placeholder="t('Unit')"/>
 
                 <!-- ocnversion factor -->
                 <ion-input type="number" :label="t('Conversion Factor')" :placeholder="t('Conversion Factor')"

@@ -74,13 +74,13 @@
 <ion-card v-if="doc.stock_location && doc.product_code" class="mt-3 m-0">
 <ion-card-content>
 <div style="display: flex;" class="pt-3" gap="10px" v-if="doc.product_code">
-  <div style="margin-right: 15px;margin-top: -10px;">
+  <div style="margin-right: 7.5px;margin-top: -10px;width: 50%;">
     <com-input type="number" :label="t('New Quantity')" v-model="doc.new_quantity" :minFractionDigits="_app.setting.float_precision" label-placement="floating" fill="outline" mode="md"  ></com-input>  
       <div class="diff-message" v-if="(_app.getNumber(doc.new_quantity - doc.current_quantity,_app.setting.float_precision))!=0">
         {{ t("Different") }}: <ComNumber :value="doc.new_quantity - doc.current_quantity"/>
       </div>
   </div>
-  <div style="margin-right: 5px;margin-top: -10px;">
+  <div style="margin-left: 7.5px;margin-top: -10px;width: 50%;">
     <com-input :minFractionDigits="_app.setting.currency_precision"  type="number" :label="t('New Cost')" v-model="doc.new_cost" label-placement="floating" fill="outline" mode="md"></com-input> 
       <div  v-if="(doc.new_cost - doc.current_cost)!=0" class="diff-message">
         {{ t("Different") }}: <ComCurrency :value="doc.new_cost - doc.current_cost"/>
