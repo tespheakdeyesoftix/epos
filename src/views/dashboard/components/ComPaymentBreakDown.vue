@@ -3,7 +3,7 @@
         <ion-text color="primary" class="ion-content">
             <h2>{{ t("Payment Breakdown") }}</h2>
         </ion-text>
-        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 300px;" v-if="data">
+        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 400px;" v-if="data">
             <v-chart :option="option" autoresize />
         </div>
     </div>
@@ -24,17 +24,25 @@ const option = computed(() => {
                 trigger: 'item',
                 formatter: '{b}: {c} ({d}%)'
             },
-            legend: {
+           legend: {
                 orient: 'horizontal',
-                bottom: 0,
-                left: 'center'
+                bottom:5,
+                left:5,
+                textStyle: {
+                    fontSize: 12,
+                },
+                formatter: function (name) {
+                    const item = props.data.find(r => r.payment_type === name);
+                    if (!item) return name;
+                    return `${name}\n$${item.base_amount.toLocaleString('th-TH', { minimumFractionDigits: 2 })}`;
+                }
             },
             series: [
                 {
                     name: t("Payment Type"),
                     type: 'pie',
-                    radius: ['40%', '70%'],
-                    center: ['50%', '50%'],
+                    radius: ['0%', '70%'],
+                    center: ['50%', '38%'],
                     data: props.data.map(r => ({
                         name: r.payment_type,
                         value: r.base_amount
@@ -47,8 +55,8 @@ const option = computed(() => {
                         }
                     },
                     label: {
+                        show:false,
                         formatter:function (params) {
-                            
                             return  params.name + ": "  + getInputAmount( params.name)
                         }
                     }

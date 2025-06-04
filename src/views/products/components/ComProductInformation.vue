@@ -34,9 +34,9 @@
             </button>
         </div>
         <ion-button style="margin-top: 10px;margin-bottom: 10px;" expand="block" @click="triggerFileInput">
-            {{ t("Upload Photo") }}
+            {{ t("Take Photo") }}
         </ion-button>
-        <input ref="fileInput" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
+        <input ref="fileInput"  capture="environment" type="file" accept="image/*" @change="handleFileChange" style="display: none" />
         <div>
             <com-input class="input-field" :label="t('Product Code')" v-model="doc.product_code" type="BarcodeScanerInput" label-placement="floating" fill="outline" @ionChange="onProductCodeChange" @onBarcodeChange="onProductCodeChange" />
             <div v-if="warningMessage" >

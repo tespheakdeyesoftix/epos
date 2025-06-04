@@ -21,7 +21,7 @@
                 
                 <ion-item>
                     <ion-label>{{ t("Posting Date") }}</ion-label>
-                    <ion-label slot="end">{{dayjs(doc?.posting_date).format("DD/MM/YYYY")}}</ion-label>
+                    <ion-label slot="end">{{dayjs(doc?.posting_date).format("DD/MM/YYYY")}} {{dayjs(doc?.creation).format("hh:mm A")}}</ion-label>
                 </ion-item>
                 <ion-item v-if="doc?.tbl_number">
                     <ion-label>{{ t("Table #") }}</ion-label>
@@ -53,10 +53,17 @@
                     <ion-label slot="end">{{ doc?.cashier_shift }}</ion-label>
                 </ion-item>
                 <ion-item v-if="doc?.shift_name">
-                    <ion-label>{{ t("Shift Name") }}</ion-label>
+                    <ion-label>{{ t("Shift") }}</ion-label>
                     <ion-label slot="end">{{ doc?.shift_name }}</ion-label>
                 </ion-item>
-     
+                <ion-item >
+                    <ion-label>{{ t("Cashier") }}</ion-label>
+                    <ion-label slot="end">{{ doc?.closed_by }}</ion-label>
+                </ion-item>
+                 <ion-item >
+                    <ion-label>{{ t("Customer") }}</ion-label>
+                    <ion-label slot="end">{{ doc?.customer_name }}</ion-label>
+                </ion-item>
 </template>
  
 
@@ -64,30 +71,9 @@
             <ion-button fill="clear" expand="full"  @click="onShowMoreInfo">
                         {{ t((showMoreInfo?"Hide Info":"Show More")) }}
                     </ion-button>
-            <ion-card button="true" class="mx-0">
-                <ion-card-content class="py-3 px-0">
-                    <ion-item>
-                        <ion-avatar slot="start">
-                            <img :alt="doc?.customer_name" src="/assets/avatar.svg" />
-                        </ion-avatar>
-                        <ion-label>
-                            <h2 class="card-title">{{ doc?.customer_name }}</h2>
-                            <h2 class="card-title">Code: {{ doc?.customer }} / Tel: {{ doc?.phone_number }}</h2>
-                        </ion-label>
-                    </ion-item>
-                </ion-card-content>
-            </ion-card>
-            <!-- group product -->
+            
             <template v-if="getSaleProducts.length > 0">
                 <template v-for="(g, index) in getSaleProductGroupByKey" :key="index">
-                    <div class="bg-red-700 text-white flex justify-content-between text-xs p-1 align-items-center" >
-                        <div class="flex align-items-center gap-1">
-                            <ion-icon size="small" :icon="timeOutline" ></ion-icon>
-                            {{dayjs(g.order_time).format('DD-MM-YYYY HH:mm:ss')}}
-                        </div>
-                        <div class="flex align-items-center gap-1"><ion-icon size="small" :icon="personOutline" ></ion-icon> {{ g.order_by }}</div>
-                    </div>
-                    <!-- product section -->
                     <div>
                         <template v-for="(d, index) in getSaleProductItems(g)" :key="index">
                             <ion-card class="ion-no-margin mb-2">
@@ -98,19 +84,17 @@
                                         </div>
                                     </ion-avatar>
                                     <ion-label>
-                                        <h2 class="card-title">{{ d.product_code }} - {{ d.product_name }}</h2>
-                                        <p class="card-subtitle">{{d.quantity}} x <com-currency :value="d.price"/></p>
+                                        <h2 class="card-title">{{ d.product_code }}</h2>
+                                        <div class="card-title">{{ d.product_name }}</div>
+                                        <p class="card-subtitle" style="color: black;">{{d.quantity}} x <com-currency :value="d.price"/></p>
                                         <p v-if="d.modifiers && !d.is_timer_product" class="card-subtitle">{{d.modifiers}} (<com-currency :value="d.modifiers_price * d.quantity"/>)</p>
                                         
                                         <p class="card-subtitle flex align-items-center gap-1" v-if="d.time_in || d.time_out">
                                             <ion-icon size="small" :icon="timeOutline"></ion-icon> {{ dayjs(d.time_in).format('hh:mm A') }} {{d?.time_out?'-':''}} {{ dayjs(d.time_out).format('hh:mm A') }}
                                         </p> 
-                                        <p class="card-subtitle flex align-items-center gap-1" v-else>
-                                            <ion-icon :icon="timeOutline" ></ion-icon> {{ dayjs(d.creation).format('hh:mm:ss A') }}
-                                        </p>
                                     </ion-label>
                                     <ion-label slot="end" class="amount-container flex flex-column align-items-center">
-                                        <ion-label color="primary"><com-currency :value="d?.price" /></ion-label>
+                                        <ion-label color="primary"><div style="font-size: 20px;color: black;"><com-currency :value="d?.price" /></div></ion-label>
                                     </ion-label>
                                 </ion-item>
                             </ion-card>
@@ -127,7 +111,7 @@
                         <ComNumber :value="doc?.total_quantity" />
                     </ion-label>
                 </ion-item>
-                <ion-item>
+                <ion-item v-if="doc?.sale_discount > 0 && doc?.product_discount > 0">
                     <ion-label>{{ t("Sub Total") }}</ion-label>
                     <ion-label slot="end">
                         <ComCurrency :value="doc?.sub_total" />
@@ -205,20 +189,20 @@
                     <ion-label><strong>{{ t("Grand Total") }} </strong>
                     </ion-label>
                     <ion-text slot="end">
-                        <h2>
+                         <div class="amount">
                             <ComCurrency :value="doc?.grand_total" />
-                        </h2>
+                       </div>
                     </ion-text>
                 </ion-item>
 
                 <!-- paymen t -->
                 <template v-if="doc?.payment">
                     <ion-item v-for="(p, index) in doc?.payment" :key="index">
-                        <ion-label>{{ p.payment_type }}</ion-label>
+                        <ion-label><strong>{{ p.payment_type }}</strong></ion-label>
                         <ion-text slot="end">
-                            <h2>
+                            <div class="amount">
                                 <ComCurrency :value="p.input_amount" :format="p.currency_format" />
-                            </h2>
+                            </div>
                         </ion-text>
                     </ion-item>
 
@@ -227,9 +211,9 @@
                     <ion-label><strong>{{ t("Payment Amount") }} </strong>
                     </ion-label>
                     <ion-text slot="end">
-                        <h2>
+                         <div class="amount">
                             <ComCurrency :value="doc?.total_paid" />
-                        </h2>
+                        </div>
                     </ion-text>
                 </ion-item>
 
@@ -237,32 +221,24 @@
                     <ion-label><strong>{{ t("Balance") }} </strong>
                     </ion-label>
                     <ion-text slot="end">
-                        <h2>
+                        <div class="amount">
                             <ComCurrency :value="doc?.balance" />
-                        </h2>
+                        </div>
+                    </ion-text>
+                </ion-item>
+                <ion-item v-if="doc?.changed_amount > 0">
+                    <ion-label><strong>{{ t("Change Amount") }} </strong>
+                    </ion-label>
+                    <ion-text slot="end">
+                        <div class="amount">
+                            <ComCurrency :value="doc?.changed_amount" />
+                        </div>
                     </ion-text>
                 </ion-item>
                 <ion-item v-if="doc?.note">
                     <ion-note>{{ doc?.note }}</ion-note>
                 </ion-item>
             </ion-list>
-
-
-            <ion-text color="medium">
-                <p>{{ t("Created by") }}: {{ doc?.owner.split("@")[0] }} {{ t("On Date") }}:
-                    <span v-tooltip="dayjs(doc?.creation).format('ddd, DD MM YYYY HH:mm A')">
-                        {{ dayjs(doc?.creation).fromNow() }}
-                    </span>
-
-                </p>
-                <p>{{ t("Closed by") }}: {{ doc?.closed_by?.split("@")[0] }} {{ t("On Date") }}:
-                    <span v-tooltip="dayjs(doc?.closed_date).format('ddd, DD MM YYYY HH:mm A')">
-                        {{ dayjs(doc?.closed_date).fromNow() }}
-                    </span>
-
-                </p>
-            </ion-text>
-
         </ion-content>
     </ion-page>
 
@@ -284,6 +260,7 @@ async function loadData() {
     let res = await app.getDoc("Sale", app.route.params.name)
     if (res.data) {
         doc.value = res.data
+        console.log(doc.value)
     }
 
     if (doc.value.tax_rule) {
@@ -335,7 +312,6 @@ const getSaleProductGroupByKey = computed(() => {
 </script>
 <style scoped>
 .card-title {
-    font-weight: 600;
     font-size: 1rem;
     margin-bottom: 4px;
     padding-left: 10px;
@@ -350,7 +326,7 @@ const getSaleProductGroupByKey = computed(() => {
 
 .amount {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 20px;
     text-align: right;
 }
 </style>

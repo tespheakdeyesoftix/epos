@@ -11,7 +11,7 @@
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
         style="background:url(/assets/pettern1.png)">
         <div class="py-2 px-3 mt-3" style="height: fit-content;">
-          <div class="grid">
+          <div class="grid" style="margin-top: 10px;">
             <ion-button class="col-6 m-0" routerLink="/dashboard">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="gridOutline" slot="start"></ion-icon>
@@ -31,12 +31,12 @@
                 {{ t("Stock Adjustment")}}
               </div>
             </ion-button>
-            <ion-button class="col-6 m-0" routerLink="/pending-order">
+            <!-- <ion-button class="col-6 m-0" routerLink="/pending-order">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="timeOutline" slot="start"></ion-icon>
                 {{ t("Pending Order") }}
               </div>
-            </ion-button>
+            </ion-button> -->
             
             <ion-button class="col-6 m-0" routerLink="/sale">
               <div class="flex flex-column justify-center align-items-center py-2">

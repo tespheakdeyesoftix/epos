@@ -5,25 +5,32 @@
             <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
-            <ComSelect docType="POS Profile"  :filters="[['is_edoor_profile','=',0],['business_branch','=',property_name]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
+             <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch">
                 <ion-item :button="true"> 
-                <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
-                <ion-label>{{ selectProfile }}</ion-label>
-               
-                    <ion-button shape="round" size="small" slot="end" style="--background: #3D8D7A;" >{{
-                    t("Select POS Profile")
-                }}</ion-button>
-            </ion-item>
-        </ComSelect>
-       
+                    <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
+                    <ion-label>{{ selectBranch }}</ion-label>
+                    <ion-button shape="round" size="small" slot="end" style="--background: #3D8D7A;" >{{t("Select Branch")}}</ion-button>
+                </ion-item>
+            </ComSelect>
+            <ComSelect docType="POS Profile" :clearselected=clearselectedvalues :filters="[['is_edoor_profile','=',0],['business_branch','=',selectedBranches]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
+                <ion-item :button="true"> 
+                    <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
+                    <ion-label>{{ selectProfile }}</ion-label>
+                    <ion-button shape="round" size="small" slot="end" style="--background: #3D8D7A;" >{{t("Select POS Profile")}}</ion-button>
+                </ion-item>
+            </ComSelect>
             <stack class="ion-padding">
-                <ComDashboardKPI :data="kpiData" />
-                <ComDashboardChart :data="chartData" />
-                <ComPaymentBreakdown :data="paymentbreakdown"/>
+                <div style="margin-bottom: -15px;">
+                    <ComDashboardKPI :data="kpiData" />
+                </div>
+                 <div style="margin-bottom: -8px;">
+                    <ComDashboardChart :data="chartData" />
+                </div>
+                <div style="margin-bottom: -5px;">
+                    <ComPaymentBreakdown :data="paymentbreakdown"/>
+                </div>
                 <ComRecentOrder :data="recentData" />
-                
             </stack>
-             
         </ion-content>
     </ion-page>
     
@@ -38,8 +45,10 @@ import { storefrontOutline } from 'ionicons/icons';
 
 import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
-const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData,paymentbreakdown} =  useDashboard()
+const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData,paymentbreakdown,selectedBranch} =  useDashboard()
 const property_name = app.property_name;
+const selectedBranches = ref("")
+const clearselectedvalues = ref(false)
 const selectProfile = computed(()=>{
 
     if(selectedPOSProfiles.value?.length==0){
@@ -51,15 +60,32 @@ const selectProfile = computed(()=>{
     return `${t("POS Profile")} (${selectedPOSProfiles.value.length} Selected)`
 })
 
+const selectBranch = computed(()=>{
+    if((selectedBranch.value?.length ?? 0)==0){
+        return t("Branch")
+    }
+    else{
+        return selectedBranch.value
+    }
+})
+
 const t = window.t;
 const handleRefresh = async (event) => {
     await onRefresh()
-  event.target.complete();
+    event.target.complete();
 };
 
 
 async function onSelectOutlet(data){
-   await onChangePOSProfile()
+    clearselectedvalues.value = false
+    await onChangePOSProfile()
+}
+
+async function onSelectBranch(data){
+    clearselectedvalues.value = true
+    selectedBranches.value = data.name
+    selectedPOSProfiles.value = []
+    await onChangePOSProfile()
 }
 
 onMounted(async () => {

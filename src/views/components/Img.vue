@@ -25,7 +25,7 @@ const props = defineProps({
 
 
 
-const imgData = ref("/assets/placeholder.jpg");
+const imgData = ref("/epos-mobile/assets/placeholder.jpg");
 const strCurrentProperty = window.storageService.getItem("current_property");
  
 let serverUrl = props.api_url;

@@ -6,26 +6,22 @@
 
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data.name }}</h2>
-
-                <p class="card-subtitle">{{ data.customer_name }}</p>
-                <p class="card-subtitle" v-if="data.tbl_number">{{ t("Tbl #") }}: {{ data.tbl_number }}</p>
-                
-                
+                <h2 class="card-title">{{ data.custom_bill_number }}</h2>
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
-                        <span v-tooltip="dayjs(data?.closed_date).format('ddd, DD MM YYYY HH:mm A')">
-                    {{t("Created By")}} {{ data.closed_by.split('@')[0]}} - {{ dayjs(data?.closed_date).fromNow() }}</span>
+                        <span>
+                            {{t("Create By")}}: {{ data.closed_by.split('@')[0]}}
+                        </span>
+                        <div>
+                            {{dayjs(data?.closed_date).format('DD/MM/YYYY hh:mm A')}}
+                        </div>
                     </ion-text>
 
                 </p>
                 
             </ion-label>
-
-            <!-- Right-aligned Amount -->
-            <div slot="end" >
+            <div slot="end" style="font-size: 20px;font-weight: bold;">
                 <ion-label color="primary"><com-currency :value="data?.grand_total" /></ion-label>
-               
             </div>
         </ion-item>
     </ion-card>

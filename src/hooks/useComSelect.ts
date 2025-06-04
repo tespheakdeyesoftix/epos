@@ -35,13 +35,8 @@ export function useComSelect(props: any) {
           filters.push([f, 'like', `%${keywordEncode}%`])
         });
       }
-
-
-
-
     }
     const andFilter = props.filters || []
-    
     if (props.selected) {
       if (!props.multiple) {
 
@@ -115,9 +110,11 @@ export function useComSelect(props: any) {
   }
 
   function onClearSelect() {
-
- 
     data.value.filter((r:any)=>r.selected).map((x:any)=>x.selected=false);
+    if(!props.multiple){
+      data.value = [""];
+      modalController.dismiss("", 'confirm')
+    }
   }
 
   const dismissModal = () => {
