@@ -33,6 +33,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/home/:parent_menu",
+    component: Home,
+    meta: { requiresAuth: true }
+  },
+
+  {
     path: "/product-list",
     component: () => import('@/views/products/ProductList.vue'),
     meta: { requiresAuth: true }

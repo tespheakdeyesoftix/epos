@@ -80,6 +80,11 @@ import {
   IonItemDivider
 } from '@ionic/vue';
 
+ 
+ 
+
+import { defineCustomElements } from 'ionicons/dist/loader'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -144,6 +149,12 @@ let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
 
+
+// Define ion-icon as custom element
+defineCustomElements(window)
+
+
+
 // attach service to window easy to call it later
 
 window.storageService = storageService;
@@ -179,8 +190,7 @@ const app = createApp(App)
 
 
 
-async function init() {
-  
+
   // check if have current login user then login
 
  
@@ -267,6 +277,9 @@ async function init() {
   app.directive('tooltip', Tooltip);
   app.component('v-chart', VueECharts)
 
+  
+async function init() {
+  
 
   await router.isReady();
   

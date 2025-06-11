@@ -8,7 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/epos-mobile/', 
+  // base: '/epos-mobile/', 
   plugins: [
     vue(),
     VitePWA({

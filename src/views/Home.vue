@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <AppBar>{{ t("Home") }}</AppBar>
+    <AppBar>{{ t(currentMenu?.title || "Home") }}</AppBar>
     <ion-content :fullscreen="true">
       <div class="wrapper-cover flex justify-content-end flex-column align-items-center pb-5">
         <ion-avatar style="width: 100px; height: 100px;" > 
@@ -8,10 +8,28 @@
         </ion-avatar>
         <h1 class="mt-2 mb-0">{{ t(setting.app_name) }}</h1>
       </div>
+    
+ 
+ 
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
         style="background:url(/assets/pettern1.png)">
         <div class="py-2 px-3 mt-3" style="height: fit-content;">
-          <div class="grid" style="margin-top: 10px;">
+      {{ currentMenu }}xx
+             <ion-grid>
+          <ion-row>
+            <ion-col v-for="(m, index) in appMenu" :key="index" size-lg="3" size-xs="6" >
+              <ion-button @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round">
+                <div class="flex flex-column justify-center align-items-center py-2">
+                  <div v-html="m.icon" style="height: 50px;width: 50px;"></div>
+
+                  <ion-label>{{ t(m.title) }}</ion-label>
+                </div>
+
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        
             <ion-button class="col-6 m-0" routerLink="/dashboard">
               <div class="flex flex-column justify-center align-items-center py-2">
                 <ion-icon class="text-6xl mb-2" :icon="gridOutline" slot="start"></ion-icon>
@@ -61,27 +79,36 @@
            
           </div>
         </div>
-      </div>
+    
     </ion-content>
   </ion-page>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import {onMounted,ref} from "vue"
 import { useAuth } from '@/hooks/useAuth';
-import {
-  IonContent,
-  IonButton,
-  IonIcon,
-  useIonRouter,
-} from '@ionic/vue';
+import {useHome} from "@/hooks/useHome.js"
 import {pricetagOutline, cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline, cardOutline, barChartOutline } from 'ionicons/icons';
+
+const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
+
+ 
 const t = window.t;
+ 
 const { logout } = useAuth();
 const setting = app.setting;
-const ionRouter = useIonRouter();
+
+
+onMounted(async ()=>{
+ await getAppMenu()
+ if(app.route.params.parent_menu){
+  await getCurrentMenu(app.route.params.parent_menu)
+ }
+})
+
 const onLogout = async () => {
   await logout();
-  ionRouter.navigate('/select-workspace', 'back', 'replace');
+  app.ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
 </script>
 <style scoped>
