@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <AppBar>{{ t("Top Up") }}</AppBar>
+        <AppBar>{{ t("Top Up Coupon") }}</AppBar>
         <ion-content>
             <DocList docType="Sale" :options="options"
             @onRowDblClick="onRowDblClick"
