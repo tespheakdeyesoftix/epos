@@ -79,6 +79,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/sale-coupon/ComTopUp.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/redeem",
+    component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
+    meta: { requiresAuth: true }
+  },
 
   
   {
