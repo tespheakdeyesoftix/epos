@@ -1,12 +1,12 @@
 <template>
     
-    <ion-card class="ion-no-margin mb-3" :routerLink="'/sale-detail/' + data.name" >
+    <ion-card class="ion-no-margin mb-3" button>
         <ion-item lines="none">
              
 
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data.custom_bill_number || data.name }}</h2>
+                <h2 class="card-title">{{ data.name }}</h2>
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
                         <span>
@@ -16,7 +16,7 @@
                             {{dayjs(data?.closed_date).format('DD/MM/YYYY hh:mm A')}}
                         </div>
                     </ion-text>
-
+                    
                 </p>
                 
             </ion-label>
@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+
 const props = defineProps({
     data: Object
 })

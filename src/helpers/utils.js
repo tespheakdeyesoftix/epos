@@ -2,6 +2,8 @@ import { modalController, alertController, toastController, loadingController, p
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
 import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 
+import { isPlatform,getPlatforms } from '@ionic/vue';
+ 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
     return imageUrl;
@@ -413,3 +415,53 @@ export function checkArrayType(value) {
 }
 
 
+export function getPlateform(){
+  if( isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
+    return "desktop"
+  }
+  return "mobile"
+
+
+}
+
+export function getCouponNumber(coupon){
+  if(coupon.toLowerCase().startsWith("http")){
+    const arrayCoupons =  coupon.split("=");
+    
+    if(arrayCoupons.length<2){
+      return ""
+    }
+    return arrayCoupons[1]
+
+  }
+   
+  return coupon
+  
+
+}
+
+
+export async function showWarningMessage(title = "Confirm", message = "Are you sure you want to process this action?") {
+    let defaultButtons = [
+        {
+            text: app.t('OK'),
+            role: 'confirm',
+            cssClass: 'alert-button-warning'
+        }
+        
+    ];
+
+
+
+    const al = await alertController.create({
+        header: app.t(title),
+        subHeader:app.t(message)  ,
+        buttons: defaultButtons,
+        cssClass:"warning-alert"
+    });
+
+    await al.present();
+    const { role } = await al.onWillDismiss();
+    return role === 'confirm';
+}
+ 

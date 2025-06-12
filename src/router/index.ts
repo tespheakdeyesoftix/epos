@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideTab:true }
   },
   {
+    path: "/enter-station-name",
+     component: () => import('@/views/EnterStationName.vue'),
+    meta: { hideTab:true }
+  },
+  {
     path: "/add-workspace/:property_code",
     component: AddWorkspace,
     meta: { hideTab:true }
@@ -32,6 +37,12 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
     meta: { requiresAuth: true }
   },
+  {
+    path: "/home/:parent_menu",
+    component: Home,
+    meta: { requiresAuth: true }
+  },
+
   {
     path: "/product-list",
     component: () => import('@/views/products/ProductList.vue'),
@@ -57,6 +68,28 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/sales/SaleList.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/sale-coupon-list",
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCouponList.vue'),
+    meta: { requiresAuth: true }
+  },
+  
+  {
+    path: "/sale-coupon",
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/top-up",
+    component: () => import('@/modules/ecoupon/sale-coupon/ComTopUp.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/redeem",
+    component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
+    meta: { requiresAuth: true }
+  },
+
   
   {
     path: "/sale-detail/:name",
@@ -69,7 +102,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/dashboard/Dashboard.vue'),
     meta: { requiresAuth: true }
   },
-  
   {
     path: "/stock-adjustment",
     component: () => import('@/views/stock-adjustment/StockAdjustment.vue'),
@@ -117,9 +149,15 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   
-  if (to.meta.requiresAuth && !ctrl.isAuthenticated.value) {
+  const station_name = await app.storageService.getItem("station_name")
+ 
+  if (to.meta.requiresAuth && !ctrl.isAuthenticated.value && to.path!="/select-workspace") {
     next("/select-workspace");
-  } else {
+  } 
+  else if(['/sale-coupon'].includes(to.path) && !station_name && to.path!="/enter-station-name"){
+    next("/enter-station-name?return_url=" + to.path);
+  }
+  else {
     
       next();
    

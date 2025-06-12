@@ -16,45 +16,47 @@ const props = defineProps({
 })
 const t = window.t;
 const option = computed(() => {
-    if (props.data) {
-        return {
-            grid: {
-                left: 20,
-                right: 20,
-                top: 40,
-                bottom: 30,
-                containLabel: true
-            },
-            tooltip: {
-                trigger: 'axis' // Shows tooltip for the whole category axis
-            },
-            xAxis: {
-                type: 'category',
-                data: props.data.map(r => r.day)
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    data: props.data.map(r => r.value),
-                    type: 'bar',
-
-                    barWidth: '60%',
-                    label: {
-                        show: true,
-                        position: 'top', // show label above bar
-                        color: '#000',   // label text color (optional)
-                        fontSize: 12     // label font size (optional)
-                    }
-                }
-            ]
+  if (props.data && props.data.length) {
+    return {
+      grid: {
+        left: 10,
+        right: 30,
+        top: 20,
+        bottom: 10,
+        containLabel: true,
+      },
+      xAxis: {
+        type: 'value',
+        axisLabel: {
+        formatter: value => {
+        return `$${value}`;
         }
+  }
+      },
+      yAxis: {
+        type: 'category',
+        data: props.data.map(r => r.day),
+      },
+      series: [
+        {
+          type: 'bar',
+          data: props.data.map(r => r.value),
+          barWidth: '45%',
+          label: {
+            show: true,
+            position: 'top',
+            color: '#000',
+            fontSize: 12,
+            formatter: params => (params.value === 0 ? '' : `$${params.value}`)
+          },
+        },
+      ],
+    };
+  }
 
-    }
-    return []
-
-})
+  // Return an empty chart option object instead of an array
+  return {};
+});
 
 
 </script>

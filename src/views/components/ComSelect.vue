@@ -59,8 +59,11 @@ const props = defineProps({
   labelPrefix: String,
   selectedValues: Object,//for multiple select send  array string 
   selectedValue: String,// for single select string only
-  selected: Object // Array of object eg. [{name:'123', label:'Label 1'}]
-
+  selected: Object, // Array of object eg. [{name:'123', label:'Label 1'}]
+  clearselected:{
+    type:Boolean,
+    default:false
+  }
 })
 
 const emit = defineEmits()
@@ -99,6 +102,9 @@ const openSheetModal = async () => {
   isOpenModal = true
   //end prevent double fire click
   JSON.stringify(props.options)
+  if (props.clearselected) {
+    selected.value = null
+  }
   const modalOption = {
     component: ComSelectSheetModal,
     swipeToClose: false,
@@ -142,34 +148,24 @@ function getLabel() {
       if (meta?.value?.title_field) return selected.value[meta?.value.title_field];
       if (selected.value.label) return selected.value.label
       if (props.labelField) return selected.value[props.labelField];
-
-
-   
       return selected.value.label || selected.value.name;
-
     }
 
     if (Array.isArray(selected.value) && selected.value.length > 0) {
-
       if (selected.value.length == 1) {
         if (meta?.value?.title_field) return selected.value[0][meta?.value.title_field];
-
         if (props.labelField) return selected.value[0][props.labelField];
         return selected.value[0].name;
-
       } else {
         return `${selected.value.length} ${(props.label || props.docType)}s`;
       }
     }
   }
-
- 
   return t(props.label || props.docType)
 
 }
 
 function onClear() {
-
   selected.value = null;
   model.value = null
   value.value = null

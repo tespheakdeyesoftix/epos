@@ -14,11 +14,14 @@
 import { ref } from 'vue';
 import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
 
+const isMobile = ref(getPlatforms().includes("mobile"))
+
+ 
 const t = window.t
 const options = {
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name", "posting_date", "grand_total", "customer", "customer_name", "closed_date", "closed_by", "tbl_number"],
+    fields: ["name", "posting_date", "grand_total", "customer", "customer_name", "closed_date", "closed_by", "tbl_number","custom_bill_number"],
     orderBy:{
       field: "modified",
       order: "desc",

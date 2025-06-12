@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import { storageService } from '@/services/storage-service';
+import {setup} from "@/helpers/setup.js"
 import { useAuth } from '@/hooks/useAuth';
 import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
@@ -80,6 +81,11 @@ import {
   IonItemDivider
 } from '@ionic/vue';
 
+ 
+ 
+
+import { defineCustomElements } from 'ionicons/dist/loader'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -135,6 +141,7 @@ import Document from '@/views/components/document-list/Document.vue';
 import ComInput from '@/views/components/public/ComInput.vue';
 import ComSelectInput from '@/views/components/public/ComSelectInput.vue';
 import Stack from '@/views/components/public/Stack.vue';
+import GetData from '@/views/components/public/GetData.vue';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -143,6 +150,12 @@ import { useApp } from './hooks/useApp';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
+
+
+// Define ion-icon as custom element
+defineCustomElements(window)
+
+
 
 // attach service to window easy to call it later
 
@@ -179,8 +192,7 @@ const app = createApp(App)
 
 
 
-async function init() {
-  
+
   // check if have current login user then login
 
  
@@ -246,6 +258,7 @@ async function init() {
   app.component('ion-select-option',IonSelectOption)
   app.component('ion-item-group',IonItemGroup)
   app.component('ion-item-divider',IonItemDivider)
+ 
   
 
   app.component('Img',Img)
@@ -260,6 +273,8 @@ async function init() {
   app.component('ComInput',ComInput)
   app.component('ComSelectInput',ComSelectInput)
   app.component('Stack',Stack)
+  app.component('get-data',GetData)
+  app.component('GetData',GetData)
 
   app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);
@@ -267,6 +282,10 @@ async function init() {
   app.directive('tooltip', Tooltip);
   app.component('v-chart', VueECharts)
 
+  
+async function init() {
+  
+  await setup()
 
   await router.isReady();
   
