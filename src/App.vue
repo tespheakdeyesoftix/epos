@@ -3,7 +3,7 @@
     <DrawerMenu v-if="isAuthenticated" />
     <ion-content :fullscreen="true" id="main-content">
 
-      <ion-router-outlet v-if="!loading"/>
+      <ion-router-outlet />
 
 
     </ion-content>
@@ -25,8 +25,8 @@ const  {checkUserLogin,isAuthenticated} = useAuth();
 const route = useRoute();
 const title = ref(route.meta.title || 'ePOS');
 const hideTab = ref(false);
-const {getSetting} = useApp();
-const loading = ref(true)
+
+ 
 
 const router = useRouter();
 
@@ -44,17 +44,6 @@ watch(() => route.meta.title, (newTitle) => {
   title.value = newTitle || 'ePOS';
 
 });
- 
-
-onMounted(async ()=>{
-  loading.value = true 
-  await checkUserLogin();
- 
-  if (isAuthenticated.value){
-    
-    await getSetting()
-  }
-  loading.value = false
-})
+  
 
 </script>

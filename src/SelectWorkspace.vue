@@ -4,7 +4,7 @@
       <!-- Branding Section -->
       <div class="addws-page">
         <div class="branding">
-          <ion-img src="/epos-mobile/assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
+          <ion-img src="/assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
           <ion-text class="app-name">ePOS</ion-text>
         </div>
         <div style="height:calc(-317.5px + 100vh);background: transparent;" class="border-round-top-3xl p-3 -mt-5">

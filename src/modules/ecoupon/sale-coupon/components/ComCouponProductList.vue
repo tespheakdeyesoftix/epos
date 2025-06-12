@@ -11,7 +11,7 @@
     import {ref} from "vue"
     import ComProductCard from "@/modules/ecoupon/sale-coupon/components/ComProductCard.vue"
 const params = ref({
-    fields:["name","product_name_en","product_name_kh","photo","price"],
+    fields:["name","product_name_en","product_name_kh","photo","price","unit"],
     filters:[["is_coupon","=",1],["disabled","=",0]],
     limit: 500000,
     orderBy: {

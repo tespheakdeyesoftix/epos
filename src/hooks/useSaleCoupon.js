@@ -21,13 +21,15 @@ export function useSaleCoupon(){
             component:ComAddCouponCode,
             componentProps:{
                 data:p,
-                title:`${p.name} - ${p.product_name_en}`,
+                
 
             },
             
         })
 
-        alert("u close modatal")
+       if(result){
+           saleDoc.value.sale_products = [...saleDoc.value.sale_products , ...result]
+       }
         // wait user confirm then add producty to sale product 
 
     }

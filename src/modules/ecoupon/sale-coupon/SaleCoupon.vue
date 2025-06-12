@@ -4,7 +4,17 @@
             {{t("Sale Coupon")}}
         </ToolBar>
         <ion-content>
-  <ComCouponProductList/>
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="8"> 
+<ComCouponProductList/>
+                    </ion-col>
+                    <ion-col size="4">
+                        {{ saleDoc }}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+  
   <ion-button @click="onSave">Save Me</ion-button>
         </ion-content>
     </ion-page>

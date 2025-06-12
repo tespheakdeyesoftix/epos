@@ -3,6 +3,7 @@ import i18n from '../../i18n'; // Import i18n config
 import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
 import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import  * as utils from '@/helpers/utils';
+import  * as storageService from '@/services/storage-service.ts';
 
 
 import { ref } from 'vue';
@@ -18,7 +19,10 @@ globalThis.app = globalThis.app || {};
 
 // api url 
 globalThis.app.utils = utils;
+globalThis.app.storageService = storageService;
+globalThis.app.setting = {business_branch:"xxx"};
 
+globalThis.app.t =  i18n.global.t;
 
 globalThis.app.getDoc =  async function (DocType,DocName) {
   return await getDoc(DocType,DocName)
@@ -98,10 +102,6 @@ globalThis.app.router = null;
   globalThis.app.router =router; 
  }
 
- globalThis.app.setting = null;
-  globalThis.app.setSetting = function(setting){
-    globalThis.app.setting =setting; 
- }
 
 
  globalThis.app.current_property = null;

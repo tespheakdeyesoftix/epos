@@ -20,8 +20,6 @@ function getToken(){
         const token = JSON.stringify(atob(userObject.token))
        
         return token.replaceAll('"',"") 
-
-        
     }
     return "" ;
    

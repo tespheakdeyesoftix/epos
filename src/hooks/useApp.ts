@@ -3,22 +3,7 @@ import { getApi } from "@/services/api-service";
 import { onMounted, ref } from "vue";
  
 const currentProperty = ref({property_name:""})
-const setting = ref()
-
-
-async function getSetting() {
-
  
-  const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings")
-  if (res.data) {
-
-    setting.value = res.data
-    
-    app.setSetting(res.data)
-    
-  }
-}
-
 
 export function useApp() {
 
@@ -93,7 +78,7 @@ export function useApp() {
     languages,
     currentProperty,
     currentLanguage,
-    getSetting,
+   
     getMeta,
     getDoctypeDefaultFields
 };

@@ -89,11 +89,8 @@ export function useAuth() {
   }
 
   async function checkUserLogin() {
-    let returnUrl = ""
-    const loading = await loadingController.create({
-      message: window.t('Loading...'),
-    });
-    await loading.present();
+    
+    const loading = await app.showLoading()
 
     const strCurrentProperty = window.storageService.getItem("current_property");
     if (strCurrentProperty) {
@@ -109,19 +106,15 @@ export function useAuth() {
         if (checkResponse.data === "Guest") {
           isAuthenticated.value = false;
           window.storageService.removeItem("current_user");
-
-          app.router.push('/select-workspance');
         } else {
           if (checkResponse.data) {
             isAuthenticated.value = true;
-            appCtrl.currentProperty.value = property;
-            app.setCurrentProperty(property);
+            app.setting.property = property
+           
             setFrappeAppUrl(property.api_url);
-            app.router.push('/home');
           } else {
             window.storageService.removeItem("current_user");
             isAuthenticated.value = false;
-            app.router.push('/select-workspace');
           }
         }
       }

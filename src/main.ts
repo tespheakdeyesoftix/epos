@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 import { storageService } from '@/services/storage-service';
+import {setup} from "@/helpers/setup.js"
 import { useAuth } from '@/hooks/useAuth';
 import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
@@ -284,6 +285,7 @@ const app = createApp(App)
   
 async function init() {
   
+  await setup()
 
   await router.isReady();
   

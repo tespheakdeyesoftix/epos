@@ -7,7 +7,6 @@
     />
     <label for="on_label">{{ label }}</label>
 </FloatLabel>
- 
   
  </template>
  <template  v-else>
@@ -18,6 +17,8 @@
                     :type="type"
                     :placeholder="placeholder"
                     :label="label"
+                    @ionChange="onChange"
+                    
                    >
                    <ion-button v-if="type=='BarcodeScanerInput'" @click="onScanBarcode"  fill="clear" slot="end" aria-label="Show/hide">
                      <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
@@ -28,7 +29,7 @@
 <script setup>
 import { IonIcon } from '@ionic/vue';
 import { scan } from 'ionicons/icons';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
@@ -38,6 +39,7 @@ const inputRef = ref(null)
 const props = defineProps({
   label:String,
   placeholder:String,
+  focus:Boolean,
   minFractionDigits:{
     type:Number,
     default:0
@@ -71,9 +73,18 @@ function onInput($event){
  }else {
   model.value = $event.detail.value
  }
+ emit("onInput",model.value)
 }
 
 
+function onChange($event){
+  if(props.type === "number"){
+  model.value = Number($event.detail.value)
+ }else {
+  model.value = $event.detail.value
+ }
+ emit("onChange",model.value)
+}
 
 async function onScanBarcode() {
   const result =  await app.onScanBarcode();
@@ -95,5 +106,18 @@ const onSelectAll = (event) => {
   }, 0);
 };
 
+
+onMounted(()=>{
+  if(props.focus){
+setTimeout(function(){
+    
+      ionInputRef.value?.$el?.setFocus()
+      const nativeInput = ionInputRef.value?.$el?.querySelector('input')
+      nativeInput?.select()  
+  },200)
+  }
+  
+
+})
 
 </script>

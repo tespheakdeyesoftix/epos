@@ -18,6 +18,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: { hideTab:true }
   },
   {
+    path: "/enter-station-name",
+     component: () => import('@/views/EnterStationName.vue'),
+    meta: { hideTab:true }
+  },
+  {
     path: "/add-workspace/:property_code",
     component: AddWorkspace,
     meta: { hideTab:true }
@@ -134,9 +139,15 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   
-  if (to.meta.requiresAuth && !ctrl.isAuthenticated.value) {
+  const station_name = await app.storageService.getItem("station_name")
+ 
+  if (to.meta.requiresAuth && !ctrl.isAuthenticated.value && to.path!="/select-workspace") {
     next("/select-workspace");
-  } else {
+  } 
+  else if(['/sale-coupon'].includes(to.path) && !station_name && to.path!="/enter-station-name"){
+    next("/enter-station-name?return_url=" + to.path);
+  }
+  else {
     
       next();
    
