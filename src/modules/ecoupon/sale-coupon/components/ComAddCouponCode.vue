@@ -13,6 +13,7 @@
                 </ion-button>
             </ion-item>
 
+<<<<<<< HEAD
         </ion-list>
         <template v-else>
             <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
@@ -31,6 +32,15 @@
 
         </template>
     </BaseModal>
+=======
+</ion-list>
+<!-- {{ data }} -->
+<template #footer>
+    <ion-button>hello</ion-button>
+    
+</template>
+</BaseModal>
+>>>>>>> d1b39b5061240e4e7b0f575284f0903c4059d97b
 
 </template>
 <script setup>

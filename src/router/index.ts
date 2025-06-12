@@ -79,6 +79,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/top-up",
+    component: () => import('@/modules/ecoupon/sale-coupon/ComTopUp.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/redeem",
+    component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
+    meta: { requiresAuth: true }
+  },
+
   
   {
     path: "/sale-detail/:name",
@@ -91,7 +102,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/dashboard/Dashboard.vue'),
     meta: { requiresAuth: true }
   },
-  
   {
     path: "/stock-adjustment",
     component: () => import('@/views/stock-adjustment/StockAdjustment.vue'),
