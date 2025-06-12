@@ -26,8 +26,6 @@ const route = useRoute();
 const title = ref(route.meta.title || 'ePOS');
 const hideTab = ref(false);
 
- 
-
 const router = useRouter();
 
 // set ion router to app so it easy to access from compoennty

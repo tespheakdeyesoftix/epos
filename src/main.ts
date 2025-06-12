@@ -286,10 +286,11 @@ const app = createApp(App)
 async function init() {
   
   await setup()
-
+ 
   await router.isReady();
   
   app.mount("#app");
+  
 }
 
 init();

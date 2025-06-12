@@ -1,9 +1,8 @@
- 
-import { getApi } from "@/services/api-service";
+
 import { onMounted, ref } from "vue";
  
 const currentProperty = ref({property_name:""})
- 
+const isAppLoadReady = ref(false)
 
 export function useApp() {
 
@@ -36,7 +35,7 @@ export function useApp() {
           return existingDoctype
         }
     
-        const response =await getApi("epos_restaurant_2023.api.api.get_meta",{
+        const response =await app.getApi("epos_restaurant_2023.api.api.get_meta",{
           doctype:doctype
         });
         
@@ -78,7 +77,7 @@ export function useApp() {
     languages,
     currentProperty,
     currentLanguage,
-   
+   isAppLoadReady,
     getMeta,
     getDoctypeDefaultFields
 };

@@ -7,12 +7,12 @@
         <Img :src="setting.app_logo"/>
         </ion-avatar>
         <ion-text>
-            <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name) }}</h1>
+            <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name || "ePOS") }}</h1>
         </ion-text>
         
       </div>
     
- 
+{{ setting }}
  
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
         style="background:url(/assets/pettern1.png)">
@@ -53,15 +53,15 @@
 import {onMounted,ref} from "vue"
 import { useAuth } from '@/hooks/useAuth';
 import {useHome} from "@/hooks/useHome.js"
-import {pricetagOutline, cartOutline, logOutOutline, timeOutline, cubeOutline,gridOutline, cardOutline, barChartOutline } from 'ionicons/icons';
-
+import {  logOutOutline } from 'ionicons/icons';
+ 
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
  
 const t = window.t;
  
 const { logout } = useAuth();
-const setting = app.setting;
+const setting = ref(app.setting);
 
 
 onMounted(async ()=>{

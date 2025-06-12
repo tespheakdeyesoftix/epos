@@ -1,6 +1,6 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
-import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc  } from "@/services/api-service";
+import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc,getValue,setValue  } from "@/services/api-service";
 import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import  * as utils from '@/helpers/utils';
 import  * as storageService from '@/services/storage-service.ts';
@@ -31,6 +31,17 @@ globalThis.app.getDoc =  async function (DocType,DocName) {
 globalThis.app.createDoc =  async function (DocType,params) {
   return await createDoc(DocType,params)
 }
+
+globalThis.app.getValue =  async function (DocType,name,fields) {
+  return await getValue(DocType,name,fields)
+}
+
+globalThis.app.setValue =  async function (DocType,name,fields,value=null) {
+  return await setValue(DocType,name,fields,value)
+}
+
+
+
 
 globalThis.app.deleteDoc =  async function (DocType,DocName) {
   return await deleteDoc(DocType,DocName)

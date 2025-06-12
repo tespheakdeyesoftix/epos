@@ -465,3 +465,13 @@ export async function showWarningMessage(title = "Confirm", message = "Are you s
     return role === 'confirm';
 }
  
+
+export async function getSetting() {
+
+    const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings")
+    console.log(res.data)
+
+    if (res.data) {
+        app.setting = { ...app.setting, ...res.data }
+    }
+}
