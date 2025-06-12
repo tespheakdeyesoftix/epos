@@ -10,7 +10,7 @@
 </ion-item>
 
 </ion-list>
-{{ data }}
+<!-- {{ data }} -->
 <template #footer>
     <ion-button>hello</ion-button>
     
