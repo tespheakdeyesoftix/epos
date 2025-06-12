@@ -14,6 +14,9 @@
 import { ref } from 'vue';
 import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
 
+const isMobile = ref(getPlatforms().includes("mobile"))
+
+ 
 const t = window.t
 const options = {
     showSearchBar:true,

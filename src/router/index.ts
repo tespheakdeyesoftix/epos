@@ -63,6 +63,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/sales/SaleList.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/sale-coupon-list",
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCouponList.vue'),
+    meta: { requiresAuth: true }
+  },
+  
+  {
+    path: "/sale-coupon",
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    meta: { requiresAuth: true }
+  },
   
   {
     path: "/sale-detail/:name",

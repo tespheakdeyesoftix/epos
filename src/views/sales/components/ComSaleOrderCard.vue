@@ -6,7 +6,7 @@
 
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data.custom_bill_number }}</h2>
+                <h2 class="card-title">{{ data.custom_bill_number || data.name }}</h2>
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
                         <span>

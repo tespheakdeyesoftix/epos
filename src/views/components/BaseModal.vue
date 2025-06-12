@@ -23,12 +23,15 @@
     </ion-content>
     <ion-footer v-if="!hideFooter"> 
   <ion-toolbar>
-   
+   <slot name="footer">
+    
     <ion-buttons slot="end">
       <ion-button size="large" fill="solid" shape="round" color="primary" @click="onConfirm">
         {{ t("Select") }}
       </ion-button>
     </ion-buttons>
+    
+   </slot>
   </ion-toolbar>
 </ion-footer>
   </template>

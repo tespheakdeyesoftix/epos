@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/hooks/useDocument.js", "src/hooks/useDocList.js", "src/hooks/useAuth.js", "src/helpers/error-message.js", "src/helpers/utils.js"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/hooks/useDocument.js", "src/hooks/useDocList.js", "src/hooks/useAuth.js", "src/helpers/error-message.js", "src/helpers/utils.js", "src/hooks/useHome.js"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

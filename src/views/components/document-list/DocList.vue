@@ -17,7 +17,8 @@
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-
+            
+ 
             <DataTable :value="data" tableStyle="min-width: 50rem" selectionMode="single"
                 v-model:selection="selectedRow" showGridlines stripedRows @sort="onSort" :lazy="true"
                 @row-dblclick="onRowDblClick" :sortField="options.presort" :sortOrder="options.sortOrder || 1">
@@ -25,7 +26,7 @@
                     :header="t(col.header)" :headerClass="col.align || getAligment(col.fieldtype)"
                     :bodyClass="col.align || getAligment(col.fieldtype)" sortable>
                     <template #body="slotProps">
-                        <slot :name="col.fieldname" :item="slotProps.data" :index="col.field + '_' + index">
+                        <slot :name="col.fieldname" :item="slotProps.data" :index="col.fieldname + '_' + index">
                             <!-- date column -->
                             <template v-if="col.fieldtype == 'Date'">
                                 {{ dayjs(slotProps.data[col.fieldname]).format("DD-MM-YYYY") }}

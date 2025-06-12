@@ -140,6 +140,7 @@ import Document from '@/views/components/document-list/Document.vue';
 import ComInput from '@/views/components/public/ComInput.vue';
 import ComSelectInput from '@/views/components/public/ComSelectInput.vue';
 import Stack from '@/views/components/public/Stack.vue';
+import GetData from '@/views/components/public/GetData.vue';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -256,6 +257,7 @@ const app = createApp(App)
   app.component('ion-select-option',IonSelectOption)
   app.component('ion-item-group',IonItemGroup)
   app.component('ion-item-divider',IonItemDivider)
+ 
   
 
   app.component('Img',Img)
@@ -270,6 +272,8 @@ const app = createApp(App)
   app.component('ComInput',ComInput)
   app.component('ComSelectInput',ComSelectInput)
   app.component('Stack',Stack)
+  app.component('get-data',GetData)
+  app.component('GetData',GetData)
 
   app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);

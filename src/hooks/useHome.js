@@ -24,9 +24,15 @@ export function useHome() {
         if (app.route.params.parent_menu) {
             filters = [["parent_mobile_app_module", "=", app.route.params.parent_menu]]
         }
+        filters.push(["is_active","=",1])
+    
         const res = await app.getDocList("Mobile App Module", {
             fields: ["*"],
-            filters: filters
+            filters: filters,
+              orderBy: {
+            field: 'sort_order',
+            order: 'asc',
+        },
 
         })
         appMenu.value = res.data;

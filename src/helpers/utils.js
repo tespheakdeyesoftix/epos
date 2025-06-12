@@ -2,6 +2,8 @@ import { modalController, alertController, toastController, loadingController, p
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
 import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 
+import { isPlatform,getPlatforms } from '@ionic/vue';
+ 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
     return imageUrl;
@@ -413,4 +415,11 @@ export function checkArrayType(value) {
 }
 
 
- 
+export function getPlateform(){
+  if( isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
+    return "desktop"
+  }
+  return "mobile"
+
+
+}
