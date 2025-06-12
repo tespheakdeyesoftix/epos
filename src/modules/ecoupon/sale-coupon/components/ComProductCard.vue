@@ -1,5 +1,5 @@
 <template>
-<!-- {{ data }} -->
+
 <ion-card button  @click="onSelectProduct(data)">
       <ion-card-content>
     <div style="display: flex; align-items: center; gap: 16px;">
