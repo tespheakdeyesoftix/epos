@@ -3,7 +3,7 @@
         <ToolBar>
             {{t("Sale Coupon")}}
         </ToolBar>
-        <ion-content>
+        <ion-content>   
   <ComCouponProductList/>
   <ion-button @click="onSave">Save Me</ion-button>
         </ion-content>
