@@ -3,11 +3,12 @@ import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCou
 import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
 
-const saleDoc = ref()
+const saleDoc = ref({
+    sale_products:[]
+})
 const customer = ref(null)
 
-initSaleDoc()
-
+ 
 const groupSaleProducts = computed(()=>{
     return  Object.groupBy(saleDoc.value.sale_products, ({ product_code }) => product_code);
 })
@@ -33,6 +34,16 @@ function initSaleDoc() {
         sale_products: [ 
 
         ]
+    }
+}
+
+async function getSaleDoc(){
+    const result = await app.getDoc("Sale",app.route.params.name);
+    if(result.data){
+        saleDoc.value = result.data;
+    }else {
+        //if not found 
+        alert("go to new route")
     }
 }
 
@@ -149,6 +160,7 @@ export function useSaleCoupon() {
         onSelectProduct,
         onSaveAsDraft,
         initSaleDoc,
-        onQuickPay
+        onQuickPay,
+        getSaleDoc
     }
 }

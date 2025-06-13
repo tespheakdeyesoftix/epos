@@ -4,6 +4,11 @@ import Home from '@/views/Home.vue';
 import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
+    {
+    path: '/:pathMatch(.*)*', // Catch-all
+    name: 'NotFound',
+    component: () => import('@/views/NotFound.vue')
+  },
   {
     path: '/',
     redirect: '/home'
@@ -80,7 +85,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/sale-coupon",
     component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
-  },
+  },  
+  {
+    path: "/sale-coupon/:name",
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    meta: { requiresAuth: true }
+  }, 
   {
     path: "/top-up",
     component: () => import('@/modules/ecoupon/TopUpList/TopUpList.vue'),
