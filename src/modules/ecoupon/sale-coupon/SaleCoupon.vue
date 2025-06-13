@@ -7,10 +7,11 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">
+                     
                         <ComCouponProductList />
                     </ion-col>
                     <ion-col size="4">
-                        <ComCustomerCard />
+                        <ComCustomerCard v-if="saleDoc?.customer" />
                         <ComSaleProductCoupon />
                     </ion-col>
                 </ion-row>
@@ -23,19 +24,28 @@
 
 </template>
 <script setup>
-import { onUnmounted, ref } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCouponProductList.vue"
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
-import {  onIonViewWillLeave } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router'
-const { saleDoc,initSaleDoc } = useSaleCoupon()
-saleDoc.value.sale_type= "Sale Coupon";
+import ComSaleProductCouponCard from "./components/ComSaleProductCouponCard.vue"
+const { saleDoc,initSaleDoc,getSaleDoc } = useSaleCoupon()
+
 
 const t = window.t
  
+
+onMounted(async ()=>{
+  if(app.route.params.name){
+    await getSaleDoc()
+    }else {
+      initSaleDoc();
+      saleDoc.value.sale_type= "Sale Coupon";
+    }
+})
 
 onBeforeRouteLeave(async (to, from, next) => {
   if (saleDoc.value.sale_products.length > 0) {
