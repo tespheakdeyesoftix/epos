@@ -13,7 +13,7 @@
       </div>
     
 <!-- {{ setting }} -->
-      <div class="menu-list flex justify-content-center border-round-top-3xl">
+      <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="p-3">
         <ion-grid class="border-round-2xl p-0">
           <ion-row>
