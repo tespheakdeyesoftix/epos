@@ -26,7 +26,6 @@ function initSaleDoc() {
     saleDoc.value = {
         business_branch: app.setting.property.property_name,
         customer: app.setting.pos_profile.default_customer,
-        customer: app.setting.pos_profile.phone_number,
         stock_location: app.setting.pos_profile.stock_location,
         outlet: app.setting.pos_profile.outlet,
         pos_profile: app.setting.pos_profile.name,

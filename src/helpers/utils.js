@@ -1,6 +1,7 @@
 import { modalController, alertController, toastController, loadingController, popoverController } from '@ionic/vue';
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
 import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
+import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue";
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  
@@ -508,4 +509,12 @@ export async function getPOSConfig(pos_config){
   }
 
   
+}
+
+export async function onSelectCustomer(){
+  const modal = await app.openModal({
+    component:ComSelectCustomer
+  })
+
+  return modal;
 }
