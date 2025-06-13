@@ -125,6 +125,10 @@ async function onLogin() {
   if (response) {
 
     setFrappeAppUrl(property.value.api_url);
+
+    // get setting
+    await app.utils.getSetting();
+    
     if (response.data?.home_page) {
       ionRouter.navigate(response.data.home_page, 'forward', 'replace');
     }

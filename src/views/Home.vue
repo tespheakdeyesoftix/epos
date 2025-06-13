@@ -12,7 +12,7 @@
         
       </div>
     
-{{ setting }}
+ 
  
       <div class="menu-list flex justify-content-center border-round-top-3xl -mt-4"
         style="background:url(/assets/pettern1.png)">

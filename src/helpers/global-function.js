@@ -20,7 +20,7 @@ globalThis.app = globalThis.app || {};
 // api url 
 globalThis.app.utils = utils;
 globalThis.app.storageService = storageService;
-globalThis.app.setting = {business_branch:"xxx"};
+globalThis.app.setting = {};
 
 globalThis.app.t =  i18n.global.t;
 

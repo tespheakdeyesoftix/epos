@@ -45,11 +45,9 @@ async function onSave(){
     app.setting.station_name = station_name.value;
     await app.storageService.setItem("station_name",station_name.value);
     
-    const posProfileRes =  await app.getDoc("POS Profile",res.data.pos_profile)
-    app.setting.pos_profile =  posProfileRes.data;
-
-    // await app.setValue("POS Station",station_name.value,"is_used",1);
-alert(app.route.query.return_url)
+    await app.utils.getSetting();
+    
+    await app.setValue("POS Station",station_name.value,"is_used",1);
     loading.dismiss();
     app.ionRouter.navigate(app.route.query.return_url, 'back', 'replace');
 
