@@ -36,6 +36,13 @@ const errorCodes =
             {title:t("New Sale Coupon"),router_link:"/sale-coupon","color":"success"},
         ]
     },
+    200:{
+        message: t("Working is already opened"),
+        page_title:t("Working Day"),
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"}
+        ]
+    },
 }
 
 const error = ref(errorCodes[app.route.params.id])

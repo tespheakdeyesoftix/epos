@@ -55,10 +55,10 @@ router.beforeEach(async (to, from, next) => {
     next("/select-workspace");
 
   } 
-  else if(['/sale-coupon'].includes(to.path) && !station_name && to.path!="/enter-station-name"){
+  else if(['/sale-coupon','/start-working-day'].includes(to.path) && !station_name && to.path!="/enter-station-name"){
     next("/enter-station-name?return_url=" + to.path);
   }else if(to.path == "/enter-station-name" && station_name){
-      alert(to.query.return_url?.toString())
+       
        next(to.query.return_url?.toString() || "/home");
      
   }
@@ -70,6 +70,14 @@ router.beforeEach(async (to, from, next) => {
       next("/message/" + result  + "?name=" + to.params.name);
     }else {
       next()
+    }
+  }
+  else if (to.path == "/start-working-day"){
+    const result = await app.shift.checkWorkingDay()
+    if(result>0){
+       next("/message/" + result )
+    }else {
+      next();
     }
   }
   else {

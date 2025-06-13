@@ -5,6 +5,7 @@ import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showT
 import  * as utils from '@/helpers/utils';
 import  * as storageService from '@/services/storage-service.ts';
 import  * as sale from "@/helpers/sale-action.js";
+import  * as shift from "@/helpers/shift-action.js";
 
 
 import { ref } from 'vue';
@@ -21,6 +22,7 @@ globalThis.app = globalThis.app || {};
 // api url 
 globalThis.app.utils = utils;
 globalThis.app.sale = sale;
+globalThis.app.shift = shift;
 globalThis.app.storageService = storageService;
 globalThis.app.setting = {};
 
