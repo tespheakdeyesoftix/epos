@@ -7,6 +7,7 @@
                         <stack row equal>
                             <ion-button routerLink="/home" expand="full" size="large">{{ t("Home") }}</ion-button>
                             <ion-button expand="full" size="large" @click="onSaveAsDraft">{{ t("Save") }}</ion-button>
+                            <ion-button expand="full" size="large" color="sucess" @click="onQuickPay">{{ t("Save") }}</ion-button>
                         </stack>
                     </ion-col>
                     <ion-col size="4">

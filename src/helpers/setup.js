@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import { useApp } from '@/hooks/useApp.ts';
+
 const  {checkUserLogin,isAuthenticated} = useAuth();
 const  {isAppLoadReady} = useApp();
 
@@ -19,6 +20,6 @@ export async function setup(){
    
 
  isAppLoadReady.value = true;
-    
+
 }
  
