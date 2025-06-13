@@ -20,15 +20,15 @@
             <ion-col v-for="(m, index) in appMenu" :key="index" size-lg="3" size-xs="6" class="flex">
               <ion-button @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round" class="w-full">
                 <div class="flex flex-column justify-center align-items-center py-2">
-                  <div v-html="m.icon" style="height: 50px;width: 50px;"></div>
+                  <div class="mb-2" v-html="m.icon" style="height: 50px;width: 50px;"></div>
                   <ion-label>{{ t(m.title) }}</ion-label>
                 </div>
               </ion-button>
             </ion-col>
             <ion-col size-lg="3" size-xs="6" class="flex">
-              <ion-button v-if="!currentMenu" expand="full" shape="round" @click="onLogout" class="w-full">
+              <ion-button v-if="!currentMenu" expand="full" shape="round" @click="onLogout" color="danger" class="w-full">
                 <div class="flex flex-column justify-center align-items-center py-2">
-                  <ion-icon class="text-6xl" :icon="logOutOutline" slot="start"></ion-icon>
+                  <ion-icon style="height: 50px;width: 50px;" class="mb-2" :icon="logOutOutline" slot="start"></ion-icon>
                   <ion-label>{{ t("Logout") }}</ion-label>
                 </div>
               </ion-button>
@@ -79,20 +79,7 @@ const onLogout = async () => {
 .menu-list ion-button {
   --border-radius: 1rem;
   font-weight: bold;
+  height: 7rem;
 }
-.menu-list ion-button:first-child {
-  --background: #7F55B1;
-}
-.menu-list ion-button:nth-child(2) {
-  --background: #328E6E;
-}
-.menu-list ion-button:nth-child(3) {
-  --background: #8F87F1;
-}
-.menu-list ion-button:nth-child(4) {
-  --background: #213448;
-}
-.menu-list ion-button:last-child {
-  --background: #E52020;
-}
+ 
 </style>

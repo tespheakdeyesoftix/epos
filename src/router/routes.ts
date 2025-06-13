@@ -83,12 +83,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/top-up",
-    component: () => import('@/modules/ecoupon/sale-coupon/ComTopUp.vue'),
+    component: () => import('@/modules/ecoupon/TopUpList/TopUpList.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: "/redeem",
-    component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
+    component: () => import('@/modules/ecoupon/RedeemList/RedeemList.vue'),
     meta: { requiresAuth: true }
   },
 
