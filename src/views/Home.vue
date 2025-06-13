@@ -15,7 +15,7 @@
 <!-- {{ setting }} -->
       <div class="menu-list flex justify-content-center border-round-top-3xl">
         <div class="p-3">
-        <ion-grid class="border-round-2xl">
+        <ion-grid class="border-round-2xl p-0">
           <ion-row>
             <ion-col v-for="(m, index) in appMenu" :key="index" size-lg="3" size-xs="6" class="flex">
               <ion-button @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round" class="w-full">
