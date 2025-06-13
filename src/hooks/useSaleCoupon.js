@@ -4,6 +4,7 @@ import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
 
 const saleDoc = ref()
+const customer = ref(null)
 
 initSaleDoc()
 
@@ -143,6 +144,7 @@ export function useSaleCoupon() {
         groupSaleProducts,
         grandTotal,
         grandTotalSecondCurrency,
+        customer,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,

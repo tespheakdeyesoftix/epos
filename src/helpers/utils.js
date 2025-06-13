@@ -493,11 +493,9 @@ app.setting.property = JSON.stringify(currentProperty);
           }
           
     }
-
-        await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
+    await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
     }
 }
-
 
 export async function getPOSConfig(pos_config){
   const res =await app.getDoc("POS Config",pos_config)
