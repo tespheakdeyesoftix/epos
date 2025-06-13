@@ -158,8 +158,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/reports/ServerReport.vue'),
     meta: { requiresAuth: true }
   },
-
-
+  {
+    path: "/start-working-day",
+    component: () => import('@/views/shift/startWorkingDay.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/close-working-day",
+    component: () => import('@/views/shift/closeWorkingDay.vue'),
+    meta: { requiresAuth: true }
+  },
   
  
 ]

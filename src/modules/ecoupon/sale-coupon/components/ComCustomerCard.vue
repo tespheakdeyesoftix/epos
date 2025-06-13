@@ -9,7 +9,7 @@
       <ion-icon :icon="searchOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
-     <ion-button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')">
+     <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click="onScanMemberCard">
       <ion-icon :icon="qrCodeOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
@@ -30,6 +30,13 @@ import { onMounted,ref } from "vue";
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
 
+async function onScanMemberCard(){
+    const result = await app.utils.onScanMemberCard();
+    if(result){
+       
+     
+    }
+}
 async function onSelectCustomer(){
     const result = await app.utils.onSelectCustomer();
     if(result){
