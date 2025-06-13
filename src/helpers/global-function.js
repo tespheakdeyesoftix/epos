@@ -4,6 +4,7 @@ import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submit
 import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import  * as utils from '@/helpers/utils';
 import  * as storageService from '@/services/storage-service.ts';
+import  * as sale from "@/helpers/sale-action.js";
 
 
 import { ref } from 'vue';
@@ -19,6 +20,7 @@ globalThis.app = globalThis.app || {};
 
 // api url 
 globalThis.app.utils = utils;
+globalThis.app.sale = sale;
 globalThis.app.storageService = storageService;
 globalThis.app.setting = {};
 

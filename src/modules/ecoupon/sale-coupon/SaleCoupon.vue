@@ -7,7 +7,6 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">
-                     
                         <ComCouponProductList />
                     </ion-col>
                     <ion-col size="4">
@@ -31,7 +30,7 @@ import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSa
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
 import { onBeforeRouteLeave } from 'vue-router'
-import ComSaleProductCouponCard from "./components/ComSaleProductCouponCard.vue"
+
 const { saleDoc,initSaleDoc,getSaleDoc } = useSaleCoupon()
 
 

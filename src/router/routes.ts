@@ -9,6 +9,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue')
   },
+    {
+    path: '/message/:id', 
+    name:"Message",
+    component: () => import('@/views/ErrorPage.vue')
+  },
   {
     path: '/',
     redirect: '/home'
@@ -88,6 +93,7 @@ const routes: Array<RouteRecordRaw> = [
   },  
   {
     path: "/sale-coupon/:name",
+    name:"EditSaleCoupon",
     component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   }, 

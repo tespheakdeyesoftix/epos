@@ -39,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
   const station_name = await app.storageService.getItem("station_name")
   const showLogin = await app.storageService.getItem("show_login")
   const currentProperty = await app.storageService.getItem("current_property")
-    
+    console.log(to)
 
   if(!currentProperty && to.path !="/select-workspace" && to.path !='/add-workspace' ){
     next("/select-workspace");
@@ -61,6 +61,16 @@ router.beforeEach(async (to, from, next) => {
       alert(to.query.return_url?.toString())
        next(to.query.return_url?.toString() || "/home");
      
+  }
+  else if(to.name == "EditSaleCoupon"){
+    // validate sale 
+    const result = await app.sale.checkSaleDoc(to.params.name);
+ 
+    if(result>0){
+      next("/message/" + result  + "?name=" + to.params.name);
+    }else {
+      next()
+    }
   }
   else {
       

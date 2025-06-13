@@ -12,13 +12,18 @@
         
       </div>
     
-<!-- {{ setting }} -->
+ <ion-button routerLink="/sale-coupon/hello">test</ion-button>
+ <ion-button routerLink="/sale-coupon/SINV2025-0167">edit close bill</ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="p-3">
         <ion-grid class="border-round-2xl p-0">
           <ion-row>
             <ion-col v-for="(m, index) in appMenu" :key="index" size-lg="3" size-xs="6" class="flex">
-              <ion-button @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round" class="w-full">
+              <template v-if="m.component">
+                <!-- render dynamic component -->
+                 <component :is="getDynamicComponent(m.component)" />
+              </template>
+              <ion-button v-else @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round" class="w-full">
                 <div class="flex flex-column justify-center align-items-center py-2">
                   <div class="mb-2" v-html="m.icon" style="height: 50px;width: 50px;"></div>
                   <ion-label>{{ t(m.title) }}</ion-label>
@@ -46,15 +51,22 @@ import {onMounted,ref} from "vue"
 import { useAuth } from '@/hooks/useAuth';
 import {useHome} from "@/hooks/useHome.js"
 import {  logOutOutline } from 'ionicons/icons';
+import ComWokingDayButton from '@/views/shift/components/ComWokingDayButton.vue';
  
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
+
 
  
 const t = window.t;
  
 const { logout } = useAuth();
 const setting = ref(app.setting);
-
+ 
+function getDynamicComponent(component){
+   if(component == "ComWokingDayButton"){
+    return ComWokingDayButton
+   }
+}
 
 onMounted(async ()=>{
  await getAppMenu()
