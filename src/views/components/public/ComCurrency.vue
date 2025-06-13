@@ -20,6 +20,7 @@
 <script setup>
  
 const props = defineProps({
+    currency:String,
     value:Number,
     hideAmount:Boolean,
     format:String
@@ -30,14 +31,14 @@ const setting = app.setting;
 
 function formatCurrency() {
   if(!props.format){
-   
+   return 123
     return `${Number(props.value).toLocaleString('en-US', {
     minimumFractionDigits: app.setting.currency_precision,
     maximumFractionDigits: app.setting.currency_precision
   })}`;
   }else {
      
-    return app.currencyFormat(props.value, props.format)
+    return  app.currencyFormat(props.value, props.format)
   }
   
 }

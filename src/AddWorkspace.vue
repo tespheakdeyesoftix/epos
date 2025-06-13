@@ -137,10 +137,9 @@ async function onSaveWorkspace() {
   }
 
   // assign to frappe app, login, and save data
-  const loadingLogin = await loadingController.create({
-    message: t("Loging In") + "...",
-  });
-  await loadingLogin.present();
+   
+  const  loadingLogin = await app.showLoading(t("Loging In") + "...")
+
 
   const loginResponse = await login({
     ...formData.value,
@@ -166,7 +165,7 @@ async function onSaveWorkspace() {
   // save current property and user to local storage
   window.storageService.setItem("current_property", JSON.stringify(property));
   window.storageService.setItem("current_user", JSON.stringify(loginResponse.data));
-
+  app.setting.property = property
   setFrappeAppUrl(response.data.app_url);
 
   await loadingLogin.dismiss();

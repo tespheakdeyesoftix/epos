@@ -71,8 +71,9 @@ async function onScanBarCode() {
     // check exists
 
     coupounList.value.push({
-        product_code: props.data.product_code,
+        product_code: props.data.name,
         product_name: props.data.product_name_en,
+        photo:props.data.photo,
         quantity: 1,
         unit: props.data.unit,
         sub_total: props.data.price,
@@ -83,7 +84,7 @@ async function onScanBarCode() {
     })
 
     coupon.value = ""
-    console.log(inputRef)
+    
 
 await l.dismiss()
     inputRef.value.focus()

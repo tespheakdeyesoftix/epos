@@ -469,7 +469,7 @@ export async function showWarningMessage(title = "Confirm", message = "Are you s
 export async function getSetting() {
 
   const station_name = await app.storageService.getItem("station_name");
-
+  
     const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings",{
       station_name:station_name
     })
@@ -478,7 +478,13 @@ export async function getSetting() {
 
     if (res.data) {
         app.setting = { ...app.setting, ...res.data }
-        alert(555)
+        if(!app.setting.property){
+              let currentProperty = await app.storageService.getItem("current_property");
+              if(currentProperty){
+app.setting.property = JSON.stringify(currentProperty);
+              }
+              
+        }
         await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
     }
 }
