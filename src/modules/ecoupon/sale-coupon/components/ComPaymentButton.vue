@@ -7,7 +7,7 @@
         </ion-label>
         
         <ion-label>
-            <ComCurrency :value="grandTotalSecondCurrency"/> 
+            <ComCurrency :value="grandTotalSecondCurrency" :currency="second_currency"/> 
         </ion-label>
 
         <ion-label>
@@ -17,8 +17,10 @@
 </ion-card>
 </template>
 <script setup>
+
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import { ref } from "vue";
  
 const {grandTotal, grandTotalSecondCurrency, onPayment } = useSaleCoupon()
-
+const second_currency = ref(app.setting.second_currency);
 </script>

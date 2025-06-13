@@ -485,6 +485,23 @@ app.setting.property = JSON.stringify(currentProperty);
               }
               
         }
+        if(res.data.pos_profile){
+          getPOSConfig();
+    }
+
         await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
     }
+}
+
+
+export async function getPOSConfig(pos_config){
+  const res =await app.getDoc("POS Config",pos_config)
+  console.log(res);
+
+  if(res.data){
+    
+    app.setting.pos_config = res.data;
+  }
+
+  
 }
