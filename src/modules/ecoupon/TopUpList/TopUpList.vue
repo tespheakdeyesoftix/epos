@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <AppBar>{{ t("Top Up Coupon") }}</AppBar>
+        <AppBar>{{ t("Top Up Coupon List") }}</AppBar>
         <ion-content>
             <DocList docType="Sale" :options="options"
             @onRowDblClick="onRowDblClick"
@@ -19,7 +19,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import ComTopUpCard from '@/modules/ecoupon/sale-coupon/components/ComTopUpCard.vue';
+import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
  
 const plateform = ref(app.utils.getPlateform())
 
