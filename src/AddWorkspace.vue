@@ -171,7 +171,7 @@ async function onSaveWorkspace() {
 
   await loadingLogin.dismiss();
 
-   await getSetting()
+   await app.utils.getSetting()
   // navigate to home page
   ionRouter.navigate("/home", "forward", "replace");
 }

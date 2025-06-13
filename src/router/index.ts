@@ -35,8 +35,18 @@ router.beforeEach(async (to, from, next) => {
 
  
   const station_name = await app.storageService.getItem("station_name")
+  const showLogin = await app.storageService.getItem("show_login")
+  const currentProperty = await app.storageService.getItem("current_property")
+
  
-  if (to.meta.requiresAuth && !isAuthenticated.value && to.path!="/select-workspace") {
+  if (to.meta.requiresAuth && !isAuthenticated.value && to.path!="/select-workspace" && (app.setting.allow_login_multiple_site==1 || app.setting.allow_login_multiple_site==undefined)) {
+     
+    next("/select-workspace");
+
+  }else  if (!isAuthenticated.value && to.path!="/login" && showLogin=="1" && currentProperty!=null) {
+    next("/login");
+   
+  }else  if (to.path =="/login" && !currentProperty) {
     
     next("/select-workspace");
 
@@ -49,7 +59,7 @@ router.beforeEach(async (to, from, next) => {
      
   }
   else {
-    
+      
       next();
    
     

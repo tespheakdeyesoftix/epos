@@ -10,9 +10,15 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/select-workspace/",
-    component: SelectWorkspace,
+    component: () => import('@/SelectWorkspace.vue'),
     meta: { hideTab:true }
   },
+  {
+    path: "/login",
+     component: () => import('@/views/Login.vue'),
+    meta: { hideTab:true }
+  },
+
   {
     path: "/enter-station-name",
      component: () => import('@/views/EnterStationName.vue'),
