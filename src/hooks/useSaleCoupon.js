@@ -1,5 +1,6 @@
 import { computed, ref } from "vue"
 import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCouponCode.vue"
+import dayjs from "dayjs"
 
 const saleDoc = ref()
 
@@ -26,7 +27,7 @@ function initSaleDoc() {
         customer: app.setting.pos_profile.default_customer,
         stock_location: app.setting.pos_profile.stock_location,
         outlet: app.setting.pos_profile.outlet,
-        
+        pos_profile: app.setting.pos_profile.name,
         sale_products: [
 
         ]
@@ -58,6 +59,33 @@ async function onSelectProduct(p) {
 function onPayment(){
     alert("payment")
 } 
+async function onSaveAsDraft(){
+    
+    if (saleDoc.value.sale_products.length==0){
+        await   app.showWarning("There is no data to save.")
+        return;
+    }
+    const l = await app.showLoading();
+    const saveData = JSON.parse(JSON.stringify(saleDoc.value));
+    saveData.sale_products.forEach(sp => {
+            sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
+    });
+    saveData.docstatus = 0
+
+    let res = null
+    if(saveData.name){
+        res = await app.updateDoc("Sale", saveData);
+    }else {
+        res = await app.createDoc("Sale", saveData);
+    }
+    if(res.data){
+        await app.showSuccess("Save sale to draft successfully.")
+        initSaleDoc();
+
+    }
+    await l.dismiss();
+
+} 
 
 export function useSaleCoupon() {
 
@@ -69,6 +97,8 @@ export function useSaleCoupon() {
         grandTotal,
         grandTotalSecondCurrency,
         onPayment,
-        onSelectProduct
+        onSelectProduct,
+        onSaveAsDraft,
+        initSaleDoc
     }
 }
