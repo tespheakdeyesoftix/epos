@@ -1,6 +1,7 @@
 import { computed, ref } from "vue"
 import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCouponCode.vue"
 import dayjs from "dayjs"
+import { showLoading } from "@/helpers/utils"
 
 const saleDoc = ref()
 
@@ -59,6 +60,16 @@ async function onSelectProduct(p) {
 function onPayment(){
     alert("payment")
 } 
+
+function getSaveData(){
+const saveData = JSON.parse(JSON.stringify(saleDoc.value));
+    saveData.sale_products.forEach(sp => {
+            sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
+    });
+    return saveData;
+    
+}
+
 async function onSaveAsDraft(){
     
     if (saleDoc.value.sale_products.length==0){
@@ -66,18 +77,9 @@ async function onSaveAsDraft(){
         return;
     }
     const l = await app.showLoading();
-    const saveData = JSON.parse(JSON.stringify(saleDoc.value));
-    saveData.sale_products.forEach(sp => {
-            sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
-    });
+    const saveData = getSaveData();
     saveData.docstatus = 0
-
-    let res = null
-    if(saveData.name){
-        res = await app.updateDoc("Sale", saveData);
-    }else {
-        res = await app.createDoc("Sale", saveData);
-    }
+    const res = saveSaleDoc(saveData);
     if(res.data){
         await app.showSuccess("Save sale to draft successfully.")
         initSaleDoc();
@@ -86,6 +88,51 @@ async function onSaveAsDraft(){
     await l.dismiss();
 
 } 
+
+
+async function onQuickPay(payment_type){
+    if(saleDoc.value.sale_products.length == 0){
+        await app.showWarning("There's no data.")
+        return 
+    }
+    const loading = await showLoading();
+    const saveData = getSaveData();
+    saveData.docstatus = 1 
+    saveData.closed_by = app.currentUser.full_name
+    saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
+    
+    // add payment type
+    saveData.payment = [
+        {payment_type:payment_type.payment_type,
+            input_amount : grandTotal.value * payment_type.exchange_rate,
+            amount : grandTotal.value * payment_type.exchange_rate
+        }
+    ]
+
+    const res = await saveSaleDoc(saveData);
+
+    if(res.data){
+
+        initSaleDoc()
+        await app.showSuccess("Quick payment successfully")
+        // TODO: Print Bill
+        
+    }
+
+
+    await loading.dismiss()
+
+}
+
+async function saveSaleDoc(saveData){
+let res = null
+    if(saveData.name){
+        res = await app.updateDoc("Sale", saveData);
+    }else {
+        res = await app.createDoc("Sale", saveData);
+    }
+    return res
+}
 
 export function useSaleCoupon() {
 
@@ -99,6 +146,7 @@ export function useSaleCoupon() {
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
-        initSaleDoc
+        initSaleDoc,
+        onQuickPay
     }
 }

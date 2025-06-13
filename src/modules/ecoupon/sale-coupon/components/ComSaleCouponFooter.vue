@@ -4,10 +4,10 @@
             <ion-grid>
                 <ion-row>
                     <ion-col size="8">
-                        <stack row equal>
-                            <ion-button routerLink="/home" expand="full" size="large">{{ t("Home") }}</ion-button>
-                            <ion-button expand="full" size="large" @click="onSaveAsDraft">{{ t("Save") }}</ion-button>
-                            <ion-button expand="full" size="large" color="sucess" @click="onQuickPay">{{ t("Save") }}</ion-button>
+                        <stack row equal gap="5px">
+                            <ion-button shape="round" routerLink="/home" expand="full" size="large">{{ t("Home") }}</ion-button>
+                            <ion-button shape="round" expand="full" size="large" @click="onSaveAsDraft">{{ t("Save") }}</ion-button>
+                            <ComQuickPayButton />
                         </stack>
                     </ion-col>
                     <ion-col size="4">
@@ -23,6 +23,7 @@
 import { ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import  ComPaymentButton  from "@/modules/ecoupon/sale-coupon/components/ComPaymentButton.vue"
+import  ComQuickPayButton  from "@/modules/ecoupon/sale-coupon/components/ComQuickPayButton.vue"
 
 const { saleDoc,onSaveAsDraft } = useSaleCoupon()
 

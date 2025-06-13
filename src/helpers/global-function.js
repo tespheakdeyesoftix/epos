@@ -114,15 +114,8 @@ globalThis.app.router = null;
  }
 
 
-
- globalThis.app.current_property = null;
- globalThis.app.setCurrentProperty = function(property){
-  globalThis.app.current_property =property; 
-  globalThis.app.property_name = property.property_name
- }
+globalThis.app.currentUser = null;
  
- globalThis.app.property_name  = ""
-
 
  
 globalThis.app.showLoading = async function (message = 'Loading...') {

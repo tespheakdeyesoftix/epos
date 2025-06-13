@@ -486,7 +486,11 @@ app.setting.property = JSON.stringify(currentProperty);
               
         }
         if(res.data.pos_profile){
-          getPOSConfig();
+          if(res.data.pos_profile.pos_config){
+            // we not wait here becuse we dont want to delay loading time
+            getPOSConfig(res.data.pos_profile.pos_config);
+          }
+          
     }
 
         await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
