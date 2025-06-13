@@ -85,6 +85,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
     meta: { requiresAuth: true }
   },
+   {
+    path: "/close-shift",
+    component: () => import('@/views/shift/CloseShift.vue'),
+    meta: { requiresAuth: true }
+  },
 
   
   {
