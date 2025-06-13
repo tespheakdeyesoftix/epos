@@ -1,6 +1,7 @@
 import { modalController, alertController, toastController, loadingController, popoverController } from '@ionic/vue';
 import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
 import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
+import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue";
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  
@@ -468,10 +469,50 @@ export async function showWarningMessage(title = "Confirm", message = "Are you s
 
 export async function getSetting() {
 
-    const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings")
+  const station_name = await app.storageService.getItem("station_name");
+  
+    const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings",{
+      station_name:station_name
+    })
+
     console.log(res.data)
 
     if (res.data) {
         app.setting = { ...app.setting, ...res.data }
+        if(!app.setting.property){
+              let currentProperty = await app.storageService.getItem("current_property");
+              if(currentProperty){
+app.setting.property = JSON.stringify(currentProperty);
+              }
+              
+        }
+        if(res.data.pos_profile){
+          if(res.data.pos_profile.pos_config){
+            // we not wait here becuse we dont want to delay loading time
+            getPOSConfig(res.data.pos_profile.pos_config);
+          }
+          
     }
+    await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
+    }
+}
+
+export async function getPOSConfig(pos_config){
+  const res =await app.getDoc("POS Config",pos_config)
+  console.log(res);
+
+  if(res.data){
+    
+    app.setting.pos_config = res.data;
+  }
+
+  
+}
+
+export async function onSelectCustomer(){
+  const modal = await app.openModal({
+    component:ComSelectCustomer
+  })
+
+  return modal;
 }

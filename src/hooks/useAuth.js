@@ -31,6 +31,7 @@ export function useAuth() {
 
       currentUser.value = response.data.message;
       window.storageService.setItem("current_user", JSON.stringify(currentUser.value));
+      app.currentUser = currentUser.value;
       setFrappeAppUrl(data.api_url);
       isAuthenticated.value = true;
 
@@ -109,6 +110,7 @@ export function useAuth() {
         } else {
           if (checkResponse.data) {
             isAuthenticated.value = true;
+        
             app.setting.property = property
            
             setFrappeAppUrl(property.api_url);
@@ -142,6 +144,8 @@ export function useAuth() {
       }
 
       currentUser.value = response.data.message;
+      app.currentUser = currentUser.value;
+      
       isAuthenticated.value = true;
       return { data: response.data.message, error: null };
     } catch (error) {

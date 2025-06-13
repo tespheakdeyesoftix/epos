@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <AppBar>{{ t("Sale Coupon List") }}</AppBar>
+        <AppBar>{{ t("Redeem List") }}</AppBar>
         <ion-content>
             <DocList docType="Sale" :options="options"
             @onRowDblClick="onRowDblClick"
@@ -11,7 +11,7 @@
                     </ion-button>
                 </template>
                 <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
-                    <ComSaleOrderCard v-for="(d,index) in item" :key="index"  :data="d"/>
+                    <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
             </DocList>
         </ion-content>
@@ -19,7 +19,8 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
+import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
+ 
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
@@ -40,7 +41,7 @@ const options = {
       field: "modified",
       order: "desc",
   },
-  filters:[["docstatus","=",1],["sale_type","=",'Sale Coupon']],
+  filters:[["docstatus","=",1],["sale_type","=",'Redeem']],
 
   filterOptions:[
     {fieldname:"posting_date", fieldtype:"Date", label:t('Sale Date'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal'},

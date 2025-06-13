@@ -10,9 +10,15 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/select-workspace/",
-    component: SelectWorkspace,
+    component: () => import('@/SelectWorkspace.vue'),
     meta: { hideTab:true }
   },
+  {
+    path: "/login",
+     component: () => import('@/views/Login.vue'),
+    meta: { hideTab:true }
+  },
+
   {
     path: "/enter-station-name",
      component: () => import('@/views/EnterStationName.vue'),
@@ -77,12 +83,12 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/top-up",
-    component: () => import('@/modules/ecoupon/sale-coupon/ComTopUp.vue'),
+    component: () => import('@/modules/ecoupon/TopUpList/TopUpList.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: "/redeem",
-    component: () => import('@/modules/ecoupon/sale-coupon/ComRedeem.vue'),
+    component: () => import('@/modules/ecoupon/RedeemList/RedeemList.vue'),
     meta: { requiresAuth: true }
   },
    {

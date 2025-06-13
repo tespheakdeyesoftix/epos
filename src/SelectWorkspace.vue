@@ -103,7 +103,7 @@ async function onLogin(p) {
 
   if (response) {
     currentProperty.value = p;
-    app.setCurrentProperty(p)
+   app.setting.property = p
     
     await app.utils.getSetting();
     

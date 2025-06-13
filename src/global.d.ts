@@ -6,7 +6,7 @@ declare global {
         getItem(key: string): string | null;
       },
       t(key: string): string | null;
-      showWarning(message: string): void;
+    showWarning(message: string): void;
       showSuccess(message: string): void;
       showError(message: string): void;
       showLoading(message: string): void;
