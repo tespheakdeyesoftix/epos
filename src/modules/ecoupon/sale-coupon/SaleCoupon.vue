@@ -9,23 +9,8 @@
                     <ion-col size="8"> 
 <ComCouponProductList/>
                     </ion-col>
-                    <ion-col size="4"  class="mt-4">
-                          <ion-list>
-                         
-                        <!-- {{ saleDoc }} -->
-                           <ion-item class="ion-no-margin ion-no-padding">
-                        {{ saleDoc.business_branch }}
-                        </ion-item>
-                        <ion-item class="ion-no-margin ion-no-padding">
-                        {{ saleDoc.customer }}
-                        </ion-item>
-                          <ion-item class="ion-no-margin ion-no-padding">
-                        {{ saleDoc.stock_location }}
-                        </ion-item>
-                          <ion-item class="ion-no-margin ion-no-padding">
-                        {{ saleDoc.outlet }}
-                          </ion-item>
-                         </ion-list>
+                    <ion-col size="4">
+                        {{ saleDoc }}
                     </ion-col>
                 </ion-row>
             </ion-grid>
