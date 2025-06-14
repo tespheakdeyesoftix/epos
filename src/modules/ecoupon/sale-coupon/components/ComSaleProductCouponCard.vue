@@ -7,19 +7,21 @@
         {{ product.product_name }}
         QTY: {{ data.length }}
         <ComCurrency :value="totalAmount" />
-
         <hr/>
-        
-        
          <ion-chip v-for="(c,index) in displayCoupons" :key="index">{{ c }}</ion-chip>
          <ion-chip v-if="data.length>3" color="primary">{{ data.length - 3 }} {{ t("More(s)") }}</ion-chip>
-         
+         <ion-button @click="onEditSaleProductCoupon(product)">{{t("Edit")}}</ion-button>
     </ion-card>
 </template>
    
 </template>
 <script setup >
 import { computed } from 'vue';
+ 
+import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+ 
+const { onEditSaleProductCoupon } = useSaleCoupon()
+
 
 const props = defineProps({
     data:Object
@@ -41,6 +43,7 @@ const displayCoupons = computed(()=>{
 })
 
 
+ 
 
 
 </script>
