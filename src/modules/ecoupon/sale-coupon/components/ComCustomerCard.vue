@@ -5,7 +5,7 @@
      {{ customer?.name }} - {{ customer?.customer_name_en }} {{ customer?.phone_number }}
      {{   customer?.customer_group   }}
 
-     <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')">
+     <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
       <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
@@ -27,6 +27,7 @@
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { addOutline, closeOutline, qrCodeOutline } from "ionicons/icons";
 import { onMounted,ref } from "vue";
+import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
 
@@ -60,6 +61,18 @@ async function onRemoveCustomer() {
       await getCustomer(saleDoc.value.customer);
       await app.showSuccess("Customer has been remove from order")
     }
+}
+
+async function onAddCustomer(){
+  const result = await app.openModal({
+    component:ComAddCustomer
+  })
+
+  if(result){
+    saleDoc.value.customer =result.name;
+      await getCustomer(saleDoc.value.customer);
+  }
+
 }
 onMounted(()=>{
 getCustomer(saleDoc.value.customer);

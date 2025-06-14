@@ -168,6 +168,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/shift/closeWorkingDay.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/customer",
+    component: () => import('@/views/customer/CustomerList.vue'),
+    meta: { requiresAuth: true }
+  }
+
   
  
 ]

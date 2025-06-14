@@ -5,8 +5,9 @@
     </ion-text>
 
     <ion-item lines="none">
-      <com-input
-        @ionChange="sale(customer)"
+      <com-input 
+        ref="txtMemberCard"
+        @ionChange="onScanMemberCard(customer)"
         placeholder="Please scan member card"
         v-model="customer"
         focus
@@ -20,11 +21,12 @@
 import { ref } from "vue";
 import { IonIcon, modalController } from "@ionic/vue";
 import { qrCodeOutline } from "ionicons/icons";
+ const txtMemberCard  = ref(null)
 
 const t = window.t;
 const customer = ref();
 
-async function sale(customer) {
+async function onScanMemberCard(customer) {
    if (!customer || customer.trim() === "") {
     app.showWarning(`Customer is required.`)
   return; 
@@ -36,13 +38,12 @@ async function sale(customer) {
       modalController.dismiss(customer, "confirm");
     } else {
         app.showWarning(`Member ship card ${customer} not found`)
+        txtMemberCard.value.focus();
+        
     }
 
 
   
 }
 </script>
-
-<style scoped>
-
-</style>
+ 

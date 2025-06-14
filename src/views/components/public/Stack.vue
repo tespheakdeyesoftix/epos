@@ -6,7 +6,7 @@ const props = defineProps({
   column: Boolean,
   gap: {
     type: String,
-    default: '' // Can be '1rem' or 'gap-3'
+    default: '10px' // Can be '1rem' or 'gap-3'
   },
   equal: Boolean,
   inline: Boolean,

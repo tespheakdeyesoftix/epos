@@ -10,18 +10,27 @@
   <template v-else-if="type == 'text-area'">
 
     <ion-textarea @ionInput="onInput" :value="model" :label="label" label-placement="stacked" fill="outline"
-      :placeholder="t('Enter note')" style="min-height: 120px;">
+      :placeholder="placeholder || label" style="min-height: 120px;">
       <ion-button @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-textarea>
   </template>
   <template v-else>
-    <ion-input v-bind="$attrs" ref="ionInputRef" :value="model" @ionInput="onInput" :type="type"
-      :placeholder="placeholder" :label="label" @ionChange="onChange" :fill="fill" :label-placement="labelPlacement">
+    <ion-input v-bind="$attrs" ref="ionInputRef" 
+    :value="model"
+     @ionInput="onInput" 
+     :type="type"
+      :placeholder="placeholder || label" 
+      :label="label" @ionChange="onChange"
+       :fill="fill" 
+       :label-placement="labelPlacement">
       <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanBarcode" fill="clear" slot="end"
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+      </ion-button>
+      <ion-button v-if="keyboard" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
+        <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-input>
   </template>
@@ -40,6 +49,7 @@ const props = defineProps({
   label: String,
   placeholder: String,
   focus: Boolean,
+  keyboard: Boolean,
   fill: {
     type: String,
     default: "outline"
@@ -120,6 +130,7 @@ const onSelectAll = (event) => {
 
 
 onMounted(() => {
+   
   if (props.focus) {
     setTimeout(function () {
 
