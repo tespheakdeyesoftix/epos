@@ -91,6 +91,7 @@ function onInput($event) {
   } else {
     model.value = $event.detail.value
   }
+  
   emit("onInput", model.value)
 }
 

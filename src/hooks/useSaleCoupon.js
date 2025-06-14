@@ -3,12 +3,14 @@ import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCou
 import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
-
+import { modalController } from "@ionic/vue"
 const saleDoc = ref({
-    sale_products:[]
+    sale_products:[],
+    payment:[]
 })
 const customer = ref(null)
-
+const paymentInputAmount = ref("")
+const selectedPrintFormat = ref()
  
 const groupSaleProducts = computed(()=>{
     return  Object.groupBy(saleDoc.value.sale_products, ({ product_code }) => product_code);
@@ -17,14 +19,32 @@ const groupSaleProducts = computed(()=>{
 const grandTotal = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.total_amount, 0);
 })
+
 const totalQuantity = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
 })
 
+const totalPaymentAmount = computed(()=>{
+    return saleDoc.value.payment.reduce((sum, item) => sum + item.amount, 0);
+})
+const paymentBalance = computed(()=>{
+    let balance =  grandTotal.value - totalPaymentAmount.value
+    if(balance<0){
+        balance = 0
+    }
+    return balance
+})
+
 
 const grandTotalSecondCurrency = computed(()=>{
-    return grandTotal.value * 4000;
+    return grandTotal.value * app.setting.exchange_rate;
 })
+
+const changeAmount = computed(()=>{
+    return totalPaymentAmount.value  - grandTotal.value
+})
+
+
 
 
 
@@ -36,9 +56,9 @@ function initSaleDoc() {
         stock_location: app.setting.pos_profile.stock_location,
         outlet: app.setting.pos_profile.outlet,
         pos_profile: app.setting.pos_profile.name,
-        sale_products: [ 
-
-        ]
+        pos_station_name:app.setting.station_name,
+        sale_products: [],
+        payment:[]
     }
 }
 
@@ -104,6 +124,10 @@ function getSaveData(){
 const saveData = JSON.parse(JSON.stringify(saleDoc.value));
     saveData.sale_products.forEach(sp => {
             sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
+            if(sp.coupons){
+sp.coupons = JSON.stringify(sp.coupons)
+            }
+            
     });
     return saveData;
     
@@ -163,6 +187,63 @@ async function onQuickPay(payment_type){
 
 }
 
+async function onCloseSale(isPrint=true){
+    if(grandTotal.value>0 && saleDoc.value.payment.length == 0){
+        await app.showWarning("Please enter all payment amount")
+        return 
+    }
+
+    const confirm = await app.onConfirm("Payment","Are you sure to process payment and close order?")
+    if(!confirm) return;
+    const loading = await showLoading();
+    const saveData = getSaveData();
+    saveData.docstatus = 1 
+    saveData.closed_by = app.currentUser.full_name
+    saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
+
+    const res = await saveSaleDoc(saveData);
+
+    if(res.data){
+
+        initSaleDoc()
+        if(isPrint){
+            printBill(res.data.name)
+        }
+        await app.showSuccess("Payment successfully")
+        
+        
+    }
+
+    modalController.dismiss("", 'confirm')
+    await loading.dismiss()
+
+}
+
+async function printBill(doc_name){
+     
+   app.showWarning("print bill")
+   const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
+      pdf: 0,
+      station:app.setting.station_name,
+      name: doc_name,
+      reprint:0,
+     template:selectedPrintFormat.value.pos_receipt_template
+   })
+
+   if (result.data) {
+       for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {
+         app.printService.submit({
+            'type': "Cashier Printer",//printer name
+            'url': 'file.pdf',
+            'file_content': result.data
+         });
+        }
+
+
+   }
+
+}
+
 async function saveSaleDoc(saveData){
 let res = null
     if(saveData.name){
@@ -207,6 +288,34 @@ async function onDeleteSaleProduct(index){
 
 }
 
+async function onAddPayment(payment_type){
+     let paymentAmount = Number(paymentInputAmount.value) 
+     if(!paymentInputAmount.value){
+        paymentAmount = paymentBalance.value;
+     }
+    if(paymentAmount==0){
+        await app.showWarning("Please enter payment amount")
+        return
+    }
+    
+    saleDoc.value.payment.push(
+        {
+            payment_type: payment_type.payment_type,
+            input_amount: paymentAmount,
+            amount: paymentAmount / payment_type.exchange_rate,
+            currency:payment_type.currency,
+            exchange_rate:payment_type.exchange_rate
+        }
+    )
+    paymentInputAmount.value = "";
+
+}
+
+
+
+
+
+
 
 export function useSaleCoupon() {
 
@@ -219,6 +328,11 @@ export function useSaleCoupon() {
         grandTotalSecondCurrency,
         customer,
         totalQuantity,
+        paymentInputAmount,
+        paymentBalance,
+        totalPaymentAmount,
+        changeAmount,
+        selectedPrintFormat,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -226,6 +340,8 @@ export function useSaleCoupon() {
         onQuickPay,
         getSaleDoc,
         onEditSaleProductCoupon,
-        onDeleteSaleProduct
+        onDeleteSaleProduct,
+        onAddPayment,
+        onCloseSale
     }
 }

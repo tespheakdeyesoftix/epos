@@ -1,0 +1,68 @@
+<template>
+    <ion-label>{{ t("Total Amount") }}</ion-label>
+   
+    <ComCurrency :value="grandTotal" /> |
+    <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
+ Exchange Rate: <ComCurrency :value="1" :currency="mainCurrency"/> =
+  <ComCurrency :value="exchangeRate" :currency="secondCurrency"/> 
+     <ion-list>
+        <ion-item button v-for="(p,index) in saleDoc.payment" :key="index">
+           
+            <ion-label>
+                {{ p.payment_type }}  
+                
+                <div v-if="p.exchange_rate!=1">
+                    <ion-text color="medium">
+{{ t("Exchange Rate") }} : <ComCurrency :value="p.exchange_rate" :currency="p.currency"/>
+                    </ion-text>
+                    
+                </div>
+            </ion-label>
+           
+            <ion-label slot="end">
+                <ComCurrency :value="p.input_amount" :currency="p.currency" />
+            </ion-label>
+            <ion-button @click="onDeletePayment(index)" size="large" shape="round" color="danger" fill="clear" slot="end">
+                <ion-icon :icon="closeOutline"  slot="icon-only"/>
+            </ion-button>
+        </ion-item>
+     </ion-list>
+
+    <ion-list>
+        <ion-item v-if="totalPaymentAmount>0">
+            <ion-label>{{ t("Total Payment") }}</ion-label>
+            <ion-label slot="end"><ComCurrency :value="totalPaymentAmount"/></ion-label>
+        </ion-item>
+        <ion-item v-if="paymentBalance>0">
+            <ion-label>{{ t("Balance") }} ({{ mainCurrency  }})</ion-label>
+            <ion-label slot="end"><ComCurrency :value="paymentBalance"/></ion-label>
+        </ion-item>
+        <ion-item v-if="paymentBalance>0">
+            <ion-label>{{ t("Balance") }} ({{ secondCurrency  }})</ion-label>
+            <ion-label slot="end"><ComCurrency :value="paymentBalance * exchangeRate" :currency="secondCurrency"/></ion-label>
+        </ion-item>
+        <ion-item v-if="changeAmount>0">
+            <ion-label>{{ t("Change Amount") }} ({{ mainCurrency  }})</ion-label>
+            <ion-label slot="end"><ComCurrency :value="changeAmount" :currency="mainCurrency"/></ion-label>
+        </ion-item>
+        <ion-item v-if="changeAmount>0">
+            <ion-label>{{ t("Change Amount") }} ({{ secondCurrency  }})</ion-label>
+            <ion-label slot="end"><ComCurrency :value="changeAmount*changeExchangeRate" :currency="secondCurrency"/></ion-label>
+        </ion-item>
+
+    </ion-list>
+</template>
+<script setup>
+import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import { closeOutline } from "ionicons/icons";
+const t = window.t;
+const {grandTotal,grandTotalSecondCurrency,totalPaymentAmount,paymentBalance,changeAmount, saleDoc} = useSaleCoupon()
+const secondCurrency = app.setting.second_currency;
+const mainCurrency = app.setting.currency;
+const exchangeRate = app.setting.exchange_rate;
+const changeExchangeRate = app.setting.change_exchange_rate;
+function onDeletePayment (index){
+    saleDoc.value.payment.splice(index,1)
+}
+
+</script>

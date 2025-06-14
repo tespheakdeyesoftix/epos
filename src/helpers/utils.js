@@ -5,7 +5,8 @@ import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue
 import ComScanMemberCard from "@/views/customer/components/ComScanMemberCard.vue";
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
- 
+ import WebSocketPrinter from "@/helpers/websocket-printer.js"
+
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
     return imageUrl;
@@ -471,32 +472,55 @@ export async function showWarningMessage(title = "Confirm", message = "Are you s
 export async function getSetting() {
 
   const station_name = await app.storageService.getItem("station_name");
-  
-    const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings",{
-      station_name:station_name
-    })
 
-    console.log(res.data)
+  const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings", {
+    station_name: station_name
+  })
 
-    if (res.data) {
-        app.setting = { ...app.setting, ...res.data }
-        if(!app.setting.property){
-              let currentProperty = await app.storageService.getItem("current_property");
-              if(currentProperty){
-app.setting.property = JSON.stringify(currentProperty);
-              }
-              
-        }
-        if(res.data.pos_profile){
-          if(res.data.pos_profile.pos_config){
-            // we not wait here becuse we dont want to delay loading time
-            getPOSConfig(res.data.pos_profile.pos_config);
-          }
-          
+  console.log(res.data)
+
+  if (res.data) {
+    app.setting = { ...app.setting, ...res.data }
+    if (!app.setting.property) {
+      let currentProperty = await app.storageService.getItem("current_property");
+      if (currentProperty) {
+        app.setting.property = JSON.stringify(currentProperty);
+      }
+
     }
-    await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
+    if (res.data.pos_profile) {
+      if (res.data.pos_profile.pos_config) {
+        // we not wait here becuse we dont want to delay loading time
+        getPOSConfig(res.data.pos_profile.pos_config);
+      }
+
+      getPrintPrintFormat()
     }
+    await app.storageService.setItem("show_login", app.setting.allow_login_multiple_site == 1 ? 0 : 1)
+
+    // get exchange rate
+    getExchangeRate()
+  }
 }
+
+export async function getExchangeRate(){
+  const res=await app.getApi("epos_restaurant_2023.api.setting.get_exchange_rate");
+  if(res.data){
+    app.setting.exchange_rate = res.data[0].exchange_rate;
+    app.setting.change_exchange_rate = res.data[0].change_exchange_rate;
+  }
+}
+
+export async function getPrintPrintFormat(){
+  const res=await app.getApi("epos_restaurant_2023.api.setting.get_print_format",{
+    pos_profile:app.setting.pos_profile.name
+  });
+  if(res.data){
+   app.setting.print_formats  = res.data;
+   console.log("print formt", app.setting.print_formats)
+  }
+}
+
 
 export async function getPOSConfig(pos_config){
   const res =await app.getDoc("POS Config",pos_config)
@@ -505,6 +529,15 @@ export async function getPOSConfig(pos_config){
   if(res.data){
     
     app.setting.pos_config = res.data;
+
+    // update print service url
+    
+    app.printService =new WebSocketPrinter({
+    url: res.data.print_service_url,
+    onConnect: () => {
+        console.log("Connected to printer");
+    },
+});
   }
 
   

@@ -7,7 +7,6 @@ import  * as storageService from '@/services/storage-service.ts';
 import  * as sale from "@/helpers/sale-action.js";
 import  * as shift from "@/helpers/shift-action.js";
 
-
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 import dayjs from 'dayjs';
@@ -233,3 +232,8 @@ globalThis.app.checkArrayType =    function(value){
  
   return   checkArrayType(value)
 }
+
+
+
+globalThis.app.printService = null
+ 
