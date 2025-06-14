@@ -6,12 +6,14 @@
   </ion-text>   
     
     <ion-item lines="none">
-    <ion-input
+    <com-input
     @ionChange="sale(customer)"
-      fill="outline"
+     
       placeholder="Please scan member card"
       v-model="customer"
-    ></ion-input>
+      focus
+      
+    ></com-input>
     <ion-icon :icon="qrCodeOutline" style="margin-left:-40px" ></ion-icon>
   </ion-item>
  </BaseModal>
