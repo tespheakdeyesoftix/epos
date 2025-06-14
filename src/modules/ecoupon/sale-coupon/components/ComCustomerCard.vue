@@ -30,18 +30,19 @@ import { onMounted,ref } from "vue";
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
 
-async function onScanMemberCard(){
-    const result = await app.utils.onScanMemberCard();
-    if(result){
-       
-     
-    }
-}
+
 async function onSelectCustomer(){
     const result = await app.utils.onSelectCustomer();
     if(result){
       saleDoc.value.customer = result.name;
       await getCustomer(result.name)
+    }
+}
+async function onScanMemberCard(){
+    const results = await app.utils.onScanMemberCard();
+    if(results){
+       
+     alert(results)
     }
 }
 async function getCustomer(name){
