@@ -26,7 +26,7 @@ const customer = ref();
 
 async function sale(customer) {
    if (!customer) {
-  alert("Customer is required.");
+    app.showWarning(`Customer is required.`)
   return; 
 }
     const res = await app.getDocList("Customer", { filters: [["name", "=", customer],["is_disabled", "=", 0]] });
