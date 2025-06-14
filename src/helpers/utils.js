@@ -527,7 +527,8 @@ export async function onSelectCustomer() {
 }
 export async function onScanMemberCard() {
   const modal = await app.openModal({
-    component: ComScanMemberCard
+    component: ComScanMemberCard,
+    cssClass:"scan-member-ship-modal"
   })
 
   return modal;

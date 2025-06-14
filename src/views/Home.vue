@@ -12,8 +12,6 @@
         
       </div>
     
- <ion-button routerLink="/sale-coupon/hello">test</ion-button>
- <ion-button routerLink="/sale-coupon/SINV2025-0167">edit close bill</ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="p-3">
         <ion-grid class="border-round-2xl p-0">
@@ -92,6 +90,9 @@ const onLogout = async () => {
   --border-radius: 1rem;
   font-weight: bold;
   height: 7rem;
+}
+.menu-list  {
+     max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;
 }
  
 </style>

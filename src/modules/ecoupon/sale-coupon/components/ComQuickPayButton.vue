@@ -22,9 +22,13 @@ const t = window.t;
 const setting = app.setting;
 
 const quickPaymentType = computed(()=>{
-    if(setting.pos_config.payment_type.filter(x=>x.show_in_quick_pay==1).length>0){
-        return setting.pos_config.payment_type.filter(x=>x.show_in_quick_pay==1)
-    }
+
+        const defaultPaymentTypes = [
+            app.setting.pos_profile.default_payment_type,
+            app.setting.pos_profile.second_currency_payment_type
+        ]
+        return setting.pos_config.payment_type.filter(x=>x.show_in_quick_pay==1 || defaultPaymentTypes.includes(x.payment_type))
+    
 })
 
 </script>
