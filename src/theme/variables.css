@@ -206,6 +206,13 @@ button.alert-button.alert-button-warning {
 		--height: 250px;
 		--border-radius: 20px;
 }
+  ion-modal.add-customer-modal{
+	width: 100vw;
+		height: 90vh;
+		--width: 700px;
+		--height: 250px;
+		--border-radius: 20px;
+}
 
 /* payment modal */
   ion-modal.payment-modal{

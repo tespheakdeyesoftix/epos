@@ -14,13 +14,13 @@
                     <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
             </DocList>
+            
         </ion-content>
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
 import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
- 
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
@@ -28,12 +28,17 @@ const options = {
     columns:[
         {fieldname:"name",header:"Customer #"},
         {fieldname:"customer_name_kh",header:"Name Kh"},
-        {fieldname:"phone_number",header:"Phone #"},
+        {fieldname:"gender",header:"Gender"},
+        {fieldname:"customer_group",header:"Group"},
+        {fieldname:"date_of_birth",header:"Date of Birth"},
+        {fieldname:"phone_number",header:"Phone"},
+        {fieldname:"company_name",header:"Company Name"},
+        {fieldname:"address",header:"Location "},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer_name_en","customer_name_kh","phone_number","modified"],
+    fields: ["name","customer_name_en","customer_name_kh","gender","company_name","address","customer_group","date_of_birth","phone_number","modified"],
     orderBy:{
       field: "modified",
       order: "desc",
