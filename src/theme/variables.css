@@ -201,7 +201,7 @@ button.alert-button.alert-button-warning {
 /* scan member ship modal height */
   ion-modal.scan-member-ship-modal{
 	width: 100vw;
-		height: 100vh;
+		height: 90vh;
 		--width: 700px;
 		/* --height: 500px; */
 		--height: 250px;
