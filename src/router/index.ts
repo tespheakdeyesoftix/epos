@@ -80,6 +80,17 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   }
+  else if (to.path == "/close-working-day"){
+    const result = await app.shift.checkWorkingDay()
+   
+    if(result == 0){
+      app.utils.getSetting()
+      next("/message/201")
+    }else {
+      
+      next();
+    }
+  }
   else {
       
       next();
