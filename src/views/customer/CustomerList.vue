@@ -2,6 +2,15 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content>
+    <ion-button 
+            shape="round" 
+            fill="solid"  
+            v-tooltip.top="t('Add new customer')"  
+            color="primary"  
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"
+            @click="onAddCustomer">
+        <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
+    </ion-button>
             <DocList docType="Customer" :options="options"
             @onRowDblClick="onRowDblClick"
             >
@@ -16,11 +25,14 @@
             </DocList>
             
         </ion-content>
+        
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
-import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
+import { addOutline } from "ionicons/icons";
+
+import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
@@ -53,5 +65,16 @@ const options = {
 
 function onRowDblClick(data){
     app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
+}
+async function onAddCustomer(){
+  const result = await app.openModal({
+    component:ComAddCustomer
+  })
+
+  if(result){
+    saleDoc.value.customer =result.name;
+      await getCustomer(saleDoc.value.customer);
+  }
+
 }
 </script>
