@@ -25,7 +25,7 @@ const t = window.t;
 const customer = ref();
 
 async function sale(customer) {
-   if (!customer) {
+   if (!customer || customer.trim() === "") {
     app.showWarning(`Customer is required.`)
   return; 
 }
