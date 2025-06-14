@@ -6,17 +6,15 @@
         <ion-content>
             <ion-grid>
                 <ion-row>
-                    <ion-col size="8">
+                    <ion-col :size="plateform == 'mobile' ? 12:8" >
                         <ComCouponProductList />
                     </ion-col>
-                    <ion-col size="4">
-                        <ComCustomerCard v-if="saleDoc?.customer" />
+                    <ion-col style="text-align: center;" :size="plateform == 'mobile' ? 12:4">
+                        <ComCustomerCard v-if="saleDoc?.customer"/>
                         <ComSaleProductCoupon />
                     </ion-col>
                 </ion-row>
             </ion-grid>
-
-            <ion-button @click="onSave">Save Me</ion-button>
         </ion-content>
        <ComSaleCouponFooter/>
     </ion-page>
@@ -30,7 +28,7 @@ import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSa
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
 import { onBeforeRouteLeave } from 'vue-router'
-
+const plateform = ref(app.utils.getPlateform())
 const { saleDoc,initSaleDoc,getSaleDoc } = useSaleCoupon()
 
 

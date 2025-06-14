@@ -1,11 +1,22 @@
 <template>
+
     <GetData doctype="Product" :params="params" >
         <template v-slot:default="{data}">
-               <ComProductCard :data="p" v-for="(p,index) in data" :key="index"  />
+            <ion-grid>
+  <ion-row>
+    <ion-col
+      size="12"
+      size-lg="4"
+      v-for="(p, index) in data"
+      :key="index"
+    >
+      <ComProductCard :data="p" />
+    </ion-col>
+  </ion-row>
+</ion-grid>
         </template>
-         
-           
     </GetData>
+
 </template>
     <script setup>
     import {ref} from "vue"

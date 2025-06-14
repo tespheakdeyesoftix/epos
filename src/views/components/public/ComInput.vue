@@ -40,6 +40,8 @@ import { IonIcon } from '@ionic/vue';
 import { keyOutline, keypadOutline, scan } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import InputNumber from 'primevue/inputnumber';
+import Keyboard from '@/views/components/public/Keyboard.vue';
+import { modalController } from "@ionic/vue";
 import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
 const inputRef = ref(null)
@@ -117,8 +119,13 @@ async function onScanBarcode() {
 
 }
 
-function onOpenKeyboard(){
-  alert("Open Keyboard")
+async function onOpenKeyboard(){
+  
+  // alert("Open Keyboard")
+   const modal = await modalController.create({
+    component: Keyboard,
+  });
+  return modal.present();
 }
 
 

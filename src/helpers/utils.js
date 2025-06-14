@@ -3,6 +3,7 @@ import ComScanBarcode from "@/views/components/ComScanBarcode.vue";
 import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue";
 import ComScanMemberCard from "@/views/customer/components/ComScanMemberCard.vue";
+import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue";
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
@@ -554,6 +555,14 @@ export async function onScanMemberCard(){
   const modal = await app.openModal({
     component: ComScanMemberCard,
     cssClass:"scan-member-ship-modal"
+  })
+
+  return modal;
+}
+export async function onAddCustomer(){
+  const modal = await app.openModal({
+    component: ComAddCustomer,
+    cssClass:"add-customer-modal"
   })
 
   return modal;

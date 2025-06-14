@@ -63,16 +63,23 @@ async function onRemoveCustomer() {
     }
 }
 
+// async function onAddCustomer(){
+//   const result = await app.openModal({
+//     component:ComAddCustomer
+//   })
+
+//   if(result){
+    
+//   }
+
+// }
 async function onAddCustomer(){
-  const result = await app.openModal({
-    component:ComAddCustomer
-  })
-
-  if(result){
-    saleDoc.value.customer =result.name;
-      await getCustomer(saleDoc.value.customer);
-  }
-
+    const result = await app.utils.onAddCustomer();
+    if(result){
+       saleDoc.value.customer = result
+      await getCustomer(result)   
+    
+    }
 }
 onMounted(()=>{
 getCustomer(saleDoc.value.customer);
