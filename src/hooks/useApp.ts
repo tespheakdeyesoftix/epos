@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
  
 const currentProperty = ref({property_name:""})
 const isAppLoadReady = ref(false)
+const isWorkingDayOpened = ref(false)
 
 export function useApp() {
 
@@ -78,6 +79,7 @@ export function useApp() {
     currentProperty,
     currentLanguage,
    isAppLoadReady,
+   isWorkingDayOpened ,
     getMeta,
     getDoctypeDefaultFields
 };

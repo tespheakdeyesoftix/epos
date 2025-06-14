@@ -18,7 +18,7 @@
                     :placeholder="placeholder"
                     :label="label"
                     @ionChange="onChange"
-                    
+                    :fill="fill"
                    >
                    <ion-button v-if="type=='BarcodeScanerInput'" @click="onScanBarcode"  fill="clear" slot="end" aria-label="Show/hide">
                      <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
@@ -40,6 +40,10 @@ const props = defineProps({
   label:String,
   placeholder:String,
   focus:Boolean,
+    fill:{
+    type:String,
+    default:"outline"
+    },
   minFractionDigits:{
     type:Number,
     default:0

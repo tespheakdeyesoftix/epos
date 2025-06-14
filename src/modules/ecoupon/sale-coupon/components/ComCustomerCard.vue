@@ -5,11 +5,11 @@
      {{ customer?.name }} - {{ customer?.customer_name_en }} {{ customer?.phone_number }}
      {{   customer?.customer_group   }}
 
-     <ion-button shape="round" fill="clear">
-      <ion-icon :icon="searchOutline" slot="icon-only"></ion-icon>
+     <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')">
+      <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
-     <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click="onScanMemberCard">
+     <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click.stop="onScanMemberCard">
       <ion-icon :icon="qrCodeOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
@@ -25,23 +25,25 @@
 </template>
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
-import { closeOutline, qrCodeOutline, searchOutline } from "ionicons/icons";
+import { addOutline, closeOutline, qrCodeOutline } from "ionicons/icons";
 import { onMounted,ref } from "vue";
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
 
-async function onScanMemberCard(){
-    const result = await app.utils.onScanMemberCard();
-    if(result){
-       
-     
-    }
-}
+
 async function onSelectCustomer(){
     const result = await app.utils.onSelectCustomer();
     if(result){
       saleDoc.value.customer = result.name;
       await getCustomer(result.name)
+    }
+}
+async function onScanMemberCard(){
+    const result = await app.utils.onScanMemberCard();
+    if(result){
+       saleDoc.value.customer = result
+      await getCustomer(result)   
+    
     }
 }
 async function getCustomer(name){

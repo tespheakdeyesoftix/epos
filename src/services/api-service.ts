@@ -61,7 +61,8 @@ export function getApi(api_url: string, param: any = null) {
             if (r.message) {
                 return { data: r.message, error: null }
             } else {
-                return { data: r, error: null }
+               
+                return { data: r.message, error: null }
             }
         })
         .catch((error) => {

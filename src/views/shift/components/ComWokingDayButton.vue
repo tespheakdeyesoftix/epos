@@ -17,6 +17,4 @@ import { ref } from 'vue';
 import { calendarOutline , todayOutline } from 'ionicons/icons';
 
     
-    const t = window.t;
-    const working_day = ref(app.setting.working_day)
 </script>

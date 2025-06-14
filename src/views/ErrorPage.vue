@@ -43,6 +43,13 @@ const errorCodes =
             {title:t("Go Home"),router_link:"/home","color":"primary"}
         ]
     },
+    201:{
+        message: t("There's no working opened."),
+        page_title:t("Close Working Day"),
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"}
+        ]
+    },
 }
 
 const error = ref(errorCodes[app.route.params.id])

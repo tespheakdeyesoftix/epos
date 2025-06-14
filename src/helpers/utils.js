@@ -4,8 +4,11 @@ import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue";
 import ComScanMemberCard from "@/views/customer/components/ComScanMemberCard.vue";
 
-import { isPlatform,getPlatforms } from '@ionic/vue';
- 
+import { isPlatform, getPlatforms } from '@ionic/vue';
+import { useApp } from '@/hooks/useApp';
+const { isWorkingDayOpened } = useApp();
+
+
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
     return imageUrl;
@@ -81,14 +84,14 @@ export async function showLoading(message = "Loading") {
   return loading;
 }
 
-export async function selectDate(props=null) {
+export async function selectDate(props = null) {
 
- 
-  const modal = await  app.openModal({
+
+  const modal = await app.openModal({
     component: ComSelectDate,
     componentProps: props,
     backdropDismiss: false,
-    cssClass:"modal-select-date"
+    cssClass: "modal-select-date"
   })
   return modal;
 }
@@ -317,7 +320,7 @@ export function getTimespanRange(timespan) {
 
   switch (timespan) {
     case "Today":
-      
+
       return { startDate: startOfDay(start), endDate: endOfDay(end) };
     case "Yesterday":
       return {
@@ -417,8 +420,8 @@ export function checkArrayType(value) {
 }
 
 
-export function getPlateform(){
-  if( isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
+export function getPlateform() {
+  if (isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")) {
     return "desktop"
   }
   return "mobile"
@@ -426,100 +429,105 @@ export function getPlateform(){
 
 }
 
-export function getCouponNumber(coupon){
-  if(coupon.toLowerCase().startsWith("http")){
-    const arrayCoupons =  coupon.split("=");
-    
-    if(arrayCoupons.length<2){
+export function getCouponNumber(coupon) {
+  if (coupon.toLowerCase().startsWith("http")) {
+    const arrayCoupons = coupon.split("=");
+
+    if (arrayCoupons.length < 2) {
       return ""
     }
     return arrayCoupons[1]
 
   }
-   
+
   return coupon
-  
+
 
 }
 
 
 export async function showWarningMessage(title = "Confirm", message = "Are you sure you want to process this action?") {
-    let defaultButtons = [
-        {
-            text: app.t('OK'),
-            role: 'confirm',
-            cssClass: 'alert-button-warning'
-        }
-        
-    ];
+  let defaultButtons = [
+    {
+      text: app.t('OK'),
+      role: 'confirm',
+      cssClass: 'alert-button-warning'
+    }
+
+  ];
 
 
 
-    const al = await alertController.create({
-        header: app.t(title),
-        subHeader:app.t(message)  ,
-        buttons: defaultButtons,
-        cssClass:"warning-alert"
-    });
+  const al = await alertController.create({
+    header: app.t(title),
+    subHeader: app.t(message),
+    buttons: defaultButtons,
+    cssClass: "warning-alert"
+  });
 
-    await al.present();
-    const { role } = await al.onWillDismiss();
-    return role === 'confirm';
+  await al.present();
+  const { role } = await al.onWillDismiss();
+  return role === 'confirm';
 }
- 
+
 
 export async function getSetting() {
 
   const station_name = await app.storageService.getItem("station_name");
-  
-    const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings",{
-      station_name:station_name
-    })
 
-    console.log(res.data)
+  const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings", {
+    station_name: station_name
+  })
 
-    if (res.data) {
-        app.setting = { ...app.setting, ...res.data }
-        if(!app.setting.property){
-              let currentProperty = await app.storageService.getItem("current_property");
-              if(currentProperty){
-app.setting.property = JSON.stringify(currentProperty);
-              }
-              
-        }
-        if(res.data.pos_profile){
-          if(res.data.pos_profile.pos_config){
-            // we not wait here becuse we dont want to delay loading time
-            getPOSConfig(res.data.pos_profile.pos_config);
-          }
-          
+  console.log(res.data)
+
+  if (res.data) {
+    app.setting = { ...app.setting, ...res.data }
+    if(res.data.working_day){
+      isWorkingDayOpened.value = true;
+    }else {
+      isWorkingDayOpened.value = false;
     }
-    await app.storageService.setItem("show_login",app.setting.allow_login_multiple_site==1?0:1)
+    if (!app.setting.property) {
+      let currentProperty = await app.storageService.getItem("current_property");
+      if (currentProperty) {
+        app.setting.property = JSON.stringify(currentProperty);
+      }
+
     }
+    if (res.data.pos_profile) {
+      if (res.data.pos_profile.pos_config) {
+        // we not wait here becuse we dont want to delay loading time
+        getPOSConfig(res.data.pos_profile.pos_config);
+      }
+
+    }
+    await app.storageService.setItem("show_login", app.setting.allow_login_multiple_site == 1 ? 0 : 1)
+  }
 }
 
-export async function getPOSConfig(pos_config){
-  const res =await app.getDoc("POS Config",pos_config)
+export async function getPOSConfig(pos_config) {
+  const res = await app.getDoc("POS Config", pos_config)
   console.log(res);
 
-  if(res.data){
-    
+  if (res.data) {
+
     app.setting.pos_config = res.data;
   }
 
-  
+
 }
 
-export async function onSelectCustomer(){
+export async function onSelectCustomer() {
   const modal = await app.openModal({
-    component:ComSelectCustomer
+    component: ComSelectCustomer
   })
 
   return modal;
 }
-export async function onScanMemberCard(){
+export async function onScanMemberCard() {
   const modal = await app.openModal({
-    component:ComScanMemberCard
+    component: ComScanMemberCard
   })
 
   return modal;
