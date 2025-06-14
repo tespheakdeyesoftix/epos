@@ -34,7 +34,7 @@
         </stack>
         <stack row >
          
-            <ComSelectInput docType="Country"  v-model="doc.country" :label="t('Country')" style="width: 280px"/>   
+            <ComSelectInput docType="Country"  v-model="doc.country" :label="t('Country')" style="width: 350px"/>   
         </stack>
         <ion-text color="primary">
             <h1>{{t("Address & Note")}}</h1>
@@ -68,7 +68,5 @@ import { ref } from 'vue';
         // close modal send result to parent compoent
         await loading.dismiss();
     }
-    function onAddCustomer(){
-        
-    }
+    
 </script>

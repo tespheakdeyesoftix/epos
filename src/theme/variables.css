@@ -207,11 +207,11 @@ button.alert-button.alert-button-warning {
 		--border-radius: 20px;
 }
   ion-modal.add-customer-modal{
-	width: 100vw;
-		height: 90vh;
-		--width: 700px;
-		--height: 250px;
-		--border-radius: 20px;
+	width: 100%;
+		height: 100vh;
+		--width: 750px;
+		--height: 90%;
+		--border-radius: 10px;
 }
 
 /* payment modal */
