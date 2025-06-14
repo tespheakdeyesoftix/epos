@@ -1,5 +1,6 @@
 import { computed, ref } from "vue"
 import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCouponCode.vue"
+import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
 
@@ -16,6 +17,10 @@ const groupSaleProducts = computed(()=>{
 const grandTotal = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.total_amount, 0);
 })
+const totalQuantity = computed(()=>{
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
+})
+
 
 const grandTotalSecondCurrency = computed(()=>{
     return grandTotal.value * 4000;
@@ -61,14 +66,38 @@ async function onSelectProduct(p) {
     })
 
     if (result) {
-        saleDoc.value.sale_products = [...saleDoc.value.sale_products, ...result]
+        //check if exist with product code and price
+        const exists = saleDoc.value.sale_products.find(x=>x.product_code == result.product_code && x.price == result.price);
+        if(exists){
+            
+            exists.coupons = [...exists.coupons,...result.coupons];
+            exists.quantity = exists.coupons.length;
+           
+            updateSaleProduct(exists)
+
+        }else {
+            saleDoc.value.sale_products.push(result)
+            updateSaleProduct(result)
+        }
+        
+        
     }
     // wait user confirm then add producty to sale product 
 
 }
 
-function onPayment(){
-    alert("payment")
+async function onPayment(){
+    if (saleDoc.value.sale_products.length==0){
+        await app.showWarning("Please add product to your order")
+        return;
+    }
+    const result = await app.openModal({
+        component:ComPayment,
+        cssClass:"payment-modal"   
+    })
+    if(result){
+        // process payment
+    }
 } 
 
 function getSaveData(){
@@ -144,16 +173,40 @@ let res = null
     return res
 }
 
-async function onEditSaleProductCoupon(product){
+async function onEditSaleProductCoupon(data){
+    const sp = JSON.parse(JSON.stringify(data))
    const result = await app.openModal({
         component: ComAddCouponCode,
         componentProps: {
-            data: {...product,name:product.product_code},
+            data: {...sp,name:sp.product_code,product_name_en:sp.product_name},
+
         },
 
     })
 
+    if(result){
+        data.coupons = result.coupons;
+        data.quantity = result.coupons.length;
+        updateSaleProduct(data)
+    }
+
 }
+
+function updateSaleProduct(sp){
+    sp.sub_total = sp.quantity * sp.price;
+    sp.total_amount = sp.quantity * sp.price;
+    // more with discount and tax later
+}
+
+
+async function onDeleteSaleProduct(index){
+    const confirm = await app.onConfirm("Delete Sale Product", "Are you sure you want to delete this record");
+    if(confirm){
+        saleDoc.value.sale_products.splice(index,1);
+    }
+
+}
+
 
 export function useSaleCoupon() {
 
@@ -165,12 +218,14 @@ export function useSaleCoupon() {
         grandTotal,
         grandTotalSecondCurrency,
         customer,
+        totalQuantity,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
         initSaleDoc,
         onQuickPay,
         getSaleDoc,
-        onEditSaleProductCoupon
+        onEditSaleProductCoupon,
+        onDeleteSaleProduct
     }
 }

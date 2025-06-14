@@ -1,6 +1,6 @@
 <template>
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
-     {{data}}
+ 
         <com-input  ref="inputRef"  focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
             :placeholder="t('Please scan coupon code')" label-placement="stacked" fill="outline"></com-input>
         
@@ -27,7 +27,6 @@
                     </strong></ion-label>
             </div>
 
-
         </template>
     </BaseModal>
 
@@ -36,7 +35,7 @@
 import { modalController } from "@ionic/vue"
 import dayjs from "dayjs";
 import { closeOutline } from 'ionicons/icons';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 const {saleDoc} = useSaleCoupon()
 const inputRef = ref(null)
@@ -71,7 +70,7 @@ async function onScanBarCode() {
     // check exists
 
     coupounList.value.push({
-        coupons: app.utils.getCouponNumber(coupon.value),
+        coupon: app.utils.getCouponNumber(coupon.value),
         creation: dayjs()
     })
 
@@ -94,7 +93,7 @@ async function validateCouponCode(c){
         return false 
     }
     // if exist in sale product
-    if(saleDoc.value.sale_products.filter(x=>x.coupon.toLowerCase() == c.toLowerCase()).length>0){
+    if(saleDoc.value.sale_products.flatMap(sp=>sp.coupons).filter(x=>x.coupon.toLowerCase() == c.toLowerCase()).length>0){
         app.showWarning("This coupon code is already selected")
         return false 
     }
@@ -127,13 +126,20 @@ function onConfirm() {
         product_code: props.data.name,
         product_name: props.data.product_name_en,
         photo:props.data.photo,
-        quantity: 1,
+        quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
         price: props.data.price,
-        total_amount: props.data.price,
+        total_amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value
     }
     modalController.dismiss(returnData, 'confirm')
 }
+
+onMounted(()=>{
+    if(props.data.coupons){
+coupounList.value = props.data.coupons;
+    }
+    
+})
 </script>

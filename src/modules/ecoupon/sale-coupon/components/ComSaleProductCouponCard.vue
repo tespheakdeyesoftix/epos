@@ -2,15 +2,20 @@
     <template v-if="data">
  <ion-card>
    
-        <Img :src="product?.photo"/>
-        {{ product.product_code }}
-        {{ product.product_name }}
-        QTY: {{ data.length }}
-        <ComCurrency :value="totalAmount" />
+        <Img :src="data?.photo"/>
+        {{ data.product_code }}
+        {{ data.product_name }}
+        QTY: {{ data.quantity }}
+        {{t("Price")}}: 
+        <ComCurrency :value="data.price" />
+        {{t("Total Amount")}}: 
+        <ComCurrency :value="data.total_amount" />
+
         <hr/>
          <ion-chip v-for="(c,index) in displayCoupons" :key="index">{{ c }}</ion-chip>
-         <ion-chip v-if="data.length>3" color="primary">{{ data.length - 3 }} {{ t("More(s)") }}</ion-chip>
-         <ion-button @click="onEditSaleProductCoupon(product)">{{t("Edit")}}</ion-button>
+         <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length>3" color="primary">{{ data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
+         <ion-button @click="onEditSaleProductCoupon(data)">{{t("Edit")}}</ion-button>
+         <ion-button color="danger" @click="onDeleteSaleProduct(index)">{{t("Delete")}}</ion-button>
     </ion-card>
 </template>
    
@@ -20,27 +25,24 @@ import { computed } from 'vue';
  
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
  
-const { onEditSaleProductCoupon } = useSaleCoupon()
+const { onEditSaleProductCoupon,onDeleteSaleProduct } = useSaleCoupon()
 
 
 const props = defineProps({
-    data:Object
+    data:Object,
+    index:Number
 })
 const t = window.t;
-const product = computed(()=>{
-    return props.data[0]
-})
-const totalAmount = computed(()=>{
-   return props.data.reduce((sum, item) => sum + item.total_amount, 0);
-})
-
+ 
 const displayCoupons = computed(()=>{
-   const allCoupuns = props.data.map(x=>x.coupon);
+   const allCoupuns = props.data.coupons.map(x=>x.coupon);
    if(allCoupuns.length>3){
     return  allCoupuns.slice(0, 3);
    }
    return allCoupuns
 })
+
+ 
 
 
  
