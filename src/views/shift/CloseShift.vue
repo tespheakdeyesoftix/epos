@@ -8,7 +8,7 @@
              <ion-content class="ion-padding">
 
       <!-- Shift Info Form -->
-    <ComShiftInformation />
+    <ComShiftInformation :data="shift" />
       <!-- Amounts Table -->
       <ion-card>
         <ion-card-header>
@@ -55,7 +55,15 @@
 </template>
 <script setup>
 import ComShiftInformation from './components/ComShiftInformation.vue';
-
+import { onMounted, ref, computed } from 'vue';
+const shift = ref()
+// const setting = app.setting;
+const setting = ref(app.setting);
+onMounted(async () => {
+ shift.value = (await app.postApi("epos_restaurant_2023.api.api.get_current_cashier_shift",{
+        pos_profile:  "Main POS Profile"
+ })).data
+});
 const t = window.t;
 const handleRefresh = async (event) => {
     await onRefresh()
