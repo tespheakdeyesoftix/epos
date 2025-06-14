@@ -2,6 +2,15 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content>
+    <ion-button 
+            shape="round" 
+            fill="solid"  
+            v-tooltip.top="t('Add new customer')"  
+            color="primary"  
+            style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"
+            @click="onAddCustomer">
+        <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
+    </ion-button>
             <DocList docType="Customer" :options="options"
             @onRowDblClick="onRowDblClick"
             >
@@ -14,13 +23,16 @@
                     <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
             </DocList>
+            
         </ion-content>
+        
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
-import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
- 
+import { addOutline } from "ionicons/icons";
+
+import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
@@ -28,12 +40,17 @@ const options = {
     columns:[
         {fieldname:"name",header:"Customer #"},
         {fieldname:"customer_name_kh",header:"Name Kh"},
-        {fieldname:"phone_number",header:"Phone #"},
+        {fieldname:"gender",header:"Gender"},
+        {fieldname:"customer_group",header:"Group"},
+        {fieldname:"date_of_birth",header:"Date of Birth"},
+        {fieldname:"phone_number",header:"Phone"},
+        {fieldname:"company_name",header:"Company Name"},
+        {fieldname:"address",header:"Location "},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer_name_en","customer_name_kh","phone_number","modified"],
+    fields: ["name","customer_name_en","customer_name_kh","gender","company_name","address","customer_group","date_of_birth","phone_number","modified"],
     orderBy:{
       field: "modified",
       order: "desc",
@@ -48,5 +65,22 @@ const options = {
 
 function onRowDblClick(data){
     app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
+}
+async function onAddCustomer(){
+  //  const result = await app.openModal({
+  //   component:ComAddCustomer
+  // })
+
+  // if(result){
+  //   saleDoc.value.customer =result.name;
+  //     await getCustomer(saleDoc.value.customer);
+  // }
+
+    const result = await app.utils.onAddCustomer();
+    if(result){
+       saleDoc.value.customer = result
+      await getCustomer(result)   
+    
+    }
 }
 </script>
