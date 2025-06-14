@@ -52,6 +52,7 @@ import { useAuth } from '@/hooks/useAuth';
 import {useHome} from "@/hooks/useHome.js"
 import {  logOutOutline } from 'ionicons/icons';
 import ComWokingDayButton from '@/views/shift/components/ComWokingDayButton.vue';
+import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
  
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
@@ -65,6 +66,9 @@ const setting = ref(app.setting);
 function getDynamicComponent(component){
    if(component == "ComWokingDayButton"){
     return ComWokingDayButton
+   }
+    else if(component == "ComShiftButton"){
+    return ComShiftButton
    }
 }
 
