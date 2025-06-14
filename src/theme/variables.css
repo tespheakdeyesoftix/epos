@@ -205,3 +205,9 @@ button.alert-button.alert-button-warning {
 		--height: 570px;
 		border-radius: 0;
 }
+th.p-datatable-header-cell.p-datatable-sortable-column.text-right .p-datatable-column-header-content{
+justify-content: flex-end !important;
+}
+th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-column-header-content{
+justify-content:center !important;
+} 
