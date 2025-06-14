@@ -196,3 +196,12 @@ button.alert-button.alert-button-warning {
 }
 
   /* waring alert */
+
+ ion-modal.scan-member-madal{
+	width: 100vw;
+		height: 100vh;
+		--width: 1024px;
+		/* --height: 500px; */
+		--height: 570px;
+		border-radius: 0;
+}
