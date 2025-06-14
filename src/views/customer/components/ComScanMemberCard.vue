@@ -28,7 +28,7 @@ const t =window.t;
    let res = (await app.getDoc("Customer", customer)).data
    
     modalController.dismiss(customer, 'confirm')
-    
+    console.log(res)
 }
 </script>
 
