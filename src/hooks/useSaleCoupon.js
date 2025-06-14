@@ -56,8 +56,6 @@ async function onSelectProduct(p) {
         component: ComAddCouponCode,
         componentProps: {
             data: p,
-
-
         },
 
     })
@@ -146,6 +144,17 @@ let res = null
     return res
 }
 
+async function onEditSaleProductCoupon(product){
+   const result = await app.openModal({
+        component: ComAddCouponCode,
+        componentProps: {
+            data: {...product,name:product.product_code},
+        },
+
+    })
+
+}
+
 export function useSaleCoupon() {
 
 
@@ -161,6 +170,7 @@ export function useSaleCoupon() {
         onSaveAsDraft,
         initSaleDoc,
         onQuickPay,
-        getSaleDoc
+        getSaleDoc,
+        onEditSaleProductCoupon
     }
 }
