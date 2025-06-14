@@ -11,16 +11,12 @@
             <ion-label>
                 <h2 class="card-title">{{ data.product_name_en }}</h2>
                 <h2 class="card-subtitle">{{data.name}}</h2>
-                 
-            
                 <p class="card-subtitle">
                     <ion-text color="dark">
                         <span v-tooltip="dayjs(data?.modified).format('ddd, DD MM YYYY HH:mm A')">
                     {{t("Last modified:")}} {{ data.modified_by.split('@')[0]}} - {{ dayjs(data?.modified).fromNow() }}</span>
                     </ion-text>
-
                 </p>
-                
             </ion-label>
             <!-- Right-aligned Amount -->
             <div slot="end" class="amount-container">

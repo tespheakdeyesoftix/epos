@@ -223,3 +223,12 @@ justify-content: flex-end !important;
 th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-column-header-content{
 justify-content:center !important;
 } 
+.p-datatable-hoverable .p-datatable-selectable-row td , .p-datatable-thead th{
+	padding: 5px !important;
+}
+.p-datatable-hoverable .p-datatable-selectable-row td .button-native{
+	padding: 1px;
+}
+.item-sale{
+	background-color: var(--ion-color-light-contrast);
+}
