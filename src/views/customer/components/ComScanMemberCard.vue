@@ -25,20 +25,21 @@ const t = window.t;
 const customer = ref();
 
 async function sale(customer) {
-  try {
-    const res = (await app.getDoc("Customer", customer)).data;
+   if (!customer || customer.trim() === "") {
+    app.showWarning(`Customer is required.`)
+  return; 
+}
+    const res = await app.getDocList("Customer", { filters: [["name", "=", customer],["is_disabled", "=", 0]] });
+    
 
-    if (res) {
-      console.log("Customer found:", res);
+    if (res.data.length > 0) {
       modalController.dismiss(customer, "confirm");
     } else {
-      console.warn("Customer not found, modal stays open.");
-      // Optionally show a warning to the user
+        app.showWarning(`Member ship card ${customer} not found`)
     }
-  } catch (error) {
-    console.error("Error fetching customer:", error);
-    // Keep modal open
-  }
+
+
+  
 }
 </script>
 
