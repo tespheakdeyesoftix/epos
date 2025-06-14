@@ -205,5 +205,5 @@ button.alert-button.alert-button-warning {
 		--width: 700px;
 		/* --height: 500px; */
 		--height: 250px;
-		border-radius: 0;
+		--border-radius: 20px;
 }

@@ -1,6 +1,6 @@
 <template>
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
-     
+     {{data}}
         <com-input  ref="inputRef"  focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
             :placeholder="t('Please scan coupon code')" label-placement="stacked" fill="outline"></com-input>
         
@@ -71,15 +71,7 @@ async function onScanBarCode() {
     // check exists
 
     coupounList.value.push({
-        product_code: props.data.name,
-        product_name: props.data.product_name_en,
-        photo:props.data.photo,
-        quantity: 1,
-        unit: props.data.unit,
-        sub_total: props.data.price,
-        price: props.data.price,
-        total_amount: props.data.price,
-        coupon: app.utils.getCouponNumber(coupon.value),
+        coupons: app.utils.getCouponNumber(coupon.value),
         creation: dayjs()
     })
 
@@ -131,6 +123,17 @@ function onConfirm() {
         app.showWarning("Please enter coupon code")
         return
     }
-    modalController.dismiss(coupounList.value, 'confirm')
+    const returnData = {
+        product_code: props.data.name,
+        product_name: props.data.product_name_en,
+        photo:props.data.photo,
+        quantity: 1,
+        unit: props.data.unit,
+        sub_total: props.data.price,
+        price: props.data.price,
+        total_amount: props.data.price,
+        coupons: coupounList.value
+    }
+    modalController.dismiss(returnData, 'confirm')
 }
 </script>
