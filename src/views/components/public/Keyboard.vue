@@ -69,7 +69,7 @@ const props = defineProps({
 });
 
 // States
-const inputText = ref(props.defaultValue);
+const inputText = ref(props.defaultValue || "");
 const isShift = ref(false);
 const isCapsLock = ref(false);
 const isCtrl = ref(false);
@@ -289,6 +289,7 @@ onMounted(()=>{
     }
   }
 
+  props.defaultValue == props.defaultValue || "";
 
   
 })

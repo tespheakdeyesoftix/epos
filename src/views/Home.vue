@@ -11,7 +11,6 @@
         </ion-text>
         
       </div>
-    
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="p-3">
         <ion-grid class="border-round-2xl p-0">
@@ -21,20 +20,13 @@
                 <!-- render dynamic component -->
                  <component :is="getDynamicComponent(m.component)" />
               </template>
-              <ion-button v-else @click="onOpenRoute(m)" :color="m.color || 'primary'" expand="full" shape="round" class="w-full">
-                <div class="flex flex-column justify-center align-items-center py-2">
-                  <div class="mb-2" v-html="m.icon" style="height: 50px;width: 50px;"></div>
-                  <ion-label>{{ t(m.title) }}</ion-label>
-                </div>
-              </ion-button>
+            
+              <HomeButton v-else :svg="m.icon" @click="onOpenRoute(m)" :color="m.color || 'primary'" >  {{ t(m.title) }}
+               
+              </HomeButton>
             </ion-col>
             <ion-col size-lg="3" size-xs="6" class="flex">
-              <ion-button v-if="!currentMenu" expand="full" shape="round" @click="onLogout" color="danger" class="w-full">
-                <div class="flex flex-column justify-center align-items-center py-2">
-                  <ion-icon style="height: 50px;width: 50px;" class="mb-2" :icon="logOutOutline" slot="start"></ion-icon>
-                  <ion-label>{{ t("Logout") }}</ion-label>
-                </div>
-              </ion-button>
+              <HomeButton color="danger" v-if="!currentMenu" @click="onLogout" :icon="logOutOutline">{{ t("Logout") }}</HomeButton>
             </ion-col>
           </ion-row>
         </ion-grid> 
@@ -49,8 +41,9 @@ import {onMounted,ref} from "vue"
 import { useAuth } from '@/hooks/useAuth';
 import {useHome} from "@/hooks/useHome.js"
 import {  logOutOutline } from 'ionicons/icons';
-import ComWokingDayButton from '@/views/shift/components/ComWokingDayButton.vue';
+import ComWorkingDayButton from '@/views/shift/components/ComWorkingDayButton.vue';
 import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
+import HomeButton from '@/views/components/public/HomeButton.vue';
  
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
@@ -63,7 +56,7 @@ const setting = ref(app.setting);
  
 function getDynamicComponent(component){
    if(component == "ComWokingDayButton"){
-    return ComWokingDayButton
+    return ComWorkingDayButton
    }
     else if(component == "ComShiftButton"){
     return ComShiftButton
@@ -90,11 +83,7 @@ const onLogout = async () => {
   height: 35%;
   color: #fff;
 }
-.menu-list ion-button {
-  --border-radius: 1rem;
-  font-weight: bold;
-  height: 7rem;
-}
+
 .menu-list  {
      max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;
 }

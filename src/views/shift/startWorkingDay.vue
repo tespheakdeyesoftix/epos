@@ -47,7 +47,7 @@ async function onStartWorkingDay(){
     const loading = await app.showLoading();
     const res = await app.createDoc("Working Day",doc.value);
     if(res.data){
-        app.setting.working_day = res.data.name
+        app.setting.working_day = res.data
         isWorkingDayOpened.value = true;
         app.ionRouter.navigate('/home', 'back', 'replace');
     }

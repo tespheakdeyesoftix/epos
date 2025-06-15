@@ -4,9 +4,13 @@ import ComSelectDate from "@/views/components/public/ComSelectDate.vue";
 import ComSelectCustomer from "@/views/customer/components/ComSelectCustomer.vue";
 import ComScanMemberCard from "@/views/customer/components/ComScanMemberCard.vue";
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue";
-
+import ComKeypad from "@/views/components/public/ComKeypad.vue";
+import Keyboard from '@/views/components/public/Keyboard.vue';
+ 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
+ import { useApp } from '@/hooks/useApp';
+const { isWorkingDayOpened,isCashierShiftOpened } = useApp();
 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
@@ -494,7 +498,9 @@ export async function getSetting() {
         // we not wait here becuse we dont want to delay loading time
         getPOSConfig(res.data.pos_profile.pos_config);
       }
-
+      // set working day open state
+      isWorkingDayOpened.value = res.data.working_day?true:false ;
+      isCashierShiftOpened.value = res.data.cashier_shift?true:false  ;
       getPrintPrintFormat()
     }
     await app.storageService.setItem("show_login", app.setting.allow_login_multiple_site == 1 ? 0 : 1)
@@ -567,3 +573,28 @@ export async function onAddCustomer(){
 
   return modal;
 }
+
+export async function onOpenKeypad(title="Enter Number"){
+  const result = await app.openModal({
+    component: ComKeypad,
+    componentProps:{title:title},
+    cssClass:"keypad-modal"
+  })
+
+  return result;
+}
+
+export async function onOpenKeyboard(props={}){
+  if(!props.title){
+    props.title = t("Enter Text")
+  }
+  const result = await app.openModal({
+    component: Keyboard,
+    componentProps:props,
+    cssClass:"keyboard-modal"
+  })
+
+
+  return result;
+}
+

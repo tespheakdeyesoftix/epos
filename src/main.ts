@@ -121,6 +121,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import AppBar from '@/views/layouts/AppBar.vue';
+import ComFooter from '@/views/layouts/ComFooter.vue';
 import ToolBar from '@/views/layouts/ToolBar.vue';
 import Loading from '@/views/components/Loading.vue';
 import Img from "@/views/components/Img.vue"
@@ -209,6 +210,7 @@ const app = createApp(App)
 });
 
   app.component('AppBar', AppBar)
+  app.component('ComFooter', ComFooter)
   app.component('ToolBar', ToolBar)
   app.component('ComSelect', ComSelect)
   app.component('ion-footer', IonFooter)

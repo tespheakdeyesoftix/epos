@@ -108,10 +108,21 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
    {
+    path: "/start-shift",
+    component: () => import('@/views/shift/components/StartCashierShift.vue'),
+    meta: { requiresAuth: true }
+  },
+   {
     path: "/close-shift",
     component: () => import('@/views/shift/CloseShift.vue'),
     meta: { requiresAuth: true }
   },
+   {
+    path: "/shift-detail/:name",
+    component: () => import('@/views/shift/CashierShiftDetail.vue'),
+    meta: { requiresAuth: true }
+  },
+
 
   
   {

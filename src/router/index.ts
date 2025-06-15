@@ -6,7 +6,7 @@ import { getRoute } from './routes';
 import dayjs from 'dayjs';
 
 const {isAuthenticated} = useAuth();
-const {isAppLoadReady} = useApp()
+const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
 
 const routes = getRoute();
 
@@ -39,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
   const station_name = await app.storageService.getItem("station_name")
   const showLogin = await app.storageService.getItem("show_login")
   const currentProperty = await app.storageService.getItem("current_property")
-    console.log(to)
+    
 
   if(!currentProperty && to.path !="/select-workspace" && to.path !='/add-workspace' ){
     next("/select-workspace");
@@ -81,6 +81,12 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   else if (to.path == "/close-working-day"){
+    if(isCashierShiftOpened.value){
+      next("/message/204") //show error shift is alreay open and ask for close first
+      return;
+    }
+    
+
     const result = await app.shift.checkWorkingDay()
    
     if(result == 0){
@@ -88,6 +94,14 @@ router.beforeEach(async (to, from, next) => {
       next("/message/201")
     }else {
       
+      next();
+    }
+  }
+  else if (to.path == "/start-shift"){
+    const result = await app.shift.checkCashierShift()
+    if(result> 0){
+      next("/message/" + result)
+    }else {
       next();
     }
   }

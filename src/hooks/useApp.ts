@@ -4,6 +4,7 @@ import { onMounted, ref } from "vue";
 const currentProperty = ref({property_name:""})
 const isAppLoadReady = ref(false)
 const isWorkingDayOpened = ref(false)
+const isCashierShiftOpened = ref(false)
 
 export function useApp() {
 
@@ -80,6 +81,7 @@ export function useApp() {
     currentLanguage,
    isAppLoadReady,
    isWorkingDayOpened ,
+   isCashierShiftOpened ,
     getMeta,
     getDoctypeDefaultFields
 };

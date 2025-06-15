@@ -223,6 +223,24 @@ button.alert-button.alert-button-warning {
  
 }
 
+/* keyboard-modal */
+  ion-modal.keyboard-modal{
+	width: 100vw;
+		height: 100vh;
+		--width: 1000px;
+		--height: 500px;
+ --border-radius: 10px;
+}
+
+/* keypad-modal */
+  ion-modal.keypad-modal{
+	width: 100vw;
+		height: 100vh;
+		--width: 420px;
+		--height: 420px;
+ --border-radius: 10px;
+}
+
 
 th.p-datatable-header-cell.p-datatable-sortable-column.text-right .p-datatable-column-header-content{
 justify-content: flex-end !important;
@@ -238,4 +256,9 @@ justify-content:center !important;
 }
 .item-sale{
 	background-color: var(--ion-color-light-contrast);
+}
+
+.fix-container{
+	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px; margin-top: 10px;
+	
 }

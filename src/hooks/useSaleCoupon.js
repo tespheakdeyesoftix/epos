@@ -12,9 +12,6 @@ const customer = ref(null)
 const paymentInputAmount = ref("")
 const selectedPrintFormat = ref()
  
-const groupSaleProducts = computed(()=>{
-    return  Object.groupBy(saleDoc.value.sale_products, ({ product_code }) => product_code);
-})
 
 const grandTotal = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.total_amount, 0);
@@ -51,12 +48,15 @@ const changeAmount = computed(()=>{
 function initSaleDoc() {
  
     saleDoc.value = {
-        business_branch: app.setting.property.property_name,
-        customer: app.setting.pos_profile.default_customer,
-        stock_location: app.setting.pos_profile.stock_location,
-        outlet: app.setting.pos_profile.outlet,
-        pos_profile: app.setting.pos_profile.name,
+        business_branch: app.setting.property?.property_name,
+        customer: app.setting.pos_profile?.default_customer,
+        stock_location: app.setting.pos_profile?.stock_location,
+        outlet: app.setting.pos_profile?.outlet,
+        pos_profile: app.setting.pos_profile?.name,
         pos_station_name:app.setting.station_name,
+        working_day:app.setting.working_day?.name,
+        cashier_shift:app.setting.cashier_shift?.name,
+        
         sale_products: [],
         payment:[]
     }
@@ -178,8 +178,9 @@ async function onQuickPay(payment_type){
 
         initSaleDoc()
         await app.showSuccess("Quick payment successfully")
-        // TODO: Print Bill
-        
+        // print bill
+        selectedPrintFormat.value = app.setting.print_formats.find(x=>x.name ==app.setting.pos_profile.default_pos_receipt)
+        printBill(res.data.name)
     }
 
 
@@ -221,7 +222,7 @@ async function onCloseSale(isPrint=true){
 
 async function printBill(doc_name){
      
-   app.showWarning("print bill")
+   
    const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
       pdf: 0,
       station:app.setting.station_name,
@@ -323,7 +324,7 @@ export function useSaleCoupon() {
 
     return {
         saleDoc,
-        groupSaleProducts,
+        
         grandTotal,
         grandTotalSecondCurrency,
         customer,

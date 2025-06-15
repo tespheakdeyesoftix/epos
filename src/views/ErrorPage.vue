@@ -4,7 +4,7 @@
         <ion-content>
             {{ error.message }} 
             
-            <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color" :routerLink="d.router_link">
+            <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
                 {{ d.title }}
             </ion-button>
             
@@ -16,6 +16,9 @@ import { ref } from 'vue';
 
 
 const t = window.t;
+function openRoute(url){
+    app.ionRouter.navigate(url,"back","replace")
+}
 // error code here is static set
 
 const errorCodes =
@@ -48,6 +51,29 @@ const errorCodes =
         page_title:t("Close Working Day"),
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"}
+        ]
+    },
+    202:{
+        message: t("Cashier shift is already opened"),
+        page_title:t("Start Cashier Shift"),
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"}
+        ]
+    },
+    203:{
+        page_title:t("Start Cashier Shift"),
+        message: t("There's no working day opened. Please start working day first."),
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"},
+            {title:t("Start Working Day Now"),router_link:"/start-working-day","color":"secondary"}
+        ]
+    },
+    204:{
+        page_title:t("Close Working Day"),
+        message: t("There's cashier shift opened. Please close cashier shift first"),
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"},
+            {title:t("Close Cashier Shift Now"),router_link:"/close-shift","color":"danger"}
         ]
     },
 }
