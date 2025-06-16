@@ -7,12 +7,12 @@
             </template>
         </ToolBar>
         <ion-content>
-            <ion-grid>
-                <ion-row>
+            <ion-grid class="h-100">
+                <ion-row class="h-100">
                     <ion-col :size="plateform == 'mobile' ? 12:8" >
                         <ComCouponProductList />
                     </ion-col>
-                    <ion-col style="text-align: center;" :size="plateform == 'mobile' ? 12:4">
+                    <ion-col class="bg-order-card" :size="plateform == 'mobile' ? 12:4">
                         <ComCustomerCard v-if="saleDoc?.customer"/>
                         <ComSaleProductCoupon />
                     </ion-col>
@@ -64,3 +64,11 @@ next()
   }
 })
 </script>
+<style scoped>
+.h-100{
+  height: 100%;
+}
+.bg-order-card{
+  background-color: var(--ion-color-light-tint);
+}
+</style>
