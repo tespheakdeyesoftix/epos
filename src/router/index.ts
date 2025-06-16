@@ -4,6 +4,7 @@ import { getRoute } from './routes';
  import { useAuth } from '@/hooks/useAuth';
  import { useApp } from '@/hooks/useApp';
 import dayjs from 'dayjs';
+import { constructOutline } from 'ionicons/icons';
 
 const {isAuthenticated} = useAuth();
 const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
@@ -39,7 +40,8 @@ router.beforeEach(async (to, from, next) => {
   const station_name = await app.storageService.getItem("station_name")
   const showLogin = await app.storageService.getItem("show_login")
   const currentProperty = await app.storageService.getItem("current_property")
-    
+  
+
 
   if(!currentProperty && to.path !="/select-workspace" && to.path !='/add-workspace' ){
     next("/select-workspace");
