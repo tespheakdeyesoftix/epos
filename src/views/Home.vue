@@ -12,7 +12,7 @@
         
       </div>
       <div class="menu-list justify-content-center border-round-top-3xl">
-        <div class="p-3">
+        <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">
           <ion-row>
             <ion-col v-for="(m, index) in appMenu" :key="index" size-lg="3" size-xs="6" class="flex">
