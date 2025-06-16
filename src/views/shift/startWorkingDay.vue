@@ -5,23 +5,21 @@
         </AppBar>
         <ion-content class="ion-padding">
             <div style=" max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;">
-            <stack gap="20px"> 
-                <stack row equal gap="20px">
-                    <com-input v-model="posting_date" :label="t('Working Date')" readonly />
-                    <com-input v-model="doc.pos_profile" :label="t('POS Profile')" readonly />
+                <stack gap="20px"> 
+                    <stack row equal gap="20px">
+                        <com-input v-model="posting_date" :label="t('Working Date')" readonly />
+                        <com-input v-model="doc.pos_profile" :label="t('POS Profile')" readonly />
+                    </stack> 
+                    <com-input v-model="doc.note" :label="t('Note')" type="text-area" />
                 </stack>
-               
-                <com-input v-model="doc.note" :label="t('Note')" type="text-area" />
-               
-            </stack>
-</div>
+            </div>
         </ion-content>
         <ion-footer>
             <ion-toolbar>
-                 <div style=" display: flex;justify-content: center;gap: 10px;">
-                <ion-button @click="onStartWorkingDay">{{ t("Start Working Day") }}</ion-button>
-                <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
-              </div>
+                <div style=" display: flex;justify-content: center;gap: 10px;">
+                    <ion-button @click="onStartWorkingDay">{{ t("Start Working Day") }}</ion-button>
+                    <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+                </div>
             </ion-toolbar>
         </ion-footer>
     </ion-page>

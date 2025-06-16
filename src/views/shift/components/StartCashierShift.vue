@@ -2,7 +2,7 @@
     <ion-page>
         <AppBar>{{ t("Start Cashier Shift") }}</AppBar>
         <ion-content class="ion-padding">
-            <div style=" max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;">
+            <div class="fix-container">
                 <stack gap="20px">
                     <stack row equal>
                         <com-input v-model="workingDay.name" readonly :label="t('Working Day Number')"></com-input>
@@ -12,16 +12,13 @@
                         <com-input v-model="workingDay.pos_profile" readonly :label="t('POS Profile')"></com-input>
                         <ComSelectInput docType="Shift Type" v-model="doc.shift_name" :label="t('Shift')" />
                     </stack>
-
                 </stack>
-
                 <ion-text color="primary">
                     <h4>{{ t("Cash Float") }}</h4>
                 </ion-text>
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6" v-for="pt in payment_type">
-
                             <com-input :label="pt.payment_type" v-model="pt.input_amount" type="number"></com-input>
                         </ion-col>
                     </ion-row>
@@ -41,11 +38,7 @@
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-
-
-
             </div>
-
         </ion-content>
         <ion-footer>
             <ion-toolbar>
@@ -54,7 +47,6 @@
                         }}</ion-button>
                     <ion-button @click="onCancel" color="danger" shape="round">{{ t("Cancel") }}</ion-button>
                 </div>
-
             </ion-toolbar>
         </ion-footer>
     </ion-page>

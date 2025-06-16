@@ -1,19 +1,28 @@
 <template>
     <ion-page>
         <AppBar>{{ error.page_title }}</AppBar>
-        <ion-content>
-            {{ error.message }} 
-            
-            <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
-                {{ d.title }}
-            </ion-button>
-            
+        <ion-content class="ion-align-items-center">
+            <div class="fix-container">
+                <ion-text color="primary"> 
+                    <div class="border-1 p-2 border-round flex align-items-center gap-2 info__message_bg">
+                        <ion-icon :icon="alertCircleOutline" size="large"></ion-icon>
+                        <p>{{ error.message }}</p>
+                    </div>
+                </ion-text>
+            </div>
         </ion-content>
+        <ion-footer>
+            <ion-toolbar class="ion-text-center">
+                <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
+                    {{ d.title }}
+                </ion-button>
+            </ion-toolbar>
+        </ion-footer>
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
-
+import { alertCircleOutline } from 'ionicons/icons';
 
 const t = window.t;
 function openRoute(url){
@@ -47,7 +56,7 @@ const errorCodes =
         ]
     },
     201:{
-        message: t("There's no working opened."),
+        message: t("There's no working day opened."),
         page_title:t("Close Working Day"),
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"}
