@@ -36,6 +36,11 @@
             <ion-item   v-if="(data.discount_amount ?? 0)==0"   @click="onProductDiscountAmount(data)" button> 
                  <ion-label> {{t("Discount Amount")}}</ion-label>
             </ion-item>
+           <!-- remove discount -->
+            <ion-item   v-if="(data.discount_amount ?? 0)>0"   @click="onRemoveProductDiscount(data)" button> 
+                 
+                <ion-label color="danger"> {{t("Remove Discount")}}</ion-label>
+            </ion-item>
 
             <!-- addnote -->
             <ion-item v-if="!data.note"  @click="onAddNote" button> 
@@ -60,15 +65,18 @@ import { computed } from 'vue';
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { documentOutline } from 'ionicons/icons';
  
-const { onEditSaleProductCoupon,onDeleteSaleProduct ,onProductDiscountPercent,onProductDiscountAmount} = useSaleCoupon()
+const { onEditSaleProductCoupon,onDeleteSaleProduct ,onProductDiscountPercent,onProductDiscountAmount,onRemoveProductDiscount} = useSaleCoupon()
 const popOverID = app.utils.generateRandomString();
+
 
 const props = defineProps({
     data:Object,
     index:Number
 })
 const t = window.t;
+
  
+
 const displayCoupons = computed(()=>{
    const allCoupuns = props.data.coupons.map(x=>x.coupon);
    if(allCoupuns.length>3){

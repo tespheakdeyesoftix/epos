@@ -1,27 +1,40 @@
 <template>
     <ion-page>
         <ToolBar>
-            {{ t("Sale Coupon") }}
+            {{ t("Sale Coupon") }} 
+            <ion-text v-if="saleDoc.name"> - {{ saleDoc.name }}</ion-text>
+            <ion-chip :color="saleDoc.sale_status == 'Bill Requested'?'success':'danger'">{{ saleDoc.sale_status }}</ion-chip>
             <template #end>
+              <ComPendingOrderButton/>
               <ComUserProfile />
+                  
             </template>
         </ToolBar>
         <ion-content>
-            <ion-grid class="h-100">
-                <ion-row class="h-100">
-                    <ion-col :size="plateform == 'mobile' ? 12:8" >
-                        <ComCouponProductList />
-                    </ion-col>
-                    <ion-col class="bg-order-card" :size="plateform == 'mobile' ? 12:4">
-                        <ComCustomerCard v-if="saleDoc?.customer"/>
-                        <ComSaleProductCoupon />
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-content>
+          <ion-split-pane when="xs" content-id="main">
+    <ion-menu content-id="main">
+      <ion-content> 
+        <ComCouponProductList />
+      </ion-content>
        <ComSaleCouponFooter/>
-    </ion-page>
+    </ion-menu>
 
+    <div class="ion-page" id="main">
+       <ComCustomerCard v-if="saleDoc?.customer"/>
+      <ion-content class="ion-padding"> 
+        
+                        <ComSaleProductCoupon />
+      </ion-content>
+   
+     <ComPaymentButton />
+  ​
+    </div>
+  </ion-split-pane>
+ 
+        </ion-content>
+     
+    </ion-page>
+ 
 </template>
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue"
@@ -31,6 +44,8 @@ import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSa
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
+    import ComPaymentButton from "@/modules/ecoupon/sale-coupon/components/ComPaymentButton.vue"  
+    import ComPendingOrderButton from "@/modules/ecoupon/sale-coupon/components/ComPendingOrderButton.vue"  
   
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
@@ -65,10 +80,14 @@ next()
 })
 </script>
 <style scoped>
-.h-100{
-  height: 100%;
-}
 .bg-order-card{
   background-color: var(--ion-color-light-tint);
 }
+ion-split-pane {
+    --side-width: 65%;
+    --side-max-width: 65%;
+    --border: 1px dashed #b3baff;
+}
+
+
 </style>

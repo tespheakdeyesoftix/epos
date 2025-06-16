@@ -1,4 +1,5 @@
 <template>
+     <ion-footer style="height:150px">
 <ion-card button @click="onPayment">
     <ion-card-content>
         
@@ -20,6 +21,7 @@
 
     </ion-card-content>
 </ion-card>
+</ion-footer>
 </template>
 <script setup>
 

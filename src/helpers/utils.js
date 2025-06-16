@@ -613,3 +613,12 @@ export async function onOpenKeyboard(props={}){
   return result;
 }
 
+export async function hasPermission(key){
+    if(app.currentUser.pos_permission[key]==0){
+      await app.showWarning("You don't have permission to perform this action.")
+      return false 
+    }
+
+
+    return true
+}
