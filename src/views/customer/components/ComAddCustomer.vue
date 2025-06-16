@@ -21,7 +21,7 @@
         </stack>
 
         <ion-text color="primary">
-            <h1>{{t("Conatct Infromation")}}</h1>
+            <h2 class="ion-no-margin">{{t("Conatct Infromation")}}</h2>
         </ion-text>
 
         <stack row equal>
@@ -37,7 +37,7 @@
             <ComSelectInput docType="Country"  v-model="doc.country" :label="t('Country')" style="width: 350px"/>   
         </stack>
         <ion-text color="primary">
-            <h1>{{t("Address & Note")}}</h1>
+            <h2 class="ion-no-margin">{{t("Address & Note")}}</h2>
         </ion-text>
         <stack row equal>
             <com-input  keyboard :label="t('Address')" v-model="doc.address"></com-input>
