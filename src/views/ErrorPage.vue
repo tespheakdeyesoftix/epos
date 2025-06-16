@@ -56,7 +56,7 @@ const errorCodes =
         ]
     },
     201:{
-        message: t("There's no working opened."),
+        message: t("There's no working day opened."),
         page_title:t("Close Working Day"),
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"}

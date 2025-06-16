@@ -101,8 +101,8 @@
          </div>
     </ion-content>
      <ComFooter>
-      <ion-button shape="round" color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
-      <ion-button shape="round" color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
+      <ion-button color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
+      <ion-button color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
      </ComFooter>
   </ion-page>
 </template>
