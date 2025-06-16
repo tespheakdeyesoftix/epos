@@ -2,6 +2,9 @@
     <ion-page>
         <ToolBar>
             {{ t("Sale Coupon") }}
+            <template #end>
+              <ComUserProfile />
+            </template>
         </ToolBar>
         <ion-content>
             <ion-grid>
@@ -27,6 +30,8 @@ import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCo
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
+    import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
+  
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
 const { saleDoc,initSaleDoc,getSaleDoc } = useSaleCoupon()

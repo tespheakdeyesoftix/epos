@@ -82,6 +82,7 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
+        cssClass:"scan-coupon-code-modal"
 
     })
 
@@ -142,7 +143,7 @@ async function onSaveAsDraft(){
     const l = await app.showLoading();
     const saveData = getSaveData();
     saveData.docstatus = 0
-    const res = saveSaleDoc(saveData);
+    const res = await saveSaleDoc(saveData);
     if(res.data){
         await app.showSuccess("Save sale to draft successfully.")
         initSaleDoc();
@@ -263,6 +264,7 @@ async function onEditSaleProductCoupon(data){
             data: {...sp,name:sp.product_code,product_name_en:sp.product_name},
 
         },
+        cssClass:"scan-coupon-code-modal"
 
     })
 

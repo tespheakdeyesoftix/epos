@@ -55,7 +55,7 @@ router.beforeEach(async (to, from, next) => {
     next("/select-workspace");
 
   } 
-  else if(['/sale-coupon','/start-working-day'].includes(to.path) && !station_name && to.path!="/enter-station-name"){
+  else if(['/sale-coupon','/start-working-day',"/start-shift"].includes(to.path) && !station_name && to.path!="/enter-station-name"){
     next("/enter-station-name?return_url=" + to.path);
   }else if(to.path == "/enter-station-name" && station_name){
        

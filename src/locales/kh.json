@@ -229,5 +229,14 @@
     "Redeem List": "បញ្ជីប្តូរគូប៉ុង",
     "Sale Coupon": "លក់គូប៉ុង",
     "Sale Coupon List": "បញ្ជីលក់គូប៉ុង",
-    "Top Up Coupon List":"បញ្ជីបញ្ចូលគូប៉ុង"
+    "Top Up Coupon List":"បញ្ជីបញ្ចូលគូប៉ុង",
+    "Coupon Code":"លេខគូប៉ុង",
+    "Total Coupon:":"សរុបគូប៉ុង",
+    "Total Amount:":"សរុបតម្លៃ",
+    "Scan to Add":"ស្កេនដើម្បីបញ្ជូល",
+    "Scan to Remove":"ស្កេនដើម្បីលុប",
+    "Please scan coupon code":"សូមបញ្ជូលលេខគូប៉ុងនៅទីនេះ",
+    "Please enter or scan qr code":"សូមបញ្ជូល ឬស្កេន QR កូដ",
+    "coupon_code_number_does_not_exist": "គូប៉ុងកូដលេខ {coupon} មិនទាន់បានជ្រើសរើសទេ។"
+
   } 

@@ -20,7 +20,7 @@ export function useHome() {
 
 
     async function getAppMenu() {
-        let filters = [["parent_mobile_app_module", "is", "not set"]]
+        let filters = [["parent_mobile_app_module", "is", "not set"],["show_in_home","=","1"]]
         if (app.route.params.parent_menu) {
             filters = [["parent_mobile_app_module", "=", app.route.params.parent_menu]]
         }

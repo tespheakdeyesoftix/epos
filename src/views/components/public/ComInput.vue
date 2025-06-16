@@ -84,6 +84,12 @@ defineExpose({
     ionInputRef.value?.$el?.setFocus()
     const nativeInput = ionInputRef.value?.$el?.querySelector('input')
     nativeInput?.select()
+  },
+  select: () => {
+
+    ionInputRef.value?.$el?.setFocus()
+    const nativeInput = ionInputRef.value?.$el?.querySelector('input')
+    nativeInput?.select()
   }
 })
 

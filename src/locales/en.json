@@ -3,5 +3,6 @@
     "greeting": "Hello, {name}!",
     "reservation_menu":"Reservation",
     "To Date":"to",
-    "property_not_exist_message": "Property code {property_code} does not exists."
+    "property_not_exist_message": "Property code {property_code} does not exists.",
+    "coupon_code_number_does_not_exist": "Coupon code {coupon} does not exist."
 }

@@ -5,7 +5,7 @@ let frappe: FrappeApp | null = null;
 
 export function setFrappeAppUrl(url: string) {
 
-    frappe = new FrappeApp(url, {
+    frappe = new FrappeApp("http://webmonitor.inccloudserver.com:7117/", {
         useToken: true,
         token: getToken,
         type: "token"

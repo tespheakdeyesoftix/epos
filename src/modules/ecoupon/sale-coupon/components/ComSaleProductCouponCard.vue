@@ -10,12 +10,14 @@
         <ComCurrency :value="data.price" />
         {{t("Total Amount")}}: 
         <ComCurrency :value="data.total_amount" />
-
+        Note: {{ data.note}}
         <hr/>
          <ion-chip v-for="(c,index) in displayCoupons" :key="index">{{ c }}</ion-chip>
          <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length>3" color="primary">{{ data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
          <ion-button @click="onEditSaleProductCoupon(data)">{{t("Edit")}}</ion-button>
          <ion-button color="danger" @click="onDeleteSaleProduct(index)">{{t("Delete")}}</ion-button>
+         <ion-button  @click="onAddNote">{{t("Note")}}</ion-button>
+         <ion-button  @click="onDiscount">{{t("Discount")}}</ion-button>
     </ion-card>
 </template>
    
@@ -25,7 +27,7 @@ import { computed } from 'vue';
  
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
  
-const { onEditSaleProductCoupon,onDeleteSaleProduct } = useSaleCoupon()
+const { onEditSaleProductCoupon,onDeleteSaleProduct ,onDiscountSaleProduct} = useSaleCoupon()
 
 
 const props = defineProps({
@@ -42,11 +44,16 @@ const displayCoupons = computed(()=>{
    return allCoupuns
 })
 
- 
-
-
- 
-
+async function onAddNote(){
+    const result = await app.utils.onOpenKeyboard({
+        title:t("Note on Product"),
+        defaultValue: props.data.nte,
+        storageKey:"sale_product_note"
+    })
+    if(result){
+        props.data.note = result;
+    }
+}
 
 </script>
 
