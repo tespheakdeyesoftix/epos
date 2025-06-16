@@ -19,6 +19,24 @@ const subTotal = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.sub_total, 0);
 })
 
+const saleDiscoutableAmount = computed(()=>{
+  
+    return saleDoc.value.sale_products.
+        filter(x=>x.allow_discount==1 && (x.discount_amount ?? 0) == 0).
+        reduce((sum, item) => sum + item.sub_total, 0) ?? 0;
+})
+
+const totalSaleDiscountAmount = computed(()=>{
+    if(saleDoc.value.discount_type=="Percent"){
+       return  saleDiscoutableAmount.value * ( (saleDoc.value.discount ?? 0) / 100)
+    
+    } else {
+        return saleDoc.value.sale_discount ?? 0
+    }
+    
+})
+
+
 const totalSaleProductDiscount = computed(()=>{
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.discount_amount || 0, 0);
 })
@@ -293,7 +311,7 @@ function updateSaleProduct(sp){
     }
     sp.total_amount = sp.sub_total - sp.discount_amount
     // more with discount and tax later
-    
+
 }
 
 
@@ -328,6 +346,61 @@ async function onAddPayment(payment_type){
 
 }
 
+
+
+async function onSaleDiscountPercent(){
+    
+    
+    if(app.currentUser.pos_permission.discount_sale ==0){
+        await app.showWarning("You don't have permission to perform this action.")  
+        return;
+    }
+
+    const result = await app.openModal({
+        component:ComDiscountPercent,
+        componentProps:{
+            checkRequireNoteKey:"discount_sale_required_note"
+        },
+        cssClass:"discount-modal"
+    })
+
+    if(result){
+        saleDoc.value.discount_type= "Percent";
+        saleDoc.value.discount = result.discount*100;
+        saleDoc.value.discount_note = result.note
+
+    }
+
+}
+
+
+async function onSaleDiscountAmount(){
+    if(saleDiscoutableAmount.value==0){
+        app.showWarning("There's no amount to discount. Please add product to your order first");
+        return;
+    }
+    if(app.currentUser.pos_permission.discount_sale ==0){
+        await app.showWarning("You don't have permission to perform this action.")  
+        return;
+    }
+
+    const result = await app.openModal({
+        component:ComDiscountAmount,
+        componentProps:{
+            checkRequireNoteKey:"discount_sale_required_note"
+        },
+        cssClass:"discount-amount-modal"
+    })
+
+    if(result){
+        saleDoc.value.discount_type= "Amount";
+        saleDoc.value.discount =0;
+        saleDoc.value.sale_discount = result.discount,
+        saleDoc.value.discount_note = result.note
+
+       
+    }
+}
 
 
 async function onProductDiscountPercent(sp){
@@ -407,7 +480,8 @@ export function useSaleCoupon() {
         selectedPrintFormat,
         subTotal,
         totalSaleProductDiscount,
-
+        saleDiscoutableAmount,
+        totalSaleDiscountAmount,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -419,6 +493,8 @@ export function useSaleCoupon() {
         onAddPayment,
         onCloseSale,
         onProductDiscountPercent,
-        onProductDiscountAmount
+        onProductDiscountAmount,
+        onSaleDiscountPercent,
+        onSaleDiscountAmount
     }
 }

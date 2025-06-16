@@ -13,7 +13,7 @@
       <ion-icon :icon="qrCodeOutline" slot="icon-only"></ion-icon>
      </ion-button>
      
-     <ion-button  color="danger" shape="round" fill="clear" v-tooltip.top="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
+     <ion-button  color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
       <ion-icon :icon="closeOutline" slot="icon-only"></ion-icon>
      </ion-button>
 
