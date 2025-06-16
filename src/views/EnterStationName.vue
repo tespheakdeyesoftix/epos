@@ -2,13 +2,12 @@
     <ion-page>
         <ToolBar>{{ t("Enter Station Name") }}</ToolBar>
         <ion-content>
-            <stack>
-            <ion-label>Please enter your station name.</ion-label>
-        <com-input  ref="stationInputRef"  focus v-model="station_name"  :label="t('Station name')"
-            :placeholder="t('Please enter station name')" label-placement="stacked" fill="outline"></com-input>
-            <ion-button @click="onSave" size="large" shape="round">Save</ion-button>
+            <stack class="fix-container flex">
+                <ion-label>Please enter your station name.</ion-label>
+                <com-input  ref="stationInputRef"  focus v-model="station_name"  :label="t('Station name')"
+                    :placeholder="t('Please enter station name')" label-placement="stacked" fill="outline"></com-input>
+                    <ion-button @click="onSave" size="large" shape="round">Save</ion-button>
             </stack>
-            
         </ion-content>
     </ion-page>
 </template>

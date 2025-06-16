@@ -70,9 +70,13 @@
 	/* background alternative */
 	--ion-search-background: #98b9ff;
 	--ion-summary-kpi-report: #F2F2F2;
+
+	--ion-message-background: #0054e938
 	
 }
-
+.info__message_bg {
+	background: var(--ion-message-background)
+}
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
