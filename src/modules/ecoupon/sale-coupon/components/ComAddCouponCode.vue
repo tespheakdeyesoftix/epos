@@ -180,7 +180,8 @@ function onConfirm() {
         sub_total: props.data.price,
         price: props.data.price,
         total_amount: coupounList.value.length * props.data.price,
-        coupons: coupounList.value
+        coupons: coupounList.value,
+        allow_discount:props.data.allow_discount
     }
     modalController.dismiss(returnData, 'confirm')
 }

@@ -6,6 +6,14 @@
         <ion-label>{{ t("Total Coupon") }}</ion-label>
         <ion-label slot="end">{{ totalQuantity }}</ion-label>
     </ion-item>
+    <ion-item>
+        <ion-label>{{ t("Sub Total") }}</ion-label>
+        <ion-label slot="end"><ComCurrency :value="subTotal"/> </ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{ t("Sale Product Dis.") }}</ion-label>
+        <ion-label slot="end"><ComCurrency :value="totalSaleProductDiscount"/></ion-label>
+    </ion-item>
 </ion-list>
 </div>
 <div  v-else>
@@ -15,8 +23,9 @@
 <script setup>
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import ComSaleProductCouponCard from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCouponCard.vue"
+import ComCurrency from "@/views/components/public/ComCurrency.vue";
 
-const {saleDoc,totalQuantity} = useSaleCoupon()
+const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount} = useSaleCoupon()
 
 const t = window.t;
 

@@ -1,6 +1,8 @@
 import { computed, ref } from "vue"
 import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCouponCode.vue"
 import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
+import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
+import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
 import { modalController } from "@ionic/vue"
@@ -13,8 +15,16 @@ const paymentInputAmount = ref("")
 const selectedPrintFormat = ref()
  
 
+const subTotal = computed(()=>{
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.sub_total, 0);
+})
+
+const totalSaleProductDiscount = computed(()=>{
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.discount_amount || 0, 0);
+})
+
 const grandTotal = computed(()=>{
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.total_amount, 0);
+    return (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0)
 })
 
 const totalQuantity = computed(()=>{
@@ -278,8 +288,12 @@ async function onEditSaleProductCoupon(data){
 
 function updateSaleProduct(sp){
     sp.sub_total = sp.quantity * sp.price;
-    sp.total_amount = sp.quantity * sp.price;
+    if(sp.discount_type == "Percent"){
+        sp.discount_amount = sp.sub_total * (sp.discount || 0) /100
+    }
+    sp.total_amount = sp.sub_total - sp.discount_amount
     // more with discount and tax later
+    
 }
 
 
@@ -316,8 +330,63 @@ async function onAddPayment(payment_type){
 
 
 
+async function onProductDiscountPercent(sp){
+    // check user permission 
+    if(!sp.allow_discount==1){
+        app.showWarning("This product is not allow to discount")
+        return
+    }
+    if(app.currentUser.pos_permission.discount_item ==0){
+        await app.showWarning("You don't have permission to perform this action.")  
+        return;
+    }
+
+    const result = await app.openModal({
+        component:ComDiscountPercent,
+        componentProps:{
+            checkRequireNoteKey:"discount_item_required_note"
+        },
+        cssClass:"discount-modal"
+    })
+
+    if(result){
+        sp.discount_type= "Percent";
+        sp.discount = result.discount*100;
+        sp.discount_note = result.note
+
+        updateSaleProduct(sp);
+    }
+
+}
 
 
+async function onProductDiscountAmount(sp){
+if(!sp.allow_discount==1){
+        app.showWarning("This product is not allow to discount")
+        return
+    }
+    if(app.currentUser.pos_permission.discount_item ==0){
+        await app.showWarning("You don't have permission to perform this action.")  
+        return;
+    }
+
+    const result = await app.openModal({
+        component:ComDiscountAmount,
+        componentProps:{
+            checkRequireNoteKey:"discount_item_required_note"
+        },
+        cssClass:"discount-amount-modal"
+    })
+
+    if(result){
+        sp.discount_type= "Amount";
+        sp.discount =0;
+        sp.discount_amount = result.discount,
+        sp.discount_note = result.note
+
+        updateSaleProduct(sp);
+    }
+}
 
 
 export function useSaleCoupon() {
@@ -336,6 +405,9 @@ export function useSaleCoupon() {
         totalPaymentAmount,
         changeAmount,
         selectedPrintFormat,
+        subTotal,
+        totalSaleProductDiscount,
+
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -345,6 +417,8 @@ export function useSaleCoupon() {
         onEditSaleProductCoupon,
         onDeleteSaleProduct,
         onAddPayment,
-        onCloseSale
+        onCloseSale,
+        onProductDiscountPercent,
+        onProductDiscountAmount
     }
 }

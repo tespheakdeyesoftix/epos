@@ -68,7 +68,8 @@ const props = defineProps({
   labelPlacement: {
     type: String,
     default: "stacked"
-  }
+  },
+  storageKey:String
 })
 
 defineOptions({
@@ -136,7 +137,8 @@ async function onOpenKeyboard(){
   }else {
  const result = await app.utils.onOpenKeyboard({
   title:props.placeholder || props.label,
-  defaultValue: model.value
+  defaultValue: model.value,
+  storageKey:props.storageKey 
  })
  if(result){
     model.value = result;
