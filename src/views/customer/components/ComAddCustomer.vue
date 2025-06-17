@@ -65,7 +65,7 @@ const requiredFields = ['customer_group', 'customer_name_en', 'gender']
 function validate() {
   const missingFields = requiredFields.filter(field => !doc.value[field])
   if (missingFields.length > 0) {
-    app.showToast(t("Please fill all required fields."), "warning")
+    app.showWarning(t("Please fill all required fields."), "warning")
     return false
   }
   return true

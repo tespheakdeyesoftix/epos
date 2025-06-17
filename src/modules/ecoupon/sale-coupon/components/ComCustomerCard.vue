@@ -55,16 +55,6 @@ async function onAddCustomer(){
     
     }
 }
-// async function onAddCustomer(){
-//   const result = await app.openModal({
-//     component:ComAddCustomer
-//   })
-
-//   if(result){
-    
-//   }
-
-// }
 async function getCustomer(name){
   const res = await app.getDoc("Customer",name);
   if(res.data){
