@@ -63,6 +63,21 @@ export function stripHtmlTags(text) {
   return text?.replace(/<[^>]*>/g, '');
 }
 
+export function generateRandomString() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const lettersAndNumbers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  let result = letters.charAt(Math.floor(Math.random() * letters.length)); // First character must be a letter
+
+  for (let i = 1; i < 20; i++) {
+    result += lettersAndNumbers.charAt(Math.floor(Math.random() * lettersAndNumbers.length));
+  }
+
+  return result;
+}
+
+
+
 export const getRandomColor = () => {
   return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 };
@@ -598,3 +613,12 @@ export async function onOpenKeyboard(props={}){
   return result;
 }
 
+export async function hasPermission(key){
+    if(app.currentUser.pos_permission[key]==0){
+      await app.showWarning("You don't have permission to perform this action.")
+      return false 
+    }
+
+
+    return true
+}

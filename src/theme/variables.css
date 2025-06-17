@@ -250,8 +250,15 @@ button.alert-button.alert-button-warning {
 		height: 100vh;
 		--width: 750px;
 		--height: 80vh;
-
 }
+/* discount-amount-modal */
+ion-modal.discount-amount-modal{
+	width: 100vw;
+		height: 100vh;
+		--width: 500px;
+		--height: 300px;
+}
+
 ion-modal{
 	 --border-radius: 10px;
 }

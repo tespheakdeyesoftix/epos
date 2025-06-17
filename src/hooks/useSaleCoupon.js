@@ -1,44 +1,72 @@
 import { computed, ref } from "vue"
 import ComAddCouponCode from "@/modules/ecoupon/sale-coupon/components/ComAddCouponCode.vue"
 import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
+import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
+import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
 import { showLoading } from "@/helpers/utils"
 import { modalController } from "@ionic/vue"
 const saleDoc = ref({
-    sale_products:[],
-    payment:[]
+    sale_products: [],
+    payment: []
 })
 const customer = ref(null)
 const paymentInputAmount = ref("")
 const selectedPrintFormat = ref()
- 
 
-const grandTotal = computed(()=>{
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.total_amount, 0);
+
+const subTotal = computed(() => {
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.sub_total, 0);
 })
 
-const totalQuantity = computed(()=>{
+const saleDiscoutableAmount = computed(() => {
+
+    return saleDoc.value.sale_products.
+        filter(x => x.allow_discount == 1 && (x.discount_amount ?? 0) == 0).
+        reduce((sum, item) => sum + item.sub_total, 0) ?? 0;
+})
+
+const totalSaleDiscountAmount = computed(() => {
+    if (saleDoc.value.discount_type == "Percent") {
+        return saleDiscoutableAmount.value * ((saleDoc.value.discount ?? 0) / 100)
+
+    } else {
+        return saleDoc.value.sale_discount ?? 0
+    }
+
+})
+
+
+const totalSaleProductDiscount = computed(() => {
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.discount_amount || 0, 0);
+})
+
+const grandTotal = computed(() => {
+    return (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
+})
+
+const totalQuantity = computed(() => {
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
 })
 
-const totalPaymentAmount = computed(()=>{
+const totalPaymentAmount = computed(() => {
     return saleDoc.value.payment.reduce((sum, item) => sum + item.amount, 0);
 })
-const paymentBalance = computed(()=>{
-    let balance =  grandTotal.value - totalPaymentAmount.value
-    if(balance<0){
+const paymentBalance = computed(() => {
+    let balance = grandTotal.value - totalPaymentAmount.value
+    if (balance < 0) {
         balance = 0
     }
     return balance
 })
 
 
-const grandTotalSecondCurrency = computed(()=>{
+const grandTotalSecondCurrency = computed(() => {
     return grandTotal.value * app.setting.exchange_rate;
 })
 
-const changeAmount = computed(()=>{
-    return totalPaymentAmount.value  - grandTotal.value
+const changeAmount = computed(() => {
+    return totalPaymentAmount.value - grandTotal.value
 })
 
 
@@ -46,30 +74,33 @@ const changeAmount = computed(()=>{
 
 
 function initSaleDoc() {
- 
+
     saleDoc.value = {
         business_branch: app.setting.property?.property_name,
         customer: app.setting.pos_profile?.default_customer,
         stock_location: app.setting.pos_profile?.stock_location,
         outlet: app.setting.pos_profile?.outlet,
         pos_profile: app.setting.pos_profile?.name,
-        pos_station_name:app.setting.station_name,
-        working_day:app.setting.working_day?.name,
-        cashier_shift:app.setting.cashier_shift?.name,
-        
+        pos_station_name: app.setting.station_name,
+        working_day: app.setting.working_day?.name,
+        cashier_shift: app.setting.cashier_shift?.name,
+        sale_status:"New",
         sale_products: [],
-        payment:[]
+        payment: []
     }
 }
 
-async function getSaleDoc(){
-    const result = await app.getDoc("Sale",app.route.params.name);
-    if(result.data){
+async function getSaleDoc() {
+    const loading = await app.showLoading();
+    const result = await app.getDoc("Sale", app.route.params.name);
+    if (result.data) {
+
+        result.data.sale_products.forEach(x => {
+            x.coupons = JSON.parse(x.coupons)
+        })
         saleDoc.value = result.data;
-    }else {
-        //if not found 
-        alert("go to new route")
     }
+    await loading.dismiss();
 }
 
 
@@ -82,105 +113,104 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
-        cssClass:"scan-coupon-code-modal"
+        cssClass: "scan-coupon-code-modal"
 
     })
 
     if (result) {
         //check if exist with product code and price
-        const exists = saleDoc.value.sale_products.find(x=>x.product_code == result.product_code && x.price == result.price);
-        if(exists){
-            
-            exists.coupons = [...exists.coupons,...result.coupons];
+        const exists = saleDoc.value.sale_products.find(x => x.product_code == result.product_code && x.price == result.price);
+        if (exists) {
+
+            exists.coupons = [...exists.coupons, ...result.coupons];
             exists.quantity = exists.coupons.length;
-           
+
             updateSaleProduct(exists)
 
-        }else {
+        } else {
             saleDoc.value.sale_products.push(result)
             updateSaleProduct(result)
         }
-        
-        
+
+
     }
     // wait user confirm then add producty to sale product 
 
 }
 
-async function onPayment(){
-    if (saleDoc.value.sale_products.length==0){
+async function onPayment() {
+    if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
     }
     const result = await app.openModal({
-        component:ComPayment,
-        cssClass:"payment-modal"   
+        component: ComPayment,
+        cssClass: "payment-modal"
     })
-    if(result){
-        // process payment
-    }
-} 
-
-function getSaveData(){
-const saveData = JSON.parse(JSON.stringify(saleDoc.value));
-    saveData.sale_products.forEach(sp => {
-            sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
-            if(sp.coupons){
-sp.coupons = JSON.stringify(sp.coupons)
-            }
-            
-    });
-    return saveData;
-    
+  
 }
 
-async function onSaveAsDraft(){
-    
-    if (saleDoc.value.sale_products.length==0){
-        await   app.showWarning("There is no data to save.")
+function getSaveData() {
+    const saveData = JSON.parse(JSON.stringify(saleDoc.value));
+    saveData.sale_products.forEach(sp => {
+        sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
+        if (sp.coupons) {
+            sp.coupons = JSON.stringify(sp.coupons)
+        }
+
+    });
+    return saveData;
+
+}
+
+async function onSaveAsDraft() {
+
+    if (saleDoc.value.sale_products.length == 0) {
+        await app.showWarning("There is no data to save.")
         return;
     }
     const l = await app.showLoading();
     const saveData = getSaveData();
     saveData.docstatus = 0
     const res = await saveSaleDoc(saveData);
-    if(res.data){
+    if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
         initSaleDoc();
 
     }
     await l.dismiss();
 
-} 
+}
 
 
-async function onQuickPay(payment_type){
-    if(saleDoc.value.sale_products.length == 0){
+async function onQuickPay(payment_type) {
+    if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("There's no data.")
-        return 
+        return
     }
     const loading = await showLoading();
     const saveData = getSaveData();
-    saveData.docstatus = 1 
+    saveData.docstatus = 1
     saveData.closed_by = app.currentUser.full_name
     saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
-    
+
     // add payment type
     saveData.payment = [
-        {payment_type:payment_type.payment_type,
-            input_amount : grandTotal.value * payment_type.exchange_rate,
-            amount : grandTotal.value * payment_type.exchange_rate
+        {
+            payment_type: payment_type.payment_type,
+            input_amount: grandTotal.value * payment_type.exchange_rate,
+            amount: grandTotal.value * payment_type.exchange_rate
         }
     ]
 
     const res = await saveSaleDoc(saveData);
 
-    if(res.data){
+    if (res.data) {
 
         initSaleDoc()
         await app.showSuccess("Quick payment successfully")
         // print bill
-        selectedPrintFormat.value = app.setting.print_formats.find(x=>x.name ==app.setting.pos_profile.default_pos_receipt)
+        selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
     }
 
@@ -189,31 +219,31 @@ async function onQuickPay(payment_type){
 
 }
 
-async function onCloseSale(isPrint=true){
-    if(grandTotal.value>0 && saleDoc.value.payment.length == 0){
+async function onCloseSale(isPrint = true) {
+    if (grandTotal.value > 0 && saleDoc.value.payment.length == 0) {
         await app.showWarning("Please enter all payment amount")
-        return 
+        return
     }
 
-    const confirm = await app.onConfirm("Payment","Are you sure to process payment and close order?")
-    if(!confirm) return;
+    const confirm = await app.onConfirm("Payment", "Are you sure to process payment and close order?")
+    if (!confirm) return;
     const loading = await showLoading();
     const saveData = getSaveData();
-    saveData.docstatus = 1 
+    saveData.docstatus = 1
     saveData.closed_by = app.currentUser.full_name
     saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
-
+    saveData.sale_status = "Closed"
     const res = await saveSaleDoc(saveData);
 
-    if(res.data){
+    if (res.data) {
 
         initSaleDoc()
-        if(isPrint){
+        if (isPrint) {
             printBill(res.data.name)
         }
         await app.showSuccess("Payment successfully")
-        
-        
+
+
     }
 
     modalController.dismiss("", 'confirm')
@@ -221,54 +251,54 @@ async function onCloseSale(isPrint=true){
 
 }
 
-async function printBill(doc_name){
-     
-   
-   const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
-      pdf: 0,
-      station:app.setting.station_name,
-      name: doc_name,
-      reprint:0,
-     template:selectedPrintFormat.value.pos_receipt_template
-   })
+async function printBill(doc_name) {
 
-   if (result.data) {
-       for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {
-         app.printService.submit({
-            'type': "Cashier Printer",//printer name
-            'url': 'file.pdf',
-            'file_content': result.data
-         });
+
+    const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
+        pdf: 0,
+        station: app.setting.station_name,
+        name: doc_name,
+        reprint: 0,
+        template: selectedPrintFormat.value.pos_receipt_template
+    })
+
+    if (result.data) {
+        for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {
+            app.printService.submit({
+                'type': "Cashier Printer",//printer name
+                'url': 'file.pdf',
+                'file_content': result.data
+            });
         }
 
 
-   }
+    }
 
 }
 
-async function saveSaleDoc(saveData){
-let res = null
-    if(saveData.name){
-        res = await app.updateDoc("Sale", saveData);
-    }else {
+async function saveSaleDoc(saveData) {
+    let res = null
+    if (saveData.name) {
+        res = await app.updateDoc("Sale",saveData.name, saveData);
+    } else {
         res = await app.createDoc("Sale", saveData);
     }
     return res
 }
 
-async function onEditSaleProductCoupon(data){
+async function onEditSaleProductCoupon(data) {
     const sp = JSON.parse(JSON.stringify(data))
-   const result = await app.openModal({
+    const result = await app.openModal({
         component: ComAddCouponCode,
         componentProps: {
-            data: {...sp,name:sp.product_code,product_name_en:sp.product_name},
+            data: { ...sp, name: sp.product_code, product_name_en: sp.product_name },
 
         },
-        cssClass:"scan-coupon-code-modal"
+        cssClass: "scan-coupon-code-modal"
 
     })
 
-    if(result){
+    if (result) {
         data.coupons = result.coupons;
         data.quantity = result.coupons.length;
         updateSaleProduct(data)
@@ -276,38 +306,42 @@ async function onEditSaleProductCoupon(data){
 
 }
 
-function updateSaleProduct(sp){
+function updateSaleProduct(sp) {
     sp.sub_total = sp.quantity * sp.price;
-    sp.total_amount = sp.quantity * sp.price;
+    if (sp.discount_type == "Percent") {
+        sp.discount_amount = sp.sub_total * (sp.discount || 0) / 100
+    }
+    sp.total_amount = sp.sub_total - sp.discount_amount
     // more with discount and tax later
+
 }
 
 
-async function onDeleteSaleProduct(index){
+async function onDeleteSaleProduct(index) {
     const confirm = await app.onConfirm("Delete Sale Product", "Are you sure you want to delete this record");
-    if(confirm){
-        saleDoc.value.sale_products.splice(index,1);
+    if (confirm) {
+        saleDoc.value.sale_products.splice(index, 1);
     }
 
 }
 
-async function onAddPayment(payment_type){
-     let paymentAmount = Number(paymentInputAmount.value) 
-     if(!paymentInputAmount.value){
+async function onAddPayment(payment_type) {
+    let paymentAmount = Number(paymentInputAmount.value)
+    if (!paymentInputAmount.value) {
         paymentAmount = paymentBalance.value;
-     }
-    if(paymentAmount==0){
+    }
+    if (paymentAmount == 0) {
         await app.showWarning("Please enter payment amount")
         return
     }
-    
+
     saleDoc.value.payment.push(
         {
             payment_type: payment_type.payment_type,
             input_amount: paymentAmount,
             amount: paymentAmount / payment_type.exchange_rate,
-            currency:payment_type.currency,
-            exchange_rate:payment_type.exchange_rate
+            currency: payment_type.currency,
+            exchange_rate: payment_type.exchange_rate
         }
     )
     paymentInputAmount.value = "";
@@ -316,8 +350,174 @@ async function onAddPayment(payment_type){
 
 
 
+async function onSaleDiscountPercent() {
+
+    console.log(app.currentUser);
+
+    if (app.currentUser.pos_permission.discount_sale == 0) {
+        await app.showWarning("You don't have permission to perform this action.")
+        return;
+    }
+
+    const result = await app.openModal({
+        component: ComDiscountPercent,
+        componentProps: {
+            checkRequireNoteKey: "discount_sale_required_note"
+        },
+        cssClass: "discount-modal"
+    })
+
+    if (result) {
+        saleDoc.value.discount_type = "Percent";
+        saleDoc.value.discount = result.discount * 100;
+        saleDoc.value.discount_note = result.note
+        app.showSuccess("Add discount successfully")
+    }
+
+}
 
 
+async function onSaleDiscountAmount() {
+    if (saleDiscoutableAmount.value == 0) {
+        app.showWarning("There's no amount to discount. Please add product to your order first");
+        return;
+    }
+    if (app.currentUser.pos_permission.discount_sale == 0) {
+        await app.showWarning("You don't have permission to perform this action.")
+        return;
+    }
+
+    const result = await app.openModal({
+        component: ComDiscountAmount,
+        componentProps: {
+            checkRequireNoteKey: "discount_sale_required_note"
+        },
+        cssClass: "discount-amount-modal"
+    })
+
+    if (result) {
+        saleDoc.value.discount_type = "Amount";
+        saleDoc.value.discount = 0;
+        saleDoc.value.sale_discount = result.discount,
+            saleDoc.value.discount_note = result.note
+        app.showSuccess("Add discount successfully")
+
+    }
+}
+
+
+async function onProductDiscountPercent(sp) {
+    // check user permission 
+    if (!sp.allow_discount == 1) {
+        app.showWarning("This product is not allow to discount")
+        return
+    }
+    if (app.currentUser.pos_permission.discount_item == 0) {
+        await app.showWarning("You don't have permission to perform this action.")
+        return;
+    }
+
+    const result = await app.openModal({
+        component: ComDiscountPercent,
+        componentProps: {
+            checkRequireNoteKey: "discount_item_required_note"
+        },
+        cssClass: "discount-modal"
+    })
+
+    if (result) {
+        sp.discount_type = "Percent";
+        sp.discount = result.discount * 100;
+        sp.discount_note = result.note
+        app.showSuccess("Add discount successfully")
+        updateSaleProduct(sp);
+    }
+
+}
+
+
+async function onProductDiscountAmount(sp) {
+    if (!sp.allow_discount == 1) {
+        app.showWarning("This product is not allow to discount")
+        return
+    }
+    if (app.currentUser.pos_permission.discount_item == 0) {
+        await app.showWarning("You don't have permission to perform this action.")
+        return;
+    }
+
+    const result = await app.openModal({
+        component: ComDiscountAmount,
+        componentProps: {
+            checkRequireNoteKey: "discount_item_required_note"
+        },
+        cssClass: "discount-amount-modal"
+    })
+
+    if (result) {
+        sp.discount_type = "Amount";
+        sp.discount = 0;
+        sp.discount_amount = result.discount,
+            sp.discount_note = result.note
+        app.showSuccess("Add discount successfully")
+        updateSaleProduct(sp);
+    }
+}
+
+
+async function onRemoveProductDiscount(sp) {
+    const hasPermission = await app.utils.hasPermission("cancel_discount_item")
+    if (!hasPermission) return;
+
+    let note = false
+    if (app.setting.pos_config.cancel_discount_item_required_note == 1) {
+        note = await app.utils.onOpenKeyboard({
+            title: t("Cancel Discount Note"),
+            storageKey: "cancel_discount_item_required_note"
+        });
+    }
+
+    if (note) {
+        sp.discount_type = "Percent";
+        sp.discount = 0;
+        sp.discount_amount = 0,
+
+            updateSaleProduct(sp);
+    }
+    app.showSuccess("Remove discount successfully")
+}
+
+async function onPrintRequestBill(format) {
+
+    // validate
+    if (saleDoc.value.sale_products.length == 0) {
+        app.showWarning("Please add product to your order first");
+        return;
+    }
+    // save sale order 
+    const l = await app.showLoading();
+    const saveData = getSaveData();
+    saveData.docstatus = 0
+    saveData.sale_status = "Bill Requested";
+    const res = await saveSaleDoc(saveData);
+    if (res.data) {
+        await app.showSuccess("Save sale successfully.")
+        selectedPrintFormat.value = format;
+        printBill(res.data.name)
+        if(app.route.params.name){
+            res.data.sale_products.forEach((x)=>{
+                x.coupons = JSON.parse(x.coupons)
+            })
+            saleDoc.value = res.data;
+        }else {
+            initSaleDoc();
+        app.ionRouter.navigate(`/sale-coupon/${res.data.name}`, "push", "replace")
+    
+        }
+        
+    }
+    await l.dismiss();
+}
 
 
 export function useSaleCoupon() {
@@ -326,7 +526,7 @@ export function useSaleCoupon() {
 
     return {
         saleDoc,
-        
+
         grandTotal,
         grandTotalSecondCurrency,
         customer,
@@ -336,6 +536,10 @@ export function useSaleCoupon() {
         totalPaymentAmount,
         changeAmount,
         selectedPrintFormat,
+        subTotal,
+        totalSaleProductDiscount,
+        saleDiscoutableAmount,
+        totalSaleDiscountAmount,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -345,6 +549,12 @@ export function useSaleCoupon() {
         onEditSaleProductCoupon,
         onDeleteSaleProduct,
         onAddPayment,
-        onCloseSale
+        onCloseSale,
+        onProductDiscountPercent,
+        onProductDiscountAmount,
+        onSaleDiscountPercent,
+        onSaleDiscountAmount,
+        onRemoveProductDiscount,
+        onPrintRequestBill
     }
 }
