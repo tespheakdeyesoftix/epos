@@ -77,9 +77,7 @@ const onLogout = async () => {
 </script>
 <style scoped>
 .wrapper-cover {
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    url(/assets/home-bg.jpeg) no-repeat center center / cover;
-  /* width: 100%; */
+  background: linear-gradient(#213b9400, rgb(0 0 0 / 70%)), url(/assets/retina_wood.png) repeat center center;
   height: 35%;
   color: #fff;
 }
