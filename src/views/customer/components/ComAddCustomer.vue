@@ -11,30 +11,29 @@
             <com-input  keyboard :label="t('Customer Name KH')" v-model="doc.customer_name_kh"></com-input>
         </stack>
         <stack row equal>
-             <ComSelectInput docType="Gender"  v-model="doc.gender" :label="t('Gender')" />
-           
-             <com-input type="date" :label="t('Date of Birth')" v-model="doc.date_of_birth"/>
+            <ComSelectInput docType="Gender"  v-model="doc.gender" :label="t('Gender')" />              
+            <com-input type="date" :label="t('Date of Birth')" v-model="doc.date_of_birth"/> 
         </stack>
         <stack row equal>
             <com-input  keyboard :label="t('Company Name')" v-model="doc.company_name"></com-input>
             <com-input  keyboard :label="t('Jobs')" v-model="doc.jobs"></com-input>
         </stack>
-
         <ion-text color="primary">
-            <h2 class="ion-no-margin">{{t("Conatct Infromation")}}</h2>
+            <h2 class="ion-no-margin">{{t("Contact Infromation")}}</h2>
         </ion-text>
-
         <stack row equal>
             <com-input  keyboard :label="t('Phone Number 1')" v-model="doc.phone_number"></com-input>
-            <com-input  keyboard :label="t('Phone Number 2')" v-model="doc.phone_number_2"></com-input>
+            <com-input   label-placement="floating"
+  fill="outline"  keyboard :label="t('Phone Number 2')" v-model="doc.phone_number_2"></com-input>
         </stack>
         <stack row equal>
             <com-input keyboard  :label="t('Email Address')" v-model="doc.email_address"></com-input>
             <ComSelectInput docType="Province"  v-model="doc.province" :label="t('Province')" />
         </stack>
-        <stack row >
+        <stack row equal>
          
-            <ComSelectInput docType="Country"  v-model="doc.country" :label="t('Country')" style="width: 350px"/>   
+            <ComSelectInput docType="Country"  v-model="doc.country" :label="t('Country')"/>  
+            <!-- <ComDatePicker :label="t('Date of Birth')" v-model="doc.date_of_birth"/> -->
         </stack>
         <ion-text color="primary">
             <h2 class="ion-no-margin">{{t("Address & Note")}}</h2>
@@ -43,14 +42,16 @@
             <com-input  keyboard :label="t('Address')" v-model="doc.address"></com-input>
             <com-input  keyboard :label="t('Note')" v-model="doc.note"></com-input>
         </stack>
+        
 </stack>
     </BaseModal>
 </template>
 <script setup>
- 
+import dayjs from 'dayjs';
 import { ref } from 'vue';
-
+// import ComDatePicker from '@/views/components/public/ComDatePicker.vue';
     const t = window.t;
+      
     const doc = ref({})
      import { modalController } from '@ionic/vue';
     async function onSave(){
@@ -67,6 +68,5 @@ import { ref } from 'vue';
         }
         // close modal send result to parent compoent
         await loading.dismiss();
-    }
-    
+    } 
 </script>
