@@ -13,11 +13,11 @@
       </com-input>
 
       <div class="chip-container">
-      <ion-chip v-for="(n, index) in predefineNotes" :key="index" @click="() => inputText = n">
-        <ion-label>{{ n }}</ion-label>
-        <ion-icon :icon="close" @click.stop="() => onDeleteNote(index)"></ion-icon>
-      </ion-chip>
-    </div>
+        <ion-chip v-for="(n, index) in predefineNotes" :key="index" @click="() => inputText = n">
+          <ion-label>{{ n }}</ion-label>
+          <ion-icon :icon="close" @click.stop="() => onDeleteNote(index)"></ion-icon>
+        </ion-chip>
+      </div>
 
       <div class="keyboard">
         <div v-for="(row, rowIndex) in keys" :key="rowIndex" class="keyboard-row">
@@ -271,10 +271,9 @@ function onConfirm() {
   modalController.dismiss(inputText.value, 'confirm');
 }
 async function onDeleteNote(index) {
-  const confirm = await window.onConfirm("Delete Note", "Are you sure you want to delete this note?");
+  const confirm = await window.confirm("Are you sure you want to delete this note?");
   if (confirm) {
     predefineNotes.value.splice(index, 1);
-    
     if (props.storageKey) {
       window.storageService.setItem(props.storageKey, JSON.stringify(predefineNotes.value));
     }
@@ -445,3 +444,5 @@ ion-chip {
 }
 }
 </style>
+
+
