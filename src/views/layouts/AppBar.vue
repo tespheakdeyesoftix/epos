@@ -7,7 +7,11 @@
             <ion-menu-button />
           </ion-buttons>
           <ion-title><slot></slot></ion-title>
-          <ComUserProfile />
+           <ion-buttons slot="end">
+            <slot name="end"></slot>
+ <ComUserProfile />
+           </ion-buttons>
+         
         </ion-toolbar>
       </ion-header>
 

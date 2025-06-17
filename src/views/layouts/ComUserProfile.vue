@@ -1,5 +1,5 @@
 <template>
-  <ion-buttons slot="end" @click="openPopover($event)">
+  <ion-buttons   @click="openPopover($event)">
  
     <ion-avatar class="small-avatar">
 
@@ -33,10 +33,7 @@
           <ion-icon slot="start" :icon="languageOutline"></ion-icon>
           <span>{{ t("Change Language") }}</span>
         </ion-item>
-        <!-- <ion-item button detail="false" router-link="/help"  @click="popoverOpen = false">
-          <ion-icon slot="start" :icon="helpCircleOutline"></ion-icon>
-          <span>{{ t("Help") }}</span>
-        </ion-item> -->
+        
         <ion-item button detail="false" lines="none" color="danger" @click="onLogout">
           <ion-icon slot="start" :icon="logOutOutline" class="logout-icon"></ion-icon>
           <span>{{ t("Logout") }}</span>

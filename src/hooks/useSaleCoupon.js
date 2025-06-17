@@ -13,6 +13,7 @@ const saleDoc = ref({
 const customer = ref(null)
 const paymentInputAmount = ref("")
 const selectedPrintFormat = ref()
+const totalPendingOrder = ref(5)
 
 
 const subTotal = computed(() => {
@@ -88,6 +89,8 @@ function initSaleDoc() {
         sale_products: [],
         payment: []
     }
+
+   getTotalPendingOrder()
 }
 
 async function getSaleDoc() {
@@ -172,6 +175,7 @@ async function onSaveAsDraft() {
     const l = await app.showLoading();
     const saveData = getSaveData();
     saveData.docstatus = 0
+    saveData.sale_status = "Hold Order"
     const res = await saveSaleDoc(saveData);
     if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
@@ -519,6 +523,19 @@ async function onPrintRequestBill(format) {
     await l.dismiss();
 }
 
+async function getTotalPendingOrder(){
+    const res = await  app.getCount("Sale",{
+        docstatus:0,
+        sale_status : "Hold Order"
+    })
+    if(res.data){
+        totalPendingOrder.value = res.data
+    }else {
+totalPendingOrder.value = 0
+    }
+    
+}
+
 
 export function useSaleCoupon() {
 
@@ -540,6 +557,7 @@ export function useSaleCoupon() {
         totalSaleProductDiscount,
         saleDiscoutableAmount,
         totalSaleDiscountAmount,
+        totalPendingOrder,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -555,6 +573,7 @@ export function useSaleCoupon() {
         onSaleDiscountPercent,
         onSaleDiscountAmount,
         onRemoveProductDiscount,
-        onPrintRequestBill
+        onPrintRequestBill,
+        getTotalPendingOrder
     }
 }

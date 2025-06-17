@@ -98,6 +98,19 @@ export function getDoc(DocType: string, DocName: string) {
         });
 }
 
+export function getCount(DocType: string, filters:any) {
+    if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+    const db = frappe.db()
+    return db.getCount(DocType,filters,true,false)
+        .then((count) => ({ data: count, error: null }))
+        .catch((error) => {
+            handleErrorMessage(error);
+            return { data: null, error }
+        });
+}
+
 export function deleteDoc(DocType: string, DocName: string) {
     if (!frappe) {
         return { data: null, error: "Frappe is not defined" };

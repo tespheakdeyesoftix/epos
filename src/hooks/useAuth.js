@@ -4,7 +4,7 @@ import { alertController, loadingController } from '@ionic/vue';
 import { setFrappeAppUrl, logoutApi } from '@/services/api-service';
 import { useApp } from "./useApp";
 import { CapacitorHttp } from '@capacitor/core';
-
+import { getPropertyInformation } from "@/services/auth-service";
 const isAuthenticated = ref(false);
 const currentUser = ref();
 
@@ -12,7 +12,20 @@ export function useAuth() {
   const appCtrl = useApp();
 
   async function login(data) {
+    const propertyInfoRes = await getPropertyInformation(data.property_code);
+      
+      if(propertyInfoRes.data){
+        data.api_url = propertyInfoRes.data.app_url
+       
+      } else {
+        app.showWarning("Invalid property code")
+        return
+      }
     try {
+      
+
+      
+
       const options = {
         url: data.api_url + "api/method/epos_restaurant_2023.api.auth.login",
         headers: { "Content-Type": "application/json" },
