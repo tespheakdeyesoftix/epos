@@ -32,14 +32,12 @@
                 30
                 ? productDoc?.product_name_en.slice(0, 30) + '...'
                 : productDoc?.product_name_en }} </ion-text>
-          </div>
-
+          </div> 
           <ion-button fill="clear" @click.stop="onScanBarcode">
             <ion-icon class="border-round-xxl" slot="icon-only" :icon="scan"></ion-icon>
           </ion-button>
         </ComSelect>
         <!-- Scan Button -->
-
       </div>
       <div class="relative fixed-input mt-2">
         <div>
@@ -96,15 +94,12 @@
       
 
     </ion-content>
-    <ion-footer>
+    <ion-footer class="ion-padding-start ion-padding-end">
       <ion-toolbar color="tranparency">
         <stack row :equal="true" gap="10px">
-          <ion-button @click="onCancel" shape="round" color="danger" expand="full">{{ t("Cancel")
-          }}</ion-button>
-          <ion-button @click="onSave" shape="round" color="success" expand="full">{{ t("Save")
-          }}</ion-button>
+          <ion-button @click="onCancel" shape="round" color="danger" expand="full">{{ t("Cancel")}}</ion-button>
+          <ion-button @click="onSave" shape="round" color="success" expand="full">{{ t("Save")}}</ion-button>
         </stack>
-
       </ion-toolbar>
     </ion-footer>
   </ion-page>
@@ -183,7 +178,7 @@ onMounted(async () => {
   width: 100%;
   display: flex !important;
   padding: 0;
-  height: 34px;
+  height: 50px;
   border-radius: 53px;
   padding-left: 12px;
   background: #e7e7e7;

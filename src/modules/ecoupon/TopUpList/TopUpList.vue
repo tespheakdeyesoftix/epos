@@ -6,8 +6,8 @@
             @onRowDblClick="onRowDblClick"
             >
                  <template #name="{ item, index }">
-                   <ion-button class="ion-no-margin" fill="clear" expand="full" :routerLink="'sale-detail/' + item.name">
-                    {{item.name}}
+                    <ion-button class="ion-no-margin" fill="clear" :routerLink="'sale-detail/' + item.name">
+                        {{item.name}}
                     </ion-button>
                 </template>
                 <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
