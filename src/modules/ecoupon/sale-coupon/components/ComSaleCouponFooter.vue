@@ -18,6 +18,7 @@
                                 <ion-label>{{ t("Discount") }}</ion-label>
                                 </ion-button>
                             <ComQuickPayButton />
+                            <ComSaleMoreActionButton />
                         </stack>
                 
         </ion-toolbar>
@@ -40,10 +41,12 @@
                 <ion-icon :icon="closeOutline" slot="start"/>
                 <ion-label  >{{ t("Remove Discount") }}</ion-label>
             </ion-item>
+
         </ion-list>
     </ion-content>
   </ion-popover>
 <!-- print bill -->
+ 
  <ion-popover trigger="print-bill" :is-open="false"   :dismiss-on-select="true">
     <ion-content class="ion-padding">
         <ion-list>
@@ -77,6 +80,7 @@ import ComPaymentButton from "@/modules/ecoupon/sale-coupon/components/ComPaymen
 import ComQuickPayButton from "@/modules/ecoupon/sale-coupon/components/ComQuickPayButton.vue"
 import ComPrintBillButton from "@/modules/ecoupon/sale-coupon/components/ComPrintBillButton.vue"
 import { closeOutline, homeOutline, logoUsd, pricetagOutline, saveOutline } from "ionicons/icons"
+import ComSaleMoreActionButton from "@/modules/ecoupon/sale-coupon/components/ComSaleMoreActionButton.vue"
 
 const { saleDoc, onSaveAsDraft,onSaleDiscountPercent,onSaleDiscountAmount,totalSaleDiscountAmount } = useSaleCoupon()
 const printFormat = app.setting?.print_formats?.filter(x=>x.show_in_pos==1 && x.doc_type==="Sale");

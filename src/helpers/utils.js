@@ -6,6 +6,7 @@ import ComScanMemberCard from "@/views/customer/components/ComScanMemberCard.vue
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue";
 import ComKeypad from "@/views/components/public/ComKeypad.vue";
 import Keyboard from '@/views/components/public/Keyboard.vue';
+import ComInputNumberModal from '@/views/components/public/ComInputNumberModal.vue';
  
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
@@ -631,3 +632,15 @@ export async function onViewPendingOrder() {
   return result
 
 }
+
+export async function onInputNumber(props={title:"Enter Number"}) {
+  const result = await app.openModal({
+    component:ComInputNumberModal,
+    componentProps:props,
+    cssClass:"input-number-modal"
+  })
+  return result
+
+}
+
+

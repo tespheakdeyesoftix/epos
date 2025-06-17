@@ -1,7 +1,11 @@
 <template >
   
-        <BaseModal :title="t('Pending Order')" @onConfirm="onSelect">
-            <DocList docType="Sale" :options="options"
+      <ion-page>
+        <AppBar>
+            {{ t("Pending Order") }}
+        </AppBar>
+        <ion-content>
+<DocList docType="Sale" :options="options"
               @onRowDblClick="onSelect"
               v-model:selectedRow="selectedRow"
               >
@@ -12,12 +16,15 @@
                 </template>
 
             </DocList>
+        </ion-content>
+      </ion-page>
+            
       
- </BaseModal>
+ 
 </template>
 <script setup>
 import { ref } from 'vue';
-import { modalController } from '@ionic/vue';
+ 
 const selectedRow = ref()
 const t = window.t
 const options = {
@@ -27,7 +34,7 @@ const options = {
         {fieldname:"total_quantity",header:"Quantity",fieldtype:"Float"},
         {fieldname:"grand_total",header:"Total Amount",fieldtype:"Currency"},
         {fieldname:"modified_by",header:"User"},
-        {fieldname:"modified",header:"Modified Date",fieldtype:"Datetime"}
+        {fieldname:"modified",header:"Modified Date",fieldtype:"datetime"}
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
@@ -51,6 +58,6 @@ async function onSelect(item = null){
         return 
     }
 
-    modalController.dismiss(selectedRow.value, 'confirm');
+    
 }
 </script>
