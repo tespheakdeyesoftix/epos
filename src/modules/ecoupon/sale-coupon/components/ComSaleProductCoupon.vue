@@ -4,7 +4,14 @@
 
 </div>
 <div  v-else>
-    Pls show empty template
+
+  <div class="ion-text-center ion-justify-content-center ion-align-items-center" style="display: flex; flex-direction: column; height: 100%;">
+    <ion-icon :icon="bagHandleOutline" size="large" color="medium"></ion-icon>
+    <p>No Item</p>
+  </div>
+
+
+
 </div>
 <ComSaleSummary/>
 </template>
@@ -12,6 +19,7 @@
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import ComSaleProductCouponCard from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCouponCard.vue"
 import ComSaleSummary from "@/modules/ecoupon/sale-coupon/components/ComSaleSummary.vue";
+import { bagAddOutline, bagHandleOutline } from "ionicons/icons";
 
 const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAmount,totalSaleDiscountAmount} = useSaleCoupon()
 

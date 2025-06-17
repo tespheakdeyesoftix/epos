@@ -1,7 +1,7 @@
 <template>
 
-<ion-card button  @click="onSelectProduct(data)">
-      <ion-card-content>
+<ion-card button class="card-product"  @click="onSelectProduct(data)">
+      <ion-card-content class="content-product" >
     <div v-if="plateform == 'mobile'" style="display: flex; align-items: center; gap: 10px;">
       <img :src="data.photo" alt="Image" style="width: 100px; height: 60px;" />
 
@@ -52,27 +52,42 @@ const {onSelectProduct} = useSaleCoupon()
 <style scoped>
 .img-product{
 width: 100%;
-max-height: 180px;
-min-height: 180px;
-border-radius: 20px;
- box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+max-height: 150px;
+min-height: 150px;
+border-radius: 10px;
 }
 .price-tag{
   position: absolute; 
-  right:0; 
+  left:0; 
   top: 0; 
   padding:5px 20px;
   border-radius: 10px;
   background-color: var(--ion-color-danger);
   font-weight: bold;
-  color: white;
-  font-size: 18px;
+  color: var(--ion-color-light-shade);
+  font-size: 14px;
+  
 }
 .name-product{
   background-color: var(--ion-color-light-shade);
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: bold;
+position: absolute;
+bottom: 10px;
+left: 50%;
+transform: translateX(-50%);
+width: 95%;
 }
-
+.content-product{
+  padding: 4px;
+  max-height: 157px;
+  border-radius: 10px;
+}
+.card-product{
+  margin: 2px;
+  border-radius: 10px;
+  background-color: var(--ion-color-light-shade);
+}
 </style>

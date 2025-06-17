@@ -1,5 +1,5 @@
 <template>
- <ion-button expand="full" shape="round" size="large" color="danger" id="quick_pay_button">{{ t("Quick Pay") }}</ion-button>
+ <ion-button expand="full" shape="round" color="danger" id="quick_pay_button">{{ t("Quick Pay") }}</ion-button>
   <ion-popover trigger="quick_pay_button" trigger-action="click"  :dismiss-on-select="true">
     <ion-content class="ion-padding">
         <ion-text class="ion-padding">
@@ -7,6 +7,7 @@
         </ion-text>
         <ion-list >
             <ion-item button v-for="(p,index) in quickPaymentType" :key="index" @click="onQuickPay(p)">
+                <ion-icon slot="start" :icon="cardOutline" />
                 <ion-label>{{ t(p.payment_type) }}</ion-label>
             </ion-item>
         </ion-list>
@@ -16,6 +17,7 @@
 <script setup>
 import { computed, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import { cardOutline } from "ionicons/icons";
  
 const { onQuickPay } = useSaleCoupon()
 const t = window.t;

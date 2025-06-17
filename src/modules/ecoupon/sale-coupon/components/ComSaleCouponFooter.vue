@@ -2,17 +2,23 @@
     <ion-footer>
         <ion-toolbar>
         
-                        <stack row equal gap="5px">
-                            <ion-button shape="round" routerLink="/home" expand="full" size="large">{{ t("Home")
+                        <stack row equal gap="5px" class="ion-padding-horizontal">
+                            <ion-button shape="round" routerLink="/home" expand="full" >
+                                  <ion-icon slot="start" :icon="homeOutline" />
+                                {{ t("Home")
                                 }}</ion-button>
-                            <ion-button shape="round" expand="full" size="large" @click="onSaveAsDraft">{{ t("Save")
-                                }}</ion-button>
+                            <ion-button shape="round" expand="full"  @click="onSaveAsDraft">
+                                <ion-icon slot="start" :icon="saveOutline" />
+                                <ion-label>  {{ t("Save")}}</ion-label>
+                              
+                                </ion-button>
                             <ComPrintBillButton/>
-                            <ion-button id="discount" expand="full" size="large" shape="round"  >Discount</ion-button>
+                            <ion-button id="discount" expand="full"  shape="round"  >
+                                <ion-icon slot="start" :icon="pricetagOutline" />
+                                <ion-label>{{ t("Discount") }}</ion-label>
+                                </ion-button>
                             <ComQuickPayButton />
                         </stack>
-              
-                    
                 
         </ion-toolbar>
     </ion-footer>
@@ -34,8 +40,6 @@
                 <ion-icon :icon="closeOutline" slot="start"/>
                 <ion-label  >{{ t("Remove Discount") }}</ion-label>
             </ion-item>
-
-
         </ion-list>
     </ion-content>
   </ion-popover>
@@ -72,7 +76,7 @@ import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComPaymentButton from "@/modules/ecoupon/sale-coupon/components/ComPaymentButton.vue"
 import ComQuickPayButton from "@/modules/ecoupon/sale-coupon/components/ComQuickPayButton.vue"
 import ComPrintBillButton from "@/modules/ecoupon/sale-coupon/components/ComPrintBillButton.vue"
-import { closeOutline, logoUsd } from "ionicons/icons"
+import { closeOutline, homeOutline, logoUsd, pricetagOutline, saveOutline } from "ionicons/icons"
 
 const { saleDoc, onSaveAsDraft,onSaleDiscountPercent,onSaleDiscountAmount,totalSaleDiscountAmount } = useSaleCoupon()
 const printFormat = app.setting?.print_formats?.filter(x=>x.show_in_pos==1 && x.doc_type==="Sale");

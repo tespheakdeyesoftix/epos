@@ -84,3 +84,8 @@ async function onAddCustomer(){
     }
 }
 </script>
+<style>
+    .customer__name::part(native-span){
+        justify-content: left !important;
+    }
+</style>
