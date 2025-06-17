@@ -76,6 +76,12 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/pending-order-list",
+    component: () => import('@/modules/epos/pending-order-table/PendingOrderList.vue'),
+    meta: { requiresAuth: true }
+  },
+
+  {
     path: "/sale",
     component: () => import('@/views/sales/SaleList.vue'),
     meta: { requiresAuth: true }

@@ -209,7 +209,7 @@ function onConfirm() {
     const returnData = {
         product_code: props.data.name,
         product_name: props.data.product_name_en,
-        photo: props.data.photo,
+        product_photo: props.data.photo,
         quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
@@ -220,7 +220,8 @@ function onConfirm() {
         coupon_markup_type : doc.value.coupon_markup_type,
         coupon_markup_value : doc.value.coupon_markup_value,
         coupon_value : props.data.is_open_product==1? doc.value.coupon_value:props.data.coupon_value,
-        is_open_product:props.data.is_open_product
+        is_open_product:props.data.is_open_product,
+        append_quantity:props.data.append_quantity
     }
     modalController.dismiss(returnData, 'confirm')
 }

@@ -109,6 +109,10 @@ async function getSaleDoc() {
 
 
 async function onSelectProduct(p) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
     // open modal
     const result = await app.openModal({
 
@@ -122,7 +126,7 @@ async function onSelectProduct(p) {
 
     if (result) {
         //check if exist with product code and price
-        const exists = saleDoc.value.sale_products.find(x => x.product_code == result.product_code && x.price == result.price);
+        const exists = saleDoc.value.sale_products.find(x => x.product_code == result.product_code && x.price == result.price && x.append_quantity == 1);
         if (exists) {
 
             exists.coupons = [...exists.coupons, ...result.coupons];
@@ -167,6 +171,10 @@ function getSaveData() {
 }
 
 async function onSaveAsDraft() {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
 
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("There is no data to save.")
@@ -197,7 +205,7 @@ async function onQuickPay(payment_type) {
     saveData.docstatus = 1
     saveData.closed_by = app.currentUser.full_name
     saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
-
+    saveData.sale_status = "Closed";
     // add payment type
     saveData.payment = [
         {
@@ -216,6 +224,7 @@ async function onQuickPay(payment_type) {
         // print bill
         selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
+        app.ionRouter.navigate("/sale-coupon","forward","replace")
     }
 
 
@@ -246,7 +255,7 @@ async function onCloseSale(isPrint = true) {
             printBill(res.data.name)
         }
         await app.showSuccess("Payment successfully")
-
+        app.ionRouter.navigate("/sale-coupon","forward","replace")
 
     }
 
@@ -291,6 +300,10 @@ async function saveSaleDoc(saveData) {
 }
 
 async function onEditSaleProductCoupon(data) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
     const sp = JSON.parse(JSON.stringify(data))
     const result = await app.openModal({
         component: ComAddCouponCode,
@@ -322,6 +335,10 @@ function updateSaleProduct(sp) {
 
 
 async function onDeleteSaleProduct(index) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
     const confirm = await app.onConfirm("Delete Sale Product", "Are you sure you want to delete this record");
     if (confirm) {
         saleDoc.value.sale_products.splice(index, 1);
@@ -356,7 +373,10 @@ async function onAddPayment(payment_type) {
 
 async function onSaleDiscountPercent() {
 
-    console.log(app.currentUser);
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
 
     if (app.currentUser.pos_permission.discount_sale == 0) {
         await app.showWarning("You don't have permission to perform this action.")
@@ -382,6 +402,11 @@ async function onSaleDiscountPercent() {
 
 
 async function onSaleDiscountAmount() {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+
     if (saleDiscoutableAmount.value == 0) {
         app.showWarning("There's no amount to discount. Please add product to your order first");
         return;
@@ -411,6 +436,10 @@ async function onSaleDiscountAmount() {
 
 
 async function onProductDiscountPercent(sp) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
     // check user permission 
     if (!sp.allow_discount == 1) {
         app.showWarning("This product is not allow to discount")
@@ -441,6 +470,10 @@ async function onProductDiscountPercent(sp) {
 
 
 async function onProductDiscountAmount(sp) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
     if (!sp.allow_discount == 1) {
         app.showWarning("This product is not allow to discount")
         return
@@ -470,6 +503,11 @@ async function onProductDiscountAmount(sp) {
 
 
 async function onRemoveProductDiscount(sp) {
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+
     const hasPermission = await app.utils.hasPermission("cancel_discount_item")
     if (!hasPermission) return;
 
@@ -525,8 +563,7 @@ async function onPrintRequestBill(format) {
 
 async function getTotalPendingOrder(){
     const res = await  app.getCount("Sale",{
-        docstatus:0,
-        sale_status : "Hold Order"
+        docstatus:0
     })
     if(res.data){
         totalPendingOrder.value = res.data
@@ -536,11 +573,48 @@ totalPendingOrder.value = 0
     
 }
 
+async function onChangeSaleProductPrice(sp){
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+    if(sp.allow_change_price==0){
+        app.showWarning("This product is not allow to change price")
+        return
+    }
+    const hasPermission =await app.utils.hasPermission("change_item_price");
+    if(!hasPermission) return false;
+
+
+    const result = await app.utils.onInputNumber({
+        checkRequireNoteKey:"change_item_price_required_note",
+        storageKey:"change_item_price_note",
+        label:app.t("Price"),
+        title:app.t("Change Price")
+    })
+
+
+    if(result){
+        sp.price = result.inputNumber
+        sp.change_price_note = result.note
+        updateSaleProduct(sp)
+    }
+}
+async function onChangeSaleProductQuantity(sp){
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+    const result = await app.utils.onOpenKeypad("Change Quantity")
+    if(result && result> 0){
+        sp.quantity = result;
+        updateSaleProduct(sp)
+    }   
+}
+
 
 export function useSaleCoupon() {
-
-
-
+ 
     return {
         saleDoc,
 
@@ -574,6 +648,8 @@ export function useSaleCoupon() {
         onSaleDiscountAmount,
         onRemoveProductDiscount,
         onPrintRequestBill,
-        getTotalPendingOrder
+        getTotalPendingOrder,
+        onChangeSaleProductPrice,
+        onChangeSaleProductQuantity
     }
 }

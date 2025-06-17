@@ -17,13 +17,27 @@ import { cartOutline } from 'ionicons/icons';
 
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { onMounted, ref } from "vue";
-const {totalPendingOrder, getTotalPendingOrder } = useSaleCoupon();
+const {saleDoc,totalPendingOrder, getTotalPendingOrder } = useSaleCoupon();
 onMounted(()=>{
     getTotalPendingOrder()
 })
 
 async function onViewPendingOrder(){
     const result = await app.utils.onViewPendingOrder();
+    
+    if(result){
+        if(saleDoc.value.name && saleDoc.value.name  == result.name) return;
+        
+       
+        if(saleDoc.value.sale_products.length>0){
+            await app.showWarning("Please save your current order first");
+            return
+        }
+
+        // open order 
+        app.ionRouter.navigate("/sale-coupon/" + result.name,"push","replace")
+        
+    }
     
 }
 </script>

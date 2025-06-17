@@ -27,6 +27,10 @@
          <ion-icon :icon="alertCircleOutline"  v-tooltip.top+="saleDoc.discount_note"></ion-icon>
         <ion-label slot="end"><ComCurrency :value="totalSaleDiscountAmount"/></ion-label>
     </ion-item>
+    <ion-item v-if="saleDoc.note">
+        <ion-label>{{ t("Note") }}</ion-label>
+        <ion-label slot="end">{{ saleDoc.note }}</ion-label>
+    </ion-item>
 
 </ion-list>
 </template>

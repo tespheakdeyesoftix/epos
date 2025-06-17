@@ -5,9 +5,8 @@
             <ion-text v-if="saleDoc.name"> - {{ saleDoc.name }}</ion-text>
             <ion-chip :color="saleDoc.sale_status == 'Bill Requested'?'success':'danger'">{{ saleDoc.sale_status }}</ion-chip>
             <template #end>
-            <ComPendingOrderButton/>
+              <ComPendingOrderButton/>
               <ComUserProfile />
-                 
             </template>
         </ToolBar>
         <ion-content>
@@ -21,13 +20,22 @@
 
     <div class="ion-page" id="main">
        <ComCustomerCard v-if="saleDoc?.customer"/>
+       <ion-list >
+        <ion-item v-if="saleDoc.reference_number">
+            <ion-label>{{ t("Reference #") }}</ion-label>
+            <ion-label>{{ saleDoc.reference_number }}</ion-label>
+        </ion-item>
+        <ion-item v-if="saleDoc.tbl_number">
+            <ion-label>{{ t("Table Number") }}</ion-label>
+            <ion-label>{{ saleDoc.tbl_number }}</ion-label>
+        </ion-item>
+       </ion-list>
       <ion-content class="ion-padding"> 
-        
-                        <ComSaleProductCoupon />
+      <ComSaleProductCoupon />
       </ion-content>
    
      <ComPaymentButton />
-  ​
+  
     </div>
   </ion-split-pane>
  

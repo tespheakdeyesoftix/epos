@@ -266,6 +266,14 @@ ion-modal.pending-order-modal{
 		--height: 80vh;
 }
 
+/* pending order mobile */
+ion-modal.input-number-modal{
+	width: 100vw;
+		height: 90vh;
+		--width: 600px;
+		--height: 300px;
+}
+
 ion-modal{
 	 --border-radius: 10px;
 }
@@ -293,6 +301,9 @@ th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-
 .fixed-container{
 	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px;
 }
+
+a.link{
+	border-bottom: dashed 1px var(--ion-color-primary)!important;
 .n0__data {
 	height: calc(100vh - 60px - 87px);
 }

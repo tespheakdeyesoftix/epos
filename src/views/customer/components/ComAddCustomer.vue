@@ -37,6 +37,7 @@
 
       <stack row equal>
         <ComSelectInput docType="Country" v-model="doc.country" :label="t('Country')" />
+        <!-- <ComSelectInput docType="Country" v-model="doc.country" :label="t('Country')" /> -->
       </stack>
 
       <ion-text color="primary">
