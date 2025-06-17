@@ -18,7 +18,8 @@
             <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
             <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                 data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
-            <ion-button @click="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
+           <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
+           <ion-button @click="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
             <ion-button :disabled="data.name || data.append_quantity == 0" shape="round"
                 @click="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
             <ion-button @click="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
@@ -31,6 +32,16 @@
         <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
             <ion-content>
                 <ion-list>
+                    <!-- Free -->
+                    <ion-item v-if="data.allow_free==1 && (data.is_free || 0) == 0"  @click="onFreeProduct(data)" button>
+                        <ion-label> {{ t("Free") }}</ion-label>
+                    </ion-item>
+                   
+                    <!--Remove Free -->
+                    <ion-item v-if="data.allow_free==1 && (data.is_free || 0) == 1" @click="onRemoveFreeProduct(data)" button>
+                        <ion-label> {{ t("Remove Free") }}</ion-label>
+                    </ion-item>
+
                     <!-- discount percent -->
                     <ion-item v-if="(data.discount_amount ?? 0) == 0" @click="onProductDiscountPercent(data)" button>
                         <ion-label> {{ t("Discount Percent") }}</ion-label>
@@ -78,7 +89,9 @@ const {
     onProductDiscountAmount,
     onRemoveProductDiscount,
     onChangeSaleProductPrice,
-    onChangeSaleProductQuantity
+    onChangeSaleProductQuantity,
+    onFreeProduct,
+    onRemoveFreeProduct
 } = useSaleCoupon()
 const popOverID = app.utils.generateRandomString();
 

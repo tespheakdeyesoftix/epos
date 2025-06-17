@@ -98,6 +98,11 @@ return   (saleDoc.value.sale_discount || 0)==0;
 })
 
 async function onDeleteDiscount(){
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+    
     const hasPermission =await app.utils.hasPermission("cancel_discount_sale")
     if(!hasPermission) return;
     let note = "" 

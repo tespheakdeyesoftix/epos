@@ -612,6 +612,33 @@ async function onChangeSaleProductQuantity(sp){
     }   
 }
 
+async function onFreeProduct(sp){
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+
+    if(sp.coupons.length>0){
+        sp.is_free = 1
+        sp.price = 0;
+        updateSaleProduct(sp)
+    }
+
+}
+async function onRemoveFreeProduct(sp){
+    if(saleDoc.value.sale_status =="Bill Requested"){
+        app.showWarning("This sale order is already print bill. Please cancel print bill first.")
+        return
+    }
+    if(sp.coupons.length>0){
+        sp.is_free = 0
+        sp.price = sp.regular_price;
+        updateSaleProduct(sp)
+    }
+    
+}
+
+
 
 export function useSaleCoupon() {
  
@@ -650,6 +677,8 @@ export function useSaleCoupon() {
         onPrintRequestBill,
         getTotalPendingOrder,
         onChangeSaleProductPrice,
-        onChangeSaleProductQuantity
+        onChangeSaleProductQuantity,
+        onFreeProduct,
+        onRemoveFreeProduct
     }
 }

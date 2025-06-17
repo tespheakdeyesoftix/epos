@@ -25,7 +25,8 @@ const params = ref({
     fields:["name","product_name_en","product_name_kh","photo",
     "price","unit","allow_discount","allow_change_price","is_open_product",
     "coupon_value","coupon_markup_type","coupon_markup_value",
-    "append_quantity"
+    "append_quantity",
+    "allow_free"
     ],
     filters:[["is_coupon","=",1],["disabled","=",0]],
     limit: 500000,

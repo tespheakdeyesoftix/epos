@@ -221,7 +221,9 @@ function onConfirm() {
         coupon_markup_value : doc.value.coupon_markup_value,
         coupon_value : props.data.is_open_product==1? doc.value.coupon_value:props.data.coupon_value,
         is_open_product:props.data.is_open_product,
-        append_quantity:props.data.append_quantity
+        append_quantity:props.data.append_quantity,
+        allow_free:props.data.allow_free,
+        regular_price: props.data.is_open_product==1? doc.value.price:props.data.price
     }
     modalController.dismiss(returnData, 'confirm')
 }
