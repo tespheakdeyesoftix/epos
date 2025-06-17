@@ -288,8 +288,10 @@ th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-
 }
 
 .fix-container{
-	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px; margin-top: 10px;
-	
+	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px; margin-top: 10px;	
+}
+.fixed-container{
+	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px;
 }
 .n0__data {
 	height: calc(100vh - 60px - 87px);

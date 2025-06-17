@@ -1,31 +1,21 @@
 <template>
-  <ion-page>
-
+  <ion-page> 
     <ion-content :fullscreen="true" class="ion-padding login-wrapper-page">
-      <div class="custom-flex-login">
+      <div class="custom-flex-login fixed-container">
         <div class="form-container ion-padding">
           <ion-grid class="cutom-gap h-100">
             <ion-row class="h-100">
-              <ion-col size="6" class="ion-padding">
+              <ion-col size="12" size-md="6" class="ion-padding">
                 <form @submit.prevent="onLogin" class="h-100 flex align-items-center">
-                  <div>
-                 
-                      <stack  gap="1rem">
-                      <ion-text color="primary" style="margin: 20px;">
-                        <h3>{{ t("Please enter your username and password") }}</h3>
-                      </ion-text>
-
- 
-    
-                      <com-input ref="txtUsername"  :label="t('Username')" v-model="formData.username" 
-                      label-placement="floating" fill="outline"  :placeholder="t('Username')"
-                      />
-
+                  <div> 
+                    <stack gap="1rem">
+                      <ion-text color="primary">
+                        <h1 class="m-0">{{ t("Please enter your username and password") }}</h1>
+                      </ion-text> 
+                      <com-input ref="txtUsername" :label="t('Username')" v-model="formData.username" 
+                        label-placement="floating" fill="outline"  :placeholder="t('Username')"/> 
                       <com-input ref="txtPassword" :label="t('Password')" v-model="formData.password" type="password"
-                      label-placement="floating" fill="outline" :placeholder="t('Password')"
-                      />
-                   
-                    
+                        label-placement="floating" fill="outline" :placeholder="t('Password')"/> 
                       <ion-button shape="round" size="large" expand="full" type="submit" class="save-button">
                         {{ t("Login") }}
                       </ion-button>
@@ -42,9 +32,9 @@
                   </div>
                 </form>
               </ion-col>
-              <ion-col size="6" class="ion-padding">
+              <ion-col size="12" size-md="6" class="ion-padding hidden md:block">
                 <div class="h-100 custom-wrapper-image">
-                  <ion-img class="h-100 img-cover" src="public/assets/ice_bg.jpg"></ion-img>
+                  <ion-img class="h-100 img-cover" src="/assets/retina_wood.png"></ion-img>
                 </div>
               </ion-col>
             </ion-row>
@@ -54,7 +44,6 @@
     </ion-content>
   </ion-page>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted,nextTick } from "vue"
 
@@ -177,11 +166,11 @@ onMounted(async () => {
 
 .login-wrapper-page .form-container {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  max-width: 60%;
+  /* max-width: 60%; */
   border-radius: 12px;
   display: flex;
   align-items: center;
-  background: url(public/assets/ice_pattern.png);
+  background: url(/assets/topography.png);
 }
 
 .login-wrapper-page .h-100 {
