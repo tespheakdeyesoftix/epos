@@ -2,26 +2,26 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content>
-    <ion-button 
-            shape="round" 
-            fill="solid"  
-            v-tooltip.top="t('Add new customer')"  
-            color="primary"  
-            style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"
-            @click="onAddCustomer">
-        <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
-    </ion-button>
+            <ion-button 
+                    shape="round" 
+                    fill="solid"  
+                    v-tooltip.top="t('Add new customer')"  
+                    color="primary"  
+                    style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"
+                    @click="onAddCustomer">
+                <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
+            </ion-button>
             <DocList docType="Customer" :options="options"
-            @onRowDblClick="onRowDblClick"
-            >
-                 <template #name="{ item, index }">
-                   <ion-button class="ion-no-margin" fill="clear" expand="full" :routerLink="'sale-detail/' + item.name">
-                    {{item.name}} - {{ item.customer_name_en }}
-                    </ion-button>
-                </template>
-                <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
-                    <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
-                </template>
+                @onRowDblClick="onRowDblClick"
+                >
+                    <template #name="{ item, index }">
+                        <ion-button class="ion-no-margin" fill="clear" :routerLink="'sale-detail/' + item.name">
+                            {{item.name}} - {{ item.customer_name_en }}
+                        </ion-button>
+                    </template>
+                    <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
+                        <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
+                    </template>
             </DocList>
             
         </ion-content>
