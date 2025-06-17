@@ -302,6 +302,7 @@ th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-
 
 a.link{
 	border-bottom: dashed 1px var(--ion-color-primary)!important;
+}
 .n0__data {
 	height: calc(100vh - 60px - 87px);
 }
