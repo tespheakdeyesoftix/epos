@@ -1,6 +1,48 @@
 <template>
     <template v-if="data">
         <ion-card>
+ <ion-card>
+   
+        <Img :src="data?.photo"/>
+        {{ data.product_code }}
+        {{ data.product_name }}
+        {{t("QTY:")}} {{ data.quantity }}
+        {{t("Price")}}: 
+        <ComCurrency :value="data.price" />
+        {{t("Total Amount")}}: 
+        <ComCurrency :value="data.total_amount" />
+        
+        {{ t("Discount") }}: <ComCurrency :value="data.discount_amount"/>
+        <!-- Note: {{ data.note}} -->
+         <ion-text v-if="data.note">{{ t("Note") }}: {{ data.note }}</ion-text>
+        <hr/>
+         <ion-chip v-for="(c,index) in displayCoupons" :key="index">{{ c }}</ion-chip>
+         <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length>3" color="primary">{{ data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
+         <ion-button @click="onEditSaleProductCoupon(data)">{{t("Edit")}}</ion-button>
+         <ion-button color="danger" @click="onDeleteSaleProduct(index)">{{t("Delete")}}</ion-button>
+       
+         
+         <ion-button :id="popOverID">{{ t("More") }}</ion-button>
+    </ion-card>
+     
+  <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
+    <ion-content >
+        <ion-list>
+            <!-- discount percent -->
+            <ion-item   v-if="(data.discount_amount ?? 0)==0"   @click="onProductDiscountPercent(data)" button> 
+                 <ion-label> {{t("Discount Percent")}}</ion-label>
+            </ion-item>
+            
+            
+            <!-- discolunt amount -->
+            <ion-item   v-if="(data.discount_amount ?? 0)==0"   @click="onProductDiscountAmount(data)" button> 
+                 <ion-label> {{t("Discount Amount")}}</ion-label>
+            </ion-item>
+           <!-- remove discount -->
+            <ion-item   v-if="(data.discount_amount ?? 0)>0"   @click="onRemoveProductDiscount(data)" button> 
+                 
+                <ion-label color="danger"> {{t("Remove Discount")}}</ion-label>
+            </ion-item>
 
             <Img :src="data?.product_photo" />
             {{ data.product_code }}

@@ -7,7 +7,7 @@
 
   <div class="ion-text-center ion-justify-content-center ion-align-items-center" style="display: flex; flex-direction: column; height: 100%;">
     <ion-icon :icon="bagHandleOutline" size="large" color="medium"></ion-icon>
-    <p>No Item</p>
+    <p>{{t("No Item")}}</p>
   </div>
 
 

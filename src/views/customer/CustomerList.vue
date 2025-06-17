@@ -38,14 +38,14 @@ const plateform = ref(app.utils.getPlateform())
 const t = window.t
 const options = {
     columns:[
-        {fieldname:"name",header:"Customer #"},
+        {fieldname:"name",header:"Customer"},
         {fieldname:"customer_name_kh",header:"Name Kh"},
         {fieldname:"gender",header:"Gender"},
         {fieldname:"customer_group",header:"Group"},
         {fieldname:"date_of_birth",header:"Date of Birth"},
-        {fieldname:"phone_number",header:"Phone"},
+        {fieldname:"phone_number",header:"Phone Number"},
         {fieldname:"company_name",header:"Company Name"},
-        {fieldname:"address",header:"Location "},
+        {fieldname:"address",header:"Location"},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
     ],
     showSearchBar:true,

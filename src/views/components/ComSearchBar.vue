@@ -1,5 +1,5 @@
 <template>
-  <div class="flex align-items-center px-2 w-full search__bar" style="background:var(--ion-search-background);">
+  <div class="flex align-items-center px-2 w-full search__bar" style="background:var(--ion-color-primary);">
     <ion-searchbar
       class="flex-grow border-round-2xl"
       :placeholder="t('Search')"
