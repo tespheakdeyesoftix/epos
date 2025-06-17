@@ -5,7 +5,7 @@
         <Img :src="data?.photo"/>
         {{ data.product_code }}
         {{ data.product_name }}
-        QTY: {{ data.quantity }}
+        {{t("QTY:")}} {{ data.quantity }}
         {{t("Price")}}: 
         <ComCurrency :value="data.price" />
         {{t("Total Amount")}}: 
