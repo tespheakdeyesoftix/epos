@@ -147,9 +147,9 @@ button.alert-button.alert-button-confirm {
 	transform: translateY(-43%);
 	width: -webkit-fill-available;
 }
-.search__bar ion-searchbar{
+/* .search__bar ion-searchbar{
 	--border-radius: 1.5rem;
-}
+} */
 .table-plan-select ion-segment{
 	--background: #EFF3EA;
 }

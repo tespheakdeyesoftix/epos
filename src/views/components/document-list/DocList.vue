@@ -11,14 +11,10 @@
     <Loading v-if="loading" />
     <template v-else>
         <slot name="filter">
-       
-                <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
-                
+            <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-            
- 
             <DataTable :value="data" tableStyle="min-width: 50rem" selectionMode="single"
                 v-model:selection="selectedRow" showGridlines stripedRows @sort="onSort" :lazy="true"
                 @row-dblclick="onRowDblClick" :sortField="options.presort" :sortOrder="options.sortOrder || 1">
@@ -30,16 +26,11 @@
                             <!-- date column -->
                             <template v-if="col.fieldtype == 'Date'">
                                 {{ dayjs(slotProps.data[col.fieldname]).format("DD-MM-YYYY") }}
-
                             </template>
                             <template v-else-if="col.fieldtype == 'Datetime'">
                                 <span v-tooltip="`${dayjs(slotProps.data[col.fieldname])}`">
-
                                     {{ dayjs(slotProps.data[col.fieldname]).fromNow() }}
-
-
                                 </span>
-
                             </template>
                             <template v-else-if="col.fieldtype == 'Currency'">
                                 <ComCurrency :value="slotProps.data[col.fieldname]" />
@@ -53,29 +44,21 @@
                             <template v-else>
                                 <span v-if="col.fieldname == 'owner' || col.fieldname == 'modified_by'">
                                     {{ slotProps.data[col.fieldname].split("@")[0] }}
-
                                 </span>
                                 <span v-else>
                                     {{ slotProps.data[col.fieldname] }}
-
                                 </span>
                                 <!-- {{ getAligment(col.fieldtype) }} -->
                             </template>
-
                         </slot>
                     </template>
-
                 </Column>
             </DataTable>
-
-
-
         </slot>
         <div v-else>
             <slot name="empty">
                 {{ t("No Data") }}
             </slot>
-
         </div>
         <div style="padding-bottom: 50px;" v-if="!options.disableLoadMore">
             <ion-infinite-scroll @ionInfinite="onLoadMore" threshold="0">
