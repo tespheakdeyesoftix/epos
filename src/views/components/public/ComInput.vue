@@ -69,6 +69,7 @@ const props = defineProps({
     type: String,
     default: "stacked"
   },
+ 
   storageKey:String
 })
 
@@ -77,6 +78,7 @@ defineOptions({
 })
 
 const model = defineModel();
+const value = defineModel("value");
 const t = window.t;
 const emit = defineEmits()
 defineExpose({
@@ -170,6 +172,14 @@ onMounted(() => {
     }, 200)
   }
 
+  if(value.value){
+   
+    if(props.type=="number"){
+      model.value = Number(value.value)
+    }else {
+      model.value =value.value
+    }
+  }
 
 })
 

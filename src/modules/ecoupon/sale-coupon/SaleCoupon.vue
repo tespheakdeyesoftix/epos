@@ -5,9 +5,9 @@
             <ion-text v-if="saleDoc.name"> - {{ saleDoc.name }}</ion-text>
             <ion-chip :color="saleDoc.sale_status == 'Bill Requested'?'success':'danger'">{{ saleDoc.sale_status }}</ion-chip>
             <template #end>
-              <ComPendingOrderButton/>
+            <ComPendingOrderButton/>
               <ComUserProfile />
-                  
+                 
             </template>
         </ToolBar>
         <ion-content>

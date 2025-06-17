@@ -16,7 +16,8 @@
               v-for="p in properties"
               :key="p.property_code"
               @click="onLogin(p)"
-              class="ripple-card border-round-2xl"  
+              class="border-round-2xl"  
+              button
             >
               <ion-card-header>
                 <div class="workspace-header">
@@ -93,11 +94,7 @@ const changeLanguage = (lang) => {
 };
 
 async function onLogin(p) {
-  const loading = await loadingController.create({
-    message: t('Loging In...'),
-  });
-
-  await loading.present();
+  const loading = await app.showLoading("Login in...")
   const response = await login(p);
   await loading.dismiss();
 

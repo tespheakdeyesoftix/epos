@@ -135,6 +135,7 @@
     "Recent Order": "ការបញ្ជាទិញថ្មីៗ",
     "View all orders": "មើលការបញ្ជាទិញទាំងអស់",
     "Pending Order": "បញ្ជាទិញកំពុងរងចាំ",
+    "Please enter price": "សូមបញ្ជូលតម្លៃ",
     "Change Profile": "ប្តូរប្រវត្តិរូប",
     "Take Photo": "ផ្ទុករូបភាព",
  
@@ -237,6 +238,30 @@
     "Scan to Remove":"ស្កេនដើម្បីលុប",
     "Please scan coupon code":"សូមបញ្ជូលលេខគូប៉ុងនៅទីនេះ",
     "Please enter or scan qr code":"សូមបញ្ជូល ឬស្កេន QR កូដ",
+    "Date of Birth":"ថ្ងៃខែឆ្នាំកំណើត",
+    "Customer Code":"លេខកូដអតិថិជន",
+    "Customer Name EN":"ឈ្មោះអតិថិជនជាអង់គ្លេស",
+    "Customer Name KH":"ឈ្មោះអតិថិជនជាភាសាខ្មែរ",
+    "Name Kh":"ឈ្មោះជាភាសាខ្មែរ",
+     
+    
+    "Company Name":"ឈ្មោះក្រុមហ៊ុន",
+    "Jobs":"ការងារ",
+    "Contact Infromation":"ព័ត៌មានទំនាក់ទំនង",
+    "Address & Note":"អាសយដ្ឋាន & កំណត់ចំណាំ",
+    "Address":"អាសយដ្ឋាន",
+    "Phone Number 1":"លេខទូរស័ព្ទ ១",
+    "Phone Number 2":"លេខទូរស័ព្ទ ២",
+    "Email Address":"អាសយដ្ឋានអ៊ីមែល",   
+    "Add Customer":"បញ្ចូលអតិថិជន",
+    "Add new customer":"បញ្ចូលអតិថិជនថ្មី",
+    "Customer List":"បញ្ជីអតិថិជន",
+    "Please scan member card":"សូមស្កេនកាតសមាជិក",
+    "Scan Member Card":"ស្កេនកាតសមាជិក",
+    "Phone Number":"លេខទូរស័ព្ទ",
+    "Location":"ទីតាំង",
+    "Last Modified":"កែប្រែចុងក្រោយ",
+    "Group":"ក្រុម",
     "coupon_code_number_does_not_exist": "គូប៉ុងកូដលេខ {coupon} មិនទាន់បានជ្រើសរើសទេ។"
 
   } 

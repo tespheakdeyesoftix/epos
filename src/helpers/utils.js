@@ -10,6 +10,7 @@ import Keyboard from '@/views/components/public/Keyboard.vue';
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
  import { useApp } from '@/hooks/useApp';
+import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
 const { isWorkingDayOpened,isCashierShiftOpened } = useApp();
 
 export function imageUrl(imageUrl, baseUrl = "") {
@@ -29,7 +30,7 @@ export function imageUrl(imageUrl, baseUrl = "") {
 
 export async function showWarning(message) {
   const toast = await toastController.create({
-    message: message,
+    message: app.t(message),
     duration: 5000,
     position: "top",
     swipeGesture: "vertical",
@@ -621,4 +622,12 @@ export async function hasPermission(key){
 
 
     return true
+}
+export async function onViewPendingOrder() {
+  const result = await app.openModal({
+    component:ComPendingOrderModal,
+    cssClass:"pending-order-modal"
+  })
+  return result
+
 }

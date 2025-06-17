@@ -1,6 +1,6 @@
 import { alertController, toastController,loadingController,modalController } from '@ionic/vue';
 import i18n from '../../i18n'; // Import i18n config
-import { getApi, getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc,getValue,setValue  } from "@/services/api-service";
+import { getApi, getCount,getDoc,updateDoc,createDoc,deleteDoc,getDocList, postApi,submitDoc,getValue,setValue  } from "@/services/api-service";
 import {checkArrayType,selectDate, getTimespanRange,generateUIJsonFromMeta,showToast,showLoading,onConfirm, openModal,openPopOver,onScanBarcode,getNumber,currencyFormat } from '@/helpers/utils';
 import  * as utils from '@/helpers/utils';
 import  * as storageService from '@/services/storage-service.ts';
@@ -30,6 +30,10 @@ globalThis.app.t =  i18n.global.t;
 globalThis.app.getDoc =  async function (DocType,DocName) {
   return await getDoc(DocType,DocName)
 }
+globalThis.app.getCount =  async function (DocType,filters) {
+  return await getCount(DocType,filters)
+}
+
 
 globalThis.app.createDoc =  async function (DocType,params) {
   return await createDoc(DocType,params)
@@ -152,7 +156,7 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
 }
   globalThis.app.showWarning = async function (message){
     const toast = await toastController.create({
-        message: message,
+        message: t(message),
         duration: 5000,
         position: "top",
         swipeGesture:"vertical",

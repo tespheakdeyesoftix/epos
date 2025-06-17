@@ -1,7 +1,20 @@
 <template>
   
-  <ion-button @click="onCancellPrintBill" color="danger" v-if="saleDoc.sale_status=='Bill Requested'" size="large" shape="round" expand="full">{{ t("Cancel Print Bill") }}</ion-button>
-  <ion-button v-if="saleDoc.sale_status!='Bill Requested'" size="large" shape="round" expand="full" @click="openPopover($event)">{{ t("Print Bill") }}</ion-button>
+<ion-button
+  @click="onCancellPrintBill"
+  color="danger"
+  shape="round"
+  expand="full"
+  v-if="saleDoc.sale_status == 'Bill Requested'"
+>
+  <ion-icon slot="start" :icon="printOutline" />
+  <ion-label> {{ t("Cancel Print Bill") }}</ion-label>
+ 
+</ion-button>
+
+  <ion-button v-if="saleDoc.sale_status!='Bill Requested'"  shape="round" expand="full" @click="openPopover($event)">
+    <ion-icon slot="start" :icon="printOutline" />
+    {{ t("Print Bill") }}</ion-button>
   <ion-popover :dismiss-on-select="true" :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false">
     <ion-content class="ion-padding">
  
@@ -17,6 +30,7 @@
 <script setup>
 import { ref } from 'vue'
  import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import { printOutline } from 'ionicons/icons';
  
 
 const { saleDoc,onPrintRequestBill} = useSaleCoupon()
