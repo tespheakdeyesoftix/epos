@@ -1,5 +1,5 @@
 <template>
-     <ion-button shape="round" class="ion-margin" expand="full" @click="AddPrice">{{ t("Add Price") }}</ion-button>
+     <ion-button class="ion-margin" expand="full" @click="AddPrice">{{ t("Add Price") }}</ion-button>
      <transition-group name="fade" tag="div">
     <ion-card v-for="(p, index) in doc.product_price" :key="p.id || index">
         <ion-card-header>
