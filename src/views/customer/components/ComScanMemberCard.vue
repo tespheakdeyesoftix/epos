@@ -8,7 +8,7 @@
       <com-input 
         ref="txtMemberCard"
         @ionChange="onScanMemberCard(customer)"
-        placeholder="Please scan member card"
+        :placeholder="t('Please scan member card')"
         v-model="customer"
         focus
       ></com-input>

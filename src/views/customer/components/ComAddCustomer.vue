@@ -19,12 +19,11 @@
             <com-input  keyboard :label="t('Jobs')" v-model="doc.jobs"></com-input>
         </stack>
         <ion-text color="primary">
-            <h2 class="ion-no-margin">{{t("Contact Infromation")}}</h2>
+            <h2 class="mt-2 mb-0">{{t("Contact Infromation")}}</h2>
         </ion-text>
         <stack row equal>
             <com-input  keyboard :label="t('Phone Number 1')" v-model="doc.phone_number"></com-input>
-            <com-input   label-placement="floating"
-  fill="outline"  keyboard :label="t('Phone Number 2')" v-model="doc.phone_number_2"></com-input>
+            <com-input  keyboard :label="t('Phone Number 2')" v-model="doc.phone_number_2"></com-input>
         </stack>
         <stack row equal>
             <com-input keyboard  :label="t('Email Address')" v-model="doc.email_address"></com-input>
@@ -36,7 +35,7 @@
             <!-- <ComDatePicker :label="t('Date of Birth')" v-model="doc.date_of_birth"/> -->
         </stack>
         <ion-text color="primary">
-            <h2 class="ion-no-margin">{{t("Address & Note")}}</h2>
+            <h2 class="mt-2 mb-0">{{t("Address & Note")}}</h2>
         </ion-text>
         <stack row equal>
             <com-input  keyboard :label="t('Address')" v-model="doc.address"></com-input>
