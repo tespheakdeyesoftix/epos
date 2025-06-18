@@ -271,7 +271,7 @@ function onConfirm() {
   modalController.dismiss(inputText.value, 'confirm');
 }
 async function onDeleteNote(index) {
-  const confirm = await window.confirm("Are you sure you want to delete this note?");
+  // const confirm = await window.confirm("Are you sure you want to delete this note?");
   if (confirm) {
     predefineNotes.value.splice(index, 1);
     if (props.storageKey) {
