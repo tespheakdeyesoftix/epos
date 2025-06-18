@@ -62,12 +62,12 @@ async function getCustomer(name){
 }
 
 async function onRemoveCustomer() {
-  // saleDoc.value.customer = null;
+   
   customer.value = {}; // Clear customer but keep card
   await app.showSuccess("Customer has been remove from order")
 }
 
 onMounted(()=>{
-getCustomer(saleDoc.value.customer);
+getCustomer(saleDoc.customer);
 });
 </script>
