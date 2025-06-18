@@ -100,8 +100,6 @@
                 </ion-list>
             </ion-content>
         </ion-popover>
-
-
     </template>
 
 </template>

@@ -32,10 +32,11 @@
        </ion-list>
       <ion-content class="ion-padding"> 
       <ComSaleProductCoupon />
-      </ion-content>
    
+      </ion-content>
+    <ComSaleSummary/>
      <ComPaymentButton />
-  
+    
     </div>
   </ion-split-pane>
  
@@ -49,6 +50,7 @@ import { onMounted, onUnmounted, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCouponProductList.vue"
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
+import ComSaleSummary from "@/modules/ecoupon/sale-coupon/components/ComSaleSummary.vue";
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  

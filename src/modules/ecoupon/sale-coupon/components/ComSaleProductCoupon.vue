@@ -13,12 +13,10 @@
 
 
 </div>
-<ComSaleSummary/>
 </template>
 <script setup>
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import ComSaleProductCouponCard from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCouponCard.vue"
-import ComSaleSummary from "@/modules/ecoupon/sale-coupon/components/ComSaleSummary.vue";
 import { bagAddOutline, bagHandleOutline } from "ionicons/icons";
 
 const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAmount,totalSaleDiscountAmount} = useSaleCoupon()
