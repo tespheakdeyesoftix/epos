@@ -4,7 +4,7 @@
    
     <ion-card-content>
     {{ customer?.photo }}
-     {{ customer?.name || t("Please select customer")}}  {{ customer?.customer_name_en }} {{ customer?.phone_number }}
+     {{ customer?.name || t("No Customer Selected")}}  {{ customer?.customer_name_en }} {{ customer?.phone_number }}
      {{   customer?.customer_group   }}
 
      <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
