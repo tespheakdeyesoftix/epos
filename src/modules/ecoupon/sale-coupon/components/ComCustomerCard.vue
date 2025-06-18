@@ -1,8 +1,10 @@
 <template>
    
   <ion-card button @click="onSelectCustomer">
+   
+    <ion-card-content>
     {{ customer?.photo }}
-     {{ customer?.name }} - {{ customer?.customer_name_en }} {{ customer?.phone_number }}
+     {{ customer?.name || t("Please select customer")}}  {{ customer?.customer_name_en }} {{ customer?.phone_number }}
      {{   customer?.customer_group   }}
 
      <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
@@ -16,15 +18,12 @@
      <ion-button  color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
       <ion-icon :icon="closeOutline" slot="icon-only"></ion-icon>
      </ion-button>
-
-
-     
+ </ion-card-content>
   </ion-card> 
-  
-   
 </template>
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+ 
 import { addOutline, closeOutline, qrCodeOutline } from "ionicons/icons";
 import { onMounted,ref } from "vue";
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
@@ -63,15 +62,12 @@ async function getCustomer(name){
 }
 
 async function onRemoveCustomer() {
-  
-    if(app.setting.pos_profile.default_customer != saleDoc.value.customer){
-      saleDoc.value.customer = app.setting.pos_profile.default_customer;
-      await getCustomer(saleDoc.value.customer);
-      await app.showSuccess("Customer has been remove from order")
-    }
+  // saleDoc.value.customer = null;
+  customer.value = {}; // Clear customer but keep card
+  await app.showSuccess("Customer has been remove from order")
 }
 
 onMounted(()=>{
 getCustomer(saleDoc.value.customer);
-})
+});
 </script>
