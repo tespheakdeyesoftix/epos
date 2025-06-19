@@ -48,8 +48,9 @@ async function onScanMemberCard(){
 async function onAddCustomer(){
     const result = await app.utils.onAddCustomer();
     if(result){
-       saleDoc.value.customer = result
-      await getCustomer(result)   
+       saleDoc.value.customer = result.name
+        customer.value = result
+    
     
     }
 }

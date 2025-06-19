@@ -1,5 +1,6 @@
 <template>
     <div  v-if="saleDoc.sale_products.length>0">
+    
 <ComSaleProductCouponCard v-for="(sp,index) in saleDoc.sale_products" :key="index"  :data="sp" :index="index"/>
 
 </div>

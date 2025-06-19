@@ -4,7 +4,7 @@
         <div class="card-sale-product ">
             <div>
                  <div class="flex gap-2" >
-                <Img class="border-round-xl" :src="data?.product_photo" />
+                <Img class="border-round-xl img-sale-coupon" :src="data?.product_photo" />
                 <div>
                     <div>
                     <ion-text>
@@ -22,11 +22,14 @@
                        {{ t("Discount") }}:      
                     <ComCurrency :value="data.discount_amount" />  
                    </ion-text>
-                     <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
+                     
                 </div>
                 
  
             </div>
+            </div>
+            <div>
+                <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
             </div>
         </div>    
         <ion-text v-if="data.note">
@@ -160,5 +163,8 @@ function onDeleteNote() {
 }
 .note-box{
     background-color: var(--ion-color-light-shade);;
+}
+.img-sale-coupon{
+    height: 80px;
 }
 </style>

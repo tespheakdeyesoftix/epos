@@ -30,7 +30,7 @@
             <ion-label>{{ saleDoc.tbl_number }}</ion-label>
         </ion-item>
        </ion-list>
-      <ion-content class="ion-padding"> 
+      <ion-content class="ion-no-padding"> 
       <ComSaleProductCoupon />
    
       </ion-content>
