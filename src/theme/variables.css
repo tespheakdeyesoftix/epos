@@ -311,3 +311,24 @@ a.link{
 .p-datatable-column-header-content {
 	display: block !important;
 }
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #007bff;
+  /* Blue background */
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 50%;
+  text-transform: uppercase;
+}
+.item-customer-card{
+	justify-content: end;
+    display: flex;
+    align-items: center;
+	height: 100%;
+}
+  

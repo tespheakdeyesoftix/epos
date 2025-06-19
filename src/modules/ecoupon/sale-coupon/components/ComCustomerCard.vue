@@ -1,29 +1,43 @@
 <template>
    
   <ion-card button @click="onSelectCustomer">
-   
+   {{ customer?.photo }}
     <ion-card-content>
-    {{ customer?.photo }}
-     {{ customer?.name || t("No Selected")}}  {{ customer?.customer_name_en }} {{ customer?.phone_number }}
+      <stack row equal >
+       <stack row>
+  <ion-avatar>
+  <Img v-if="customer?.photo" :src="customer?.photo"/>
+  <div class="avatar-placeholder" v-else>{{ getAvatarLetter(customer?.customer_name_en) }}</div>
+</ion-avatar> 
+<div>
+  {{ customer?.name || t("No Selected")}} - {{ customer?.customer_name_en }}
+  <div>
+  {{ customer?.phone_number }}
+</div>
+<div>
      {{   customer?.customer_group   }}
-
-     <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
+</div>
+</div>
+</stack>
+      
+<div class="item-customer-card">
+      <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
       <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
-     </ion-button>
-     
-     <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click.stop="onScanMemberCard">
+      </ion-button>
+      <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click.stop="onScanMemberCard">
       <ion-icon :icon="qrCodeOutline" slot="icon-only"></ion-icon>
-     </ion-button>
-     
-     <ion-button  color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
+      </ion-button>
+      <ion-button  color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
       <ion-icon :icon="closeOutline" slot="icon-only"></ion-icon>
-     </ion-button>
+      </ion-button>
+    </div>
+</stack>
  </ion-card-content>
   </ion-card> 
 </template>
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
- 
+import { imageUrl, getAvatarLetter } from "@/helpers/utils" 
 import { addOutline, closeOutline, qrCodeOutline } from "ionicons/icons";
 import { onMounted,ref } from "vue";
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
@@ -50,8 +64,6 @@ async function onAddCustomer(){
     if(result){
        saleDoc.value.customer = result.name
         customer.value = result
-    
-    
     }
 }
 async function getCustomer(name){
