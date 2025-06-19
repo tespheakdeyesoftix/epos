@@ -1,6 +1,6 @@
 <template>
     <template v-if="data">
-        <ion-card class="border-round-lg p-2">
+        <ion-card class="border-round-lg p-2 border-1">
         <div class="card-sale-product ">
             <div>
                  <div class="flex gap-2" >
@@ -22,18 +22,11 @@
                        {{ t("Discount") }}:      
                     <ComCurrency :value="data.discount_amount" />  
                    </ion-text>
-                 
+                     <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
                 </div>
                 
  
             </div>
-            </div>
-           
-            <div>
-                  <ion-text>
-                    <h4><ComCurrency :value="data?.total_amount" /></h4>
-                  </ion-text>
-            
             </div>
         </div>    
         <ion-text v-if="data.note">
