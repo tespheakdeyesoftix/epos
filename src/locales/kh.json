@@ -268,7 +268,8 @@
     "Group":"ក្រុម",
     "coupon_code_number_does_not_exist": "គូប៉ុងកូដលេខ {coupon} មិនទាន់បានជ្រើសរើសទេ។",
     "Discount Percent": "ភាគរយបញ្ចុះតម្លៃ",
-    "Discount Amount": "ចំនួនទឹកប្រាក់បញ្ចុះតម្លៃ"
+    "Discount Amount": "ចំនួនទឹកប្រាក់បញ្ចុះតម្លៃ",
+    "No Selected": "មិនបានជ្រើសរើស"
      
 
   } 
