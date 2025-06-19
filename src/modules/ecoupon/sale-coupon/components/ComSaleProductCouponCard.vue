@@ -22,6 +22,11 @@
                        {{ t("Discount") }}:      
                     <ComCurrency :value="data.discount_amount" />  
                    </ion-text>
+                    <ion-text v-if="data.note">
+            <div >
+                {{ data.note }}
+            </div>
+        </ion-text>
                      
                 </div>
                 
@@ -32,12 +37,7 @@
                 <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
             </div>
         </div>    
-        <ion-text v-if="data.note">
-            Note: 
-            <div class="note-box">
-                {{ data.note }}
-            </div>
-        </ion-text>
+       
         <div>
             <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
         </div>

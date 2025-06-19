@@ -331,4 +331,9 @@ a.link{
     align-items: center;
 	height: 100%;
 }
-  
+.select-customer{
+	display: flex;
+    align-items: center;
+    font-size: 21px;
+	height: 100%;
+}

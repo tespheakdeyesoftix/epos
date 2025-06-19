@@ -20,7 +20,7 @@
 
     <div class="ion-page" id="main">
        <ComCustomerCard v-if="saleDoc?.customer"/>
-       <ion-list >
+       <ion-list v-if="saleDoc.reference_number && saleDoc.tbl_number" >
         <ion-item v-if="saleDoc.reference_number">
             <ion-label>{{ t("Reference #") }}</ion-label>
             <ion-label>{{ saleDoc.reference_number }}</ion-label>

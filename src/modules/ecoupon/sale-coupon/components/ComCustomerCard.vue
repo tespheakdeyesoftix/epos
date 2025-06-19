@@ -1,16 +1,17 @@
 <template>
    
   <ion-card button @click="onSelectCustomer">
-   {{ customer?.photo }}
     <ion-card-content>
       <stack row equal >
-       <stack row>
+       <stack v-if="customer?.name" row>
   <ion-avatar>
   <Img v-if="customer?.photo" :src="customer?.photo"/>
   <div class="avatar-placeholder" v-else>{{ getAvatarLetter(customer?.customer_name_en) }}</div>
 </ion-avatar> 
 <div>
-  {{ customer?.name || t("No Selected")}} - {{ customer?.customer_name_en }}
+  {{ customer?.name}} {{ customer?.customer_name_en }}
+
+  
   <div>
   {{ customer?.phone_number }}
 </div>
@@ -19,6 +20,9 @@
 </div>
 </div>
 </stack>
+<div class="select-customer" v-else>
+  <span v-if="!customer?.name">{{ t("No Selected") }} </span>
+</div>
       
 <div class="item-customer-card">
       <ion-button shape="round" fill="clear"  v-tooltip.top="t('Add new customer')" @click.stop="onAddCustomer">
