@@ -42,23 +42,20 @@
             <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
         </div>
             <div v-if="activeIndex == index">
-             <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
+             <ion-chip @click.stop="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                 data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
            <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
         
-           <ion-button @click="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
+           <ion-button @click.stop="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
             <ion-button :disabled="data.name || data.append_quantity == 0" shape="round"
-                @click="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
-            <ion-button @click="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" @click="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
+                @click.stop="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
+            <ion-button @click.stop="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
+            <ion-button color="danger" @click.stop="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
 
 
-            <ion-button :id="popOverID">{{ t("More") }}</ion-button>   
-            </div>
-            
-        </ion-card>
+     <ion-button :id="popOverID" @click="handleButtonClick" >{{ t("More") }}</ion-button>   
 
-        <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
+             <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
             <ion-content>
                 <ion-list>
                     <!-- Free -->
@@ -99,6 +96,10 @@
                 </ion-list>
             </ion-content>
         </ion-popover>
+            </div>
+            
+        </ion-card>
+      
     </template>
 
 </template>
@@ -107,7 +108,9 @@ import { computed } from 'vue';
 
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { documentOutline } from 'ionicons/icons';
-
+function handleButtonClick(e) {
+  e.stopPropagation()
+}
 const { 
     saleDoc, 
     onEditSaleProductCoupon, 
