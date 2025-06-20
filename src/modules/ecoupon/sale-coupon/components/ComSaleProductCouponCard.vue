@@ -34,6 +34,7 @@
             </div>
             </div>
             <div>
+                 <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
                 <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
             </div>
         </div>    
@@ -44,7 +45,6 @@
             <div v-if="activeIndex == index">
              <ion-chip @click.stop="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                 data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
-           <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
         
            <ion-button @click.stop="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
             <ion-button :disabled="data.name || data.append_quantity == 0" shape="round"
