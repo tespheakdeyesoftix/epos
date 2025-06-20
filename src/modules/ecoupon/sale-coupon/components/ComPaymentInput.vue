@@ -11,14 +11,45 @@
                     </ion-col>
                 </ion-row>
         </ion-grid>
-
-        <ion-button v-for="d in mainPredefine" @click="onSelectMainPredefine(d)">
-            <ComCurrency :value="d" />
-        </ion-button>
-        <ion-button  v-for="d in secondPredefine" @click="onSelectSecondPredefine(d)">
-            <ComCurrency :value="d" :currency="secondCurrency"/>
-        </ion-button>
-
+        <ion-grid class="ion-no-padding">
+  <ion-row>
+    <ion-col 
+      v-for="(d, index) in mainPredefine" 
+      :key="index" 
+      size="3"
+    >
+      <ion-button 
+        expand="block" 
+        @click="onSelectMainPredefine(d)"
+        fill="outline"
+        size="large"
+        style="height:20px;"
+      >
+        <ComCurrency :value="d" />
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<ion-grid class="ion-no-padding">
+  <ion-row>
+    <ion-col 
+      v-for="d in secondPredefine" 
+      :key="index" 
+      size="3"
+      
+    >
+      <ion-button 
+        expand="block" 
+        fill="outline"
+        size="large"
+        style="height:20px;"
+        @click="onSelectSecondPredefine(d)"
+      >
+        <ComCurrency :value="d" :currency="secondCurrency"/>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
     </stack>
 </template>
 <script setup>
