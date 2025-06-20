@@ -15,7 +15,7 @@
         
          
     </ion-button>
-    {{ saleDoc }}
+
 </template>
 <script setup>
     import {ref,onMounted} from "vue"

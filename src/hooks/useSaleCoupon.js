@@ -4,7 +4,6 @@ import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
 import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
-import { hasPermission, showLoading } from "@/helpers/utils"
 import { modalController } from "@ionic/vue"
 const saleDoc = ref({
     sale_products: [],
@@ -17,8 +16,9 @@ const totalPendingOrder = ref(5)
 const couponCode = ref("")
 const topUpCouponInfo = ref()
 const topUpSaleProduct = ref({product_code:""})
-
 const saleType = ref("Sale Coupon")
+const pageRoute = ref("/sale-coupon")
+const inputScanQRCode = ref(null)
 
  
 initSaleDoc();
@@ -79,9 +79,6 @@ const grandTotalSecondCurrency = computed(() => {
 const changeAmount = computed(() => {
     return totalPaymentAmount.value - grandTotal.value
 })
-
-
-
 
 
 function initSaleDoc() {
@@ -204,7 +201,7 @@ async function onSaveAsDraft() {
         
 
         if(app.route.params.name){
-            app.ionRouter.navigate("/sale-coupon","forward","replace")
+            app.ionRouter.navigate(pageRoute.value,"forward","replace")
         }
     }
     await l.dismiss();
@@ -216,6 +213,13 @@ async function onQuickPay(payment_type) {
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("There's no data.")
         return
+    }
+    // if top up validate user select topup
+    if(saleDoc.value.sale_type =="Top Up"){
+        if(saleDoc.value.sale_products[0].product_code == ""){
+            await app.showWarning("Please select top up amount")
+            return
+        }
     }
     const loading = await showLoading();
     const saveData = getSaveData();
@@ -236,12 +240,12 @@ async function onQuickPay(payment_type) {
 
     if (res.data) {
 
-        initSaleDoc()
+        onClearData();
         await app.showSuccess("Quick payment successfully")
         // print bill
         selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
-        app.ionRouter.navigate("/sale-coupon","forward","replace")
+        app.ionRouter.navigate(pageRoute.value,"forward","replace")
     }
 
 
@@ -267,13 +271,14 @@ async function onCloseSale(isPrint = true) {
 
     if (res.data) {
 
-        initSaleDoc()
+        onClearData()
+
         if (isPrint) {
             printBill(res.data.name)
         }
         await app.showSuccess("Payment successfully")
         
-        app.ionRouter.navigate("/sale-coupon","forward","replace")
+        app.ionRouter.navigate(pageRoute.value,"forward","replace")
 
 
     }
@@ -572,7 +577,7 @@ async function onPrintRequestBill(format) {
             saleDoc.value = res.data;
         }else {
             initSaleDoc();
-        app.ionRouter.navigate(`/sale-coupon/${res.data.name}`, "push", "replace")
+        app.ionRouter.navigate(`${pageRoute.value}/${res.data.name}`, "push", "replace")
     
         }
         
@@ -677,13 +682,28 @@ async function onRemoveFreeProduct(sp){
     
 }
 
+export function onClearData(){
+    setTimeout(() => {
+    if(inputScanQRCode.value){
+        inputScanQRCode.value.focus()
+    }    
+    }, 500);
+    
+    initSaleDoc()
+    topUpCouponInfo.value = null
+    topUpSaleProduct.value = {"product_code":""}
+    saleDoc.value.sale_products=[topUpSaleProduct.value]
+}
+ 
+
 
 
 export function useSaleCoupon() {
  
+  
     return {
         saleDoc,
-
+        inputScanQRCode,
         grandTotal,
         grandTotalSecondCurrency,
         customer,
@@ -702,6 +722,7 @@ export function useSaleCoupon() {
         topUpCouponInfo,
         saleType,
         topUpSaleProduct,
+        pageRoute,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,
@@ -722,6 +743,7 @@ export function useSaleCoupon() {
         onChangeSaleProductPrice,
         onChangeSaleProductQuantity,
         onFreeProduct,
-        onRemoveFreeProduct
+        onRemoveFreeProduct,
+        onClearData
     }
 }

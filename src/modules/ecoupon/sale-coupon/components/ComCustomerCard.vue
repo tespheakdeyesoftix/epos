@@ -1,5 +1,5 @@
 <template>
-   
+
   <ion-card button @click="onSelectCustomer">
     <ion-card-content>
       <stack row equal >
@@ -31,7 +31,7 @@
       <ion-button button color="success" shape="round" fill="clear" v-tooltip.top="t('Scan Member Card')" @click.stop="onScanMemberCard">
       <ion-icon :icon="qrCodeOutline" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button  color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
+      <ion-button  v-if="default_customer!=saleDoc.customer" color="danger" shape="round" fill="clear" v-tooltip.left="t('Remove this customer from this order')" @click.stop="onRemoveCustomer">
       <ion-icon :icon="closeOutline" slot="icon-only"></ion-icon>
       </ion-button>
     </div>
@@ -47,7 +47,7 @@ import { onMounted,ref } from "vue";
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
-
+const default_customer=  ref(app.setting.pos_profile.default_customer)
 async function onSelectCustomer(){
     const result = await app.utils.onSelectCustomer();
     if(result){
@@ -79,12 +79,13 @@ async function getCustomer(name){
 
 async function onRemoveCustomer() {
    
-  customer.value = {}; // Clear customer but keep card
+  saleDoc.value.customer = app.setting.pos_profile.default_customer
+  getCustomer(saleDoc.value.customer);
   await app.showSuccess("Customer has been remove from order")
 }
 
 onMounted(()=>{
-getCustomer(saleDoc.customer);
+getCustomer(saleDoc.value.customer);
 });
 </script>
 
