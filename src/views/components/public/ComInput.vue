@@ -27,10 +27,17 @@
       :label="label" @ionChange="onChange"
        :fill="fill" 
        :label-placement="labelPlacement">
+       
+      <ion-button v-if="icon"  fill="clear" slot="end"
+        aria-label="Show/hide">
+        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+      </ion-button>
+      
       <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanBarcode" fill="clear" slot="end"
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
+      
       <ion-button v-if="keyboard" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
@@ -53,6 +60,7 @@ const props = defineProps({
   placeholder: String,
   focus: Boolean,
   keyboard: Boolean,
+  icon:Object,
   fill: {
     type: String,
     default: "outline"

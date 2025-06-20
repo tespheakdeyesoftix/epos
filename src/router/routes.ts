@@ -104,7 +104,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   }, 
   {
-    path: "/top-up",
+    path: "/top-up-list",
     component: () => import('@/modules/ecoupon/TopUpList/TopUpList.vue'),
     meta: { requiresAuth: true }
   },
@@ -188,6 +188,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/customer",
     component: () => import('@/views/customer/CustomerList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/top-up",
+    component: () => import('@/modules/ecoupon/TopUpList/TopUp.vue'),
     meta: { requiresAuth: true }
   }
 

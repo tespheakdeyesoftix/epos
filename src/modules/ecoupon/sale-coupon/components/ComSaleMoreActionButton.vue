@@ -1,11 +1,12 @@
 <template>
-    <ion-button shape="round" expand="full" id="more-action">{{ t("Mores") }}</ion-button>
+    <ion-button shape="round" expand="full" 
+    @click="openPopover($event)" 
+    >{{ t("Mores") }}</ion-button>
     
  <ion-popover 
-    trigger="more-action" 
-    :is-open="false"   
+    
+    :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"
     :dismiss-on-select="true" 
-    trigger-action="click" 
     style="--width:500px"
     >
     <ion-content>
@@ -20,32 +21,19 @@
                       <ion-item button lines="full" @click="onChangeNote">
                             <ion-label>{{ t("Note") }}</ion-label>
                         </ion-item>
-                        
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
-                        </ion-item>
+                         
 
                     </ion-list>
                 </ion-col>
                 <ion-col>
                     <ion-list>
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
+                        <ion-item button @click="onViewOrderDetail">
+                            <ion-label>{{ t("View Order Detail ") }}</ion-label>
                         </ion-item>
-                        
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
+                        <ion-item button @click="onDeleteOrder" :disabled="!saleDoc.name">
+                            <ion-label color="danger">{{ t("Delete this Order") }}</ion-label>
                         </ion-item>
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>option 1</ion-label>
-                        </ion-item>
-
+                         
                     </ion-list>
 
                 </ion-col>
@@ -57,8 +45,19 @@
 </template>
 <script setup >
 import { useSaleCoupon } from '@/hooks/useSaleCoupon';
+import ComOrderDetailModal from '@/modules/ecoupon/sale-coupon/components/ComOrderDetailModal.vue';
+import { ref } from 'vue';
 const {saleDoc} = useSaleCoupon();
+
 const t = window.t;
+const popoverOpen = ref(false)
+const event = ref(null)
+
+function openPopover(e) {
+ 
+  event.value = e
+  popoverOpen.value = true
+}
 
 async function onChangeReferenceNumber(){
     const result = await app.utils.onOpenKeyboard({
@@ -81,5 +80,41 @@ async function onChangeNote(){
 saleDoc.value.note = result;
     }
     
+}
+
+function onViewOrderDetail(){
+    app.openModal({
+        component:ComOrderDetailModal,
+        cssClass:"fullscreen-modal"
+
+    })
+}
+
+async function onDeleteOrder(){
+    
+
+    const confirm = await app.onConfirm("Delete order","Are you sure you want to delete this order");
+    if (!confirm) return;
+
+    const l = await app.showLoading()
+    const res = await app.postApi("epos_restaurant_2023.api.api.delete_sale",{
+        name:saleDoc.value.name,
+        auth:{
+            full_name:app.currentUser.full_name,
+            username:app.currentUser.name,
+            note:""
+        }
+    })
+    
+    if(res.data){
+        
+            await l.dismiss()
+           
+            app.ionRouter.navigate("/sale-coupon","forward","replace")
+    }
+    
+    await l.dismiss()
+ 
+
 }
 </script>

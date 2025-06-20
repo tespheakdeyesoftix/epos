@@ -4,7 +4,7 @@ import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
 import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
-import { showLoading } from "@/helpers/utils"
+import { hasPermission, showLoading } from "@/helpers/utils"
 import { modalController } from "@ionic/vue"
 const saleDoc = ref({
     sale_products: [],
@@ -14,7 +14,14 @@ const customer = ref(null)
 const paymentInputAmount = ref("")
 const selectedPrintFormat = ref()
 const totalPendingOrder = ref(5)
+const couponCode = ref("")
+const topUpCouponInfo = ref()
+const topUpSaleProduct = ref({product_code:""})
 
+const saleType = ref("Sale Coupon")
+
+ 
+initSaleDoc();
 
 const subTotal = computed(() => {
     return saleDoc.value.sale_products.reduce((sum, item) => sum + item.sub_total, 0);
@@ -43,11 +50,13 @@ const totalSaleProductDiscount = computed(() => {
 })
 
 const grandTotal = computed(() => {
-    return (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
+    const total =  (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
+    return total || 0
 })
 
 const totalQuantity = computed(() => {
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
+    const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
+    return total || 0
 })
 
 const totalPaymentAmount = computed(() => {
@@ -63,7 +72,8 @@ const paymentBalance = computed(() => {
 
 
 const grandTotalSecondCurrency = computed(() => {
-    return grandTotal.value * app.setting.exchange_rate;
+    const total =  grandTotal.value * (app.setting.exchange_rate || 1); 
+    return total || 0
 })
 
 const changeAmount = computed(() => {
@@ -77,6 +87,7 @@ const changeAmount = computed(() => {
 function initSaleDoc() {
 
     saleDoc.value = {
+        posting_date:app.setting.working_day?.posting_date,
         business_branch: app.setting.property?.property_name,
         customer: app.setting.pos_profile?.default_customer,
         stock_location: app.setting.pos_profile?.stock_location,
@@ -99,7 +110,7 @@ async function getSaleDoc() {
     if (result.data) {
 
         result.data.sale_products.forEach(x => {
-            x.coupons = JSON.parse(x.coupons)
+            x.coupons =  JSON.parse(x.coupons ?? "[]")
         })
         saleDoc.value = result.data;
     }
@@ -159,7 +170,10 @@ async function onPayment() {
 
 function getSaveData() {
     const saveData = JSON.parse(JSON.stringify(saleDoc.value));
+ 
+    if(!saveData.sale_type) saveData.sale_type = saleType.value;
     saveData.sale_products.forEach(sp => {
+        delete sp.selling_price;
         sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
         if (sp.coupons) {
             sp.coupons = JSON.stringify(sp.coupons)
@@ -187,8 +201,11 @@ async function onSaveAsDraft() {
     const res = await saveSaleDoc(saveData);
     if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
-        initSaleDoc();
+        
 
+        if(app.route.params.name){
+            app.ionRouter.navigate("/sale-coupon","forward","replace")
+        }
     }
     await l.dismiss();
 
@@ -255,7 +272,9 @@ async function onCloseSale(isPrint = true) {
             printBill(res.data.name)
         }
         await app.showSuccess("Payment successfully")
+        
         app.ionRouter.navigate("/sale-coupon","forward","replace")
+
 
     }
 
@@ -328,7 +347,7 @@ function updateSaleProduct(sp) {
     if (sp.discount_type == "Percent") {
         sp.discount_amount = sp.sub_total * (sp.discount || 0) / 100
     }
-    sp.total_amount = sp.sub_total - sp.discount_amount
+    sp.total_amount = sp.sub_total - (sp.discount_amount ?? 0)
     // more with discount and tax later
 
 }
@@ -618,11 +637,31 @@ async function onFreeProduct(sp){
         return
     }
 
-    if(sp.coupons.length>0){
+    const hasPermission = await app.utils.hasPermission("free_item");
+    if (!hasPermission) return;
+
+    let freeQuantity = sp.quantity;
+    let freeNote = ""
+    if(freeQuantity==1 || sp.coupons.length>0){
+        if(app.setting.pos_config.free_item_required_note==1){
+            const noteResult = await app.utils.onOpenKeyboard({
+                title:app.t("Free Note"),
+                storageKey:"free_note"
+            })
+            if((typeof noteResult) =="string"){
+                freeNote = noteResult;
+            }
+        }
+    }else {
+        // free quantity
+    }
+
+   
         sp.is_free = 1
         sp.price = 0;
+        sp.free_note = freeNote
         updateSaleProduct(sp)
-    }
+   
 
 }
 async function onRemoveFreeProduct(sp){
@@ -659,6 +698,10 @@ export function useSaleCoupon() {
         saleDiscoutableAmount,
         totalSaleDiscountAmount,
         totalPendingOrder,
+        couponCode,
+        topUpCouponInfo,
+        saleType,
+        topUpSaleProduct,
         onPayment,
         onSelectProduct,
         onSaveAsDraft,

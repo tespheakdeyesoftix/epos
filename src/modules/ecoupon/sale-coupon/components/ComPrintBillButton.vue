@@ -64,6 +64,7 @@ if (app.setting.pos_config.cancel_print_bill_required_note==1){
 }
  
 if(note){
+  const loading = await app.showLoading();
   const saveData = JSON.parse(JSON.stringify(saleDoc.value))
   saveData.sale_products.forEach(x=>{
     x.coupons = JSON.stringify(x.coupons)
@@ -76,6 +77,7 @@ if(note){
       x.coupons = JSON.parse(x.coupons)
     });
     saleDoc.value = res.data;
+    await loading.dismiss();
     app.showSuccess("Cancell print bill successully")
   }
 

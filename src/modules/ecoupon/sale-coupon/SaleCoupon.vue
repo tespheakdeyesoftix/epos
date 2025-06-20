@@ -57,17 +57,19 @@ import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSal
   
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
-const { saleDoc,initSaleDoc,getSaleDoc } = useSaleCoupon()
+const { saleDoc,initSaleDoc,getSaleDoc,saleType } = useSaleCoupon()
 
 
 const t = window.t
  
 
 onMounted(async ()=>{
+  
+  saleType.value = "Sale Coupon";
   if(app.route.params.name){
     await getSaleDoc()
     }else {
-      initSaleDoc();
+
       saleDoc.value.sale_type= "Sale Coupon";
     }
 })

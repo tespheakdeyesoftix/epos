@@ -25,6 +25,8 @@ globalThis.app.shift = shift;
 globalThis.app.storageService = storageService;
 globalThis.app.setting = {};
 
+ 
+
 globalThis.app.t =  i18n.global.t;
 
 globalThis.app.getDoc =  async function (DocType,DocName) {

@@ -12,7 +12,7 @@ import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
  import { useApp } from '@/hooks/useApp';
 import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
-const { isWorkingDayOpened,isCashierShiftOpened } = useApp();
+const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate,change_exchange_rate } = useApp();
 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
@@ -532,6 +532,8 @@ export async function getExchangeRate(){
   if(res.data){
     app.setting.exchange_rate = res.data[0].exchange_rate;
     app.setting.change_exchange_rate = res.data[0].change_exchange_rate;
+    exchange_rate.value = res.data[0].exchange_rate;
+    change_exchange_rate.value = res.data[0].change_exchange_rate;
   }
 }
 
