@@ -128,20 +128,7 @@ const onLogout = async () => {
 }
 
 /* Placeholder styling when no image */
-.avatar-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #007bff;
-  /* Blue background */
-  color: white;
-  font-size: 25px;
-  font-weight: bold;
-  border-radius: 50%;
-  text-transform: uppercase;
-}
+
 
 
 /* Style the user info section */

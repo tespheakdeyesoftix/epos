@@ -1,8 +1,8 @@
 <template>
     
-<ion-list>
+<ion-list class="summary-sale">
     <ion-item v-if="totalQuantity>0">
-        <ion-label>{{ t("Total Coupon") }}</ion-label>
+        <ion-label class="ion-no-padding">{{ t("Total Coupon") }}</ion-label>
         <ion-label slot="end">{{ totalQuantity }}</ion-label>
     </ion-item>
     <ion-item v-if="subTotal>0">
@@ -43,3 +43,10 @@ const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAm
 const t = window.t;
 
 </script>
+<style scoped>
+.ion-no-padding.sc-ion-label-md-h.sc-ion-label-md-s.md , .sc-ion-label-md-h.sc-ion-label-md-s.md{
+    min-height: 10px !important;
+    padding: 2px;
+    margin: 0;
+}
+</style>

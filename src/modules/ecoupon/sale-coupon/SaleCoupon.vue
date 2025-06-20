@@ -20,7 +20,7 @@
 
     <div class="ion-page" id="main">
        <ComCustomerCard v-if="saleDoc?.customer"/>
-       <ion-list >
+       <ion-list v-if="saleDoc.reference_number && saleDoc.tbl_number" >
         <ion-item v-if="saleDoc.reference_number">
             <ion-label>{{ t("Reference #") }}</ion-label>
             <ion-label>{{ saleDoc.reference_number }}</ion-label>
@@ -30,12 +30,13 @@
             <ion-label>{{ saleDoc.tbl_number }}</ion-label>
         </ion-item>
        </ion-list>
-      <ion-content class="ion-padding"> 
+      <ion-content class="ion-no-padding"> 
       <ComSaleProductCoupon />
-      </ion-content>
    
+      </ion-content>
+    <ComSaleSummary/>
      <ComPaymentButton />
-  
+    
     </div>
   </ion-split-pane>
  
@@ -49,6 +50,7 @@ import { onMounted, onUnmounted, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCouponProductList.vue"
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
+import ComSaleSummary from "@/modules/ecoupon/sale-coupon/components/ComSaleSummary.vue";
 import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
 import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooter.vue"
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  

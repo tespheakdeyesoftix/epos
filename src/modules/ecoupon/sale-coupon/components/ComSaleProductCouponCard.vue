@@ -1,21 +1,47 @@
 <template>
     <template v-if="data">
-        <ion-card>
-
-            <Img :src="data?.product_photo" />
-            {{ data.product_code }}
-            {{ data.product_name }}
-            QTY: {{ data.quantity }}
-            {{ t("Price") }}:
-            <ComCurrency :value="data.price" />
-            {{ t("Total Amount") }}:
-            <ComCurrency :value="data.total_amount" />
-
-            {{ t("Discount") }}:
-            <ComCurrency :value="data.discount_amount" />
-            Note: {{ data.note }}
-            <hr />
+        <ion-card class="border-round-lg p-2 border-1">
+        <div class="card-sale-product ">
+            <div>
+                 <div class="flex gap-2" >
+                <Img class="border-round-xl img-sale-coupon" :src="data?.product_photo" />
+                <div>
+                    <div>
+                    <ion-text>
+                        <h4 class="m-0">
+                           {{ data.product_code }} - {{ data.product_name }}  
+                        </h4>
+                    </ion-text>
+                    </div>
+                   <ion-text>
+                    <h5 class="m-0">
+                       {{ data.quantity }} x  <ComCurrency :value="data.price" /> 
+                    </h5>
+                   </ion-text>
+                   <ion-text v-if="data.discount_amount">
+                       {{ t("Discount") }}:      
+                    <ComCurrency :value="data.discount_amount" />  
+                   </ion-text>
+                    <ion-text v-if="data.note">
+            <div >
+                {{ data.note }}
+            </div>
+        </ion-text>
+                     
+                </div>
+                
+ 
+            </div>
+            </div>
+            <div>
+                <ion-chip color="danger"><h5 class="m-0"><ComCurrency :value="data?.total_amount" /></h5></ion-chip>
+            </div>
+        </div>    
+       
+        <div>
             <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
+        </div>
+            
             <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                 data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
            <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
@@ -71,8 +97,6 @@
                 </ion-list>
             </ion-content>
         </ion-popover>
-
-
     </template>
 
 </template>
@@ -133,3 +157,15 @@ function onDeleteNote() {
 }
 
 </script>
+<style scoped>
+.card-sale-product{
+  display: flex;
+  justify-content: space-between;
+}
+.note-box{
+    background-color: var(--ion-color-light-shade);;
+}
+.img-sale-coupon{
+    height: 80px;
+}
+</style>

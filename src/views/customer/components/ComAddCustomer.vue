@@ -60,40 +60,23 @@ import dayjs from 'dayjs'
 const t = window.t
 const doc = ref({})
 
-// ✅ Use internal property keys, not labels
-const requiredFields = ['customer_group', 'customer_name_en', 'gender']
 
-function validate() {
-  const missingFields = requiredFields.filter(field => !doc.value[field])
-  if (missingFields.length > 0) {
-    app.showWarning(t("Please fill all required fields."), "warning")
-    return false
-  }
-  return true
-}
+
 
 async function onSave() {
-  if (!validate()) return
-
   const loading = await app.showLoading()
   let result = null
-
-  try {
+ 
     if (doc.value.name) {
       result = await app.updateDoc("Customer", doc.value.name, doc.value)
     } else {
       result = await app.createDoc("Customer", doc.value)
     }
-
-    if (result) {
+    if (result.data) {
     app.showSuccess(`Added successfully.`)
-      await modalController.dismiss(result)
-    }
-  } catch (err) {
-    console.error("Save error:", err)
-    app.showToast(t("Error saving data."), "danger")
-  } finally {
-    await loading.dismiss()
+      modalController.dismiss(result.data, 'confirm')
+      
+    } 
+    await loading.dismiss() 
   }
-}
-</script>
+    </script >
