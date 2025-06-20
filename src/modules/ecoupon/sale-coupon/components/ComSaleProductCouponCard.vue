@@ -1,6 +1,6 @@
 <template>
     <template v-if="data">
-        <ion-card class="border-round-lg p-2 border-1">
+        <ion-card  class="border-round-lg p-2 border-1">
         <div class="card-sale-product ">
             <div>
                  <div class="flex gap-2" >
@@ -41,8 +41,8 @@
         <div>
             <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
         </div>
-            
-            <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
+            <div v-if="activeIndex == index">
+             <ion-chip @click="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                 data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
            <ion-chip v-if="data.is_free==1" color="success">{{ t("Free") }}</ion-chip>
         
@@ -53,7 +53,9 @@
             <ion-button color="danger" @click="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
 
 
-            <ion-button :id="popOverID">{{ t("More") }}</ion-button>
+            <ion-button :id="popOverID">{{ t("More") }}</ion-button>   
+            </div>
+            
         </ion-card>
 
         <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
@@ -119,11 +121,10 @@ const {
     onRemoveFreeProduct
 } = useSaleCoupon()
 const popOverID = app.utils.generateRandomString();
-
-
 const props = defineProps({
     data: Object,
-    index: Number
+    index: Number,
+    activeIndex:Number,
 })
 const t = window.t;
 
