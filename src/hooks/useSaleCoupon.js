@@ -178,9 +178,9 @@ async function onPayment() {
 
 function getSaveData() {
     const saveData = JSON.parse(JSON.stringify(saleDoc.value));
- 
+    saveData.pos_station_name = app.setting.station_name;
     if(!saveData.sale_type) saveData.sale_type = saleType.value;
-    saveData.sale_products.forEach(sp => {
+        saveData.sale_products.forEach(sp => {
         delete sp.selling_price;
         sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
         if (sp.coupons) {
@@ -279,6 +279,7 @@ async function onCloseSale(isPrint = true) {
     saveData.closed_by = app.currentUser.full_name
     saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
     saveData.sale_status = "Closed"
+
     const res = await saveSaleDoc(saveData);
 
     if (res.data) {
@@ -703,7 +704,9 @@ export function onClearData(){
     
     initSaleDoc()
     topUpCouponInfo.value = null
-    if(saleDoc.value.sale_type =="Top Up"){
+    
+    if(saleType.value =="Top Up"){
+       
         topUpSaleProduct.value = {"product_code":"",quantity:1,price:0}
         saleDoc.value.sale_products=[topUpSaleProduct.value]
     }

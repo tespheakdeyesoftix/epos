@@ -1,8 +1,8 @@
 <template>
-    <BaseModal>
+    <BaseModal :title="t('Top Up Coupon Amount')" @onConfirm="onConfirm">
 
 <stack row equal class="mb-4">
-             <com-input :label="t('Price')" v-model="doc.price" type="number" keyboard />
+             <com-input focus :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" :label="t('Markup Type')" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
                 <ion-select-option value="Percent">Percent</ion-select-option>
@@ -21,12 +21,14 @@
         </stack>  
         
         <div class="ion-margin-top">
-<com-input  :label="t('Note')" :placeholder="t('Enter note here')"  type="text-area" stateKey="sale_product_note"></com-input>
+<com-input  :label="t('Note')" :placeholder="t('Enter note here')"  type="text-area" 
+storageKey="sale_product_note"></com-input>
         </div>
         
     </BaseModal>
 </template>
 <script setup>
+import { modalController } from "@ionic/vue"
     const props =defineProps({
         data:Object
     })
@@ -34,7 +36,8 @@
     const t =window.t;
     
     const doc =ref({
-        coupon_markup_type :  props.data.coupon_markup_type
+        coupon_markup_type :  props.data.coupon_markup_type,
+        coupon_markup_value:props.data.coupon_markup_type=="Percent"? props.data.coupon_markup_value:0
 
     })
     
@@ -45,5 +48,27 @@ const couponValue = computed(() => {
         return doc.value.coupon_value;
     }
 })
+
+function onConfirm(){
+if((doc.value.price || 0)==0){
+    app.showWarning("Please enter coupuon price");
+    return
+}
+
+if(doc.value.coupon_markup_type=="Percent" && (doc.value.coupon_markup_value || 0) <=0){
+    app.showWarning("Please enter coupon markup value");
+
+    return
+}
+if(doc.value.coupon_markup_type=="Amount" && (couponValue.value ||0)==0){
+    app.showWarning("Please enter coupon value");
+
+    return
+}
+
+
+
+modalController.dismiss({...doc.value,coupon_value:couponValue.value}, 'confirm')
+}
 
 </script>

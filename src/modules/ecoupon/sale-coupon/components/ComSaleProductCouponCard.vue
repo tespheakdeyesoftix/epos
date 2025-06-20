@@ -11,7 +11,9 @@
                         <h4 class="m-0">
                            {{ data.product_code }} - {{ data.product_name }}  
                         </h4>
+
                     </ion-text>
+                    
                     </div>
                    <ion-text>
                     <h5 class="m-0">

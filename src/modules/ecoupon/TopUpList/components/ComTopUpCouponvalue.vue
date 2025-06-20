@@ -30,6 +30,8 @@
     saleDoc.value.sale_products = [topUpSaleProduct.value]
     
     async function onSelectCoupon(p){
+               let price = p.price
+        let couponValue = p.coupon_value
         // check if is open price enter coupon price 
         if(p.is_open_product==1){
             const result = await app.openModal({
@@ -40,11 +42,13 @@
                 cssClass:"top-up-coupon-amount"
             })
             if(!result) return
+
+            price = result.price
+            couponValue = result.coupon_value
         }
 
 
-        let price = p.price
-        let couponValue = p.coupon_value
+ 
 
        topUpSaleProduct.value.product_code = p.name 
         topUpSaleProduct.value.product_name= p.product_name_en,

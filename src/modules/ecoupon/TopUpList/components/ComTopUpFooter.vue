@@ -4,7 +4,11 @@
         <ion-toolbar  >
             <div style="display: flex; justify-content: center;gap: 10px;"> 
             <ion-button routerLink="/home"> {{ t('Home') }}</ion-button>
-            <ion-button :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}</ion-button>
+            
+            <ion-button :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}
+ 
+
+            </ion-button>
             <ComQuickPayButton/>
             <ion-button color="success" @click="onPaymentClick"> {{ t('Payment') }}</ion-button>
             </div>
@@ -15,7 +19,7 @@
 <script setup>
 import {useSaleCoupon} from "@/hooks/useSaleCoupon"
 import ComQuickPayButton from "@/modules/ecoupon/sale-coupon/components/ComQuickPayButton.vue"
-const  {onPayment,saleDoc ,onClearData} = useSaleCoupon()
+const  {onPayment,saleDoc ,onClearData,topUpCouponInfo} = useSaleCoupon()
 const t = window.t;
 
  

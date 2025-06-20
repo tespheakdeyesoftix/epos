@@ -18,6 +18,7 @@ export async function setup(){
   await app.utils.getSetting()
   }
    
+  
 
  isAppLoadReady.value = true;
 

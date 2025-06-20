@@ -7,6 +7,7 @@ import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue";
 import ComKeypad from "@/views/components/public/ComKeypad.vue";
 import Keyboard from '@/views/components/public/Keyboard.vue';
 import ComInputNumberModal from '@/views/components/public/ComInputNumberModal.vue';
+import ComAuth from '@/views/components/public/ComAuth.vue';
  
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
@@ -522,6 +523,7 @@ export async function getSetting() {
     }
     await app.storageService.setItem("show_login", app.setting.allow_login_multiple_site == 1 ? 0 : 1)
 
+    app.setting.station_name = app.storageService.getItem("station_name")
     // get exchange rate
     getExchangeRate()
   }
@@ -602,6 +604,15 @@ export async function onOpenKeypad(title="Enter Number"){
 
   return result;
 }
+export async function onInputPinCode(title="Enter Pin Code"){
+  const result = await app.openModal({
+    component: ComAuth,
+    componentProps:{title:title},
+    cssClass:"keypad-modal"
+  })
+
+  return result;
+}
 
 export async function onOpenKeyboard(props={}){
   if(!props.title){
@@ -617,7 +628,16 @@ export async function onOpenKeyboard(props={}){
   return result;
 }
 
-export async function hasPermission(key){
+export async function hasPermission(key,operation=""){
+    if(operation){
+      if(app.setting.pos_config[operation] ==1){
+          const result = await onInputPinCode()
+      }
+      
+    }
+
+
+
     if(app.currentUser.pos_permission[key]==0){
       await app.showWarning("You don't have permission to perform this action.")
       return false 

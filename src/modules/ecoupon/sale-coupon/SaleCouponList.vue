@@ -6,7 +6,7 @@
             @onRowDblClick="onRowDblClick"
             >
                 <template #name="{ item, index }">
-                    <ion-button class="ion-no-margin" fill="clear" :routerLink="'sale-detail/' + item.name">
+                    <ion-button class="ion-no-margin" fill="clear" :routerLink="'/sale-detail/' + item.name">
                         {{item.name}}
                     </ion-button>
                 </template>

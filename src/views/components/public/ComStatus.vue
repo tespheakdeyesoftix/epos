@@ -1,5 +1,5 @@
 <template>
-    
+   
      <ion-chip  v-if="status" :class="['small-chip',csClass]"  :color="getSeverity()" size="small">{{ t(status) }}</ion-chip>
      
 </template>
@@ -13,7 +13,8 @@ const getSeverity = () => {
     switch (props.status) {
         case 'Paid':
             return 'success';
-
+        case 'Closed':
+            return 'success';
         case 'Unpaid':
             return 'danger';
         case 'Draft':
@@ -21,6 +22,14 @@ const getSeverity = () => {
 
         case 'Partially Paid':
             return 'warning';
+        case 'Sale Coupon':
+            return 'success';    
+        case 'Top Up':
+            return 'warning';    
+        case 'Redeem':
+            return 'danger';
+
+
 
        
             default:

@@ -31,6 +31,7 @@ const t = window.t;
 const popoverOpen = ref(false)
 const quickPaymentType  = ref([])
 
+
 function openPopover(e){
     const defaultPaymentTypes = [
             app.setting.pos_profile.default_payment_type,

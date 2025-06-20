@@ -29,6 +29,7 @@ const options = {
         {fieldname:"name",header:"Sale #"},
         {fieldname:"pos_station_name",header:"Station"},
         {fieldname:"posting_date",header:"Sale Date",fieldtype:"Date"},
+        {fieldname:"sale_type",header:"Sale Type",},
         {fieldname:"total_quantity",header:"Quantity",fieldtype:"Float"},
         {fieldname:"grand_total",header:"Grand Total",fieldtype:"Currency"},
         {fieldname:"closed_by",header:"User"},
@@ -36,7 +37,7 @@ const options = {
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name", "posting_date","pos_station_name","total_quantity", "grand_total", "customer", "customer_name", "closed_date", "closed_by", "tbl_number","custom_bill_number"],
+    fields: ["name", "posting_date","sale_type","pos_station_name","total_quantity", "grand_total", "customer", "customer_name", "closed_date", "closed_by", "tbl_number","custom_bill_number"],
     orderBy:{
       field: "modified",
       order: "desc",

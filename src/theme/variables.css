@@ -249,7 +249,7 @@ ion-modal.fullscreen-modal{
 	width: 100vw;
 		height: 100vh;
 		--width: 420px;
-		--height: 420px;
+		--height: 500px;
  --border-radius: 10px;
 }
 /* keypad-modal */
@@ -312,7 +312,7 @@ th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-
 }
 
 .fix-container{
-	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px; margin-top: 10px;	
+	max-width: 1000px; width: 100%;  margin: 0 auto;;	
 }
 .fixed-container{
 	max-width: 1000px; width: 100%;  margin: 0 auto;  padding: 0 16px;

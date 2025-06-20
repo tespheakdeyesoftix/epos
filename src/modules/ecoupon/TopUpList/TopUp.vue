@@ -51,8 +51,8 @@ onIonViewWillEnter(()=>{
   if(!app.route.params.name){
   saleType.value = "Top Up"
   pageRoute.value = "top-up"
-  saleDoc.value.sale_type = "Top Up";
     onClearData()
+      saleDoc.value.sale_type = "Top Up";
   }
   
 

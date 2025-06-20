@@ -14,3 +14,27 @@ export async function checkSaleDoc(name){
    await loading.dismiss()
    return 0
 }
+
+export async function onPrintBill(name,format=null) {
+ 
+    const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
+        pdf: 0,
+        station: app.setting.station_name,
+        name: name,
+        reprint: 0,
+        template: format.pos_receipt_template
+    })
+
+    if (result.data) {
+        for (let i = 0; i < format.print_receipt_copies; i++) {
+            app.printService.submit({
+                'type': "Cashier Printer",//printer name
+                'url': 'file.pdf',
+                'file_content': result.data
+            });
+        }
+
+
+    }
+
+}
