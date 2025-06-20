@@ -1,27 +1,25 @@
 <template>
-     <ion-footer>
-<ion-card color="tertiary" button @click="onPayment">
+     <ion-footer >
+<ion-card class="p-0 m-0 card-height" color="tertiary" button @click="onPayment">
     <ion-card-content>
         <stack row equal >
-        
-                <span class="title-payment">
+         <stack row>
+            <span class="title-payment">
                 {{ t('Payment') }} 
                 </span>
-       
-        <stack>
-  <ion-label>
-          {{t('Total')}} ({{ mainCurrency }}) :  <ComCurrency :value="grandTotal"/> 
-        </ion-label>
-        <ion-label>
-           {{t('Total')}} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
-        </ion-label>
-        </stack>
-      
-     
-        <ion-chip class="big-chip" color="secondary">
+                   <ion-chip class="small-chip" color="primary">
               <ComCurrency :value="1" :currency="mainCurrency" /> <span class="mx-2">=</span>   
         <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
                 </ion-chip>
+         </stack>
+                    <stack>
+  <ion-label class="big-chip">
+          {{t('Total')}} ({{ mainCurrency }}) :  <ComCurrency :value="grandTotal"/> 
+        </ion-label>
+        <ion-label class="big-chip">
+           {{t('Total')}} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
+        </ion-label>
+        </stack>
                 </stack>
     </ion-card-content>
 </ion-card>
@@ -43,5 +41,8 @@ const exchangeRate = app.setting.exchange_rate
 }
 .title-payment{
     font-size: 24px;
+}
+.small-chip{
+    font-size: 12px;
 }
 </style>

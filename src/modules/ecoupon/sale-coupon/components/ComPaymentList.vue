@@ -1,10 +1,37 @@
 <template>
-    <ion-label>{{ t("Total Amount") }}</ion-label>
    
-    <ComCurrency :value="grandTotal" /> |
-    <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
- Exchange Rate: <ComCurrency :value="1" :currency="mainCurrency"/> =
-  <ComCurrency :value="exchangeRate" :currency="secondCurrency"/> 
+    <ion-card>
+        <ion-card-content>
+            <div class="w-full flex justify-content-center">
+<ion-text>
+    <h2>{{ t("Total Amount") }}</h2>
+</ion-text>
+
+            </div>
+          
+            <div class="w-full flex justify-content-between">
+                <div>
+                    <ion-chip>
+                         <ComCurrency :value="grandTotal" /> 
+                         <span class="mx-2">  | </span>
+                        
+    <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" /> 
+                    </ion-chip>
+                   
+                </div>
+               <div>
+                <ion-chip>
+                   Exchange Rate: <ComCurrency :value="1" :currency="mainCurrency"/> =
+  <ComCurrency :value="exchangeRate" :currency="secondCurrency"/>     
+                </ion-chip>
+             
+               </div>
+            </div>
+            
+ 
+        </ion-card-content>
+    </ion-card>
+    
      <ion-list>
         <ion-item button v-for="(p,index) in saleDoc.payment" :key="index">
            
