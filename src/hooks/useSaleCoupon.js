@@ -24,14 +24,14 @@ const inputScanQRCode = ref(null)
 initSaleDoc();
 
 const subTotal = computed(() => {
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.sub_total, 0);
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.sub_total ||0), 0);
 })
 
 const saleDiscoutableAmount = computed(() => {
 
     return saleDoc.value.sale_products.
-        filter(x => x.allow_discount == 1 && (x.discount_amount ?? 0) == 0).
-        reduce((sum, item) => sum + item.sub_total, 0) ?? 0;
+        filter(x => x.allow_discount == 1 && (x.discount_amount || 0) == 0).
+        reduce((sum, item) => sum + (item.sub_total ||0), 0) ?? 0;
 })
 
 const totalSaleDiscountAmount = computed(() => {
@@ -46,7 +46,7 @@ const totalSaleDiscountAmount = computed(() => {
 
 
 const totalSaleProductDiscount = computed(() => {
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + item.discount_amount || 0, 0);
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.discount_amount || 0), 0);
 })
 
 const grandTotal = computed(() => {
@@ -55,15 +55,15 @@ const grandTotal = computed(() => {
 })
 
 const totalQuantity = computed(() => {
-    const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + item.quantity, 0);
+    const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + (item.quantity || 1), 0);
     return total || 0
 })
 
 const totalPaymentAmount = computed(() => {
-    return saleDoc.value.payment.reduce((sum, item) => sum + item.amount, 0);
+    return saleDoc.value.payment.reduce((sum, item) => sum + (item.amount || 0), 0);
 })
 const paymentBalance = computed(() => {
-    let balance = grandTotal.value - totalPaymentAmount.value
+    let balance =(grandTotal.value - totalPaymentAmount.value) || 0
     if (balance < 0) {
         balance = 0
     }
@@ -104,14 +104,25 @@ function initSaleDoc() {
 async function getSaleDoc() {
     const loading = await app.showLoading();
     const result = await app.getDoc("Sale", app.route.params.name);
+    
     if (result.data) {
 
         result.data.sale_products.forEach(x => {
             x.coupons =  JSON.parse(x.coupons ?? "[]")
         })
         saleDoc.value = result.data;
+
+        getCustomerData(saleDoc.value.customer);
     }
+
     await loading.dismiss();
+}
+
+async function getCustomerData(name){
+    const res = await app.getDoc("Customer",name)
+    if(res.data){
+        customer.value = res.data
+    }
 }
 
 
@@ -199,6 +210,7 @@ async function onSaveAsDraft() {
     if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
         
+        onClearData()
 
         if(app.route.params.name){
             app.ionRouter.navigate(pageRoute.value,"forward","replace")
@@ -691,8 +703,11 @@ export function onClearData(){
     
     initSaleDoc()
     topUpCouponInfo.value = null
-    topUpSaleProduct.value = {"product_code":""}
-    saleDoc.value.sale_products=[topUpSaleProduct.value]
+    if(saleDoc.value.sale_type =="Top Up"){
+        topUpSaleProduct.value = {"product_code":"",quantity:1,price:0}
+        saleDoc.value.sale_products=[topUpSaleProduct.value]
+    }
+    
 }
  
 

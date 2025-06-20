@@ -3,7 +3,7 @@
     <ion-button 
     v-for="(p,index) in products" :key="index" :disabled="!topUpCouponInfo" 
     @click="onSelectCoupon(p)"
-    :color="p.name == topUpSaleProduct.product_code?'success':''"
+    :color="p.name == topUpSaleProduct?.product_code?'success':''"
     >
         <template v-if="p.is_open_product==0">
 <ComCurrency :value="p.price"/>
@@ -34,6 +34,9 @@
         if(p.is_open_product==1){
             const result = await app.openModal({
                 component:ComEnterCustomTopupAmount,
+                componentProps:{
+                    data:p
+                },
                 cssClass:"top-up-coupon-amount"
             })
             if(!result) return

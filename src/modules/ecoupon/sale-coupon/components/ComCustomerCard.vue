@@ -48,6 +48,7 @@ import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const t = window.t;
 const { saleDoc,customer } = useSaleCoupon()
 const default_customer=  ref(app.setting.pos_profile.default_customer)
+
 async function onSelectCustomer(){
     const result = await app.utils.onSelectCustomer();
     if(result){

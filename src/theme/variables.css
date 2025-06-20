@@ -266,7 +266,7 @@ ion-modal.discount-amount-modal{
 		--width: 500px;
 		--height: 300px;
 }
-/* pending order mobile */
+/* pending order modal */
 ion-modal.pending-order-modal{
 	width: 100vw;
 		height: 100vh;
@@ -274,13 +274,21 @@ ion-modal.pending-order-modal{
 		--height: 80vh;
 }
 
-/* pending order mobile */
+/* pending order modal */
 ion-modal.input-number-modal{
 	width: 100vw;
 		height: 90vh;
 		--width: 600px;
 		--height: 300px;
 }
+/* pending order modal */
+ion-modal.top-up-coupon-amount{
+	width: 100vw;
+		height: 90vh;
+		--width: 600px;
+		--height: 380px;
+}
+
 
 ion-modal{
 	 --border-radius: 10px;

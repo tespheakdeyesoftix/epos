@@ -36,6 +36,9 @@ async function onViewPendingOrder(){
 
         // open order 
         app.ionRouter.navigate("/sale-coupon/" + result.name,"push","replace")
+
+
+        
         
     }
     

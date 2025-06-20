@@ -19,7 +19,7 @@
     </ion-menu>
 
     <div class="ion-page" id="main">
-       <1 v-if="saleDoc?.customer"/>
+       <ComCustomerCard v-if="saleDoc?.customer"/>
        <ion-list v-if="saleDoc.reference_number && saleDoc.tbl_number" >
         <ion-item v-if="saleDoc.reference_number">
             <ion-label>{{ t("Reference #") }}</ion-label>
@@ -70,6 +70,7 @@ onMounted(async ()=>{
   saleType.value = "Sale Coupon";
   if(app.route.params.name){
     await getSaleDoc()
+    
     }else {
 
       saleDoc.value.sale_type= "Sale Coupon";
@@ -87,6 +88,7 @@ onBeforeRouteLeave(async (to, from, next) => {
 next()
     }
   } else {
+    initSaleDoc()
     next()
   }
 })
