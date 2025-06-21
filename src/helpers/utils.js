@@ -632,6 +632,9 @@ export async function hasPermission(key,operation=""){
     if(operation){
       if(app.setting.pos_config[operation] ==1){
           const result = await onInputPinCode()
+          if(result){
+            alert(result.permission[operation])
+          }
       }
       
     }

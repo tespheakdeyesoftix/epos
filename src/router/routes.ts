@@ -109,8 +109,13 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/redeem",
+    path: "/redeem-list",
     component: () => import('@/modules/ecoupon/RedeemList/RedeemList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/redeem",
+    component: () => import('@/modules/ecoupon/RedeemList/Redeem.vue'),
     meta: { requiresAuth: true }
   },
    {

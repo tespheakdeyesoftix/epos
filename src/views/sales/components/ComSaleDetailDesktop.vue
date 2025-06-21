@@ -206,7 +206,6 @@
 </template>
 <script setup>
 
-import { useSaleCoupon } from '@/hooks/useSaleCoupon';
 import { computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import { phonePortraitOutline } from 'ionicons/icons';

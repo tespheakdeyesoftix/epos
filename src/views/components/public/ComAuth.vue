@@ -66,10 +66,14 @@ async function onConfirm(){
     }
     const loading = await app.showLoading();
     const res = app.getApi("epos_restaurant_2023.api.api.check_username",{
-        pin_code:numberInput.toString().trim()
+        pin_code:numberInput.value.toString().trim()
     })
+    
     await loading.dismiss();
-    modalController.dismiss(Number(numberInput.value || 0), 'confirm');
+    if(res.data){
+modalController.dismiss( res.data, 'confirm');
+    }
+    
 }
 
 </script>
