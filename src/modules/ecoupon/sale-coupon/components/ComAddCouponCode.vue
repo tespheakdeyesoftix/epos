@@ -206,6 +206,7 @@ function onConfirm() {
         app.showWarning("Please enter coupon value")
         return;
     }
+   
     const returnData = {
         product_code: props.data.name,
         product_name: props.data.product_name_en,
@@ -225,7 +226,9 @@ function onConfirm() {
         allow_free:props.data.allow_free,
         regular_price: props.data.is_open_product==1? doc.value.price:props.data.price
     }
+        returnData.coupon_markup_percentage   = ((returnData.coupon_value  - returnData.price )/ returnData.price) * 100
     modalController.dismiss(returnData, 'confirm')
+    
 }
 
 onMounted(() => {

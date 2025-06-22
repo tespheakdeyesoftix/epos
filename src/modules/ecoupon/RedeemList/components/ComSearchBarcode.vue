@@ -1,5 +1,4 @@
 <template>
- 
     <com-input focus 
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
