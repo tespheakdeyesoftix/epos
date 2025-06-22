@@ -9,7 +9,9 @@ import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
 import debounce from '@/directives/debounce.js'
 import VueECharts from 'vue-echarts'
+import { SafeArea } from 'capacitor-plugin-safe-area';
 import { use } from 'echarts/core'
+
 import {
   CanvasRenderer
 } from 'echarts/renderers'
@@ -148,6 +150,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/km' // import Khmer locale
 import { useApp } from './hooks/useApp';
+import { Capacitor } from '@capacitor/core';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
@@ -171,8 +174,7 @@ window.showLoading = (message: string='Loading') => showLoading(message);
 window.openModal = ( props:object) =>openModal(props);
 
 
-const {getSetting} = useApp()
-
+ 
 
 use([
   CanvasRenderer,
@@ -191,6 +193,29 @@ use([
 const app = createApp(App)
 .use(IonicVue)
 
+
+
+
+// SafeArea setup
+if (Capacitor.isNativePlatform()) {
+  SafeArea.getSafeAreaInsets().then(({ insets }) => {
+   
+    for (const [key, value] of Object.entries(insets)) {
+      document.documentElement.style.setProperty(`--safe-area-inset-${key}`, `${value}px`);
+    }
+  });
+
+  SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
+    
+    document.documentElement.style.setProperty('--status-bar-height', `${statusBarHeight}px`);
+  });
+
+  SafeArea.addListener('safeAreaChanged', ({ insets }) => {
+    for (const [key, value] of Object.entries(insets)) {
+      document.documentElement.style.setProperty(`--safe-area-inset-${key}`, `${value}px`);
+    }
+  });
+}
 
 
 

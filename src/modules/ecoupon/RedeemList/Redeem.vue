@@ -6,6 +6,7 @@
         </AppBar>
         <ion-content class="ion-padding">
             <div class="fix-container">
+                <h1>Hello World</h1>
 <ComSearchBarcode/>
 <ComRedeemCouponList />
             </div>

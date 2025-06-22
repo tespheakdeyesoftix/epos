@@ -1,0 +1,9 @@
+{
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": true,
+      "style": "DARK",
+      "backgroundColor": "red"
+    }
+  }
+}

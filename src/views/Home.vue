@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <AppBar>{{ t(currentMenu?.title || "Home") }}</AppBar>
+    <AppBar>{{ t(currentMenu?.title || "Home") }} </AppBar>
     <ion-content :fullscreen="true">
       <div class="wrapper-cover flex justify-content-end flex-column align-items-center m-3 mb-0 border-round-3xl pb-5">
         <ion-avatar style="width: 100px; height: 100px;" > 
@@ -44,10 +44,13 @@ import {  logOutOutline } from 'ionicons/icons';
 import ComWorkingDayButton from '@/views/shift/components/ComWorkingDayButton.vue';
 import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
 import HomeButton from '@/views/components/public/HomeButton.vue';
- 
+
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
 
+
+
+ 
  
 const t = window.t;
  
@@ -68,6 +71,8 @@ onMounted(async ()=>{
  if(app.route.params.parent_menu){
   await getCurrentMenu(app.route.params.parent_menu)
  }
+
+
 })
 
 const onLogout = async () => {
