@@ -17,7 +17,7 @@
         <div style="text-align: center;">{{ data?.name}} - {{ data?.customer_name_en}}</div>
 
        <stack row equal>
-        <ion-card button>
+        <ion-card button color="primary" @click="onViewTotalVisit">
           <ion-card-content>
             <ion-card-subtitle>
                 {{ data?.total_visited_count}}
@@ -27,7 +27,7 @@
               </ion-card-subtitle>
           </ion-card-content>
         </ion-card>
-        <ion-card button>
+        <ion-card button color="warning" @click="onViewTotalAnnalOrder">
           <ion-card-content>
             <ion-card-subtitle slot="end"><ComCurrency :value="data?.voucher_actual_amount"/> </ion-card-subtitle>
               <ion-card-subtitle>
@@ -35,7 +35,7 @@
               </ion-card-subtitle>
           </ion-card-content>
         </ion-card>
-        <ion-card button>
+        <ion-card button color="success" @click="onViewTotalOrder">
           <ion-card-content>
              
                 <ion-card-subtitle slot="end"><ComCurrency :value="data?.total_coupon_amount"/> </ion-card-subtitle>
@@ -47,55 +47,14 @@
         </ion-card>
         
        </stack>
- 
-        <ion-segment>
-    <ion-segment-button value="About" content-id="About">
-      <ion-label>About</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Recent Order" content-id="Recent Order">
-      <ion-label>Recent Order</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Print" content-id="Print">
-      <ion-label>Print</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <ion-segment-view>
-    <ion-segment-content id="About">
-       <ion-grid>
-    <ion-row>
-      <ion-col size="6">
-        <div>{{ data?.customer_group }}</div>
-        <div color="primary" class="mt-1"><ion-text>Guest Type</ion-text></div>
-      </ion-col>
-      <ion-col size="6">
-        <strong>Phone Number</strong> {{ data?.phone_number || data?.phone_number_2 || 'null' }}
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="6">
-        <div>{{ data?.gender}}</div>
-        <div>Gender</div> 
-      </ion-col>
-      <ion-col size="6">
-        <strong>Country</strong> {{ data?.country}}
-      </ion-col>
-    </ion-row>
-    
-  </ion-grid>
-    </ion-segment-content>
-    <ion-segment-content id="Recent Order">Recent Order</ion-segment-content>
-    <ion-segment-content id="Print">Print</ion-segment-content>
-  </ion-segment-view>
-
-        
-        
+        <ComSegment/>  
     </ion-content>
   </ion-page>
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from 'vue';
+import ComSegment from "@/views/customer/components/ComSegment.vue"
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonGrid, IonRow, IonCol, IonList, IonItem, IonLabel, IonText } from '@ionic/vue';
 import { imageUrl, getAvatarLetter } from "@/helpers/utils"
 const data = ref()
@@ -119,7 +78,27 @@ onMounted(async () => {
     await loadData()
 })
    
-
+async function onViewTotalVisit(){
+    const result = await app.utils.onViewTotalVisit();
+    if(result){
+      saleDoc.value.customer = result.name;
+      await getCustomer(result.name)
+    }
+}
+async function onViewTotalAnnalOrder(){
+    const result = await app.utils.onViewTotalAnnalOrder();
+    if(result){
+      saleDoc.value.customer = result.name;
+      await getCustomer(result.name)
+    }
+}
+async function onViewTotalOrder(){
+    const result = await app.utils.onViewTotalOrder();
+    if(result){
+      saleDoc.value.customer = result.name;
+      await getCustomer(result.name)
+    }
+}
 
 </script>
 
