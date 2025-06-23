@@ -1,11 +1,14 @@
 <template>
+  <div style="display: inline;"  @click="onSelectDate">
   <slot>
- <ion-chip @click="onSelectDate" :color="model?'secondary':''">
+ <ion-chip :color="model?'secondary':''">
    
         {{ t(getLabel) }}   
         <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear" ></ion-icon>
   </ion-chip>
 </slot>
+  </div>
+
 </template>
 <script setup>
 import ComSelectDateModal from "@/views/components/public/ComSelectDateModal.vue"

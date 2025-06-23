@@ -9,6 +9,8 @@
                 <h1>Hello World</h1>
 <ComSearchBarcode/>
 <ComRedeemCouponList />
+
+{{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" />
             </div>
         </ion-content>
         <ion-footer>
@@ -22,5 +24,7 @@
 <script setup >
 import ComSearchBarcode from "@/modules/ecoupon/RedeemList/components/ComSearchBarcode.vue"
 import ComRedeemCouponList from "@/modules/ecoupon/RedeemList/components/ComRedeemCouponList.vue"
+import { useSaleCoupon } from "@/hooks/useSaleCoupon";
     const t = window.t;
+    const {saleDoc,grandTotal} = useSaleCoupon()
 </script>

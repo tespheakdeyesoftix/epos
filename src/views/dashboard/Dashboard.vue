@@ -5,20 +5,42 @@
             <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
-             <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch">
-                <ion-item :button="true"> 
-                    <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
-                    <ion-label>{{ selectBranch }}</ion-label>
-                    <ion-button shape="round" size="small" slot="end" style="--background: #3D8D7A;" >{{t("Select Branch")}}</ion-button>
-                </ion-item>
+            <div class="ion-margin-top" style="margin-left: 10px;">
+ <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch">
+                 
+                <ion-chip>
+                     <ion-icon :icon="storefrontOutline" color="primary"></ion-icon>
+                    <ion-label>
+                         {{ selectBranch }}
+                    </ion-label>
+                    </ion-chip>
             </ComSelect>
             <ComSelect docType="POS Profile" :clearselected=clearselectedvalues :filters="[['is_edoor_profile','=',0],['business_branch','=',selectedBranches]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
-                <ion-item :button="true"> 
-                    <ion-icon color="danger" slot="start" :icon="storefrontOutline" size="large"></ion-icon>
-                    <ion-label>{{ selectProfile }}</ion-label>
-                    <ion-button shape="round" size="small" slot="end" style="--background: #3D8D7A;" >{{t("Select POS Profile")}}</ion-button>
-                </ion-item>
+              
+                <ion-chip>
+                     <ion-icon :icon="calculatorOutline" color="primary"></ion-icon>
+                    <ion-label>
+                         {{ selectBranch }}
+                    </ion-label>
+                    </ion-chip>
             </ComSelect>
+
+            <ComSelectDateFilter     v-model ="selectedDate" :clear="true"  @onSelect="onSelectedDate" @onClear="onClearDate" modalType="dialog_modal">
+                 <ion-chip>
+                     <ion-icon :icon="calendarOutline" color="primary"></ion-icon>
+                    <ion-label>
+                        <template v-if="selectedDate">
+      <span v-if="selectedDate.timespan">{{ t(selectedDate.timespan) }}</span>
+                        <span v-else>{{ selectedDate.start_date  }} to {{ selectedDate.end_date }}</span>
+                        
+                        </template>
+                        <span v-else>{{ t("Select Date") }}</span>
+                    </ion-label>
+                    </ion-chip>
+            </ComSelectDateFilter>
+
+            </div>
+             
             <stack class="ion-padding">
                 <div style="margin-bottom: -15px;">
                     <ComDashboardKPI :data="kpiData" />
@@ -41,14 +63,16 @@ import ComRecentOrder from "@/views/dashboard/components/ComRecentOrder.vue"
 import ComDashboardChart from "@/views/dashboard/components/ComDashboardChart.vue"
 import ComDashboardKPI from "@/views/dashboard/components/ComDashboardKPI.vue"
 import ComPaymentBreakdown from "@/views/dashboard/components/ComPaymentBreakdown.vue"
-import { storefrontOutline } from 'ionicons/icons';
+import { calculatorOutline, calendarOutline, storefrontOutline } from 'ionicons/icons';
 
 import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
+import { selectDate } from "@/helpers/utils";
 const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData,paymentbreakdown,selectedBranch} =  useDashboard()
 const property_name = app.property_name;
 const selectedBranches = ref("")
 const clearselectedvalues = ref(false)
+const selectedDate = ref(false)
 const selectProfile = computed(()=>{
 
     if(selectedPOSProfiles.value?.length==0){

@@ -170,7 +170,7 @@ async function validateCouponCode(c) {
 
     // validate in existing in db
     const l = await app.showLoading("Checking coupon code...")
-    const res = await app.getDocList("Coupon Codes", { fields: ["name", "is_used"], filters: [["name", "=", c]] })
+    const res = await app.getDocList("Coupon Codes", { fields: ["name", "coupon_status"], filters: [["name", "=", c]] })
 
     if (res.data.length == 0) {
         app.showWarning("This coupon code is not exist in the system.");
@@ -178,7 +178,7 @@ async function validateCouponCode(c) {
         inputRef.value.focus();
         return false
     }
-    if (res.data[0].is_used == 1) {
+    if (res.data[0].coupon_status !="Unused" ) {
         app.showWarning("This coupon is already use.")
         await l.dismiss();
         return false
