@@ -37,7 +37,10 @@ async function onScanQRCode(){
             coupons:[{coupon:couponCode.value}],
             product_photo:res.data.photo,
             price:res.data.actual_amount_balance,
-            quantity : 1  
+            quantity : 1 ,
+            coupon_value: res.data.coupon_balance,
+            coupon_markup_type : "Percent"
+
              
         } 
         sp.sub_total = sp.price * sp.quantity

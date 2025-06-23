@@ -25,10 +25,17 @@ export function useDocList(props) {
     orderBy.value = options.value.orderBy;
   }
 
+  function getFields(){
+    let f = options.value.fields;
+    f=[...f,...(options.value.columns || []).map(x=>x.fieldname)]
+    f = [...new Set(f)];
+    return f
+  }
+
   async function getData() {
     
     const response = await getDocList(props.docType, {
-      fields: options.value.fields,
+      fields: getFields(),
       filters: options.value.filters,
       orFilters: options.value?.orFilters || [],
       limit_start: startIndex.value,
@@ -123,7 +130,7 @@ export function useDocList(props) {
 
     canLoadMore.value = true;
     startIndex.value = 0;
-
+    console.log(f);
     options.value.filters = structuredClone(defaultFilters) || [];
     if (f) {
       Object.keys(f).forEach((key) => {

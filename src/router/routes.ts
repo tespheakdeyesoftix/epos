@@ -133,9 +133,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/shift/CashierShiftDetail.vue'),
     meta: { requiresAuth: true }
   },
-
-
-  
   {
     path: "/sale-detail/:name",
     component: () => import('@/views/sales/SaleDetail.vue'),
@@ -203,6 +200,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/top-up",
     component: () => import('@/modules/ecoupon/TopUpList/TopUp.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/coupon-code-list",
+    component: () => import('@/modules/ecoupon/coupon-codes/CouponCodeList.vue'),
     meta: { requiresAuth: true }
   }
 

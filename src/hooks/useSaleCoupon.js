@@ -150,7 +150,6 @@ async function onSelectProduct(p) {
 
             exists.coupons = [...exists.coupons, ...result.coupons];
             exists.quantity = exists.coupons.length;
-
             updateSaleProduct(exists)
 
         } else {
@@ -182,12 +181,25 @@ function getSaveData() {
     if(!saveData.sale_type) saveData.sale_type = saleType.value;
         saveData.sale_products.forEach(sp => {
         delete sp.selling_price;
+        sp.quantity = sp.quantity * (saleType.value=="Redeem"?-1:1)
+        sp.coupon_value = sp.coupon_value * (saleType.value=="Redeem"?-1:1)
+        sp.redeem_coupon_inform
         sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
         if (sp.coupons) {
             sp.coupons = JSON.stringify(sp.coupons)
         }
 
     });
+    
+    if(saleType.value == "Redeem"){
+saveData.payment.forEach(p=>{
+        
+        p.input_amount = p.input_amount  * -1
+    })
+    }
+    
+
+    
     return saveData;
 
 }
@@ -209,9 +221,7 @@ async function onSaveAsDraft() {
     const res = await saveSaleDoc(saveData);
     if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
-        
         onClearData()
-
         if(app.route.params.name){
             app.ionRouter.navigate(pageRoute.value,"forward","replace")
         }
@@ -219,7 +229,6 @@ async function onSaveAsDraft() {
     await l.dismiss();
 
 }
-
 
 async function onQuickPay(payment_type) {
     if (saleDoc.value.sale_products.length == 0) {
@@ -234,13 +243,8 @@ async function onQuickPay(payment_type) {
         }
     }
     const loading = await showLoading();
-    const saveData = getSaveData();
-    saveData.docstatus = 1
-    saveData.closed_by = app.currentUser.full_name
-    saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
-    saveData.sale_status = "Closed";
     // add payment type
-    saveData.payment = [
+    saleDoc.value.payment = [
         {
             payment_type: payment_type.payment_type,
             input_amount: grandTotal.value * payment_type.exchange_rate,
@@ -248,6 +252,12 @@ async function onQuickPay(payment_type) {
         }
     ]
 
+    const saveData = getSaveData();
+    saveData.docstatus = 1
+    saveData.closed_by = app.currentUser.full_name
+    saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
+    saveData.sale_status = "Closed";
+     
     const res = await saveSaleDoc(saveData);
 
     if (res.data) {

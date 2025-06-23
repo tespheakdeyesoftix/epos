@@ -19,7 +19,9 @@ import { useRouter } from 'vue-router';
 import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { useApp } from "./hooks/useApp";
+import { Capacitor } from '@capacitor/core';
 
+import { isPlatform,getPlatforms } from '@ionic/vue';
  import { StatusBar, Style } from '@capacitor/status-bar';
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();
@@ -34,10 +36,7 @@ const router = useRouter();
 app.setIonRouter(ionRouter)
 app.setRoute(route)
 app.setRouter(router)
-
-
  
-
 // Watch for route changes and update the title
 watch(() => route.meta.title, (newTitle) => {
   title.value = newTitle || 'ePOS';
@@ -46,7 +45,8 @@ watch(() => route.meta.title, (newTitle) => {
   
 onMounted(async ()=>{
 
-  const toolbarColor = getComputedStyle(document.documentElement)
+  if(Capacitor.getPlatform()!=="web"){
+const toolbarColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--ion-toolbar-background')
   .trim();
 
@@ -54,5 +54,7 @@ await StatusBar.setOverlaysWebView({ overlay: false }); // Optional: ensures web
 await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
 await StatusBar.setBackgroundColor({color: toolbarColor }); // Use white icons for dark background
 
+  }
+  
 })
 </script>
