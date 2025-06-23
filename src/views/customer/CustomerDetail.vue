@@ -14,32 +14,32 @@
             <Img v-if="data?.photo" :src="data?.photo"/>
             <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.customer_name_en) }}</div>
         </ion-avatar> 
-        <div style="text-align: center;">{{ data?.name}} - {{ data?.customer_name_en}}</div>
+        <div class="mt-2 text-center" style="font-size: 20px;">{{ data?.name}} - {{ data?.customer_name_en}}</div>
 
        <stack row equal>
         <ion-card button color="primary" @click="onViewTotalVisit">
-          <ion-card-content>
-            <ion-card-subtitle>
+          <ion-card-content class="text-center">
+            <ion-card-subtitle style="font-size: 18px;">
                 {{ data?.total_visited_count}}
               </ion-card-subtitle>
-              <ion-card-subtitle>
+              <ion-card-subtitle class="mt-2" style="font-size: 18px;">
                   {{t("Total Visit")}}
               </ion-card-subtitle>
-          </ion-card-content>
+          </ion-card-content >
         </ion-card>
         <ion-card button color="warning" @click="onViewTotalAnnalOrder">
-          <ion-card-content>
-            <ion-card-subtitle slot="end"><ComCurrency :value="data?.voucher_actual_amount"/> </ion-card-subtitle>
-              <ion-card-subtitle>
+          <ion-card-content class="text-center">
+            <ion-card-subtitle slot="end" style="font-size: 18px;"><ComCurrency :value="data?.voucher_actual_amount"/> </ion-card-subtitle>
+              <ion-card-subtitle  class="mt-2" style="font-size: 18px;">
                   {{t("Total Annual order")}}
               </ion-card-subtitle>
           </ion-card-content>
         </ion-card>
         <ion-card button color="success" @click="onViewTotalOrder">
-          <ion-card-content>
+          <ion-card-content class="text-center">
              
-                <ion-card-subtitle slot="end"><ComCurrency :value="data?.total_coupon_amount"/> </ion-card-subtitle>
-                 <ion-card-subtitle>
+                <ion-card-subtitle slot="end" style="font-size: 18px;"><ComCurrency :value="data?.total_coupon_amount"/> </ion-card-subtitle>
+                 <ion-card-subtitle  class="mt-2" style="font-size: 18px;">
                   {{t("Total Order")}}
                   </ion-card-subtitle>
            

@@ -1,13 +1,13 @@
 <template>
     <ion-segment>
           <ion-segment-button value="About" content-id="About">
-            <ion-label>About</ion-label>
+            <ion-label>{{t("About")}}</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Recent Order" content-id="Recent Order">
-            <ion-label>Recent Order</ion-label>
+            <ion-label>{{t("Recent Order")}}</ion-label>
           </ion-segment-button>
           <ion-segment-button value="Print" content-id="Print">
-            <ion-label>Print</ion-label>
+            <ion-label>{{t("Print")}}</ion-label>
           </ion-segment-button>
         </ion-segment>
         <ion-segment-view>
@@ -20,24 +20,24 @@
           </ion-col>
           <ion-col size="6">
             <div>{{ data?.phone_number || data?.phone_number_2 || 'null' }}</div>
-            <div class="mt-1"><ion-text  color="medium">Phone Number</ion-text></div> 
+            <div class="mt-1"><ion-text  color="medium">{{t("Phone Number")}}</ion-text></div> 
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="6">
             <div>{{ data?.gender}}</div>
-            <div class="mt-1"><ion-text color="medium">Gender</ion-text></div> 
+            <div class="mt-1"><ion-text color="medium">{{t("Gender")}}</ion-text></div> 
           </ion-col>
           <ion-col size="6">
             <div>{{ data?.country}}</div>
-            <div class="mt-1"><ion-text color="medium">Country</ion-text></div> 
+            <div class="mt-1"><ion-text color="medium">{{t("Country")}}</ion-text></div> 
           </ion-col>
         </ion-row>
         
       </ion-grid>
         </ion-segment-content>
-        <ion-segment-content id="Recent Order">Recent Ordergehter</ion-segment-content>
+        <ion-segment-content id="Recent Order">Recent Order</ion-segment-content>
         <ion-segment-content id="Print">Print</ion-segment-content>
       </ion-segment-view>
 </template>
