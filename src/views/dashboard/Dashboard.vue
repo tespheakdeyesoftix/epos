@@ -6,29 +6,30 @@
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
             <div class="ion-margin-top" style="margin-left: 10px;">
- <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch">
+ <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch" modalType="sheet_modal">
                  
-                <ion-chip>
-                     <ion-icon :icon="storefrontOutline" color="primary"></ion-icon>
+                <ion-chip color="primary">
+                     <ion-icon :icon="storefrontOutline" color="danger"></ion-icon>
                     <ion-label>
                          {{ selectBranch }}
                     </ion-label>
                     </ion-chip>
             </ComSelect>
-            <ComSelect docType="POS Profile" :clearselected=clearselectedvalues :filters="[['is_edoor_profile','=',0],['business_branch','=',selectedBranches]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet">
+            <ComSelect docType="POS Profile" :clearselected=clearselectedvalues :filters="[['is_edoor_profile','=',0],['business_branch','=',selectedBranches]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet" modalType="sheet_modal">
               
-                <ion-chip>
+                <ion-chip >
                      <ion-icon :icon="calculatorOutline" color="primary"></ion-icon>
                     <ion-label>
-                         {{ selectBranch }}
+                         {{ selectedPOSProfiles.map(x=>x.name).join(",") }}
                     </ion-label>
                     </ion-chip>
             </ComSelect>
 
-            <ComSelectDateFilter     v-model ="selectedDate" :clear="true"  @onSelect="onSelectedDate" @onClear="onClearDate" modalType="dialog_modal">
+            <ComSelectDateFilter     v-model ="selectedDate" :clear="true"  @onSelect="onSelectedDate" @onClear="onClearDate" modalType="sheet_modal">
                  <ion-chip>
                      <ion-icon :icon="calendarOutline" color="primary"></ion-icon>
                     <ion-label>
+                   
                         <template v-if="selectedDate">
       <span v-if="selectedDate.timespan">{{ t(selectedDate.timespan) }}</span>
                         <span v-else>{{ selectedDate.start_date  }} to {{ selectedDate.end_date }}</span>

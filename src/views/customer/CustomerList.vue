@@ -11,7 +11,7 @@
                     @click="onAddCustomer">
                 <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
             </ion-button>
-            <DocList docType="Customer" :options="options"
+            <DocList docType="Customer" :options="options"  
                 @onRowDblClick="onRowDblClick"
                 >
                     <template #name="{ item, index }">
