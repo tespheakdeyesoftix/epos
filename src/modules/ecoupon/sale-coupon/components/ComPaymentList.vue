@@ -1,5 +1,7 @@
 <template>
-   
+  <div>
+
+  
     <ion-card>
         <ion-card-content>
             <div class="w-full flex justify-content-center">
@@ -54,30 +56,42 @@
             </ion-button>
         </ion-item>
      </ion-list>
+<div class="fixed-payment">
+<ion-list class="ion-no-border">
+    <ion-item v-if="totalPaymentAmount > 0">
+      <ion-label>{{ t("Total Payment") }}</ion-label>
+      <ion-label slot="end"><ComCurrency :value="totalPaymentAmount" /></ion-label>
+    </ion-item>
 
-    <ion-list>
-        <ion-item v-if="totalPaymentAmount>0">
-            <ion-label>{{ t("Total Payment") }}</ion-label>
-            <ion-label slot="end"><ComCurrency :value="totalPaymentAmount"/></ion-label>
-        </ion-item>
-        <ion-item v-if="paymentBalance>0">
-            <ion-label>{{ t("Balance") }} ({{ mainCurrency  }})</ion-label>
-            <ion-label slot="end"><ComCurrency :value="paymentBalance"/></ion-label>
-        </ion-item>
-        <ion-item v-if="paymentBalance>0">
-            <ion-label>{{ t("Balance") }} ({{ secondCurrency  }})</ion-label>
-            <ion-label slot="end"><ComCurrency :value="paymentBalance * exchangeRate" :currency="secondCurrency"/></ion-label>
-        </ion-item>
-        <ion-item v-if="changeAmount>0">
-            <ion-label>{{ t("Change Amount") }} ({{ mainCurrency  }})</ion-label>
-            <ion-label slot="end"><ComCurrency :value="changeAmount" :currency="mainCurrency"/></ion-label>
-        </ion-item>
-        <ion-item v-if="changeAmount>0">
-            <ion-label>{{ t("Change Amount") }} ({{ secondCurrency  }})</ion-label>
-            <ion-label slot="end"><ComCurrency :value="changeAmount*changeExchangeRate" :currency="secondCurrency"/></ion-label>
-        </ion-item>
+    <ion-item v-if="paymentBalance > 0">
+      <ion-label>{{ t("Balance") }} ({{ mainCurrency }})</ion-label>
+      <ion-label slot="end"><ComCurrency :value="paymentBalance" /></ion-label>
+    </ion-item>
 
-    </ion-list>
+    <ion-item v-if="paymentBalance > 0">
+      <ion-label>{{ t("Balance") }} ({{ secondCurrency }})</ion-label>
+      <ion-label slot="end">
+        <ComCurrency :value="paymentBalance * exchangeRate" :currency="secondCurrency" />
+      </ion-label>
+    </ion-item>
+
+    <ion-item v-if="changeAmount > 0">
+      <ion-label>{{ t("Change Amount") }} ({{ mainCurrency }})</ion-label>
+      <ion-label slot="end">
+        <ComCurrency :value="changeAmount" :currency="mainCurrency" />
+      </ion-label>
+    </ion-item>
+
+    <ion-item v-if="changeAmount > 0">
+      <ion-label>{{ t("Change Amount") }} ({{ secondCurrency }})</ion-label>
+      <ion-label slot="end">
+        <ComCurrency :value="changeAmount * changeExchangeRate" :currency="secondCurrency" />
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+  
+</div> 
 </template>
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
@@ -93,3 +107,10 @@ function onDeletePayment (index){
 }
 
 </script>
+<style scoped>
+.fixed-payment{
+position: absolute;
+    bottom: -20px;
+    width: 100%;
+}
+</style>

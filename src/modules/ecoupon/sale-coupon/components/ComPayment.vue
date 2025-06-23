@@ -1,14 +1,14 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <ion-grid>
-        <ion-row>
+    <ion-grid class="h-full">
+        <ion-row class="h-full">
             <ion-col>
                 <ComPaymentInput />
             </ion-col>
             <ion-col>
                 <ComPaymentSelectPaymentType/>
             </ion-col>
-            <ion-col>
+            <ion-col class="h-full relative">
                 <ComPaymentList/>
             </ion-col>
         </ion-row>

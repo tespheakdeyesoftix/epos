@@ -8,7 +8,10 @@ import ComKeypad from "@/views/components/public/ComKeypad.vue";
 import Keyboard from '@/views/components/public/Keyboard.vue';
 import ComInputNumberModal from '@/views/components/public/ComInputNumberModal.vue';
 import ComAuth from '@/views/components/public/ComAuth.vue';
- 
+import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
+import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
+import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
+
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
  import { useApp } from '@/hooks/useApp';
@@ -574,6 +577,27 @@ export async function getPOSConfig(pos_config){
 export async function onSelectCustomer(){
   const modal = await app.openModal({
     component:ComSelectCustomer
+  })
+
+  return modal;
+}
+export async function onViewTotalVisit(){
+  const modal = await app.openModal({
+    component:ComViewTotalVisit
+  })
+
+  return modal;
+}
+export async function onViewTotalAnnalOrder(){
+  const modal = await app.openModal({
+    component:ComViewTotalAnnalOrder
+  })
+
+  return modal;
+}
+export async function onViewTotalOrder(){
+  const modal = await app.openModal({
+    component:ComViewTotalOrder
   })
 
   return modal;
