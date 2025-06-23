@@ -1,12 +1,26 @@
 <template>
- 
-    <com-input focus 
+ <ion-card>
+    <ion-card-content class="ion-no-margin">
+        <ion-label class="flex justify-item-center gap-2">
+            <ion-badge class="px-3" color="danger">
+                <h2>1</h2>
+            </ion-badge>
+            <ion-text class="ms-2">
+                <h2>
+                    <b> {{ t('Please Inter Or Scan Coupon') }}   </b>
+                </h2>
+            </ion-text>
+        </ion-label>
+        <com-input focus 
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
     />
+    </ion-card-content>
+ </ion-card>
+   
  
 </template>
 <script setup>

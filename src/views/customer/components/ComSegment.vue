@@ -1,67 +1,110 @@
 <template>
-    <ion-segment>
-          <ion-segment-button value="About" content-id="About">
-            <ion-label>{{t("About")}}</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="Recent Order" content-id="Recent Order">
-            <ion-label>{{t("Recent Order")}}</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="Print" content-id="Print">
-            <ion-label>{{t("Print")}}</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-        <ion-segment-view>
-        <ion-segment-content id="About">
-          <ion-grid>
-        <ion-row>
-          <ion-col size="6">
-            <div>{{ data?.customer_group }}</div>
-            <div class="mt-1"><ion-text color="medium">{{ t("Guest Type") }}</ion-text></div>
-          </ion-col>
-          <ion-col size="6">
-            <div>{{ data?.phone_number || data?.phone_number_2 || 'null' }}</div>
-            <div class="mt-1"><ion-text  color="medium">{{t("Phone Number")}}</ion-text></div> 
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="6">
-            <div>{{ data?.gender}}</div>
-            <div class="mt-1"><ion-text color="medium">{{t("Gender")}}</ion-text></div> 
-          </ion-col>
-          <ion-col size="6">
-            <div>{{ data?.country}}</div>
-            <div class="mt-1"><ion-text color="medium">{{t("Country")}}</ion-text></div> 
-          </ion-col>
-        </ion-row>
-        
-      </ion-grid>
-        </ion-segment-content>
-        <ion-segment-content id="Recent Order">Recent Order</ion-segment-content>
-        <ion-segment-content id="Print">Print</ion-segment-content>
-      </ion-segment-view>
+  <ion-segment>
+    <ion-segment-button value="About" content-id="About">
+      <ion-label>{{ t("About") }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Recent Order" content-id="Recent Order">
+      <ion-label>{{ t("Recent Order") }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+ 
+  <ion-segment-view class="segment-view">
+    <ion-segment-content id="About">
+      <div class="flex-grid">
+        <div
+          class="flex-item"
+          v-for="(col, index) in options.columns"
+          :key="index"
+        >
+          <div class="field-value">
+  {{
+    col.fieldtype === 'Datetime'
+      ? dayjs(data?.[col.fieldname]).format('DD-MM-YYYY')
+      : (data?.[col.fieldname] || 'null')
+  }}
+</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t(col.header) }}</ion-text>
+          </div>
+        </div>
+      </div>
+    </ion-segment-content>
+{{ col }}
+    <ion-segment-content id="Recent Order">
+      <ion-text color="medium">{{ t("Recent Order") }}</ion-text>
+    </ion-segment-content>
+  </ion-segment-view>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
-const data = ref()
- 
-async function loadData() {
-    const l = await app.showLoading()
-    let res = await app.getDoc("Customer", app.route.params.name)
-    if (res.data) {
-        data.value = res.data
-        
-    }
-
-   
-
-    await l.dismiss();
-
-}
+import dayjs from 'dayjs';
+const data = ref();
 const t = window.t;
-onMounted(async () => {
 
-    await loadData()
-})
+// Load customer data
+async function loadData() {
+  const l = await app.showLoading();
+  const res = await app.getDoc("Customer", app.route.params.name);
+  if (res.data) {
+    data.value = res.data;
+  }
+  await l.dismiss();
+}
+
+onMounted(async () => {
+  await loadData();
+});
+
+// Helper to format date fields 
+
+const options = {
+  columns: [
+    { fieldname: "name", header: "Customer" },
+    { fieldname: "customer_name_kh", header: "Name Kh" },
+    { fieldname: "gender", header: "Gender" },
+    { fieldname: "customer_group", header: "Group" },
+    { fieldname: "date_of_birth", header: "Date of Birth" },
+    { fieldname: "phone_number", header: "Phone Number" },
+    { fieldname: "company_name", header: "Company Name" },
+    { fieldname: "address", header: "Location" },
+    { fieldname: "modified", header: "Last Modified", fieldtype: "Datetime" }
+  ],
+  showSearchBar: true,
+  showBarcodeScanner: false,
+  fields: [
+    "name", "customer_name_en", "customer_name_kh", "gender",
+    "company_name", "address", "customer_group",
+    "date_of_birth", "phone_number", "modified"
+  ]
+};
 </script>
+
+<style scoped>
+.segment-view {
+  overflow-y: auto;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px;
+}
+
+.flex-item {
+  flex: 1 1 45%;
+  min-width: 140px;
+  max-width: 48%;
+  padding: 10px;
+}
+
+.field-value {
+  font-weight: 500;
+  font-size: 16px;
+}
+</style>
