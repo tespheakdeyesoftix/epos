@@ -8,8 +8,8 @@
             <div class="ion-margin-top" style="margin-left: 10px;">
  <ComSelect docType="Business Branch" v-model="selectedBranch" @onSelected="onSelectBranch" modalType="sheet_modal">
                  
-                <ion-chip>
-                     <ion-icon :icon="storefrontOutline" color="primary"></ion-icon>
+                <ion-chip color="primary">
+                     <ion-icon :icon="storefrontOutline" color="danger"></ion-icon>
                     <ion-label>
                          {{ selectBranch }}
                     </ion-label>
@@ -17,7 +17,7 @@
             </ComSelect>
             <ComSelect docType="POS Profile" :clearselected=clearselectedvalues :filters="[['is_edoor_profile','=',0],['business_branch','=',selectedBranches]]" multiple v-model="selectedPOSProfiles" @onSelected="onSelectOutlet" modalType="sheet_modal">
               
-                <ion-chip>
+                <ion-chip >
                      <ion-icon :icon="calculatorOutline" color="primary"></ion-icon>
                     <ion-label>
                          {{ selectedPOSProfiles.map(x=>x.name).join(",") }}
