@@ -356,3 +356,6 @@ a.link{
 .cursor-pointer{
 	cursor: pointer;
 }
+.relative{
+	position: relative !important;
+}
