@@ -27,12 +27,9 @@
       >
         <ComCurrency :value="d" />
       </ion-button>
+      
     </ion-col>
-  </ion-row>
-</ion-grid>
-<ion-grid class="ion-no-padding">
-  <ion-row>
-    <ion-col 
+       <ion-col 
       v-for="d in secondPredefine" 
       :key="index" 
       size="3"
