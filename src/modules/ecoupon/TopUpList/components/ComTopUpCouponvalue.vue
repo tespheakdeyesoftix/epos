@@ -3,7 +3,6 @@
     <ion-button 
     v-for="(p,index) in products" :key="index" :disabled="!topUpCouponInfo" 
     @click="onSelectCoupon(p)"
-    :color="p.name == topUpSaleProduct?.product_code?'success':''"
     >
         <template v-if="p.is_open_product==0">
 <ComCurrency :value="p.price"/>
@@ -15,6 +14,36 @@
         
          
     </ion-button>
+   <ion-grid>
+  <ion-row>
+    <ion-col
+      v-for="(p, index) in products"
+      :key="index"
+      size="6"
+      size-md="4"
+    >
+      <ion-card
+        :disabled="!topUpCouponInfo"
+        @click="onSelectCoupon(p)"
+        
+        class="coupon-card ion-no-padding"
+      >
+        <ion-card-content class="content-center ion-no-padding">
+          
+          <img :src="p.photo" alt="Coupon" class="coupon-image" />
+          <ion-chip :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name ">
+            <ion-text  >{{ p.product_name_en }}</ion-text>
+          </ion-chip>
+          
+          <div class="top-price">
+<ion-chip color="danger">{{ p.price }}</ion-chip>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
 
 </template>
 <script setup>
@@ -75,3 +104,40 @@
         
     })
 </script>
+<style scoped>
+.coupon-card {
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.coupon-card:hover {
+  transform: scale(1.03);
+  border: 1px solid green;
+}
+.content-center {
+    position: relative;  
+    
+}
+.coupon-image {
+  width: 100%;
+  border-radius: 12px;
+  max-height: 130px;
+  object-fit: cover;
+}
+.top-up-product-name{
+    position: absolute;
+    bottom:10px;
+    border-radius: 12px;
+    left:10%;
+    text-align: center;
+    width: 80%;
+    
+}
+
+.top-price{
+     position: absolute;
+    top:0px;
+    right: 0;
+
+}
+</style>

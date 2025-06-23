@@ -359,3 +359,9 @@ a.link{
 .relative{
 	position: relative !important;
 }
+.align-item-center{
+	    align-items: center;
+}
+.input-wrapper{
+min-height: 20px !important;
+}
