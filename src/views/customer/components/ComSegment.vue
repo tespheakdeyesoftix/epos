@@ -16,22 +16,22 @@
         <ion-row>
           <ion-col size="6">
             <div>{{ data?.customer_group }}</div>
-            <div color="primary" class="mt-1"><ion-text>{{ t("Guest Type") }}</ion-text></div>
+            <div class="mt-1"><ion-text color="medium">{{ t("Guest Type") }}</ion-text></div>
           </ion-col>
           <ion-col size="6">
             <div>{{ data?.phone_number || data?.phone_number_2 || 'null' }}</div>
-            <div class="mt-1"><ion-text>Phone Number</ion-text></div> 
+            <div class="mt-1"><ion-text  color="medium">Phone Number</ion-text></div> 
           </ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col size="6">
             <div>{{ data?.gender}}</div>
-            <div class="mt-1">{{t("Gender")}}</div> 
+            <div class="mt-1"><ion-text color="medium">Gender</ion-text></div> 
           </ion-col>
           <ion-col size="6">
             <div>{{ data?.country}}</div>
-            <div class="mt-1">Country</div> 
+            <div class="mt-1"><ion-text color="medium">Country</ion-text></div> 
           </ion-col>
         </ion-row>
         
