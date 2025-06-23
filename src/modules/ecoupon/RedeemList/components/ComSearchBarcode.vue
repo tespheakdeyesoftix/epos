@@ -30,14 +30,25 @@ async function onScanQRCode(){
         coupon_code:couponCode.value
     })
     if(res.data){
-        console.log((res.data))
+        
         const sp = {
             product_code:res.data.product_code,
             product_name:res.data.product_name,
-            coupons:[couponCode.value],
+            coupons:[{coupon:couponCode.value}],
             product_photo:res.data.photo,
-            price:2
+            price:res.data.actual_amount_balance,
+            quantity : 1  
+             
         } 
+        sp.sub_total = sp.price * sp.quantity
+        sp.amount = sp.sub_total
+        
+        const redeemInfo = res.data;
+        delete redeemInfo.product_code
+        delete redeemInfo.product_name
+        delete redeemInfo.photo
+        sp.redeem_coupon_info = redeemInfo
+
         saleDoc.value.sale_products.push(sp)
     }
     await l.dismiss()

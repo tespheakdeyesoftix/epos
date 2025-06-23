@@ -1,6 +1,6 @@
 <template>
     
-<ComRedeemCouponCard v-for="(sp,index) in saleDoc?.sale_products" :key="index"  :data="sp"/>
+<ComRedeemCouponCard v-for="(sp,index) in saleDoc?.sale_products" :key="index"  :data="sp" :index="index"/>
       
         
 </template>
