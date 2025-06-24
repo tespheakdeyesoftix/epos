@@ -21,43 +21,10 @@
 
       <!-- Info Cards -->
       <div class="fix-container">
-        <stack row equal>
-        <ion-card button color="primary">
-          <ion-card-content class="text-center">
-            <ion-card-subtitle style="font-size: 18px;">
-              {{ data?.total_visited_count }}
-            </ion-card-subtitle>
-            <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-              {{ t("Total Visit") }}
-            </ion-card-subtitle>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card button color="warning">
-          <ion-card-content class="text-center">
-            <ion-card-subtitle slot="end" style="font-size: 18px;">
-              <ComCurrency :value="data?.voucher_actual_amount" />
-            </ion-card-subtitle>
-            <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-              {{ t("Total Annual order") }}
-            </ion-card-subtitle>
-          </ion-card-content>
-        </ion-card>
-
-        <ion-card button color="success">
-          <ion-card-content class="text-center">
-            <ion-card-subtitle slot="end" style="font-size: 18px;">
-              <ComCurrency :value="data?.total_coupon_amount" />
-            </ion-card-subtitle>
-            <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-              {{ t("Total Order") }}
-            </ion-card-subtitle>
-          </ion-card-content>
-        </ion-card>
-      </stack>
-
-      <!-- Segment -->
-      <ComSegment />
+        
+        <ComViewCard/>
+        <!-- Segment -->
+        <ComSegment />
       </div>
     
     </ion-content>
@@ -69,6 +36,7 @@
 import { onMounted, ref } from 'vue';
 import ComSegment from "@/views/customer/components/ComSegment.vue";
 import ComCustomerFooter from "@/views/customer/components/ComCustomerFooter.vue";
+import ComViewCard from "@/views/customer/components/ComViewCard.vue";
 import { getAvatarLetter } from "@/helpers/utils";
 const data = ref();
 import dayjs from 'dayjs';

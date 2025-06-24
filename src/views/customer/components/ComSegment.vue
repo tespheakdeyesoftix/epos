@@ -20,7 +20,7 @@
   {{
     col.fieldtype === 'Datetime'
       ? dayjs(data?.[col.fieldname]).format('DD-MM-YYYY')
-      : (data?.[col.fieldname] || 'null')
+      : (data?.[col.fieldname] || '')
   }}
 </div>
           <div class="mt-1">
@@ -70,8 +70,8 @@ const options = {
     { fieldname: "address", header: "Location" },
     { fieldname: "modified", header: "Last Modified", fieldtype: "Datetime" }
   ],
-  showSearchBar: true,
-  showBarcodeScanner: false,
+  
+  
   fields: [
     "name", "customer_name_en", "customer_name_kh", "gender",
     "company_name", "address", "customer_group",
