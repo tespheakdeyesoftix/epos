@@ -693,3 +693,19 @@ export async function onInputNumber(props={title:"Enter Number"}) {
 }
 
 
+export function bankersRound(number, decimals = null) {
+  if(decimals == null){
+    decimals = app.setting.currency_precision;
+    
+  }
+  const factor = Math.pow(10, decimals);
+  const n = number * factor;
+  const integer = Math.floor(n);
+  const fraction = n - integer;
+
+  if (fraction > 0.5) return (integer + 1) / factor;
+  if (fraction < 0.5) return integer / factor;
+
+  // fraction == 0.5, round to even
+  return (integer % 2 === 0 ? integer : integer + 1) / factor;
+}

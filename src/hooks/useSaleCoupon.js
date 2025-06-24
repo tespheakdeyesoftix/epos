@@ -67,7 +67,8 @@ const paymentBalance = computed(() => {
     if (balance < 0) {
         balance = 0
     }
-    return balance
+
+    return app.utils.bankersRound(balance)
 })
 
 

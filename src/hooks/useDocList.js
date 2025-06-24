@@ -15,7 +15,7 @@ export function useDocList(props) {
   const loadingMoreData = ref(false);
   const defaultFilters = structuredClone(props.options.filters);
   let options = ref(props.options);
-
+  const totalRecord = ref(0)
   const orderBy = ref({
     field: "modified",
     order: "asc",
@@ -44,11 +44,29 @@ export function useDocList(props) {
     });
     loading.value = false;
     loadingMoreData.value = false;
+    getCount();
     if (response.data) {
       return response.data;
     }
     return [];
   }
+
+
+  async function getCount() {
+    const response = await getDocList(props.docType, {
+      fields: ["count(name) as total"],
+      filters: options.value.filters,
+      orFilters: options.value?.orFilters || [],
+    });
+    if (response.data) {
+      if(response.data.length>0){
+        totalRecord.value = response.data[0]["total"]
+      }
+      
+    }
+    
+  }
+
 
   const onLoadMore = async (event) => {
     loadingMoreData.value = true;
@@ -130,7 +148,6 @@ export function useDocList(props) {
 
     canLoadMore.value = true;
     startIndex.value = 0;
-    console.log(f);
     options.value.filters = structuredClone(defaultFilters) || [];
     if (f) {
       Object.keys(f).forEach((key) => {
@@ -173,6 +190,7 @@ export function useDocList(props) {
     meta,
     orderBy,
     options,
+    totalRecord,
     onSearch,
     getData,
     onLoadMore,

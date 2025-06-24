@@ -16,7 +16,7 @@
 
  
         <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Top Up Note')"
-          storageKey="sale_note" />
+          storageKey="top_up_note" />
       </div>
     </ion-content>
     <ComTopUpFooter />

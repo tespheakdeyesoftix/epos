@@ -97,7 +97,7 @@ onMounted(async () => {
 }
 
 .header-background {
-  background-image: url('https://picsum.photos/1920/500?blur');
+  background-image: url('https://picsum.photos/1024/300');
   background-size: cover;
   background-position: center;
   height: 100%;

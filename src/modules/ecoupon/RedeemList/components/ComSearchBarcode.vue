@@ -23,7 +23,8 @@ async function onScanQRCode(){
         await app.showWarning("Please scan qr code")
         return 
     }
-  
+    
+    couponCode.value = app.utils.getCouponNumber(couponCode.value);
       
     const l = await app.showLoading();
     const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code",{

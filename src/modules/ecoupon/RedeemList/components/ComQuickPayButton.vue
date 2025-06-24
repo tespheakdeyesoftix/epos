@@ -1,6 +1,7 @@
 <template>
    
  <ion-button 
+    :disabled="saleDoc?.sale_products?.length==0" 
  expand="full" shape="round" color="danger" id="quick_pay_button"
  @click="openPopover($event)"
  >{{ t("Quick Pay") }}</ion-button>
@@ -25,7 +26,7 @@ import {  ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { cardOutline } from "ionicons/icons";
  const event = ref(null)
-const { onQuickPay } = useSaleCoupon()
+const { onQuickPay,saleDoc } = useSaleCoupon()
 const t = window.t;
  
 const popoverOpen = ref(false)

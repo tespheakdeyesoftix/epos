@@ -3,7 +3,7 @@
         <ion-toolbar>
         
                         <stack row equal gap="5px" class="ion-padding-horizontal">
-                            <ion-button shape="round" routerLink="/home" expand="full" >
+                            <ion-button shape="round" @click="onBack" expand="full" >
                                   <ion-icon slot="start" :icon="homeOutline" />
                                 {{ t("Home")
                                 }}</ion-button>
@@ -119,6 +119,10 @@ async function onDeleteDiscount(){
 
     app.showSuccess("Remove dicount successfully")
 
+}
+
+function onBack(){
+    app.router.back();
 }
 
 </script>

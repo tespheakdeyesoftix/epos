@@ -31,7 +31,7 @@ const { couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 
 const t = window.t
 async function onScanQRCode(){
-   
+     couponCode.value = app.utils.getCouponNumber(couponCode.value);
     if(!couponCode.value){
         await app.showWarning("Please scan qr code")
         return 

@@ -11,13 +11,39 @@
     <Loading v-if="loading" />
     <template v-else>
         <slot name="filter">
-            <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
+            <ion-grid>
+                <ion-row>
+                    <ion-col :size="10">
+                        <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
+                    </ion-col>
+                    <ion-col :size="2" >
+                        <div style="display: flex; justify-content: right;">
+                            <ion-label class="ion-padding">
+{{ data.length  }} {{ t("of") }} {{ totalRecord }}
+                            </ion-label>
+                            
+                        </div>
+                    </ion-col>
+                    
+                </ion-row>
+            </ion-grid>
+            
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-            <DataTable :value="data" tableStyle="min-width: 50rem" selectionMode="single"
-                v-model:selection="selectedRow" showGridlines stripedRows @sort="onSort" :lazy="true"
-                @row-dblclick="onRowDblClick" :sortField="options.presort" :sortOrder="options.sortOrder || 1">
+            <DataTable :value="data"
+                
+                tableStyle="min-width: 50rem" selectionMode="single"
+                v-model:selection="selectedRow" 
+                showGridlines 
+                stripedRows 
+                @sort="onSort" 
+                :lazy="true"
+                @row-dblclick="onRowDblClick" 
+                :sortField="options.presort" 
+                :sortOrder="options.sortOrder || 1"
+            >
+                
                 <Column v-for="col of options.columns" :key="col.fieldname" :field="col.fieldname"
                     :header="t(col.header)" :headerClass="col.align || getAligment(col.fieldtype)"
                     :bodyClass="col.align || getAligment(col.fieldtype)" sortable>
@@ -73,7 +99,6 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import dayjs from 'dayjs';
 
-import relativeTime from "dayjs/plugin/relativeTime";
 import { useAttrs, watch } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
@@ -101,7 +126,7 @@ const props = defineProps({
 
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
-    onSort, options,onFilter
+    onSort, options,onFilter,totalRecord
 } = useDocList(props)
 
 const selectedRow = defineModel("selectedRow")

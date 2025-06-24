@@ -6,21 +6,23 @@
         </ToolBar>
         <ion-content class="ion-padding">
             <div class="fix-container">
-                <h1>Hello World</h1>
+              
 <ComSearchBarcode/>
 <ComRedeemCouponList />
+    <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
+          storageKey="redeem_note" />
 
 {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" />
 {{ t("Exchange Rate") }} :<ComCurrency :value="1" :currency="mainCurrency" /> =  <ComCurrency :value="exchange_rate" :currency="second_currency" />
 {{ t("Grand Total") }}({{ second_currency }}) :<ComCurrency :value="grandTotal*exchange_rate" :currency="second_currency" />
 
             </div>
+
+            
         </ion-content>
-        <ion-footer>
-            <ion-toolbar>
+ 
                 <ComRedeemFooter/>
-            </ion-toolbar>
-        </ion-footer>
+ 
     </ion-page>
 
 </template>

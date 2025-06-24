@@ -26,7 +26,6 @@ router.beforeEach(async (to, from, next) => {
       const waitForSetup = () =>
         new Promise<void>((resolve) => {
           const interval = setInterval(() => {
-           
             if (isAppLoadReady.value) {
               clearInterval(interval)
               resolve()

@@ -297,6 +297,22 @@ export async function removeAttachment(docType: string, docname: string, file_ur
 }
 
 
+export function getDoctypeCount(doctype:string, filters:any,orFilters:any) {
+        
+if (!frappe) {
+        return { data: null, error: "Frappe is not defined" };
+    }
+  const call = frappe.call();
+        return call.post("epos_restaurant_2023.api.utils.get_doctype_count",{doctype_name:doctype,filters:filters,or_filters:orFilters})
+        .then((r) => {
+            return { data: r.message, error: null };
+})
+        .catch((error) => {
+        return { data: null, error }
+    });
+}
+
+
 
 
 

@@ -14,14 +14,7 @@
             <DocList docType="Customer" :options="options"  
                 @onRowDblClick="onRowDblClick"
                 >
-                    <template #name="{ item, index }">
-                        <ion-button class="ion-no-margin" fill="clear" :routerLink="'customer-detail/' + item.name">
-                            {{item.name}} - {{ item.customer_name_en }}
-                        </ion-button>
-                    </template>
-                    <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
-                        <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
-                    </template>
+                    
             </DocList>
             
         </ion-content>
@@ -32,13 +25,13 @@
 import { ref } from 'vue';
 import { addOutline } from "ionicons/icons";
 
-import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
+ 
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
 const options = {
     columns:[
-        {fieldname:"name",header:"Customer"},
+        {fieldname:"customer_code_name",header:"Customer",url:"/customer-detail",id_field:"name" },
         {fieldname:"customer_name_kh",header:"Name Kh"},
         {fieldname:"gender",header:"Gender"},
         {fieldname:"customer_group",header:"Group"},
@@ -59,6 +52,7 @@ const options = {
 
   filterOptions:[
     {fieldname:"customer_group", fieldtype:"Link",options:"Customer Group", label:t('Customer Group'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal'},
+    {fieldname:"gender", fieldtype:"Select",options:['Not Set','Male',"Female"], label:t('Gender'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal'},
    
   ]
 }
@@ -67,15 +61,7 @@ function onRowDblClick(data){
     app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
 }
 async function onAddCustomer(){
-  //  const result = await app.openModal({
-  //   component:ComAddCustomer
-  // })
-
-  // if(result){
-  //   saleDoc.value.customer =result.name;
-  //     await getCustomer(saleDoc.value.customer);
-  // }
-
+ 
     const result = await app.utils.onAddCustomer();
     if(result){
        saleDoc.value.customer = result
