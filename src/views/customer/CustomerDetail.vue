@@ -1,10 +1,8 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ t("Customer Detail") }} - {{ data?.name }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ToolBar>
+      {{ t("Customer Detail") }} - {{ data?.name }}
+    </ToolBar>
  
     <ion-content >
       <!-- Header with background image -->
@@ -61,8 +59,9 @@
       <!-- Segment -->
       <ComSegment />
       </div>
-      <ComCustomerFooter/>
+    
     </ion-content>
+      <ComCustomerFooter/>
   </ion-page>
 </template>
 
@@ -93,12 +92,12 @@ onMounted(async () => {
 /* Header section */
 .profile-header {
   position: relative;
-  height: 180px;
+  height: 300px;
   background-color: #f0f0f0;
 }
 
 .header-background {
-  background-image: url('https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4');
+  background-image: url('https://picsum.photos/1920/500?blur');
   background-size: cover;
   background-position: center;
   height: 100%;

@@ -14,7 +14,10 @@ const getSeverity = () => {
         case 'Paid':
             return 'success';
         case 'Closed':
+            return 'success';    
+        case 'Used':
             return 'success';
+
         case 'Unpaid':
             return 'danger';
         case 'Draft':
@@ -27,6 +30,8 @@ const getSeverity = () => {
         case 'Top Up':
             return 'warning';    
         case 'Redeem':
+            return 'danger';
+        case 'Redeemed':
             return 'danger';
 
 
