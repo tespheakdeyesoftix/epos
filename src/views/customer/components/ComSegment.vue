@@ -9,10 +9,11 @@
   </ion-segment>
 
   <ion-segment-view class="segment-view">
-    <ion-segment-content id="About">
-      
+    <ion-segment-content id="About" class="ion-padding">
+     
 
-       <div class="flex-grid p-0" >
+
+   <div class="flex-grid p-0" >
 
         <div class="flex-item">
           <div class="field-value">{{ data?.name || '' }}</div>
@@ -76,14 +77,14 @@
           <div class="field-value">
              <span v-tooltip="dayjs(data?.modified).format('ddd, DD MM YYYY HH:mm A')">
             {{ dayjs(data?.modified).fromNow() }}</span>
-            <!-- {{ data?.modified ? dayjs(data.modified).format('DD-MM-YYYY') : '' }} -->
+             
           </div>
           <div class="mt-1">
             <ion-text color="medium">{{ t("Last Modified") }}</ion-text>
           </div>
         </div>
 
-      </div> 
+      </div>   
     </ion-segment-content>
 
     <ion-segment-content id="Recent Order">
@@ -97,6 +98,7 @@
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 import Stack from '@/views/components/public/Stack.vue';
+
 
 const data = ref(null);
 const t = window.t;
