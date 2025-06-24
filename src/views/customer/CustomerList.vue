@@ -1,35 +1,33 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
-        <ion-content>
-            <ion-button 
-                    shape="round" 
-                    fill="solid"  
-                    v-tooltip.top="t('Add new customer')"  
-                    color="primary"  
-                    style="position: fixed; bottom: 20px; right: 20px; z-index: 999;"
-                    @click="onAddCustomer">
-                <ion-icon :icon="addOutline" slot="icon-only"></ion-icon>
-            </ion-button>
+        <ion-content ref="contentRef">
+            
             <DocList docType="Customer" :options="options"  
+                :contentRef="contentRef"
                 @onRowDblClick="onRowDblClick"
                 >
                     
             </DocList>
-            
+           
         </ion-content>
-        
+       <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab-button v-tooltip.top="t('Add new customer')" @click="onAddCustomer" >
+    <ion-icon :icon="addOutline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
     </ion-page>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { ref  } from 'vue';
 import { addOutline } from "ionicons/icons";
-
- 
+const contentRef = ref(null)
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
 const options = {
+   
     columns:[
         {fieldname:"customer_code_name",header:"Customer",url:"/customer-detail",id_field:"name" },
         {fieldname:"customer_name_kh",header:"Name Kh"},
@@ -69,6 +67,7 @@ async function onAddCustomer(){
     
     }
 }
+
 </script>
 <style>
     .customer__name::part(native-span){

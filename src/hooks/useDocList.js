@@ -1,4 +1,4 @@
-import { ref, onMounted } from "vue";
+import { ref, onMounted,nextTick } from "vue";
 import { getDocList } from "@/services/api-service";
  
 import { useApp } from "./useApp";
@@ -175,12 +175,26 @@ export function useDocList(props) {
     await _loading.dismiss();
   }
 
+  const checkScrollFillsScreen = async () => {
+  await nextTick(); // wait for DOM update
+  const content = props.contentRef.$el;
+  if (content.scrollHeight <= content.clientHeight && canLoadMore.value) {
+    
+    await  onLoadMore({ target: { complete: () => {} } });
+   
+  }
+};
+
   onMounted(async () => {
     loading.value = true;
     const result = await getData();
     data.value = result;
-
+    
     meta = await getMeta(props.docType);
+     if(props.contentRef){
+      await checkScrollFillsScreen();
+     }
+
   });
 
   return {

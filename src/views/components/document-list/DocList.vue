@@ -119,7 +119,8 @@ const props = defineProps({
             showBarcodeScanner: false,
             fields: ["name"]
         }
-    }
+    },
+    contentRef:Object
 
 
 })
