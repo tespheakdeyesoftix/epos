@@ -27,7 +27,7 @@
 import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
-const { couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
+const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 
 const t = window.t
 async function onScanQRCode(){
@@ -42,6 +42,7 @@ async function onScanQRCode(){
     })
     if(res.data){
         topUpCouponInfo.value =res.data
+        saleDoc.value.customer= res.data.customer.name
     }
     await l.dismiss()
     couponCode.value = ""

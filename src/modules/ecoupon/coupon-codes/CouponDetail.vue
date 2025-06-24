@@ -7,6 +7,7 @@
          {{ t("Coupon Detail") }}
         </ToolBar>
         <ion-content>
+            {{ data }}
            <div class="fix-container">
             <ion-card class="ion-padding">
                 <ion-card-title>{{ t("Coupon Code Information") }}</ion-card-title>
@@ -92,10 +93,25 @@
 </template>
 <script setup>
 
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const t = window.t;
 const showAppBar = ref(app.route.query.appbar==1)
+const data = ref()
+async function getData(){
+    const l = await app.showLoading();
+    const res = await app.getApi("epos_restaurant_2023.selling.doctype.coupon_codes.coupon_codes.get_coupon_info",{
+        coupon:app.route.params.name
+    })
+    if (res.data){
+        data.value= res.data
+    }
+
+    await l.dismiss();
+}
+onMounted(async ()=>{
+await getData();
+})
 </script>
 <style scoped>
 ion-list,ion-item{

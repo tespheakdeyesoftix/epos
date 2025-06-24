@@ -115,17 +115,18 @@ async function onScanBarCode() {
 async function addCoupon() {
 
 
-    const canAdd = await validateCouponCode(app.utils.getCouponNumber(coupon.value))
-    if (!canAdd) {
+    const data = await validateCouponCode(app.utils.getCouponNumber(coupon.value))
+    if (!data) {
         coupon.value = ""
         inputRef.value.focus()
         return;
     }
     // check 
     // check exists
-
+  
     coupounList.value.push({
-        coupon: app.utils.getCouponNumber(coupon.value),
+        name:data.name,
+        coupon: data.coupon,
         creation: dayjs()
     })
 
@@ -170,21 +171,15 @@ async function validateCouponCode(c) {
 
     // validate in existing in db
     const l = await app.showLoading("Checking coupon code...")
-    const res = await app.getDocList("Coupon Codes", { fields: ["name", "coupon_status"], filters: [["name", "=", c]] })
-
-    if (res.data.length == 0) {
-        app.showWarning("This coupon code is not exist in the system.");
-        await l.dismiss();
-        inputRef.value.focus();
-        return false
+    const res = await app.getApi("epos_restaurant_2023.selling.doctype.coupon_codes.coupon_codes.check_coupon_code", { coupon: c })
+    if(res.error){
+         await l.dismiss();
+         return false
     }
-    if (res.data[0].coupon_status !="Unused" ) {
-        app.showWarning("This coupon is already use.")
-        await l.dismiss();
-        return false
-    }
+     
+  
     await l.dismiss();
-    return true
+    return res.data
 }
 
 function onDelete(index) {
