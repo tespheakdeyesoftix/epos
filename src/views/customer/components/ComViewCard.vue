@@ -3,7 +3,7 @@
     <ion-card button color="primary">
       <ion-card-content class="text-center">
         <ion-card-subtitle style="font-size: 18px;">
-          {{ data?.total_visited_count ?? 0 }}
+          {{ data?.total_visit ?? 0 }}
         </ion-card-subtitle>
         <ion-card-subtitle class="mt-2" style="font-size: 18px;">
           {{ t("Total Visit") }}
@@ -14,7 +14,7 @@
     <ion-card button color="warning">
       <ion-card-content class="text-center">
         <ion-card-subtitle slot="end" style="font-size: 18px;">
-          <ComCurrency :value="data?.voucher_actual_amount ?? 0" />
+          <ComCurrency :value="data?.total_annual_order ?? 0" />
         </ion-card-subtitle>
         <ion-card-subtitle class="mt-2" style="font-size: 18px;">
           {{ t("Total Annual order") }}
@@ -25,7 +25,7 @@
     <ion-card button color="success">
       <ion-card-content class="text-center">
         <ion-card-subtitle slot="end" style="font-size: 18px;">
-          <ComCurrency :value="data?.total_coupon_amount ?? 0" />
+          <ComCurrency :value="data?.total_order ?? 0" />
         </ion-card-subtitle>
         <ion-card-subtitle class="mt-2" style="font-size: 18px;">
           {{ t("Total Order") }}
@@ -46,7 +46,7 @@ async function getData() {
     const response = await app.getApi(
       'epos_restaurant_2023.selling.doctype.customer.customer.get_customer_order_summary',
       {
-        
+        customer: app.route.params.name
       }
     )
 
