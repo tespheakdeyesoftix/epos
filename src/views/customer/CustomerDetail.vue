@@ -22,9 +22,9 @@
       <!-- Info Cards -->
       <div class="fix-container">
         
-        <ComViewCard/>
+        <ComViewCard />
         <!-- Segment -->
-        <ComSegment />
+        <ComSegment :data="data"/>
       </div>
     
     </ion-content>

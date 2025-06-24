@@ -1,5 +1,5 @@
 <template>
-  <ion-segment>
+   <ion-segment @ionChange="onSegmentChange">
     <ion-segment-button value="About" content-id="About">
       <ion-label>{{ t("About") }}</ion-label>
     </ion-segment-button>
@@ -87,33 +87,29 @@
     </ion-segment-content>
 
     <ion-segment-content id="Recent Order">
-      <ion-text color="medium">{{ t("Recent Order") }}</ion-text>
+      <ComCustomerRecentOrder v-if="isRecentOrderLoaded" :customer="data.name"/>
     </ion-segment-content>
   </ion-segment-view>
  
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import {  ref } from 'vue';
 import dayjs from 'dayjs';
-import Stack from '@/views/components/public/Stack.vue';
-
-const data = ref(null);
+import ComCustomerRecentOrder from "@/views/customer/components/ComCustomerRecentOrder.vue"
+const props = defineProps({
+  data:Object
+})
+ 
 const t = window.t;
-
-// Load customer data
-async function loadData() {
-  const loading = await app.showLoading();
-  const res = await app.getDoc("Customer", app.route.params.name);
-  if (res.data) {
-    data.value = res.data;
+const isRecentOrderLoaded = ref(false)
+ 
+ 
+function onSegmentChange(event){
+  if(event.detail.value=="Recent Order"){
+    isRecentOrderLoaded.value = true
   }
-  await loading.dismiss();
 }
-
-onMounted(() => {
-  loadData();
-});
 </script>
 
 <style scoped>
