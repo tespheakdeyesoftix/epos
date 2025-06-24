@@ -74,7 +74,9 @@
 
         <div class="flex-item">
           <div class="field-value">
-            {{ data?.modified ? dayjs(data.modified).format('DD-MM-YYYY') : '' }}
+             <span v-tooltip="dayjs(data?.modified).format('ddd, DD MM YYYY HH:mm A')">
+            {{ dayjs(data?.modified).fromNow() }}</span>
+            <!-- {{ data?.modified ? dayjs(data.modified).format('DD-MM-YYYY') : '' }} -->
           </div>
           <div class="mt-1">
             <ion-text color="medium">{{ t("Last Modified") }}</ion-text>
