@@ -7,77 +7,111 @@
       <ion-label>{{ t("Recent Order") }}</ion-label>
     </ion-segment-button>
   </ion-segment>
- 
+
   <ion-segment-view class="segment-view">
     <ion-segment-content id="About">
-      <div class="flex-grid">
-        <div
-          class="flex-item"
-          v-for="(col, index) in options.columns"
-          :key="index"
-        >
-          <div class="field-value">
-  {{
-    col.fieldtype === 'Datetime'
-      ? dayjs(data?.[col.fieldname]).format('DD-MM-YYYY')
-      : (data?.[col.fieldname] || '')
-  }}
-</div>
+      
+
+       <div class="flex-grid p-0" >
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.name || '' }}</div>
           <div class="mt-1">
-            <ion-text color="medium">{{ t(col.header) }}</ion-text>
+            <ion-text color="medium">{{ t("Customer") }}</ion-text>
           </div>
         </div>
-      </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.customer_name_kh || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Name Kh") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.gender || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Gender") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.customer_group || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Group") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">
+            {{ data?.date_of_birth ? dayjs(data.date_of_birth).format('DD-MM-YYYY') : '' }}
+          </div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Date of Birth") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.phone_number || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Phone Number") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.company_name || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Company Name") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">{{ data?.address || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Location") }}</ion-text>
+          </div>
+        </div>
+
+        <div class="flex-item">
+          <div class="field-value">
+            {{ data?.modified ? dayjs(data.modified).format('DD-MM-YYYY') : '' }}
+          </div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Last Modified") }}</ion-text>
+          </div>
+        </div>
+
+      </div> 
     </ion-segment-content>
-{{ col }}
+
     <ion-segment-content id="Recent Order">
       <ion-text color="medium">{{ t("Recent Order") }}</ion-text>
     </ion-segment-content>
   </ion-segment-view>
+ 
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
-const data = ref();
+import Stack from '@/views/components/public/Stack.vue';
+
+const data = ref(null);
 const t = window.t;
 
 // Load customer data
 async function loadData() {
-  const l = await app.showLoading();
+  const loading = await app.showLoading();
   const res = await app.getDoc("Customer", app.route.params.name);
   if (res.data) {
     data.value = res.data;
   }
-  await l.dismiss();
+  await loading.dismiss();
 }
 
-onMounted(async () => {
-  await loadData();
+onMounted(() => {
+  loadData();
 });
-
-// Helper to format date fields 
-
-const options = {
-  columns: [
-    { fieldname: "name", header: "Customer" },
-    { fieldname: "customer_name_kh", header: "Name Kh" },
-    { fieldname: "gender", header: "Gender" },
-    { fieldname: "customer_group", header: "Group" },
-    { fieldname: "date_of_birth", header: "Date of Birth" },
-    { fieldname: "phone_number", header: "Phone Number" },
-    { fieldname: "company_name", header: "Company Name" },
-    { fieldname: "address", header: "Location" },
-    { fieldname: "modified", header: "Last Modified", fieldtype: "Datetime" }
-  ],
-  
-  
-  fields: [
-    "name", "customer_name_en", "customer_name_kh", "gender",
-    "company_name", "address", "customer_group",
-    "date_of_birth", "phone_number", "modified"
-  ]
-};
 </script>
 
 <style scoped>
@@ -100,7 +134,7 @@ const options = {
   flex: 1 1 45%;
   min-width: 140px;
   max-width: 48%;
-  padding: 10px;
+  padding: 5px;
 }
 
 .field-value {
