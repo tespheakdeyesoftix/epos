@@ -1,4 +1,5 @@
 <template>
+  
    <ion-segment @ionChange="onSegmentChange">
     <ion-segment-button value="About" content-id="About">
       <ion-label>{{ t("About") }}</ion-label>
@@ -7,7 +8,7 @@
       <ion-label>{{ t("Recent Order") }}</ion-label>
     </ion-segment-button>
   </ion-segment>
-
+ 
   <ion-segment-view class="segment-view">
     <ion-segment-content id="About" class="ion-padding">
      
@@ -88,10 +89,10 @@
     </ion-segment-content>
 
     <ion-segment-content id="Recent Order">
-      <ComCustomerRecentOrder v-if="isRecentOrderLoaded" :customer="data.name"/>
+      <ComCustomerRecentOrder v-if="isRecentOrderLoaded" :customer="data.name" :address="data.address"/>
     </ion-segment-content>
   </ion-segment-view>
- 
+
 </template>
 
 <script setup>

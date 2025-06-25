@@ -6,7 +6,7 @@
             <ion-button  @click="onClose" color="danger"> {{ t('Close') }}</ion-button>
             
             <ComQuickPayButton/>
-            <ion-button color="success" @click="onPaymentClick"> {{ t('Edit') }}</ion-button>
+            <ion-button color="success" @click="onEditClick"> {{ t('Edit') }}</ion-button>
             </div>
            
         </ion-toolbar>
