@@ -361,5 +361,6 @@ a.link{
 }
 .align-item-center{
 	    align-items: center;
+		justify-items: center;
 }
  

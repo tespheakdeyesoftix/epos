@@ -8,7 +8,6 @@
     </ToolBar>
     <ion-content>
       <div class="fix-container">
-        {{ saleDoc }}
         <ComSearchBarcode />
         <ComCouponInformation />
         <ComTopUpCouponvalue />

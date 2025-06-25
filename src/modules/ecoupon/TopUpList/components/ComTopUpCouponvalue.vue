@@ -1,20 +1,13 @@
 <template>
-    {{ saleProduct }}
-    <ion-button 
-    v-for="(p,index) in products" :key="index" :disabled="!topUpCouponInfo" 
-    @click="onSelectCoupon(p)"
-    >
-        <template v-if="p.is_open_product==0">
-<ComCurrency :value="p.price"/>
-{{ p }}
-        </template>
-        <template v-else>
-            Add Custom Amount
-        </template>
-        
-         
-    </ion-button>
-   <ion-grid>
+    <ion-card class="relative">
+      <ion-card-title class="pl-2 pt-2">
+    <div class="flex align-item-center gap-2">
+ <ion-chip color="danger bg-red-500 text-white">2</ion-chip>
+ <ion-label class="label-top-up">{{ t('Choose Top-Up Option') }}</ion-label>
+  </div>
+      </ion-card-title>
+      <ion-card-content class="ion-no-padding">
+        <ion-grid class="ion-no-padding">
   <ion-row>
     <ion-col
       v-for="(p, index) in products"
@@ -25,34 +18,37 @@
       <ion-card
         :disabled="!topUpCouponInfo"
         @click="onSelectCoupon(p)"
-        
         class="coupon-card ion-no-padding"
       >
         <ion-card-content class="content-center ion-no-padding">
           
           <img :src="p.photo" alt="Coupon" class="coupon-image" />
-          <ion-chip :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name ">
+          <ion-card :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name">
             <ion-text  >{{ p.product_name_en }}</ion-text>
-          </ion-chip>
-          
+          </ion-card>
           <div class="top-price">
-<ion-chip color="danger">{{ p.price }}</ion-chip>
+<ion-card class="padding" color="danger">
+  <ComCurrency :value="p.price" /></ion-card>
           </div>
+          <ion-card v-if="p.is_open_product!=0" class="custom" color="warning">
+            Custom
+          </ion-card>
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
 </ion-grid>
-
-
+      </ion-card-content>
+</ion-card>
 </template>
 <script setup>
     import {ref,onMounted} from "vue"
     import {useProductMenu} from "@/hooks/useProductMenu"
     import {useSaleCoupon} from "@/hooks/useSaleCoupon"
     import  ComEnterCustomTopupAmount from "@/modules/ecoupon/TopUpList/components/ComEnterCustomTopupAmount.vue"
-
+    const t = window.t;
     import dayjs from "dayjs";
+import ComCurrency from "@/views/components/public/ComCurrency.vue";
     const {products} = useProductMenu();
     const {saleDoc,topUpCouponInfo,topUpSaleProduct} = useSaleCoupon();
      
@@ -109,9 +105,11 @@
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  max-height: 130px;
 }
 .coupon-card:hover {
   transform: scale(1.03);
+  border: 1px solid green;
   border: 1px solid green;
 }
 .content-center {
@@ -130,14 +128,29 @@
     border-radius: 12px;
     left:10%;
     text-align: center;
+    padding: 5px;
+    margin: 0 !important;
     width: 80%;
     
 }
-
-.top-price{
-     position: absolute;
-    top:0px;
-    right: 0;
-
+.custom{
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 4px 30px;
+  border-bottom-right-radius: 6px;
+  transform: translate(-20%, -20%) rotate(-20deg);
 }
+.top-price{
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.top-price .padding{
+padding:5px 10px;
+ border-radius: 12px;
+}
+
 </style>

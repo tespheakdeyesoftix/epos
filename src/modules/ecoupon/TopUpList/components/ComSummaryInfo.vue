@@ -1,23 +1,32 @@
 <template>
     <h1>Summary</h1>
-<ion-card button >
+<ion-card  class="icon-no-padding ion-no-margin my-3" color="danger" >
     <ion-card-content>
-        
-        <ion-label>
+        <div class="flex justify-content-between align-item-center">
+
+     
+        <div>
+             <ion-label>
+            {{ t('Total') }} ({{ mainCurrency }}) :
             <ComCurrency :value="grandTotal"/> 
         </ion-label>
-        
+        <br>
         <ion-label>
-            <ComCurrency :value="grandTotalSecondCurrency" :currency="second_currency"/> 
+            {{ t('Total') }} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency" :currency="second_currency"/> 
         </ion-label>
-
-        <ion-label>
-            Payment 
-        </ion-label>
-
-        exchange_rate: 
-        <ComCurrency :value="1" :currency="mainCurrency" /> = 
+        </div>
+       <div>
+  <ion-chip style="float: right;">
+            <ComCurrency :value="1" :currency="mainCurrency" /> 
+            <span class="mx-2"> = </span>
+           
         <ComCurrency :value="exchange_rate" :currency="second_currency" /> 
+        </ion-chip>
+       </div>
+   </div>
+       
+      
+        
 
     </ion-card-content>
 </ion-card>
@@ -29,7 +38,7 @@ import { useApp } from "@/hooks/useApp.ts"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { ref } from "vue";
 const {exchange_rate} = useApp()
-
+const t = window.t;
 const {grandTotal, grandTotalSecondCurrency } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
