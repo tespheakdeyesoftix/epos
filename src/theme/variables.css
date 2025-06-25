@@ -361,7 +361,6 @@ a.link{
 }
 .align-item-center{
 	    align-items: center;
+		justify-items: center;
 }
-.input-wrapper{
-min-height: 20px !important;
-}
+ 

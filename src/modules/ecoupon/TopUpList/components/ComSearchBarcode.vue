@@ -1,16 +1,13 @@
 <template>
  <ion-card>
+     <ion-card-title class="pl-2 pt-2">
+    <div class="flex align-item-center gap-2">
+ <ion-chip color="danger bg-red-500 text-white">1</ion-chip>
+ <ion-label class="label-top-up">{{ t('Please scan or enter your coupon code.') }}</ion-label>
+  </div>
+      </ion-card-title>
     <ion-card-content class="ion-no-margin">
-        <ion-label class="flex justify-item-center gap-2">
-            <ion-badge class="px-3" color="danger">
-                <h2>1</h2>
-            </ion-badge>
-            <ion-text class="ms-2">
-                <h2>
-                    <b> {{ t('Please Inter Or Scan Coupon') }}   </b>
-                </h2>
-            </ion-text>
-        </ion-label>
+       
         <com-input focus 
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
@@ -27,7 +24,7 @@
 import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
-const { couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
+const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 
 const t = window.t
 async function onScanQRCode(){
@@ -42,6 +39,7 @@ async function onScanQRCode(){
     })
     if(res.data){
         topUpCouponInfo.value =res.data
+        saleDoc.value.customer= res.data.customer.name
     }
     await l.dismiss()
     couponCode.value = ""
