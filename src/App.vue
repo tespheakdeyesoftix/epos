@@ -18,10 +18,9 @@ import { IonApp, IonRouterOutlet, useIonRouter } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
-import { useApp } from "./hooks/useApp";
 import { Capacitor } from '@capacitor/core';
 
-import { isPlatform,getPlatforms } from '@ionic/vue';
+ 
  import { StatusBar, Style } from '@capacitor/status-bar';
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();
@@ -44,7 +43,7 @@ watch(() => route.meta.title, (newTitle) => {
 });
   
 onMounted(async ()=>{
-
+ 
   if(Capacitor.getPlatform()!=="web"){
 const toolbarColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--ion-toolbar-background')

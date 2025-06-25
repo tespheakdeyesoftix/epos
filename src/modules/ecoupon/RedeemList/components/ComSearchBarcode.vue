@@ -27,7 +27,7 @@ async function onScanQRCode(){
     couponCode.value = app.utils.getCouponNumber(couponCode.value);
       
     const l = await app.showLoading();
-    const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code",{
+    const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code_for_redeem",{
         coupon_code:couponCode.value
     })
     if(res.data){
@@ -35,7 +35,7 @@ async function onScanQRCode(){
         const sp = {
             product_code:res.data.product_code,
             product_name:res.data.product_name,
-            coupons:[{coupon:couponCode.value}],
+            coupons:[{name:res.data.coupon_code, coupon:couponCode.value}],
             product_photo:res.data.photo,
             price:res.data.actual_amount_balance,
             quantity : 1 ,

@@ -62,17 +62,21 @@
       <div class="terms">
        <ion-grid class="coupon-transaction-table">
   <ion-row class="header-row">
-    <ion-col size="4"><strong>Transaction Type</strong></ion-col>
-    <ion-col size="4"><strong>Markup</strong></ion-col>
-    <ion-col size="4"><strong>Coupon Amount</strong></ion-col>
+    <ion-col size="3"><strong>{{ t("Transaction Type") }}</strong></ion-col>
+    <ion-col size="3"><strong>{{ t("Price") }}</strong></ion-col>
+    <ion-col size="3"><strong>{{ t("Markup") }}</strong></ion-col>
+    <ion-col size="3"><strong>{{ t("Coupon Amount") }}</strong></ion-col>
   </ion-row>
 
   <ion-row v-for="(tx, index) in topUpCouponInfo?.coupon_transaction" :key="index" class="data-row">
-    <ion-col size="4">{{ tx.transaction_type }}</ion-col>
-    <ion-col size="4">
+    <ion-col size="3">{{ tx.transaction_type }}</ion-col>
+    <ion-col size="3">
+      <ComCurrency :value="tx.input_actual_amount" />
+    </ion-col>
+    <ion-col size="3">
       {{ tx.markup_percentage.toFixed(2) }}%
     </ion-col>
-    <ion-col size="4">
+    <ion-col size="3">
         <ComCurrency :value="tx.coupon_amount" />
     </ion-col>
   </ion-row>

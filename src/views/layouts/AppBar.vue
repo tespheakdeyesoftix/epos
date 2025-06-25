@@ -15,7 +15,7 @@
         style="max-width: 300px;"
         @ionChange="onCheckCouponCode"
         v-model="keyword"
-
+        
       ></ion-searchbar>
   
            <ion-buttons slot="end">
@@ -40,9 +40,17 @@ import { ref } from 'vue';
 
 const t = window.t;
 const keyword = ref("")
-function onCheckCouponCode(){
+async function onCheckCouponCode(){
   if(keyword.value){
-      app.ionRouter.navigate("/coupon-detail/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1")
+      const res = await app.getDocList("Coupon Codes", {
+        filters: [["coupon", "=", app.utils.getCouponNumber(keyword.value)]],
+        limit: 1
+      });
+      if(res.data.length == 0){
+        await app.showWarning(t("No coupon code found"));
+        return;
+      }
+      app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1")
   }
   keyword.value = ""
 }

@@ -3,7 +3,7 @@
         
         <ion-toolbar  >
             <div style="display: flex; justify-content: center;gap: 10px;"> 
-            <ion-button routerLink="/home"> {{ t('Home') }}</ion-button>
+            <ion-button @click="onGoHome"> {{ t('Home') }}</ion-button>
             
             <ion-button :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}
  
@@ -32,4 +32,8 @@ async function onPaymentClick(){
     await onPayment()
     
 }
+function onGoHome(){
+    app.router.back()
+}
+
 </script>

@@ -136,7 +136,7 @@ const t = window.t;
 
 
 const displayCoupons = computed(() => {
-    const allCoupuns = props.data.coupons.map(x => x.coupon);
+    const allCoupuns = (props.data.coupons || []).map(x => x.coupon);
     if (allCoupuns.length > 3) {
         return allCoupuns.slice(0, 3);
     }

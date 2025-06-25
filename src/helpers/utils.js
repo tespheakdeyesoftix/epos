@@ -445,7 +445,9 @@ export function checkArrayType(value) {
 
 
 export function getPlateform(){
-  if( isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
+   const screenWidth = window.innerWidth;
+ 
+  if( screenWidth>=1024 || isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
     return "desktop"
   }
   return "mobile"

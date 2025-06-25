@@ -73,8 +73,7 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
         }
 
 
- 
-
+  
        topUpSaleProduct.value.product_code = p.name 
         topUpSaleProduct.value.product_name= p.product_name_en,
         topUpSaleProduct.value.quantity= 1
@@ -82,7 +81,7 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
         topUpSaleProduct.value.sub_total = price
         topUpSaleProduct.value.price = price
         topUpSaleProduct.value.total_amount =  price
-        topUpSaleProduct.value.coupons =  [{coupon:topUpCouponInfo.value.coupon_number,creation:dayjs()}]
+        topUpSaleProduct.value.coupons =  [{name:topUpCouponInfo.value.coupon_code, coupon:topUpCouponInfo.value.coupon_number,creation:dayjs()}]
         topUpSaleProduct.value.allow_discount =  p.allow_discount  
         topUpSaleProduct.value.coupon_markup_type  =  p.coupon_markup_type
         topUpSaleProduct.value.coupon_markup_value  =  p.coupon_markup_value

@@ -21,7 +21,7 @@
 import { ref } from 'vue';
 import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
 const plateform = ref(app.utils.getPlateform())
-
+ 
 const t = window.t
 const options = {
     columns:[
