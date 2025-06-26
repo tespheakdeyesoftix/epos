@@ -154,11 +154,15 @@ function onRowDblClick(event) {
     if (event.data) {
         emit("onRowDblClick", event.data);
     }
-
-
-
+ 
 }
 
+
+ 
+
+defineExpose({
+   onRefresh
+})
 
 
 

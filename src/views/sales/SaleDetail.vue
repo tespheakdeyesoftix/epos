@@ -13,11 +13,11 @@
         <ion-footer>
             <ion-toolbar>
                 <div style="display: flex;justify-content: center;gap:10px">
-<ion-button @click="onEdit" shape="round" >{{ t("Edit") }}</ion-button>
-<ComPrintBillButton  :name="doc?.name"/>
-<ion-button shape="round" color="danger">{{ t("Delete") }}</ion-button>
-                </div>
-                
+                <ion-button @click="onEdit" shape="round" >{{ t("Edit") }}</ion-button>
+                <ComPrintBillButton  :name="doc?.name"/>
+                <ion-button shape="round" color="danger">{{ t("Delete") }}</ion-button>
+                                </div>
+                                
             </ion-toolbar>
         </ion-footer>
     </ion-page>
@@ -45,11 +45,8 @@ async function loadData() {
     let res = await app.getDoc("Sale", app.route.params.name)
     if (res.data) {
         doc.value = res.data
-        
     }
-
-   
-
+ 
     await l.dismiss();
 
 }

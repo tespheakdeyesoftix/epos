@@ -14,7 +14,10 @@
               <ComCouponCodeList   :data="data" v-else  /> 
             </template>
             <template v-else>
-                No Coupon Code Found
+                <div v-if="!isLoading">
+No Coupon Code Found
+                </div>
+                
                 </template>
                </div>
         </ion-content>
@@ -25,7 +28,7 @@
 import ComCouponCodeList from "@/modules/ecoupon/coupon-codes/components/ComCouponCodeList.vue"
 import ComCouponDetail from "@/modules/ecoupon/coupon-codes/components/ComCouponDetail.vue"
 import { onMounted, ref } from 'vue';
-
+const isLoading = ref(true)
 const t = window.t;
 const showAppBar = ref(app.route.query.appbar==1)
 const data = ref()
@@ -35,7 +38,11 @@ async function getData(){
     const res = await app.getDocList("Coupon Codes",{
         fields:["*"],
         limit:1000,
-        filters:[["coupon","=",app.route.params.name]]
+        filters:[["coupon","=",app.route.params.name]],
+        orderBy:{
+      field: "creation",
+      order: "asc",
+  },
     })
     if (res.data){
         data.value= res.data
@@ -43,6 +50,7 @@ async function getData(){
             await getCouponDetail(res.data[0].name);
         }
     }
+    isLoading.value = false;
     await l.dismiss();
 }
 

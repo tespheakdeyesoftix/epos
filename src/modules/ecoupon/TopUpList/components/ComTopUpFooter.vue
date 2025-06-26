@@ -33,7 +33,13 @@ async function onPaymentClick(){
     
 }
 function onGoHome(){
-    app.router.back()
+    if(window.history.length>1){
+app.router.back()
+    }else {
+        app.ionRouter.navigate("/home","back","replace")
+    }
+   
+    
 }
 
 </script>

@@ -6,8 +6,8 @@
             <DocList docType="Coupon Codes" :options="options"
             v-model:selectedRow="selectedRow"
             @onRowDblClick="onRowDblClick"
+            ref="docListRef"
             >
-                
                 <template #coupon_status="{ item, index }">
                     <ComStatus :status="item.coupon_status"/>
                 </template>
@@ -40,6 +40,9 @@ import { ref } from 'vue';
 
 import dayjs from 'dayjs';
 import { arrowUpOutline } from 'ionicons/icons';
+import {  onIonViewDidEnter } from '@ionic/vue';
+const docListRef = ref()
+
 const plateform = ref(app.utils.getPlateform())
 const pageRef = ref(null)
 const selectedRow = ref()
@@ -68,7 +71,8 @@ const options = {
     {fieldname:"coupon_status", fieldtype:"Select", label:t('Coupon Status'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal',options:['Used','Unused','Redeemed','Expired']},
     {fieldname:"sale_date", fieldtype:"Date",   label:t('Sale Date')},
     {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
-    {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")}
+    {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
+    {fieldname:"sale", fieldtype:"Link",options:"Sale", label:t("Sale #")}
     
   ]
 }
@@ -86,6 +90,19 @@ const handleScroll = (ev) => {
   const scrollTop = ev.detail.scrollTop;
   showFab.value = scrollTop > 200; // show after scrolling 200px
 };
+onIonViewDidEnter(async ()=>{
+ 
+ 
+    if((window.refresh_page || 0) == 1){
+     
+      const l = await app.showLoading();
+       await docListRef.value.onRefresh()
+       window.history.replaceState({}, '', '/coupon-code-list');
+       await l.dismiss();
+       window.refresh_page = 0;
+
+    }
+})
 
 </script>
 <style scoped>

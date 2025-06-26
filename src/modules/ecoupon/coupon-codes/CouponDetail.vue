@@ -13,14 +13,15 @@
         </ion-content>
         <ComFooter>
             <ion-button>{{ t("Edit") }}</ion-button>
-            <ion-button color="danger">{{ t("Delete") }}</ion-button>
+            <ion-button color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>
         </ComFooter>
     </ion-page>
 </template>
 <script setup>
-
 import { onMounted, ref } from 'vue';
 import ComCouponDetail from "@/modules/ecoupon/coupon-codes/components/ComCouponDetail.vue"
+
+
 const t = window.t;
 const showAppBar = ref(app.route.query.appbar==1)
 const data = ref()
@@ -35,9 +36,31 @@ async function getData(){
 
     await l.dismiss();
 }
+
+async function onDelete(){
+    
+ 
+    const confirm = await app.utils.onConfirm("Delete Coupon","Are you sure you want to delete this coupon code?")
+    if (!confirm) return;
+    const l = await app.showLoading()
+    
+    const res = await app.deleteDoc("Coupon Codes", app.route.params.name);
+    if(res.data){
+        window.refresh_page = 1;
+        
+        app.ionRouter.navigate("/coupon-code-list","back","replace")
+    }
+    await l.dismiss()
+}
+
+
+
+
 onMounted(async ()=>{
 await getData();
 })
+
+
 </script>
 <style scoped>
 ion-list,ion-item{
