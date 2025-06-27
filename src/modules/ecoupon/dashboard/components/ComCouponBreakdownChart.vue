@@ -44,6 +44,13 @@ const option = computed(() => {
     legend: {
       data: [t("Total Amount"), t("Quantity"), t("Coupon Value")]
     },
+     grid: {
+    top: 25,
+    bottom: 5,
+    left: 40,
+    right: 10,
+    containLabel: true
+  },
     xAxis: {
       type: 'category',
       data: productNames,
