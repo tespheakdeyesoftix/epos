@@ -1,6 +1,5 @@
 <template>
-    <h1>Summary</h1>
-<ion-card  class="icon-no-padding ion-no-margin my-3" color="danger" >
+<ion-card  class="icon-no-padding ion-no-margin" color="danger" >
     <ion-card-content>
         <div class="flex justify-content-between align-item-center">
 

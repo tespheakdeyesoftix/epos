@@ -46,22 +46,34 @@
   <ion-row>
     <ion-col size="6">
       <div class="detail-label">
-        {{ t('Transaction Date') }}: {{ topUpCouponInfo?.transaction_date }}
+        {{ t('Transaction Date') }}:  {{ topUpCouponInfo?.transaction_date }}
       </div>
     </ion-col>
      <ion-col size="6">
       <div class="detail-label">
-        {{ t('Actual Balance') }}: 
-        <ComCurrency :value="topUpCouponInfo?.actual_amount_balance" />
+        {{ t('Actual Balance') }}: <ComCurrency :value="topUpCouponInfo?.actual_amount_balance" />
       </div>
     </ion-col>
     
 
   </ion-row>
 </ion-grid>
-      <div class="terms">
-       <ion-grid class="coupon-transaction-table">
-  <ion-row class="header-row">
+<ion-button
+  class="w-full ion-no-padding"
+  style="font-size: 10px;"
+  fill="clear"
+  @click="isOpen = !isOpen"
+>
+  Transaction
+  <ion-icon
+    :icon="isOpen ? chevronUpOutline : chevronDownOutline"
+    slot="end"
+  />
+</ion-button>
+
+      <div class="terms" >
+       <ion-grid  v-if="isOpen" class="coupon-transaction-table" >
+  <ion-row class="header-row" >
     <ion-col size="3"><strong>{{ t("Transaction Type") }}</strong></ion-col>
     <ion-col size="3"><strong>{{ t("Price") }}</strong></ion-col>
     <ion-col size="3"><strong>{{ t("Markup") }}</strong></ion-col>
@@ -90,8 +102,9 @@
 <script setup>
 import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
+import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 const { topUpCouponInfo} = useSaleCoupon()
- 
+const isOpen = ref(false);
 const t = window.t
 </script>
 <style scoped>
