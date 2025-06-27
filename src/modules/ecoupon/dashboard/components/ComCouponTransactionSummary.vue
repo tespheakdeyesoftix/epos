@@ -1,5 +1,5 @@
 <template>
-    <ion-card class="ion-no-margin ml-2 mt-2">
+    <ion-card class="ion-no-margin ml-2  ">
         <ion-card-header>
             <ion-card-title>
                 {{ t("Coupon Transaction Summary") }}
