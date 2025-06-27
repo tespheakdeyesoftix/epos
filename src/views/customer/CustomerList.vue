@@ -55,9 +55,9 @@ const options = {
   ]
 }
 
-function onRowDblClick(data){
-    app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
-}
+// function onRowDblClick(data){
+//     app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
+// }
 async function onAddCustomer(){
  
     const result = await app.utils.onAddCustomer();
