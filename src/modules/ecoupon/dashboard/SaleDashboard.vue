@@ -10,10 +10,10 @@
             <ComRevenueKPI :data = "kpiData"/>
             <ion-grid  class="ion-no-margin ion-no-padding">
                 <ion-row   >
-                    <ion-col  size="8" class="ion-no-padding pr-2">
+                    <ion-col  size="12"  size-xs="12"   size-md="8"   class="ion-no-padding pr-2">
                              <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
                     </ion-col>
-                    <ion-col size="4" >
+                    <ion-col  size="12" size-xs="12"  size-md="4" >
                         
                             <ComCouponTransactionSummary :data="couponTransactionSummary"/>
                       

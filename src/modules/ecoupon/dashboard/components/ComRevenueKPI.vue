@@ -12,7 +12,6 @@
       :value="(data?.mtd_coupon_bill || 0) + ' / ' + (data?.mtd_coupon_quantity || 0)" />
   </stack>
  
-
 </template>
 <script setup>
  
