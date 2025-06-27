@@ -7,10 +7,10 @@
       <div style="text-align: center;" class="label">{{ t(label) }}</div>
       <div class="text-lg font-semibold" style="margin-top: 5px;">
         <div v-if="isCurrency" class="data" style="text-align: center;">
-          <ComCurrency :value="value" />
+          <ComCurrency :value="value || 0" />
         </div>
         <div style="text-align: center;" class="data" v-else>
-             {{ value }}
+             {{ value || 0 }}
         </div>
       </div>
     </div>

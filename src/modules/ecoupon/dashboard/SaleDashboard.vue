@@ -14,9 +14,9 @@
                              <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
                     </ion-col>
                     <ion-col size="4" >
-                        <ion-card class="ion-no-margin">
-                            hello
-                        </ion-card>
+                        
+                            <ComCouponTransactionSummary :data="couponTransactionSummary"/>
+                      
                         
                         
 
@@ -32,13 +32,18 @@ const t = window.t ;
 import { useDashboard } from "@/hooks/useDashboard";
 import ComRevenueKPI from "@/modules/ecoupon/dashboard/components/ComRevenueKPI.vue"
 import ComCouponBreakdownChart from "@/modules/ecoupon/dashboard/components/ComCouponBreakdownChart.vue"
+import ComCouponTransactionSummary from "@/modules/ecoupon/dashboard/components/ComCouponTransactionSummary.vue"
 import { onMounted } from "vue";
-const {kpiData,saleCouponBreakdown,getKpiData,getSaleCouponBreakdown} = useDashboard()
+const {kpiData,saleCouponBreakdown,getKpiData,getSaleCouponBreakdown,
+    couponTransactionSummary,
+getCouponTransactionSummary
+} = useDashboard()
 
 
 async function getData(){
   await getKpiData()
   await getSaleCouponBreakdown()
+  await getCouponTransactionSummary();
 }
 
 const handleRefresh = async (event) => {
