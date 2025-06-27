@@ -16,7 +16,12 @@ import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
  import { useApp } from '@/hooks/useApp';
 import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
+import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
+dayjs.extend(isoWeek)
+
 const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate,change_exchange_rate } = useApp();
+
 
 export function imageUrl(imageUrl, baseUrl = "") {
   if (imageUrl?.startsWith("https://") || imageUrl?.startsWith("http://")) {
@@ -710,4 +715,17 @@ export function bankersRound(number, decimals = null) {
 
   // fraction == 0.5, round to even
   return (integer % 2 === 0 ? integer : integer + 1) / factor;
+}
+
+
+export function getWeekStartAndEnd(dateInput) {
+  const date = dayjs(dateInput)
+
+ const startOfWeek = date.startOf('isoWeek') // Monday
+  const endOfWeek = date.endOf('isoWeek')     // Sunday
+
+  return {
+    start: startOfWeek.format('YYYY-MM-DD'),
+    end: endOfWeek.format('YYYY-MM-DD')
+  }
 }

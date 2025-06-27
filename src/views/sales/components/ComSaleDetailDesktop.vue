@@ -13,7 +13,6 @@
                                 <ion-text>
                                     {{ doc?.customer  }} - {{ doc?.customer_name }}
                                 </ion-text>
-                                
                                 <ion-text>
                                     <ion-icon :icon="phonePortraitOutline" />
                                     {{ doc?.phone_number}}

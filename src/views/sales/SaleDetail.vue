@@ -8,7 +8,7 @@
             <ComSaleDetailMobile v-if="plateform =='mobile'" :doc="doc"/>
                 <ComSaleDetailDesktop v-else :doc="doc"/>
                 
-                </div>
+            </div>
         </ion-content>
         <ion-footer>
             <ion-toolbar>

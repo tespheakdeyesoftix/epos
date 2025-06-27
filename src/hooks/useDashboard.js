@@ -1,37 +1,26 @@
 
 
+import dayjs from "dayjs";
 import { ref } from "vue";
 
 
 export function useDashboard(props = null) {
+    
     const kpiData = ref()
     const chartData = ref()
     const paymentbreakdown = ref()
     const recentData = ref([])
     const selectedPOSProfiles = ref([])
     const selectedBranch = ref("")
-    function getWeekStartAndEnd(date = new Date()) {
-        const currentDate = new Date(date);
-        const day = currentDate.getDay();
-        const diffToMonday = (day === 0 ? -6 : 1 - day);
-        const weekStart = new Date(currentDate);
-        weekStart.setDate(currentDate.getDate() + diffToMonday);
-        const weekEnd = new Date(weekStart);
-        weekEnd.setDate(weekStart.getDate() + 6);
-        const formatDate = d => d.toISOString().split('T')[0];
-        return {
-            start: formatDate(weekStart),
-            end: formatDate(weekEnd)
-        };
-    }
+    const saleCouponBreakdown = ref([])
+ 
     async function getKpiData() {
-        const formatDate = d => d.toISOString().split('T')[0];
         const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.sale_kpi",
             {
                 param:{
                     pos_profiles: selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
                     business_branch: (selectedBranch.value?.length ?? 0) == 0 ? "" : selectedBranch.value,
-                    working_date: formatDate(new Date())
+                    working_date: app.setting.working_day.posting_date
                 }
             }
         )
@@ -41,16 +30,18 @@ export function useDashboard(props = null) {
     }
 
     async function getChartData() {
-        const formatDate = d => d.toISOString().split('T')[0];
+        
         const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.daily_sale_chart", {
             param: {
                 pos_profiles:selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
                 business_branch: (selectedBranch.value?.length ?? 0) == 0 ? "" : selectedBranch.value,
-                working_date: formatDate(new Date())
+                working_date: app.setting.working_day.posting_date
             }
         })
         if (res.data) {
-            const current = getWeekStartAndEnd()
+            const current = app.utils.getWeekStartAndEnd()
+             const formatDate = d => d.toISOString().split('T')[0];
+
             const filtered = res.data.filter(item => {
                 const itemDate = formatDate(new Date(item.date));
                 return itemDate >= current["start"] && itemDate <= current["end"];
@@ -59,12 +50,12 @@ export function useDashboard(props = null) {
         }
     }
     async function getPaymentBreakDown() {
-    const formatDate = d => d.toISOString().split('T')[0];
+    
     const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.payment_breakdown", {
         param: {
             pos_profiles: selectedPOSProfiles.value.length == 0 ? [] : selectedPOSProfiles.value.map(r => r.name),
             business_branch: (selectedBranch.value?.length ?? 0) == 0 ? "" : selectedBranch.value,
-            working_date: formatDate(new Date())
+            working_date: app.setting.working_day.posting_date
         }
     })
     if (res.data) {
@@ -103,8 +94,6 @@ export function useDashboard(props = null) {
         await getChartData()
         await getPaymentBreakDown()
         await getRecentData()
-         
-
     }
 
     async function onChangePOSProfile() {
@@ -114,6 +103,22 @@ export function useDashboard(props = null) {
     }
 
 
+    async function getSaleCouponBreakdown(){
+        const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.get_sale_breakdown_by_coupon",{
+           param:{
+             business_branch:app.setting.property.property_name,
+                working_date:app.setting?.working_day?.posting_date ?? dayjs().format("YYYY-MM-DD"),
+                pos_profiles:""
+           }
+        })
+        if(res.data){
+            saleCouponBreakdown.value = res.data
+        }
+    }
+
+
+ 
+
     return {
         kpiData,
         chartData,
@@ -121,12 +126,13 @@ export function useDashboard(props = null) {
         recentData,
         selectedPOSProfiles,
         selectedBranch,
+        saleCouponBreakdown,
         onRefresh,
         getKpiData,
         getChartData,
         getPaymentBreakDown,
         getRecentData,
-        
+        getSaleCouponBreakdown,
         onChangePOSProfile
     }
 

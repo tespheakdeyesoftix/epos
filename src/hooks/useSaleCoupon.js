@@ -33,7 +33,6 @@ const saleDiscoutableAmount = computed(() => {
         filter(x => x.allow_discount == 1 && (x.discount_amount || 0) == 0).
         reduce((sum, item) => sum + (item.sub_total ||0), 0) ?? 0;
 })
-
 const totalSaleDiscountAmount = computed(() => {
     if (saleDoc.value.discount_type == "Percent") {
         return saleDiscoutableAmount.value * ((saleDoc.value.discount ?? 0) / 100)
@@ -43,7 +42,6 @@ const totalSaleDiscountAmount = computed(() => {
     }
 
 })
-
 
 const totalSaleProductDiscount = computed(() => {
     return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.discount_amount || 0), 0);
