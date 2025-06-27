@@ -36,7 +36,10 @@ const option = computed(() => {
 
   return {
     tooltip: {
-      trigger: 'axis'
+      trigger: 'item',
+      formatter: (params) => {
+        return `${params.seriesName}<br/>${params.name}: ${params.value}`
+      }
     },
     legend: {
       data: [t("Total Amount"), t("Quantity"), t("Coupon Value")]
