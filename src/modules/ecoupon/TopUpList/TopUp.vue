@@ -7,18 +7,32 @@
       </template>
     </ToolBar>
     <ion-content>
-      <div class="fix-container">
-        <ComSearchBarcode />
-        <ComCouponInformation />
-        <ComTopUpCouponvalue />
-        <ComSummaryInfo />
-
- 
+        <ion-split-pane when="xs" content-id="main">
+    <ion-menu content-id="main">
+      <ion-content class="ion-padding">   
+      <ComSearchBarcode />
+      <ComTopUpCouponvalue />
+      </ion-content>
+        
+    </ion-menu>
+    <div class="ion-page" id="main">
+      <ion-content class="ion-padding">
+            <ComCouponInformation />
+          
+               <div class="fix-container px-2 mt-1">
         <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Top Up Note')"
           storageKey="top_up_note" />
       </div>
+           
+      
+      </ion-content>
+     <ComSummaryInfo />
+    </div> 
+    
+  </ion-split-pane>
+     
     </ion-content>
-    <ComTopUpFooter />
+  <ComTopUpFooter />
   </ion-page>
 
 </template>
@@ -80,3 +94,15 @@ onBeforeRouteLeave(async (to, from, next) => {
 
 
 </script>
+<style scoped>
+.bg-order-card{
+  background-color: var(--ion-color-light-tint);
+}
+ion-split-pane {
+    --side-width: 60%;
+    --side-max-width: 60%;
+    --border: 1px dashed #b3baff;
+}
+
+
+</style>
