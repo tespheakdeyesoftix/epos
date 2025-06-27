@@ -14,10 +14,10 @@
          </stack>
                     <stack>
   <ion-label class="big-chip">
-          {{t('Total')}} ({{ mainCurrency }}) :  <ComCurrency :value="grandTotal"/> 
+          {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
         </ion-label>
         <ion-label class="big-chip">
-           {{t('Total')}} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
+           {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
         </ion-label>
         </stack>
                 </stack>
