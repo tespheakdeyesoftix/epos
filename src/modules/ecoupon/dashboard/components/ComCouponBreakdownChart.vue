@@ -1,23 +1,21 @@
 <template>
   <ion-card class="ion-no-margin ion-no-padding">
-    <ion-card-header>
+    <ion-card-header  class="ion-no-padding">
       <ion-item lines="none">
         <ion-label>
           <h1>{{ t("Sale Breakdown by Coupon Code") }}</h1>
         </ion-label>
-
         <!-- Desktop: Show buttons -->
         <template v-if="platform !== 'mobile'">
           <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
-            :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
+            :fill="chartType == 'bar' ? 'solid' : 'clear'"
+             v-tooltip.top="`${t('View Graph as Bar Chart')}`">
             <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
           </ion-button>
-
           <ion-button @click="onChangeChartType('line')" shape="round" size="default"
             :fill="chartType == 'line' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
             <ion-icon slot="icon-only" :icon="analyticsOutline"></ion-icon>
           </ion-button>
-
           <ion-chip @click="onViewData" slot="end" color="primary">
             {{ t("View Data") }}
           </ion-chip>
@@ -25,22 +23,23 @@
 
         <!-- Mobile: Show hamburger icon -->
         <template v-else>
-          <ion-button id="hamburger-menu-btn" fill="clear" size="large" >
+          <ion-button id="hamburger-menu-btn" fill="clear" size="default" shape="round" slot="end"  class="ion-no-margin" >
             <ion-icon slot="icon-only" :icon="ellipsisVerticalOutline"></ion-icon>
           </ion-button>
 
           <ion-popover trigger="hamburger-menu-btn" trigger-action="click" size="auto"  :dismiss-on-select="true">
             <ion-content class="ion-padding">
               <ion-list>
-                <ion-item button @click="onChangeChartType('bar')">
-                  <!-- <ion-icon slot="start" :icon="barChartOutline"></ion-icon> -->
+                <ion-item button @click="onChangeChartType('bar')" lines="full">
+                  <ion-icon slot="start" :icon="barChartOutline"></ion-icon>
                   <ion-label>{{ t("View Graph as Bar Chart") }}</ion-label>
                 </ion-item>
-                <ion-item button @click="onChangeChartType('line')">
-                  <!-- <ion-icon slot="start" :icon="analyticsOutline"></ion-icon> -->
+                <ion-item button @click="onChangeChartType('line')" lines="full">
+                  <ion-icon slot="start" :icon="analyticsOutline"></ion-icon>
                   <ion-label>{{ t("View Graph as Line Chart") }}</ion-label>
                 </ion-item>
-                <ion-item button @click="onViewData">
+                <ion-item button @click="onViewData" lines="full">
+                  <ion-icon slot="start" :icon="documentTextOutline"></ion-icon>
                   <ion-label>{{ t("View Data") }}</ion-label>
                 </ion-item>
               </ion-list>
@@ -60,7 +59,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons'
+import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline, documentTextOutline } from 'ionicons/icons'
 import VChart from 'vue-echarts'
 import ComViewSaleBreakdownByCouponData from '@/modules/ecoupon/dashboard/components/ComViewSaleBreakdownByCouponData.vue'
  
