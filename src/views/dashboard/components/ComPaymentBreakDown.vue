@@ -28,11 +28,11 @@
                         <ion-content class="ion-padding">
                             <ion-list>
                                 <ion-item button @click="onChangeChartType('bar')">
-                                    <ion-icon slot="start" :icon="barChartOutline"></ion-icon>
+                                    <!-- <ion-icon slot="start" :icon="barChartOutline"></ion-icon> -->
                                     <ion-label>{{ t("View Graph as Bar Chart") }}</ion-label>
                                 </ion-item>
                                 <ion-item button @click="onChangeChartType('pie')">
-                                    <ion-icon slot="start" :icon="pieChartOutline"></ion-icon>
+                                    <!-- <ion-icon slot="start" :icon="pieChartOutline"></ion-icon> -->
                                     <ion-label>{{ t("View Graph as Pie Chart") }}</ion-label>
                                 </ion-item>
                                 <ion-item button @click="onViewData">
