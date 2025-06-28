@@ -59,7 +59,7 @@ import ComViewDailySaleRevenueData from '@/modules/ecoupon/dashboard/components/
 import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
 const platform = ref(app.utils.getPlateform())
 function updatePlatform() {
-  platform.value = app.utils.getPlateform()
+  platform.value = window.innerWidth <= 1024 ? 'mobile' : 'desktop'
 }
 
 onMounted(() => {

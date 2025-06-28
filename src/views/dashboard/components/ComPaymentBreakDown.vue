@@ -62,7 +62,7 @@ const t = window.t;
 
 const platform = ref(app.utils.getPlateform())
 function updatePlatform() {
-  platform.value = app.utils.getPlateform()
+  platform.value = window.innerWidth <= 1024 ? 'mobile' : 'desktop'
 }
 
 onMounted(() => {
