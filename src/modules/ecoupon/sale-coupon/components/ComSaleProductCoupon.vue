@@ -1,4 +1,5 @@
 <template>
+   
     <div  v-if="saleDoc.sale_products.length>0">
       <div @click="toggle(index)" v-for="(sp,index) in saleDoc.sale_products"  :key="index" >
 <ComSaleProductCouponCard  :activeIndex="activeIndex" :index="index"  :data="sp" />
@@ -14,9 +15,9 @@
 <script setup>
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import ComSaleProductCouponCard from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCouponCard.vue"
-import { bagAddOutline, bagHandleOutline } from "ionicons/icons";
+import {  bagHandleOutline } from "ionicons/icons";
 import { ref } from 'vue'
-const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAmount,totalSaleDiscountAmount} = useSaleCoupon()
+const {saleDoc} = useSaleCoupon()
 const activeIndex = ref(0)
 
 const toggle = (index) => {

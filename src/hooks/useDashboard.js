@@ -13,6 +13,7 @@ export function useDashboard(props = null) {
     const selectedPOSProfiles = ref([])
     const selectedBranch = ref("")
     const saleCouponBreakdown = ref([])
+    const couponTransactionSummary = ref([])
  
     async function getKpiData() {
         const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.sale_kpi",
@@ -20,7 +21,7 @@ export function useDashboard(props = null) {
                 param:{
                     pos_profiles: selectedPOSProfiles.value.length==0? []:selectedPOSProfiles.value.map(r=>r.name),
                     business_branch: (selectedBranch.value?.length ?? 0) == 0 ? "" : selectedBranch.value,
-                    working_date: app.setting.working_day.posting_date
+                    working_date: app.setting.working_day?.posting_date ?? dayjs().format("YYYY-MM-DD")
                 }
             }
         )
@@ -116,6 +117,19 @@ export function useDashboard(props = null) {
         }
     }
 
+    async function getCouponTransactionSummary(){
+        const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.get_coupon_transaction_summary",{
+           param:{
+             business_branch:app.setting.property.property_name,
+                working_date:app.setting?.working_day?.posting_date ?? dayjs().format("YYYY-MM-DD"),
+                pos_profiles:""
+           }
+        })
+        if(res.data){
+            couponTransactionSummary.value = res.data
+        }
+    }
+
 
  
 
@@ -127,13 +141,15 @@ export function useDashboard(props = null) {
         selectedPOSProfiles,
         selectedBranch,
         saleCouponBreakdown,
+    couponTransactionSummary,
         onRefresh,
         getKpiData,
         getChartData,
         getPaymentBreakDown,
         getRecentData,
         getSaleCouponBreakdown,
-        onChangePOSProfile
+        onChangePOSProfile,
+        getCouponTransactionSummary
     }
 
 }

@@ -14,8 +14,7 @@ export async function setup(){
      await checkUserLogin();
     
   if (isAuthenticated.value){
-    
-  await app.utils.getSetting()
+    await app.utils.getSetting()
   }
    
   

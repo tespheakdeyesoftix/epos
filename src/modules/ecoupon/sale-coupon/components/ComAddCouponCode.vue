@@ -2,7 +2,7 @@
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
  
         <stack row equal class="mb-4" v-if="data.is_open_product==1">
-            <com-input :label="t('Price')" v-model="doc.price" type="number" keyboard />
+            <com-input ref="txtPrice" :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
                 <ion-select-option value="Percent">Percent</ion-select-option>
@@ -65,6 +65,8 @@ import { computed, onMounted, ref } from 'vue';
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 const { saleDoc } = useSaleCoupon()
 const inputRef = ref(null)
+const txtPrice = ref(null)
+
 const props = defineProps({
     data: Object,
 
@@ -113,8 +115,6 @@ async function onScanBarCode() {
 
 
 async function addCoupon() {
-
-
     const data = await validateCouponCode(app.utils.getCouponNumber(coupon.value))
     if (!data) {
         coupon.value = ""
@@ -191,17 +191,21 @@ function onDelete(index) {
 function onConfirm() {
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
+         inputRef.value.select()
         return
     }
     if(props.data.is_open_product==1 && Number(doc.value.price == 0)){
         app.showWarning("Please enter price")
+         txtPrice.value.select()
+
         return;
     }
     if(props.data.is_open_product==1 && Number(couponValue.value == 0)){
         app.showWarning("Please enter coupon value")
+         
         return;
     }
-   
+ 
     const returnData = {
         product_code: props.data.name,
         product_name: props.data.product_name_en,
@@ -215,13 +219,14 @@ function onConfirm() {
         allow_discount: props.data.allow_discount,
         coupon_markup_type : doc.value.coupon_markup_type,
         coupon_markup_value : doc.value.coupon_markup_value,
-        coupon_value : props.data.is_open_product==1? doc.value.coupon_value:props.data.coupon_value,
+        coupon_value : props.data.is_open_product==1? couponValue.value:props.data.coupon_value,
         is_open_product:props.data.is_open_product,
         append_quantity:props.data.append_quantity,
         allow_free:props.data.allow_free,
         regular_price: props.data.is_open_product==1? doc.value.price:props.data.price
     }
-        returnData.coupon_markup_percentage   = ((returnData.coupon_value  - returnData.price )/ returnData.price) * 100
+    
+    returnData.coupon_markup_percentage   = ((returnData.coupon_value  - returnData.price )/ returnData.price) * 100
     modalController.dismiss(returnData, 'confirm')
     
 }

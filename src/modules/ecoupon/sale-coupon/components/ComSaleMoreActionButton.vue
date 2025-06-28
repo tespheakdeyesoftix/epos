@@ -28,7 +28,7 @@
                 <ion-col>
                     <ion-list>
                         <ion-item button @click="onViewOrderDetail">
-                            <ion-label>{{ t("View Order Detail ") }}</ion-label>
+                            <ion-label>{{ t("View Order Detail") }}</ion-label>
                         </ion-item>
                         <ion-item button @click="onDeleteOrder" :disabled="!saleDoc.name">
                             <ion-label color="danger">{{ t("Delete this Order") }}</ion-label>
