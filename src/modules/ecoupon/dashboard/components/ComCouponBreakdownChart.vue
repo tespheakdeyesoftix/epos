@@ -26,7 +26,7 @@
         <!-- Mobile: Show hamburger icon -->
         <template v-else>
           <ion-button id="hamburger-menu-btn" fill="clear" size="large" >
-            <ion-icon slot="icon-only" :icon="menuOutline"></ion-icon>
+            <ion-icon slot="icon-only" :icon="ellipsisVerticalOutline"></ion-icon>
           </ion-button>
 
           <ion-popover trigger="hamburger-menu-btn" trigger-action="click" size="auto"  :dismiss-on-select="true">
@@ -60,7 +60,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { analyticsOutline, barChartOutline, menuOutline } from 'ionicons/icons'
+import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons'
 import VChart from 'vue-echarts'
 import ComViewSaleBreakdownByCouponData from '@/modules/ecoupon/dashboard/components/ComViewSaleBreakdownByCouponData.vue'
  
