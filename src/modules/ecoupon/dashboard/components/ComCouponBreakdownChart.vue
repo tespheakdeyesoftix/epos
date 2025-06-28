@@ -26,7 +26,6 @@
           <ion-button id="hamburger-menu-btn" fill="clear" size="default" shape="round" slot="end"  class="ion-no-margin" >
             <ion-icon slot="icon-only" :icon="ellipsisVerticalOutline"></ion-icon>
           </ion-button>
-
           <ion-popover trigger="hamburger-menu-btn" trigger-action="click" size="auto"  :dismiss-on-select="true">
             <ion-content class="ion-padding">
               <ion-list>
@@ -67,8 +66,9 @@ import ComViewSaleBreakdownByCouponData from '@/modules/ecoupon/dashboard/compon
  
 const platform = ref(app.utils.getPlateform())
 
+
 function updatePlatform() {
-  platform.value = app.utils.getPlateform()
+  platform.value = window.innerWidth <= 1024 ? 'mobile' : 'desktop'
 }
 
 onMounted(() => {

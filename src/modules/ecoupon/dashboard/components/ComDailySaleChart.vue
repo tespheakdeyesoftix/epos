@@ -27,11 +27,11 @@
                         <ion-content class="ion-padding">
                             <ion-list>
                                 <ion-item button @click="onChangeChartType('bar')">
-                                    <!-- <ion-icon slot="start" :icon="barChartOutline"></ion-icon> -->
+                                    <ion-icon slot="start" :icon="barChartOutline"></ion-icon>
                                     <ion-label>{{ t("View Graph as Bar Chart") }}</ion-label>
                                 </ion-item> 
                                 <ion-item button @click="onChangeChartType('line')">
-                                    <!-- <ion-icon slot="start" :icon="analyticsOutline"></ion-icon> -->
+                                    <ion-icon slot="start" :icon="analyticsOutline"></ion-icon>
                                     <ion-label>{{ t("View Graph as Line Chart") }}</ion-label>
                                 </ion-item>
                                 <ion-item button @click="onViewData">
@@ -59,7 +59,7 @@ import ComViewDailySaleRevenueData from '@/modules/ecoupon/dashboard/components/
 import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
 const platform = ref(app.utils.getPlateform())
 function updatePlatform() {
-  platform.value = app.utils.getPlateform()
+  platform.value = window.innerWidth <= 1024 ? 'mobile' : 'desktop'
 }
 
 onMounted(() => {
