@@ -217,54 +217,68 @@ export function getNumber(num, decimalDigits) {
   return `${parts[0]}.${trimmedDecimals}`;
 }
 
-export function currencyFormat(number, format) {
-  // Match the number format part (e.g., #,###,##0.00, #,###,##0.###)
-  const numberPattern = /[#0.,]+/;
-  const match = format.match(numberPattern);
-  if (!match) return number.toString();
-
-  const numFormat = match[0];
-  const startIndex = format.indexOf(numFormat);
-  const endIndex = startIndex + numFormat.length;
-
-  const prefix = format.slice(0, startIndex).trim();
-  const suffix = format.slice(endIndex).trim();
-
-  // Parse decimal part from format
-  let minFractionDigits = 0;
-  let maxFractionDigits = 0;
-
-  const decimalMatch = numFormat.match(/\.(0+|#+)$/);
-  if (decimalMatch) {
-    const decimalPart = decimalMatch[1];
-    if (decimalPart[0] === '0') {
-      // Fixed decimals - number of zeros = exact decimals
-      minFractionDigits = decimalPart.length;
-      maxFractionDigits = decimalPart.length;
-    } else if (decimalPart[0] === '#') {
-      // Optional decimals - number of # = max decimals, min 0
-      minFractionDigits = 0;
-      maxFractionDigits = decimalPart.length;
-    }
+export function currencyFormat(number,currency=null, format=null) {
+  const amount = formatNumber(number,currency,format);
+  if (isCurrencySymbolOnRight(currency)==1){
+    return amount + " " + getCurrencySymbol(currency)
+  }else {
+    return getCurrencySymbol(currency) + " " + amount ;
   }
 
-  // Format number accordingly
-  const formattedNumber = number.toLocaleString('en-US', {
-    minimumFractionDigits: minFractionDigits,
-    maximumFractionDigits: maxFractionDigits,
-  });
+}
+function getCurrencySymbol(currency=null){
+  if(!currency) return app.setting.currency_symbol
+  if (currency == app.setting.currency) return app.setting.currency_symbol
+  if(currency == app.setting.second_currency) return app.setting.second_currency_symbol
 
-  // Compose final string with currency symbol position
-  if (prefix && !suffix) {
-    return `${prefix} ${formattedNumber}`;
-  } else if (!prefix && suffix) {
-    return `${formattedNumber} ${suffix}`;
-  } else if (prefix && suffix) {
-    return `${prefix} ${formattedNumber} ${suffix}`;
-  } else {
-    return formattedNumber;
+  return "$"
+
+}
+
+function isCurrencySymbolOnRight(currency){
+  if(!currency) return app.setting.symbol_on_right
+  if (currency == app.setting.currency) return app.setting.symbol_on_right
+  if(currency == app.setting.second_currency) return app.setting.second_symbol_on_right
+
+  return 0
+}
+
+
+ 
+
+
+function formatNumber(number,currency=null, format=null) {
+  
+  if(!format){
+  
+    if(!currency ) {
+          return `${Number(number).toLocaleString('en-US', {
+          minimumFractionDigits: app.setting.currency_precision,
+          maximumFractionDigits: app.setting.currency_precision
+      })}`;
+    }
+    
+    if(currency == app.setting.currency ) {
+          return `${Number(number).toLocaleString('en-US', {
+          minimumFractionDigits: app.setting.currency_precision,
+          maximumFractionDigits: app.setting.currency_precision
+      })}`;
+    }
+    
+    if(currency == app.setting.second_currency ) {
+          return `${Number(number).toLocaleString('en-US', {
+          minimumFractionDigits: app.setting.second_currency_precision,
+          maximumFractionDigits: app.setting.second_currency_precision
+      })}`;
+    }
+
+
+  }else {
+    return    `${Number(number).toLocaleString('en-US')}`;
   }
 }
+
+
 
 
 export function generateUIJsonFromMeta(metaFields) {

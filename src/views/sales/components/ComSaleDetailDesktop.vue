@@ -39,11 +39,11 @@
                             </stack>
                             <stack row equal>
                                 <ion-text>{{ t("Business Branch") }}</ion-text>
-                                <ion-text ><strong>{{ doc?.working_day }} / {{ doc?.cashier_shift }}</strong></ion-text>
+                                <ion-text ><strong>{{ doc?.business_branch }}</strong></ion-text>
                             </stack>
                             <stack row equal>
                                 <ion-text>{{ t("Working Day/Cashier Shift") }}</ion-text>
-                                <ion-text ><strong>{{ doc?.outlet }}</strong></ion-text>
+                                <ion-text ><strong>{{ doc?.working_day }} / {{ doc?.cashier_shift }}</strong></ion-text>
                             </stack>
                             <stack row equal>
                                 <ion-text>{{ t("Outlet") }}</ion-text>

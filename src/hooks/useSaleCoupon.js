@@ -27,6 +27,7 @@ const subTotal = computed(() => {
     return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.sub_total ||0), 0);
 })
 
+
 const saleDiscoutableAmount = computed(() => {
 
     return saleDoc.value.sale_products.

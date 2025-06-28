@@ -22,6 +22,24 @@
 
                     </ion-col>
                 </ion-row>
+                <ion-row>
+                    <ion-col>
+                       <ComDailySaleChart :data="chartData"/>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="mt-3">
+                    <ion-col size="12"  size-xs="12" size-sm="12"  size-md="6"   class="pr-2">
+                        <ComCouponUseByPOSStationChart :data="couponUsedSummaryByPOSStation"/>
+                    </ion-col>
+                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2">  <ComPaymentBreakdown :data="paymentbreakdown"/></ion-col>
+                </ion-row>
+                
+                    <ion-row class="mt-3">
+<ion-col>
+    <ComRecentData />
+</ion-col>
+                    </ion-row>
+            
             </ion-grid>
  
         </ion-content>
@@ -33,17 +51,35 @@ import { useDashboard } from "@/hooks/useDashboard";
 import ComRevenueKPI from "@/modules/ecoupon/dashboard/components/ComRevenueKPI.vue"
 import ComCouponBreakdownChart from "@/modules/ecoupon/dashboard/components/ComCouponBreakdownChart.vue"
 import ComCouponTransactionSummary from "@/modules/ecoupon/dashboard/components/ComCouponTransactionSummary.vue"
+import ComDailySaleChart from "@/modules/ecoupon/dashboard/components/ComDailySaleChart.vue"
+import ComPaymentBreakdown from "@/views/dashboard/components/ComPaymentBreakdown.vue"
+import ComCouponUseByPOSStationChart from "@/modules/ecoupon/dashboard/components/ComCouponUseByPOSStationChart.vue"
+import ComRecentData from "@/modules/ecoupon/dashboard/components/ComRecentData.vue"
 import { onMounted } from "vue";
-const {kpiData,saleCouponBreakdown,getKpiData,getSaleCouponBreakdown,
-    couponTransactionSummary,
-getCouponTransactionSummary
-} = useDashboard()
+const {
+        kpiData,
+        saleCouponBreakdown,
+        paymentbreakdown,
+        couponTransactionSummary,
+        chartData,
+        couponUsedSummaryByPOSStation,
+        getKpiData,
+        getSaleCouponBreakdown,
+        getCouponTransactionSummary,
+        getChartData,
+        getPaymentBreakDown,
+        getCouponUseSummaryByPOSStation
+    } = useDashboard()
 
 
 async function getData(){
-  await getKpiData()
-  await getSaleCouponBreakdown()
+  await getKpiData();
+  await getSaleCouponBreakdown();
   await getCouponTransactionSummary();
+  await getChartData();
+//   to disable loading 
+  getPaymentBreakDown();
+  getCouponUseSummaryByPOSStation();
 }
 
 const handleRefresh = async (event) => {
