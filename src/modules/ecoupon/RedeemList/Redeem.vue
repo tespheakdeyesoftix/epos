@@ -14,15 +14,28 @@
       <ComRedeemFooter/>
     </ion-menu>
     <div class="ion-page" id="main">
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding h-full">
           <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
           storageKey="redeem_note" />
       </ion-content>
-      <ion-card>
-  {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" />
-{{ t("Exchange Rate") }} :<ComCurrency :value="1" :currency="mainCurrency" /> =  <ComCurrency :value="exchange_rate" :currency="second_currency" />
-{{ t("Grand Total") }}({{ second_currency }}) :<ComCurrency :value="grandTotal*exchange_rate" :currency="second_currency" />
-      </ion-card>
+       <ion-footer >
+<ion-card class="p-3 m-0 card-height" color="tertiary">
+  <stack row equal>
+<div>
+ {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" /> <br>
+ {{ t("Grand Total") }}({{ second_currency }}) :<ComCurrency :value="grandTotal*exchange_rate" :currency="second_currency" />
+        </div>
+        <div style="float: right;">
+          <ion-chip>
+            <ComCurrency :value="1" :currency="mainCurrency" /> =  <ComCurrency :value="exchange_rate" :currency="second_currency" />
+          </ion-chip>
+           
+        </div>
+       
+  </stack>
+        
+</ion-card>   
+</ion-footer>
     
     </div> 
     </ion-split-pane>

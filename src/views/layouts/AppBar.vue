@@ -14,6 +14,7 @@
         :placeholder="t('Check coupon code')"
         style="max-width: 300px;"
         @ionChange="onCheckCouponCode"
+        class="search_bar"
         v-model="keyword"
         
       ></ion-searchbar>
@@ -55,4 +56,13 @@ async function onCheckCouponCode(){
   keyword.value = ""
 }
   </script>
+<style scoped>
+.search_bar{
+  position: absolute;
+max-width: 300px;
+top: 0;
+left: 50%;
+transform: translateX(-50%);
+}
+</style>
   

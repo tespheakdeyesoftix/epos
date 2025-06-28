@@ -12,12 +12,21 @@ const t = window.t;
 const data = ref([])
 async function getData(){
     const res =  await app.getDocList("Sale",{
-        fields:["*"]
+        fields:["name","customer","customer_name","grand_total","creation","total_quantity","owner"],
+        filters:[
+            ["business_branch","=",app.setting.property.property_name]
+        ],
+        limit:20,
+        orderBy: {
+            field: 'creation',
+            order: 'desc',
+        }
     })
     if(res.data){
         data.value = res.data;
     }
 }
+
 onMounted(async ()=>{
 await getData();
 })
