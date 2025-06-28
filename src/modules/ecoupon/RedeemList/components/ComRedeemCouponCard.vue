@@ -54,7 +54,35 @@
             <ion-icon :icon="trashBinOutline" />
           </ion-button>    
             </stack>
-  
+  <ion-accordion-group>
+  <ion-accordion value="first">
+    <ion-item slot="header" class="border-round-xl mt-2" color="light">
+      <ion-label class="ion-no-padding">{{ t('Coupon Transaction') }} </ion-label>
+    </ion-item>
+    <div  slot="content">
+<ion-grid >
+  <!-- Table Header -->
+  <ion-row class="ion-text-center ion-no-padding" color="light">
+    <ion-col><strong>{{ t('Type') }} </strong></ion-col>
+    <ion-col><strong>{{ t('Markup %') }} </strong></ion-col>
+    <ion-col><strong>{{ t('Actual Amt') }} </strong></ion-col>
+    <ion-col><strong>{{ t(' Coupon Amt') }}</strong></ion-col>
+  </ion-row>
+  <ion-row
+    v-for="(txn, index) in data.redeem_coupon_info.coupon_transaction"
+    :key="index"
+    class="ion-text-center"
+  >
+    <ion-col>{{ txn.transaction_type }}</ion-col>
+    <ion-col>{{ txn.markup_percentage }}</ion-col>
+    <ion-col>{{ txn.input_actual_amount }}</ion-col>
+    <ion-col>{{ txn.coupon_amount }}</ion-col>
+  </ion-row>
+</ion-grid>
+
+    </div>
+  </ion-accordion>
+</ion-accordion-group>
         </ion-card-content>
         
     </ion-card>
