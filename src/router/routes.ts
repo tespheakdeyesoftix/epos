@@ -222,6 +222,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/dashboard/SaleDashboard.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/cashier-shift-lsit",
+    component: () => import('@/views/shift/CashierShiftList.vue'),
+    meta: { requiresAuth: true }
+  },
 
 
   
