@@ -7,9 +7,13 @@
 const t = window.t
 const props = defineProps({
     status:String,
-    csClass:String
+    csClass:String,
+    color:String
 })
 const getSeverity = () => {
+    if(props.color){
+        return props.color
+    }
     switch (props.status) {
         case 'Paid':
             return 'success';
