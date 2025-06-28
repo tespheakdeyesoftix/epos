@@ -6,16 +6,41 @@
                     <h1> {{ t("Revenue vs Coupon Used by Station") }}</h1>
                 </ion-label>
 
-                <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
-                    :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
-                    <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
-                </ion-button>
-                <ion-button @click="onChangeChartType('line')" shape="round" size="default"
-                    :fill="chartType == 'line' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
-                    <ion-icon slot="icon-only" :icon="analyticsOutline"></ion-icon>
-                </ion-button>
-                <ion-chip @click="onViewData" slot="end" color="primary">{{ t("View Data") }}</ion-chip>
+                <template v-if="platform !== 'mobile'">
+                    <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
+                        :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
+                        <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
+                    </ion-button>
+                    <ion-button @click="onChangeChartType('line')" shape="round" size="default"
+                        :fill="chartType == 'line' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
+                        <ion-icon slot="icon-only" :icon="analyticsOutline"></ion-icon>
+                    </ion-button>
+                    <ion-chip @click="onViewData" slot="end" color="primary">{{ t("View Data") }}</ion-chip>
+                </template>
 
+                <template v-else>
+                      <ion-button id="hamburger-btn" fill="clear" size="large" >
+                          <ion-icon slot="icon-only" :icon="ellipsisVerticalOutline"></ion-icon>
+                      </ion-button>
+
+                      <ion-popover trigger="hamburger-btn" trigger-action="click" size="auto"  :dismiss-on-select="true">
+            <ion-content class="ion-padding">
+              <ion-list>
+                <ion-item button @click="onChangeChartType('bar')">
+                  <!-- <ion-icon slot="start" :icon="barChartOutline"></ion-icon> -->
+                  <ion-label>{{ t("View Graph as Bar Chart") }}</ion-label>
+                </ion-item>
+                <ion-item button @click="onChangeChartType('line')">
+                  <!-- <ion-icon slot="start" :icon="analyticsOutline"></ion-icon> -->
+                  <ion-label>{{ t("View Graph as Line Chart") }}</ion-label>
+                </ion-item>
+                <ion-item button @click="onViewData">
+                  <ion-label>{{ t("View Data") }}</ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-content>
+          </ion-popover>
+                </template>
             </ion-item>
 
         </ion-card-header>
@@ -28,11 +53,23 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import VChart from 'vue-echarts'
 import ComViewCouponUseByPOSStatinData from '@/modules/ecoupon/dashboard/components/ComViewCouponUseByPOSStatinData.vue'
-import { analyticsOutline, barChartOutline } from 'ionicons/icons';
+import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
 
+const platform = ref(app.utils.getPlateform())
+function updatePlatform() {
+  platform.value = app.utils.getPlateform()
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updatePlatform)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updatePlatform)
+})
 
 const props = defineProps({
   data: {

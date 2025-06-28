@@ -6,16 +6,42 @@
                     <h1> {{ t("Payment Breakdown") }}</h1>
                 </ion-label>
 
-                <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
-                    :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
-                    <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
-                </ion-button>
-                <ion-button @click="onChangeChartType('pie')" shape="round" size="default"
-                    :fill="chartType == 'pie' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
-                    <ion-icon slot="icon-only" :icon="pieChartOutline"></ion-icon>
-                </ion-button>
-                <ion-chip @click="onViewData" slot="end" color="primary">{{ t("View Data") }}</ion-chip>
+                <template v-if="platform !== 'mobile'">
 
+                        <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
+                            :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
+                            <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
+                        </ion-button>
+                        <ion-button @click="onChangeChartType('pie')" shape="round" size="default"
+                            :fill="chartType == 'pie' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
+                            <ion-icon slot="icon-only" :icon="pieChartOutline"></ion-icon>
+                        </ion-button>
+                        <ion-chip @click="onViewData" slot="end" color="primary">{{ t("View Data") }}</ion-chip>
+                </template>
+
+                <template v-else>
+                    <ion-button id="hamburger-menu" fill="clear" size="large" >
+                        <ion-icon slot="icon-only" :icon="ellipsisVerticalOutline"></ion-icon>
+                    </ion-button>
+
+                    <ion-popover trigger="hamburger-menu" trigger-action="click" size="auto"  :dismiss-on-select="true">
+                        <ion-content class="ion-padding">
+                            <ion-list>
+                                <ion-item button @click="onChangeChartType('bar')">
+                                    <!-- <ion-icon slot="start" :icon="barChartOutline"></ion-icon> -->
+                                    <ion-label>{{ t("View Graph as Bar Chart") }}</ion-label>
+                                </ion-item>
+                                <ion-item button @click="onChangeChartType('pie')">
+                                    <!-- <ion-icon slot="start" :icon="pieChartOutline"></ion-icon> -->
+                                    <ion-label>{{ t("View Graph as Pie Chart") }}</ion-label>
+                                </ion-item>
+                                <ion-item button @click="onViewData">
+                                    <ion-label>{{ t("View Data") }}</ion-label>
+                                </ion-item>
+                            </ion-list>
+                        </ion-content>
+                    </ion-popover>
+                </template>
             </ion-item>
 
         </ion-card-header>
@@ -29,10 +55,23 @@
 </template>
 
 <script setup>
-import {  barChartOutline, pieChartOutline } from 'ionicons/icons';
-import { ref, computed } from 'vue'
+import {  barChartOutline, pieChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import  ComViewPaymentBreakdownData from '@/views/dashboard/components/ComViewPaymentBreakdownData.vue'
 const t = window.t;
+
+const platform = ref(app.utils.getPlateform())
+function updatePlatform() {
+  platform.value = app.utils.getPlateform()
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updatePlatform)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updatePlatform)
+})
 
 const props = defineProps({
     data: Object
