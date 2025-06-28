@@ -220,6 +220,7 @@ function onConfirm() {
         coupon_markup_type : doc.value.coupon_markup_type,
         coupon_markup_value : doc.value.coupon_markup_value,
         coupon_value : props.data.is_open_product==1? couponValue.value:props.data.coupon_value,
+        total_coupon_value : (props.data.is_open_product==1? couponValue.value:props.data.coupon_value) * coupounList.value.length,
         is_open_product:props.data.is_open_product,
         append_quantity:props.data.append_quantity,
         allow_free:props.data.allow_free,

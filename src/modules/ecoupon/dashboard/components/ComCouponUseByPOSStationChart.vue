@@ -1,9 +1,9 @@
 <template>
-  <ion-card class="ion-no-margin ion-no-padding">
-    <ion-card-header>
-      <ion-item lines="none">
+    <ion-card class="ion-no-margin">
+        <ion-card-header>
+            <ion-item lines="none">
                 <ion-label>
-                    <h1> {{ t("Sale Breakdown by Coupon Code") }}</h1>
+                    <h1> {{ t("Revenue vs Coupon Used by Station") }}</h1>
                 </ion-label>
 
                 <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
@@ -18,23 +18,22 @@
 
             </ion-item>
 
-    </ion-card-header>
-    <ion-card-content>
-      <div class="mt-1 bg-blue-50 border-round-lg" style="width: 100%; height: 295px;" v-if="data">
-        <v-chart :option="option" autoresize />
-      </div>
-
-    
-    </ion-card-content>
-  </ion-card>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="mt-1 border-round-lg" style="width: 100%; height: 400px;" v-if="data">
+                <v-chart :option="option" autoresize />
+            </div>
+        </ion-card-content>
+    </ion-card>
 </template>
 
 <script setup>
-import { analyticsOutline, barChartOutline } from 'ionicons/icons';
 import { computed, ref } from 'vue'
 import VChart from 'vue-echarts'
-import ComViewSaleBreakdownByCouponData from '@/modules/ecoupon/dashboard/components/ComViewSaleBreakdownByCouponData.vue'
-const chartType = ref('bar')
+import ComViewCouponUseByPOSStatinData from '@/modules/ecoupon/dashboard/components/ComViewCouponUseByPOSStatinData.vue'
+import { analyticsOutline, barChartOutline } from 'ionicons/icons';
+
+
 const props = defineProps({
   data: {
     type: Array,
@@ -42,14 +41,14 @@ const props = defineProps({
   }
 })
 
+const chartType=ref('bar')
 const t = window.t;
 
 const option = computed(() => {
-  const productNames = props.data.map(item => item.product_name)
-  const totalAmounts = props.data.map(item => item.total_amount)
-  const quantities = props.data.map(item => item.quantity)
-  const couponValues = props.data.map(item => item.total_coupon_value)
-
+  const labels = props.data.map(item => item.pos_station)
+  const couponValues = props.data.map(item => Math.abs( item.coupon_value))
+  const totalAmount = props.data.map(item =>Math.abs( item.total_amount))
+ 
   return {
     tooltip: {
       trigger: 'item',
@@ -58,7 +57,7 @@ const option = computed(() => {
       }
     },
     legend: {
-      data: [t("Total Amount"), t("Quantity"), t("Coupon Value")]
+      data: [t("Total Revenue"),t("Coupon Value")]
     },
      grid: {
     top: 25,
@@ -69,7 +68,7 @@ const option = computed(() => {
   },
     xAxis: {
       type: 'category',
-      data: productNames,
+      data: labels,
       axisLabel: {
         interval: 0,
         rotate: 0
@@ -80,25 +79,15 @@ const option = computed(() => {
     },
     series: [
       {
-        name: t("Total Amount"),
+        name: t("Total Revenue"),
         type: chartType.value,
-        data: totalAmounts,
-        label: {
+        data: totalAmount,
+         label: {
             show: true,
             position: 'top', // or 'inside', 'bottom', etc.
             formatter: function (params) {
                 return app.currencyFormat(params.value)
             }
-            }
-      },
-      {
-        name: t("Quantity"),
-        type: chartType.value,
-        data: quantities,
-        label: {
-            show: true,
-            position: 'top', // or 'inside', 'bottom', etc.
-             formatter: '{c}'
             }
       },
       {
@@ -112,24 +101,25 @@ const option = computed(() => {
                 return app.currencyFormat(params.value)
             }
             }
-      }
+      },
+      
     ]
   }
 })
 
 function onChangeChartType(type='bar'){
-    chartType.value = type
+    chartType.value= type
 }
+
 
 function onViewData(){
     app.openModal({
-        component:ComViewSaleBreakdownByCouponData,
+        component:ComViewCouponUseByPOSStatinData,
         componentProps:{
             data:props.data
         }
     })
 }
-
 </script>
 
 

@@ -212,8 +212,8 @@ globalThis.app.getNumber = function(n){
   return getNumber(n, app.setting.float_precision);
 }
 
-globalThis.app.currencyFormat = function(number,format){
-  return currencyFormat(number,format);
+globalThis.app.currencyFormat = function(number,currency=null,format=null){
+  return currencyFormat(number,currency,format);
 }
 
 globalThis.app.getMeta = async function(doctype){

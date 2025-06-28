@@ -1,22 +1,43 @@
  <template>
-    <div class="px-1 mt-1">
-        <ion-text color="primary" class="ion-content">
-            <h2>{{ t("Payment Breakdown") }}</h2>
-        </ion-text>
-        <div class="mt-1 bg-blue-100 border-round-lg " style="width: 100%;height: 400px;" v-if="data">
-            <v-chart :option="option" autoresize />
+    <ion-card class="ion-no-margin">
+        <ion-card-header>
+            <ion-item lines="none">
+                <ion-label>
+                    <h1> {{ t("Payment Breakdown") }}</h1>
+                </ion-label>
+
+                <ion-button @click="onChangeChartType('bar')" shape="round" size="default"
+                    :fill="chartType == 'bar' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Bar Chart')}`">
+                    <ion-icon slot="icon-only" :icon="barChartOutline"></ion-icon>
+                </ion-button>
+                <ion-button @click="onChangeChartType('pie')" shape="round" size="default"
+                    :fill="chartType == 'pie' ? 'solid' : 'clear'" v-tooltip.top="`${t('View Graph as Line Chart')}`">
+                    <ion-icon slot="icon-only" :icon="pieChartOutline"></ion-icon>
+                </ion-button>
+                <ion-chip @click="onViewData" slot="end" color="primary">{{ t("View Data") }}</ion-chip>
+
+            </ion-item>
+
+        </ion-card-header>
+        <ion-card-content>
+             <div class="mt-1 bg-blue-50 border-round-lg " style="width: 100%;height: 400px;" v-if="data">
+            <v-chart :option="chartType=='pie'?option:barChartOption" autoresize />
         </div>
-    </div>
+        </ion-card-content>
+    </ion-card>
+     
 </template>
 
 <script setup>
+import {  barChartOutline, pieChartOutline } from 'ionicons/icons';
 import { ref, computed } from 'vue'
+import  ComViewPaymentBreakdownData from '@/views/dashboard/components/ComViewPaymentBreakdownData.vue'
 const t = window.t;
 
 const props = defineProps({
     data: Object
 })
-
+const chartType = ref("pie")
 const option = computed(() => {
     if (props.data) {
         return {
@@ -40,7 +61,7 @@ const option = computed(() => {
             series: [
                 {
                     name: t("Payment Type"),
-                    type: 'pie',
+                    type: chartType.value,
                     radius: ['0%', '70%'],
                     center: ['50%', '38%'],
                     data: props.data.map(r => ({
@@ -67,7 +88,72 @@ const option = computed(() => {
     return {}
 })
 
+
+const barChartOption = computed(()=>{
+       if (props.data) {
+return {
+    tooltip: {
+      trigger: 'item',
+      formatter: (params) => {
+        return `${params.seriesName}<br/>${params.name}: ${params.value}`
+      }
+    },
+    legend: {
+      data: [t("Payment Breakdown")]
+    },
+     grid: {
+    top: 25,
+    bottom: 5,
+    left: 40,
+    right: 10,
+    containLabel: true
+  },
+    xAxis: {
+      type: 'category',
+      data: props.data.map(x=>x.payment_type),
+      axisLabel: {
+        interval: 0,
+        rotate: 0
+      }
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: t("Sale Revenue"),
+        type: chartType.value,
+        data: props.data.map(x=>x.base_amount),
+         label: {
+            show: true,
+            position: 'top', // or 'inside', 'bottom', etc.
+            formatter: function (params) {
+                return app.currencyFormat(params.value)
+            }
+            }
+      },
+      
+    ]
+  }
+}
+return {}
+
+})
+
 function getInputAmount(payment_type){
     return  props.data.find(x=>x.payment_type == payment_type).input_amount
+}
+
+function onChangeChartType(type){
+    chartType.value  = type
+}
+
+function onViewData(){
+    app.openModal({
+        component:ComViewPaymentBreakdownData,
+        componentProps:{
+            data:props.data
+        }
+    })
 }
 </script>

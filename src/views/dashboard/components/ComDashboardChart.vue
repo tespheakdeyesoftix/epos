@@ -16,7 +16,19 @@ const props = defineProps({
 })
 const t = window.t;
 const option = computed(() => {
+
+  
+
   if (props.data && props.data.length) {
+     const current = app.utils.getWeekStartAndEnd()
+             const formatDate = d => d.toISOString().split('T')[0];
+
+            const data = props.data.filter(item => {
+                const itemDate = formatDate(new Date(item.date));
+                return itemDate >= current["start"] && itemDate <= current["end"];
+            });
+          
+
     return {
       grid: {
         left: 10,
@@ -35,12 +47,12 @@ const option = computed(() => {
       },
       yAxis: {
         type: 'category',
-        data: props.data.map(r => r.day),
+        data: data.map(r => r.day),
       },
       series: [
         {
           type: 'bar',
-          data: props.data.map(r => r.value),
+          data: data.map(r => r.value),
           barWidth: '45%',
           label: {
             show: true,
