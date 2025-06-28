@@ -1,5 +1,5 @@
 <template>
-<ion-card  class="icon-no-padding ion-no-margin" color="danger" >
+<ion-card  class="icon-no-padding ion-no-margin" color="tertiary" >
     <ion-card-content>
         <div class="flex justify-content-between align-item-center">
 

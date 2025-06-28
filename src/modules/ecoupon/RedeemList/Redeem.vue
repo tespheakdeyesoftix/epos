@@ -2,27 +2,32 @@
     <ion-page>
         <ToolBar>
             {{ t("Redeem") }}
-
         </ToolBar>
         <ion-content class="ion-padding">
             <div class="fix-container">
-              
-<ComSearchBarcode/>
-<ComRedeemCouponList />
-    <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
+             <ion-split-pane when="xs" content-id="main">
+    <ion-menu content-id="main">
+      <ion-content class="ion-padding">
+      <ComSearchBarcode/>
+      <ComRedeemCouponList />  
+      </ion-content>
+      <ComRedeemFooter/>
+    </ion-menu>
+    <div class="ion-page" id="main">
+      <ion-content class="ion-padding">
+          <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
           storageKey="redeem_note" />
-
-{{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" />
+      </ion-content>
+      <ion-card>
+  {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" />
 {{ t("Exchange Rate") }} :<ComCurrency :value="1" :currency="mainCurrency" /> =  <ComCurrency :value="exchange_rate" :currency="second_currency" />
 {{ t("Grand Total") }}({{ second_currency }}) :<ComCurrency :value="grandTotal*exchange_rate" :currency="second_currency" />
-
+      </ion-card>
+    
+    </div> 
+    </ion-split-pane>
             </div>
-
-            
         </ion-content>
- 
-                <ComRedeemFooter/>
- 
     </ion-page>
 
 </template>
@@ -75,3 +80,15 @@ onBeforeRouteLeave(async (to, from, next) => {
 
 
 </script>
+<style scoped>
+.bg-order-card{
+  background-color: var(--ion-color-light-tint);
+}
+ion-split-pane {
+    --side-width: 60%;
+    --side-max-width: 60%;
+    --border: 1px dashed #b3baff;
+}
+
+
+</style>
