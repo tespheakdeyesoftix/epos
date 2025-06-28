@@ -2,7 +2,7 @@
     <ion-footer>
         
         <ion-toolbar  >
-            <div style="display: flex; justify-content: center;gap: 10px;"> 
+            <div class="mr-3" style="display: flex; justify-content: right;gap: 10px;"> 
             <ion-button @click="onGoHome"> {{ t('Home') }}</ion-button>
             
             <ion-button :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}

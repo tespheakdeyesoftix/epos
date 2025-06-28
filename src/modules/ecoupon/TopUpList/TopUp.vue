@@ -13,7 +13,7 @@
       <ComSearchBarcode />
       <ComTopUpCouponvalue />
       </ion-content>
-        
+        <ComTopUpFooter />
     </ion-menu>
     <div class="ion-page" id="main">
       <ion-content class="ion-padding">
@@ -32,7 +32,7 @@
   </ion-split-pane>
      
     </ion-content>
-  <ComTopUpFooter />
+  
   </ion-page>
 
 </template>
