@@ -223,7 +223,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/cashier-shift-lsit",
+    path: "/cashier-shift-list",
     component: () => import('@/views/shift/CashierShiftList.vue'),
     meta: { requiresAuth: true }
   },

@@ -5,7 +5,7 @@
                 <ComSelect :multiple="f.multiple" :color="filter[f.fieldname]?'primary':''" v-if="f.fieldtype=='Link'" :docType="f.options" :label="f.label || f.options"  v-model ="filter[f.fieldname]" @onSelected="onSelected" @onClear="onClear"/> 
                 <ComSelect v-else-if="f.fieldtype=='Select'" :multiple="f.multiple" :color="filter[f.fieldname]?'primary':''" 
                  :options="f.options" :label="f.label || f.options"  v-model ="filter[f.fieldname]" @onSelected="onSelected" @onClear="onClear"/> 
-                <ComSelectDateFilter v-else-if="f.fieldtype=='Date'" :label="f.label"   v-model ="filter[f.fieldname]" :clear="f.clear"  @onSelect="onSelected" @onClear="onClear" :modalType="f.modal_type"/> 
+                <ComSelectDateFilter v-else-if="f.fieldtype=='Date'" :label="f.label"   v-model ="filter[f.fieldname]" :clear="f.clear"  @onSelect="onSelected" @onClear="onClear" :modalType="f.modal_type" :defaultTimespan="f.default"/> 
             </template>
         </stack>
     </div>

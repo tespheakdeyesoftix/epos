@@ -2,14 +2,11 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content ref="contentRef">
-            
             <DocList docType="Customer" :options="options"  
                 :contentRef="contentRef"
                 @onRowDblClick="onRowDblClick"
-                >
-                    
+                >    
             </DocList>
-           
         </ion-content>
        <ion-fab slot="fixed" horizontal="end" vertical="bottom">
   <ion-fab-button v-tooltip.top="t('Add new customer')" @click="onAddCustomer" >
