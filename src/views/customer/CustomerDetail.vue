@@ -7,7 +7,10 @@
     <ion-content >
       <!-- Header with background image -->
       <div class="profile-header">
-        <div class="header-background"></div>
+         <div
+          class="header-background"
+          :style="{ backgroundImage: `url('${randomBgImage}')` }"
+        ></div>
         <ion-avatar class="custom-avatar">
           <Img v-if="data?.photo" :src="data?.photo" />
           <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.customer_name_en) }}</div>
@@ -42,6 +45,14 @@ const data = ref();
 import dayjs from 'dayjs';
 const t = window.t;
 
+const bgImages = [
+  "/assets/back2.jpg",
+  "/assets/back3.jpg",
+  "/assets/back9.jpg",
+  "/assets/back10.jpg"
+];
+const randomBgImage = ref("");
+
 async function loadData() {
   const l = await app.showLoading();
   let res = await app.getDoc("Customer", app.route.params.name);
@@ -52,6 +63,11 @@ async function loadData() {
 }
 
 onMounted(async () => {
+
+  const index = Math.floor(Math.random() * bgImages.length);
+  randomBgImage.value = bgImages[index];
+  console.log("Random background image:", randomBgImage.value);
+
   await loadData();
 });
 </script>
@@ -65,7 +81,7 @@ onMounted(async () => {
 }
 
 .header-background {
-  background-image: url('https://picsum.photos/1024/300');
+  
   background-size: cover;
   background-position: center;
   height: 100%;
@@ -77,7 +93,7 @@ onMounted(async () => {
 .custom-avatar {
   width: 150px;
   height: 150px;
-  /* border: 4px solid white; */
+  border: 1px solid white;
   
   overflow: hidden;
   position: absolute;
