@@ -10,10 +10,10 @@
       <ion-label>{{ t("Shift Information") }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="second" content-id="second">
-      <ion-label>Second</ion-label>
+      <ion-label>Receipt List</ion-label>
     </ion-segment-button>
     <ion-segment-button value="third" content-id="third">
-      <ion-label>Third</ion-label>
+      <ion-label>Sale Product Breawkdown</ion-label>
     </ion-segment-button>
   </ion-segment>
   </div>
@@ -26,7 +26,7 @@
   </ion-segment-view>
     </ion-content>
     <ComFooter>
-        hello footer
+       
     </ComFooter>
     </ion-page>
 

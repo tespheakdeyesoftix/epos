@@ -107,6 +107,12 @@ async function onLogin() {
   property.value.username = formData.value.username
   property.value.password = formData.value.password
   const response = await login(property.value);
+
+  if(response?.error){
+    await loading.dismiss()
+    return
+
+  }
   
   SaveUsername()
 

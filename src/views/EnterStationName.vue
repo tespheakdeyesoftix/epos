@@ -1,12 +1,12 @@
 <template>
     <ion-page>
         <ToolBar>{{ t("Enter Station Name") }}</ToolBar>
-        <ion-content>
+        <ion-content class="ion-padding">
             <stack class="fix-container flex">
-                <ion-label>Please enter your station name.</ion-label>
+                <ion-label>{{t("Please enter your station name.")}}"</ion-label>
                 <com-input  ref="stationInputRef"  focus v-model="station_name"  :label="t('Station name')"
                     :placeholder="t('Please enter station name')" label-placement="stacked" fill="outline"></com-input>
-                    <ion-button @click="onSave" size="large" shape="round">Save</ion-button>
+                    <ion-button @click="onSave" size="default" shape="round">{{ t("Save") }}</ion-button>
             </stack>
         </ion-content>
     </ion-page>
@@ -38,8 +38,8 @@ async function onSave(){
             return
         }
       
-    }
- 
+    
+    
  
     app.setting.station_name = station_name.value;
     await app.storageService.setItem("station_name",station_name.value);
@@ -47,9 +47,12 @@ async function onSave(){
     await app.utils.getSetting();
     
     await app.setValue("POS Station",station_name.value,"is_used",1);
-    loading.dismiss();
-    app.ionRouter.navigate(app.route.query.return_url, 'back', 'replace');
 
+    app.ionRouter.navigate(app.route.query.return_url, 'back', 'replace');
+ loading.dismiss();
+    } else {
+         loading.dismiss();
+    }
 
 
 }

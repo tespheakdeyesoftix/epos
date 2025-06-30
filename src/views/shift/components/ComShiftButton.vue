@@ -3,7 +3,7 @@
               <HomeButton v-if="!isCashierShiftOpened"  routerLink="/start-shift" :color="'tertiary'" :icon="calendarOutline">
                 {{ t("Start Shift") }}
               </HomeButton>
-              <HomeButton v-else  routerLink="/close-shift" :color="'danger'" :icon="todayOutline">
+              <HomeButton v-else  routerLink="/close-shift" :color="'warning'" :icon="todayOutline">
                 {{ t("Close Shift") }}
               </HomeButton>
    

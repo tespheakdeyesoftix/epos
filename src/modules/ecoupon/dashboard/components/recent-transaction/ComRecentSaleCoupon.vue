@@ -14,7 +14,8 @@ async function getData(){
     const res =  await app.getDocList("Sale",{
         fields:["name","customer","customer_name","grand_total","creation","total_quantity","owner"],
         filters:[
-            ["business_branch","=",app.setting.property.property_name]
+            ["business_branch","=",app.setting.property.property_name],
+            ["sale_type","=",'Sale Coupon']
         ],
         limit:20,
         orderBy: {
