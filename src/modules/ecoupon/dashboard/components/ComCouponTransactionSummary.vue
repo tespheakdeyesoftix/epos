@@ -12,7 +12,7 @@
                     {{ t(d.transaction_type) }} <ion-chip>{{ d.total_transaction }}</ion-chip>
                 </ion-label>
                 <ion-label slot="end">
-                    <ion-chip :color="getColor(d.transaction_type)"><ComCurrency :value="d.coupon_value"/></ion-chip>
+                    <ion-chip :color="getColor(d.transaction_type)"><ComCurrency :value="Math.abs( d.coupon_value)"/></ion-chip>
                 </ion-label>
             </ion-item>
         </ion-list>

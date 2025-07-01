@@ -346,6 +346,11 @@ export function generateUIJsonFromMeta(metaFields) {
 }
 
 
+export function getTimespanOptions(){
+return  ["Today", "Yesterday", "Tomorrow", "This Week", "Last Week", "Next Week", "This Month", "Last Month", "Next Month", "This Quarter", "Last Quarter", "This Year", "Last Year"];
+
+}
+
 export function getTimespanRange(timespan) {
   const now = new Date();
   const startOfDay = d => new Date(d.setHours(0, 0, 0, 0));

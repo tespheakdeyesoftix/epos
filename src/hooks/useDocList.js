@@ -2,6 +2,7 @@ import { ref, onMounted,nextTick } from "vue";
 import { getDocList } from "@/services/api-service";
  
 import { useApp } from "./useApp";
+import dayjs from "dayjs";
 
 export function useDocList(props) {
   const { getMeta } = useApp();
@@ -185,8 +186,31 @@ export function useDocList(props) {
   }
 };
 
+function getDefaultFilter(){
+  const f  = []
+  const hasDefaultFilters = options.value.filterOptions.filter(x=>x.default);
+  hasDefaultFilters.forEach(x=>{
+    if(x.fieldtype=="Date"){
+      if (app.utils.getTimespanOptions().includes(x.default)){
+        const dates = app.utils.getTimespanRange(x.default);
+        f.push([x.fieldname,"between",[dayjs(dates.startDate).format("YYYY-MM-DD"), dayjs(dates.endDate).format("YYYY-MM-DD")]])
+      }else {
+      f.push([x.fieldname,"=",x.default])  
+      }
+    }else {
+      f.push([x.fieldname,"=",x.default])
+    }
+  })
+
+  options.value.filters = [...options.value.filters,...f]
+}
+
   onMounted(async () => {
     loading.value = true;
+  getDefaultFilter();
+
+    
+
     const result = await getData();
     data.value = result;
     
