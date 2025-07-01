@@ -46,10 +46,11 @@
 <ion-modal id="example-modal"  :is-open="isOpenChangeLanguage" ref="modal">
       <div class="wrapper">
         <h3>{{ t("Change Language") }}</h3>
-
+ 
         <ion-list lines="none">
           <ion-item :button="true" :detail="false" @click="onDismissModal(l.lang)" v-for="(l, index) in languages" :key="index">
             <ion-icon style="height: 32px;" :icon="l.icon"></ion-icon>
+             
             <ion-label>{{ l.label }}</ion-label>
           </ion-item>
            

@@ -276,7 +276,6 @@ const saleProducts = computed(() => {
             p.price,
             p.modifiers_price
         ].join(',');
-        console.log(key)
         if (!grouped[key]) {
             grouped[key] = {
               

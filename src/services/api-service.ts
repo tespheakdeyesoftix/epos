@@ -249,7 +249,7 @@ export async function uploadFile(
 
         (completedBytes, totalBytes) => {
             if (totalBytes) {
-                console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
+              //  console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
             }
         },
         "epos_restaurant_2023.api.upload.upload_file"
@@ -257,8 +257,7 @@ export async function uploadFile(
         .then(async (result: any) => {
 
             // Log to See Structure
-            console.log(result.data.message.file_url);
-
+       
             return { data: result.data.message.file_url, error: null };
         })
         .catch(async (e) => {

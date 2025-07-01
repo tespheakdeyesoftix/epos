@@ -30,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
               clearInterval(interval)
               resolve()
             }
-          }, 100)
+          }, 1000)
         })
       await waitForSetup()
     }
@@ -113,6 +113,7 @@ router.beforeEach(async (to, from, next) => {
     
   }
 });
+
 
 
 export default router

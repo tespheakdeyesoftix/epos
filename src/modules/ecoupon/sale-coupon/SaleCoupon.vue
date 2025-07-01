@@ -60,7 +60,11 @@ import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSal
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
 const { saleDoc,initSaleDoc,getSaleDoc,saleType,pageRoute } = useSaleCoupon()
+import {
 
+  IonSplitPane,
+
+} from '@ionic/vue';
 
 const t = window.t
  

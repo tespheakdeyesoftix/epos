@@ -47,7 +47,7 @@ async function startUpload(docname) {
   if (result.error) {
     console.error('Upload failed:', result.error)
   } else {
-    console.log('Uploaded file URL:', result.data)
+ 
     // Optionally reset file input and preview
     selectedFile.value = null
     previewUrl.value = null

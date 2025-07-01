@@ -8,6 +8,7 @@
               <ion-col size="12" size-md="6" class="ion-padding">
                 <form @submit.prevent="onLogin" class="h-100 flex align-items-center">
                   <div> 
+                    {{ property }}
                     <stack gap="1rem">
                       <ion-text color="primary">
                         <h1 class="m-0">{{ t("Please enter your username and password") }}</h1>
@@ -34,7 +35,7 @@
               </ion-col>
               <ion-col size="12" size-md="6" class="ion-padding hidden md:block">
                 <div class="h-100 custom-wrapper-image">
-                  <ion-img class="h-100 img-cover" src="/assets/retina_wood.png"></ion-img>
+                  <ion-img class="h-100 img-cover" src="assets/retina_wood.png"></ion-img>
                 </div>
               </ion-col>
             </ion-row>
@@ -113,6 +114,9 @@ async function onLogin() {
     return
 
   }
+
+  // login success 
+  app.setting.property = property.value
   
   SaveUsername()
 

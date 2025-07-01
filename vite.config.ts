@@ -8,7 +8,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: '/epos-mobile/', 
+  base: '/ecoupon/', 
   plugins: [
     vue(),
     VitePWA({
@@ -18,20 +18,20 @@ export default defineConfig({
       },
       manifest: {
         name: 'ePOS',
-        short_name: 'ePOS',
-        description: 'ePOS for Owner',
+        short_name: 'eCoupon',
+        description: 'eCoupon for Food',
         theme_color: '#3880ff',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/epos-mobile/',
+        start_url: '/ecoupon/',
         icons: [
           {
-            src: '/epos-mobile/assets/app_icon.png',
+            src: '/ecoupon/assets/app_icon.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/epos-mobile/assets/app_icon.png',
+            src: '/ecoupon/assets/app_icon.png',
             sizes: '512x512',
             type: 'image/png',
           },

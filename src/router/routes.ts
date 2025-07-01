@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/select-workspace/",
-    component: () => import('@/SelectWorkspace.vue'),
+    component: SelectWorkspace,
     meta: { hideTab:true }
   },
   {

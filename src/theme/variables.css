@@ -74,6 +74,7 @@
 	--ion-message-background: #0054e938
 	
 }
+
 .info__message_bg {
 	background: var(--ion-message-background)
 }

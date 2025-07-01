@@ -1,17 +1,18 @@
 <template>
   <ion-menu content-id="main-content">
-    
+   
       <!-- Profile Section -->
        
       <div class="profile-section"> 
        
         <ion-avatar class="profile-avatar"> 
           <Img v-if="currentUser?.photo"  :src="currentUser?.photo"/>
-          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div> 
+          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser?.full_name) }}</div> 
         </ion-avatar>
-        <ion-label class="profile-name">{{ currentUser.full_name }}</ion-label>
+        <ion-label class="profile-name">{{ currentUser?.full_name }}</ion-label>
       </div> 
       <ion-content>
+        
       <!-- Menu List -->
         <!-- start loop menu -->
          <template v-for="p in drawerMenus.filter(x=>!x.parent_mobile_app_module)" :key="p.name" >
@@ -90,6 +91,10 @@ const onLogout = async () => {
 };
 
 onMounted(async ()=>{
+  
+  setTimeout(async ()=>{
+
+  
   const res = await app.getDocList("Mobile App Module",{
     fields:["name","parent_mobile_app_module","is_group","title","route_url","icon","color"],
     filters:[["show_in_drawer_menu","=","1"],["is_active","=",1]],
@@ -98,10 +103,15 @@ onMounted(async ()=>{
             order: 'asc',
         }
   })
+
+ 
+
  if (res.data){
   drawerMenus.value =res.data
  
  }
+ },3000)
+
 })
 
 </script>

@@ -48,6 +48,7 @@
 import { IonIcon } from '@ionic/vue';
 import {  keypadOutline, scan } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
+import { IonTextarea } from '@ionic/vue';
 import InputNumber from 'primevue/inputnumber';
 
 import FloatLabel from 'primevue/floatlabel';

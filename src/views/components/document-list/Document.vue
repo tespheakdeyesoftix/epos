@@ -16,7 +16,7 @@
 </template>
 <script setup >
 import { useDocument } from '@/hooks/useDocument';
-import {defineModel} from "vue"
+
 const props = defineProps({
     docType:String,
     docName:String,

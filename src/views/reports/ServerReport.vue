@@ -35,7 +35,7 @@
         </template>
         <template v-else>
           <stack class="align-items-center justify-content-center n0__data">
-            <ion-img style="width:70px" src="/assets/file-not-found.png"></ion-img>
+            <ion-img style="width:70px" src="assets/file-not-found.png"></ion-img>
             <ion-text v-if="reportData">Nothing to Show</ion-text>
           </stack>
         </template>

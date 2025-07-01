@@ -3,7 +3,6 @@ import App from './App.vue'
 import router from './router';
 import { storageService } from '@/services/storage-service';
 import {setup} from "@/helpers/setup.js"
-import { useAuth } from '@/hooks/useAuth';
 import "@/helpers/global-function.js"
 import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
@@ -80,7 +79,13 @@ import {
   IonSelect,
   IonSelectOption,
   IonItemGroup,
-  IonItemDivider
+  IonItemDivider,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonSplitPane,
+  IonMenu,
+  IonMenuToggle
 } from '@ionic/vue';
 
  
@@ -149,7 +154,7 @@ import GetData from '@/views/components/public/GetData.vue';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/km' // import Khmer locale
-import { useApp } from './hooks/useApp';
+
 import { Capacitor } from '@capacitor/core';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
@@ -285,6 +290,12 @@ if (Capacitor.isNativePlatform()) {
   app.component('ion-select-option',IonSelectOption)
   app.component('ion-item-group',IonItemGroup)
   app.component('ion-item-divider',IonItemDivider)
+  app.component('ion-grid',IonGrid)
+  app.component('ion-row',IonRow)
+  app.component('ion-col',IonCol)
+  app.component('ion-split-pane',IonSplitPane)
+  app.component('ion-menu',IonMenu)
+  app.component('ion-menu-toggle',IonMenuToggle)
  
   
 
@@ -312,8 +323,8 @@ if (Capacitor.isNativePlatform()) {
   
 async function init() {
   
-  await setup()
-  await router.isReady();
+  setup()
+  router.isReady();
   app.mount("#app");
   
 }

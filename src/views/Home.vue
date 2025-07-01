@@ -47,9 +47,6 @@ import HomeButton from '@/views/components/public/HomeButton.vue';
 
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
-
-
-
  
  
 const t = window.t;

@@ -18,13 +18,13 @@ export function useApp() {
   const languages = [
     {
       lang:"en",
-      icon:"/assets/en.svg",
+      icon:"assets/en.svg",
       label:"English"
     },
     
     {
       lang:"kh",
-      icon:"/assets/kh.svg",
+      icon:"assets/kh.svg",
       label:"ភាសារខ្មែរ"
     }
     ]

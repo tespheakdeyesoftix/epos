@@ -313,7 +313,7 @@ async function onCloseSale(isPrint = true) {
 
 async function printBill(doc_name) {
 
-
+    alert(555)
     const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
         pdf: 0,
         station: app.setting.station_name,
@@ -321,6 +321,9 @@ async function printBill(doc_name) {
         reprint: 0,
         template: selectedPrintFormat.value.pos_receipt_template
     })
+
+    console.log( selectedPrintFormat.value.pos_receipt_template)
+    console.log(result)
 
     if (result.data) {
         for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {

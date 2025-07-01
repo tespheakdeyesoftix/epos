@@ -523,8 +523,7 @@ export async function getSetting() {
   const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings", {
     station_name: station_name
   })
-
-  console.log(res.data)
+ 
 
   if (res.data) {
     app.setting = { ...app.setting, ...res.data }
@@ -569,14 +568,14 @@ export async function getPrintPrintFormat(){
   });
   if(res.data){
    app.setting.print_formats  = res.data;
-   console.log("print formt", app.setting.print_formats)
+ 
   }
 }
 
 
 export async function getPOSConfig(pos_config){
   const res =await app.getDoc("POS Config",pos_config)
-  console.log(res);
+ 
 
   if(res.data){
     
@@ -587,7 +586,7 @@ export async function getPOSConfig(pos_config){
     app.printService =new WebSocketPrinter({
     url: res.data.print_service_url,
     onConnect: () => {
-        console.log("Connected to printer");
+        
     },
 });
   }

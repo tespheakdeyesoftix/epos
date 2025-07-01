@@ -15,7 +15,6 @@ const props = defineProps({
 })
 
 const model = defineModel()
- 
 watch(() => props.params, async (newVal, oldVal) => {
  
  await loadData()
