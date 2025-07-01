@@ -4,6 +4,9 @@
             {{ t("Cashier Shift Detail") }} - {{ name }}
         </ToolBar>
     <ion-content>
+          <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
        <div style="position: sticky; top: 0; z-index: 10; background: white;">
         <ion-segment>
     <ion-segment-button value="Shift Information" content-id="first">
@@ -49,6 +52,13 @@ async function getData(){
   await l.dismiss();
   
 }
+const onRefreshData = async (event) => {
+    await getData()
+    event.target.complete();
+  
+};
+
+
 onMounted(async ()=>{
 await getData();
 })
