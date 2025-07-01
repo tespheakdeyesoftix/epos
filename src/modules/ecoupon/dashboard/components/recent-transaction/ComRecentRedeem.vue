@@ -1,7 +1,7 @@
 <template>
    <ComRecentSaleCouponTable :data="data" v-if="plateform=='desktop'"/>
    <ComSaleOrderCard v-for="(d,index) in data" :key="index" :data="d" v-else/> 
-   <ion-button  expand="full" fill="clear" routerLink="/redeem-list">{{ t("View all orders") }}</ion-button>
+   <ion-button  expand="full" fill="clear" routerLink="/redeem-list">{{ t("View all redeems") }}</ion-button>
 </template>
 <script setup>
 import ComSaleOrderCard  from "@/views/sales/components/ComSaleOrderCard.vue"
