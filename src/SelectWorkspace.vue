@@ -103,8 +103,6 @@ async function onLogin(p) {
    app.setting.property = p
     
     await app.utils.getSetting();
-    alert("loading complete ")
-    alert("go home")
     ionRouter.navigate('/home', 'forward', 'replace');
   }
 }

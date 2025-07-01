@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <AppBar>
+        <ToolBar>
             {{ t("Cashier Shift Detail") }} - {{ name }}
-        </AppBar>
+        </ToolBar>
     <ion-content>
        <div style="position: sticky; top: 0; z-index: 10; background: white;">
         <ion-segment>
@@ -34,6 +34,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import ComCashierShiftSummary from "@/views/shift/components/ComCashierShiftSummary.vue"
+import ToolBar from '../layouts/ToolBar.vue';
 const t = window.t;
 const data = ref()
 const name = ref(app.route.params.name)
