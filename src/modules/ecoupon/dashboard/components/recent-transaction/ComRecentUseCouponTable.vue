@@ -42,14 +42,14 @@
    
         <Column :header="t('Actual Amount')" headerClass="text-right" bodyClass="text-right">
             <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.actual_amount" v-if="slotProps.data.actual_amount" />
+               <ComCurrency :value="Math.abs(slotProps.data.actual_amount)"/>
             </template>
         </Column>
         
         
         <Column :header="t('Coupon Amount')" headerClass="text-right" bodyClass="text-right">
             <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.coupon_amount" v-if="slotProps.data.coupon_amount" />
+               <ComCurrency :value="Math.abs(slotProps.data.coupon_amount)"/>
             </template>
         </Column>
         <Column :header="t('Created Date')" headerClass="text-right" bodyClass="text-right">

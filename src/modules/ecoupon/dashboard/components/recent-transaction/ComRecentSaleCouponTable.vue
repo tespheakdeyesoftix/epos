@@ -13,10 +13,14 @@
     </Column>
 
 
-    <Column field="total_quantity" header="Quantity" headerClass="text-center" bodyClass="text-center"></Column>
+    <Column field="total_quantity" header="Quantity" headerClass="text-center" bodyClass="text-center">
+    <template #body="slotProps">
+        {{ Math.abs(slotProps.data.total_quantity) }}
+    </template>
+    </Column>
     <Column :header="t('Total Amount')" headerClass="text-right" bodyClass="text-right">
      <template #body="slotProps">
-        <ComCurrency :value="slotProps.data.grand_total" />
+        <ComCurrency :value="Math.abs(slotProps.data.grand_total)" />
     </template>
     </Column>
     <Column :header="t('Created By')" >
