@@ -101,7 +101,7 @@ async function onLogin(p) {
   if (response) {
     currentProperty.value = p;
    app.setting.property = p
-    
+    await app.storageService.setItem("current_property",JSON.stringify(p))
     await app.utils.getSetting();
     ionRouter.navigate('/home', 'forward', 'replace');
   }

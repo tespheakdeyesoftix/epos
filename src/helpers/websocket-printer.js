@@ -1,5 +1,7 @@
 export default function WebSocketPrinter(options) {
+ 
     var defaults = {
+        // we have setting in pos config to change url
         url: "ws://192.168.10.81:12212/print/",
         onConnect: function () {
         },
@@ -8,8 +10,10 @@ export default function WebSocketPrinter(options) {
         onUpdate: function () {
         },
     };
-
+ 
     var settings = Object.assign({}, defaults, options);
+ 
+
     var websocket;
     var connected = false;
 

@@ -76,7 +76,50 @@
 
         </ion-row>
         <ion-row>
-            
+            <ion-col>
+<ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        {{ t("Cash Float") }}
+                    </ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  
+                    <stack>
+                        <stack row equal>
+                            <ion-label><strong>{{ t("Opening Amount") }}</strong></ion-label>
+                            <ion-label><ComCurrency :value="data?.shift_doc.total_opening_amount" /></ion-label>
+                            
+                            <ion-label><strong>{{ t("Total Closes Amount") }}</strong></ion-label>
+                            <ion-label><ComCurrency :value="data?.shift_doc.total_close_amount" /></ion-label>
+
+                        </stack>
+                        <stack row equal>
+                            <ion-label><strong>{{ t("System Close Amount") }}</strong></ion-label>
+                            <ion-label><ComCurrency :value="data?.shift_doc.total_opening_amount" /></ion-label>
+                            
+                            <ion-label><strong>{{ t("Total Difference Amount") }}</strong></ion-label>
+                            <ion-label><ComCurrency :value="data?.shift_doc.total_different_amount" /></ion-label>
+
+                        </stack>
+
+                    </stack>
+                    <!-- cashfloat table -->
+                    <ComCashFloatTable :data="data?.shift_doc.cash_float"/>
+                </ion-card-content>
+            </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-card-header>
+                        <ion-card-title>
+                            {{ t("Summary") }}
+                        </ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
         </ion-row>
     </ion-grid>
     </div>
@@ -84,8 +127,8 @@
 <script setup>
 import dayjs from 'dayjs';
 import { ref } from 'vue';
-
-
+import ComCashFloatTable from "@/views/shift/components/ComCashFloatTable.vue"
+ 
 const props = defineProps({
     data:Object
 })
