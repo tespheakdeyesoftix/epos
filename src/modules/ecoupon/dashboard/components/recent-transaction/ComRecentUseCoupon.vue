@@ -3,7 +3,7 @@
   <template v-else>
     <ComSaleOrderCard v-for="(d, index) in data" :key="index" :data="d" />
   </template>
-  <ion-button expand="full" fill="clear" routerLink="/sold-coupon">
+  <ion-button expand="full" fill="clear" routerLink="/coupon-transaction-list">
     {{ t("View all use coupons") }}
   </ion-button>
 </template>
@@ -19,7 +19,7 @@ const data = ref([])
 
 async function getData() {
   const res = await app.getDocList("Coupon Transaction", {
-    fields: ["sale", "customer","customer_name", "pos_station","creation","owner","posting_date", "coupon_number", "actual_amount", "coupon_amount"],
+    fields: ["sale", "customer","customer_name", "pos_station","creation","owner","posting_date","coupon_code" ,"coupon_number", "actual_amount", "coupon_amount"],
     filters: [
       ["business_branch", "=", app.setting.property.property_name],
       ["transaction_type", "=", "Use"]
