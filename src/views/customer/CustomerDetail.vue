@@ -7,7 +7,10 @@
     <ion-content >
       <!-- Header with background image -->
       <div class="profile-header">
-        <div class="header-background"></div>
+         <div
+          class="header-background"
+          :style="{ backgroundImage: `url('${randomBgImage}')` }"
+        ></div>
         <ion-avatar class="custom-avatar">
           <Img v-if="data?.photo" :src="data?.photo" />
           <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.customer_name_en) }}</div>
@@ -42,6 +45,17 @@ const data = ref();
 import dayjs from 'dayjs';
 const t = window.t;
 
+const bgImages = [
+  "/assets/back2.jpg",
+  "/assets/back3.jpg",
+  "/assets/back9.jpg",
+  "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg/1200px-Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg",
+  "https://c4.wallpaperflare.com/wallpaper/800/831/598/digital-art-neon-mountains-lake-wallpaper-thumb.jpg",
+  "https://i.etsystatic.com/56713946/r/il/0d08c9/6638762685/il_fullxfull.6638762685_p2xv.jpg",
+  "/assets/back10.jpg"
+];
+const randomBgImage = ref("");
+
 async function loadData() {
   const l = await app.showLoading();
   let res = await app.getDoc("Customer", app.route.params.name);
@@ -52,6 +66,11 @@ async function loadData() {
 }
 
 onMounted(async () => {
+
+  const index = Math.floor(Math.random() * bgImages.length);
+  randomBgImage.value = bgImages[index];
+  console.log("Random background image:", randomBgImage.value);
+
   await loadData();
 });
 </script>
@@ -65,7 +84,7 @@ onMounted(async () => {
 }
 
 .header-background {
-  background-image: url('https://picsum.photos/1024/300');
+  
   background-size: cover;
   background-position: center;
   height: 100%;
@@ -77,7 +96,7 @@ onMounted(async () => {
 .custom-avatar {
   width: 150px;
   height: 150px;
-  /* border: 4px solid white; */
+  border: 1px solid white;
   
   overflow: hidden;
   position: absolute;
