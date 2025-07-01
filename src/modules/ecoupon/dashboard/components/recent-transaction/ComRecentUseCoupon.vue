@@ -3,7 +3,7 @@
   <template v-else>
     <ComSaleOrderCard v-for="(d, index) in data" :key="index" :data="d" />
   </template>
-  <ion-button expand="full" fill="clear" routerLink="/top-up-list">
+  <ion-button expand="full" fill="clear" routerLink="/sold-coupon">
     {{ t("View all use coupons") }}
   </ion-button>
 </template>
