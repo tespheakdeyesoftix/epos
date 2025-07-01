@@ -28,7 +28,7 @@
        
         <Column :header="t('Posting Date')" headerClass="text-center" bodyClass="text-center">
             <template #body="slotProps">
-                {{ slotProps.data.posting_date }}
+                {{ dayjs(slotProps.data.posting_date).format('DD/MM/YYYY') }}
             </template>
         </Column>
         
@@ -52,6 +52,16 @@
                 <ComCurrency :value="slotProps.data.coupon_amount" v-if="slotProps.data.coupon_amount" />
             </template>
         </Column>
+        <Column :header="t('Created Date')" headerClass="text-right" bodyClass="text-right">
+             <template #body="slotProps">
+        {{ dayjs(slotProps.data.creation).fromNow() }}
+        </template>
+        </Column>
+        <Column :header="t('Created By')" headerClass="text-center" bodyClass="text-center">
+            <template #body="slotProps">
+                {{slotProps.data.owner.split("@")[0]}}
+            </template>
+         </Column>
     </DataTable>
 </template>
 
@@ -59,7 +69,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ComCurrency from '@/views/components/public/ComCurrency.vue';
-
+import dayjs from 'dayjs';
 const props = defineProps({
     data: {
         type: Array,
