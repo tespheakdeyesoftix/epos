@@ -35,7 +35,7 @@
 
         </ion-content>
         <ComFooter>
-             <ion-button :disabled="!selectedRow" :routerLink="'/coupon-detail/' + selectedRow?.name">{{ t("View Detail") }}</ion-button>
+             <ion-button :disabled="!selectedRow" :routerLink="'/coupon-detail/' + selectedRow?.coupon_code">{{ t("View Detail") }}</ion-button>
             <ion-button :disabled="!selectedRow">{{ t("Edit") }}</ion-button>
             <ion-button color="danger" :disabled="!selectedRow">{{ t("Delete") }}</ion-button>
         </ComFooter>
