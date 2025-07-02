@@ -4,7 +4,7 @@
     <ComSaleOrderCard v-for="(d, index) in data" :key="index" :data="d" />
   </template>
   <ion-button expand="full" fill="clear" routerLink="/coupon-transaction-list">
-    {{ t("View all use coupons") }}
+    {{ t("View all Coupon Transactions") }}
   </ion-button>
 </template>
 
