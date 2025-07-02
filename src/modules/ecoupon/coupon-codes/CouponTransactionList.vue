@@ -75,7 +75,7 @@ const options = {
   filters:[],
   filterOptions:[
    
-    
+   {fieldname:"transaction_type", fieldtype:"Select", label:t('Transaction Type'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal',options:['Sale Coupon','Top Up','Redeem','Use']}, 
     // {fieldname:"business_branch", fieldtype:"Link",options:"Business Branch", label:t("Business Branch"), hidden: true},
     {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
