@@ -115,6 +115,11 @@
                 <ComSaleSumamry v-if="data?.shift_doc.name" :cashier_shift="data?.shift_doc.name"/>
             </ion-col>
         </ion-row>
+        <ion-row>
+            <ion-col>
+                <ComPaymentBreakdown v-if="data?.shift_doc.name" :cashier_shift="data?.shift_doc.name"/>
+            </ion-col>
+        </ion-row>
     </ion-grid>
     </div>
 </template>
@@ -123,6 +128,7 @@ import dayjs from 'dayjs';
 import { ref } from 'vue';
 import ComCashFloatTable from "@/views/shift/components/ComCashFloatTable.vue"
 import ComSaleSumamry from "@/views/shift/components/ComSaleSumamry.vue"
+import ComPaymentBreakdown from "@/views/shift/components/ComPaymentBreakdown.vue"
  
 const props = defineProps({
     data:Object

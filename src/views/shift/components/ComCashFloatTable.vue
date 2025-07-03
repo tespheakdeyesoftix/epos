@@ -9,7 +9,11 @@
       {{ slotProps.index + 1 }}
     </template>
   </Column>
-    <Column field="payment_method" :header="t('Payment Type')"></Column>
+    <Column field="payment_method" :header="t('Payment Type')">
+    <template #body="slotProps">
+        {{ t(slotProps.data.payment_method) }}
+    </template>
+    </Column>
     <Column field="input_amount" :header="t('Opening Amount')" headerClass="text-right" bodyClass="text-right">
     <template #body="slotProps">
         <ComCurrency :value="slotProps.data.input_amount" :currency="slotProps.data.currency"/>

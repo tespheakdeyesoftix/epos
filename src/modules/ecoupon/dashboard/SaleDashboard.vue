@@ -2,6 +2,11 @@
     <ion-page>
         <AppBar>
             {{ t("Dashbard") }}
+             <template #end>
+                <ion-button @click="onReloadData" shape="round" class="ion-hide-sm-down">
+                    <ion-icon :icon="refreshOutline" slot="icon-only" />
+                </ion-button>
+            </template>
         </AppBar>
         <ion-content class="ion-padding">
 <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
@@ -56,6 +61,7 @@ import ComPaymentBreakdown from "@/views/dashboard/components/ComPaymentBreakdow
 import ComCouponUseByPOSStationChart from "@/modules/ecoupon/dashboard/components/ComCouponUseByPOSStationChart.vue"
 import ComRecentData from "@/modules/ecoupon/dashboard/components/ComRecentData.vue"
 import { onMounted } from "vue";
+import { refreshOutline } from "ionicons/icons";
 const {
         kpiData,
         saleCouponBreakdown,
@@ -86,6 +92,14 @@ const handleRefresh = async (event) => {
     await getData()
     event.target.complete();
 };
+
+async function onReloadData() {
+    const l = await app.showLoading()
+    await getData()
+    await l.dismiss()
+
+}
+
 
 
 onMounted(async ()=>{

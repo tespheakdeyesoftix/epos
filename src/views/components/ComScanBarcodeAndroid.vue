@@ -1,9 +1,10 @@
 <template>
-  
+  <ion-item button class="mb-2" lines="full">
+    <ion-icon slot="start" :icon="cameraOutline"/>
+    <ion-label>{{t("Select Camera")}}</ion-label>
     <ion-select
       @ionChange="startScanner"
-      label="Select Camera"
-      placeholder="Select Camera"
+      slot="end"  
       v-model="selectedCameraId"
     >
       <ion-select-option
@@ -14,8 +15,8 @@
         {{ d.label }}
       </ion-select-option>
     </ion-select>
-    <div id="reader" style="width: 100%"></div>
-    <p>Scanned Result: {{ result }}</p>
+  </ion-item>
+    <div id="reader" style="width: 100%;"></div>
  
 </template>
 
@@ -23,10 +24,11 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Html5Qrcode } from 'html5-qrcode'
 import beep from '/assets/beep.mp3'
+import { cameraOutline } from 'ionicons/icons';
 const emit = defineEmits();
 const result = ref('')
 let scanner = null
-
+const t = window.t;
 const selectedCameraId = ref('')
 const cameraList = ref([])
 
@@ -95,3 +97,10 @@ onBeforeUnmount(() => {
   }
 })
 </script>
+
+<style scoped>
+#reader{
+  border-radius: 20px;
+  overflow: hidden;
+}
+</style>

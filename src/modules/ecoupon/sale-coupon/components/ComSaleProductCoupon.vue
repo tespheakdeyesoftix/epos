@@ -1,5 +1,4 @@
 <template>
-   
     <div  v-if="saleDoc.sale_products.length>0">
       <div @click="toggle(index)" v-for="(sp,index) in saleDoc.sale_products"  :key="index" >
 <ComSaleProductCouponCard  :activeIndex="activeIndex" :index="index"  :data="sp" />
@@ -21,11 +20,7 @@ const {saleDoc} = useSaleCoupon()
 const activeIndex = ref(0)
 
 const toggle = (index) => {
-  if (activeIndex.value == index) {
-    activeIndex.value = null
-  } else {
-    activeIndex.value = index
-  }
+ activeIndex.value = index
 }
 const t = window.t;
 

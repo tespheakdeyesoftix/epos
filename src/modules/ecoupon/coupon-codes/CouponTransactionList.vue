@@ -2,11 +2,10 @@
     <ion-page>
         <AppBar>{{ t("Coupon Transaction List") }}</AppBar>
         <ion-content  ref="pageRef" :scrollEvents="true" @ionScroll="handleScroll">
- 
             <DocList docType="Coupon Transaction" :options="options"
-            v-model:selectedRow="selectedRow"
-            @onRowDblClick="onRowDblClick"
-            ref="docListRef"
+              v-model:selectedRow="selectedRow"
+              @onRowDblClick="onRowDblClick"
+              ref="docListRef"
             >
                 <template #coupon_status="{ item, index }">
                     <ComStatus :status="item.coupon_status"/>
@@ -22,7 +21,6 @@
                 <template #coupon_amount="{ item, index }">
                      {{ Math.abs(item.coupon_amount) }}
                 </template>
-                
             </DocList>
              
             <transition name="fade">

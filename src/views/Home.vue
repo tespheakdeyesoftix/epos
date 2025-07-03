@@ -2,6 +2,7 @@
   <ion-page>
     <AppBar>{{ t(currentMenu?.title || "Home") }} </AppBar>
     <ion-content :fullscreen="true">
+      
       <div class="wrapper-cover flex justify-content-end flex-column align-items-center m-3 mb-0 border-round-3xl pb-5">
         <ion-avatar style="width: 100px; height: 100px;" > 
         <Img :src="setting.app_logo"/>
@@ -36,8 +37,8 @@
   </ion-page>
 </template>
 
-<script setup>
-import {onMounted,ref} from "vue"
+<script setup lang="tsx">
+import {onMounted,ref,defineComponent} from "vue"
 import { useAuth } from '@/hooks/useAuth';
 import {useHome} from "@/hooks/useHome.js"
 import {  logOutOutline } from 'ionicons/icons';
@@ -46,6 +47,12 @@ import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
 import HomeButton from '@/views/components/public/HomeButton.vue';
 
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
+
+const MyDiv = defineComponent({
+  setup() {
+    return () => <div>Hello from JSX</div>
+  }
+})
 
  
  

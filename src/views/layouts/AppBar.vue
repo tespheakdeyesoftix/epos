@@ -10,18 +10,23 @@
              
            
       <ion-searchbar
-        :search-icon="qrCode"
+          
+      :search-icon="qrCode"
         :placeholder="t('Check coupon code')"
         style="max-width: 300px;"
         @ionChange="onCheckCouponCode"
-        class="search_bar"
+        class="ion-hide-sm-down search_bar"
         v-model="keyword"
         
       ></ion-searchbar>
   
            <ion-buttons slot="end">
+            <ion-button @click="onScanQRCode" shape="round" class="ion-hide-sm-up">
+                    <ion-icon :icon="scanOutline" slot="icon-only" />
+                </ion-button>
+            <ComQuickAction   /> 
             <slot name="end"></slot>
- <ComUserProfile />
+                <ComUserProfile />
            </ion-buttons>
          
         </ion-toolbar>
@@ -33,14 +38,16 @@
   import {  IonButtons, IonTitle, IonMenuButton } from '@ionic/vue';
  
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
+    import ComQuickAction from "@/views/layouts/ComQuickAction.vue"  
   
     import { useAuth } from '@/hooks/useAuth';
-import { qrCode } from 'ionicons/icons';
+import { qrCode, scanOutline } from 'ionicons/icons';
 import { ref } from 'vue';
     const {isAuthenticated} = useAuth();
 
 const t = window.t;
 const keyword = ref("")
+
 async function onCheckCouponCode(){
   if(keyword.value){
       const res = await app.getDocList("Coupon Codes", {
@@ -54,6 +61,14 @@ async function onCheckCouponCode(){
       app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1")
   }
   keyword.value = ""
+}
+
+async function onScanQRCode(){
+  const result = await app.onScanBarcode();
+  if (result) {
+    keyword.value = result
+    onCheckCouponCode();
+  }
 }
   </script>
 <style scoped>

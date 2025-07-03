@@ -31,8 +31,9 @@
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-            <DataTable :value="data"
-                
+            
+            <DataTable :value="data" 
+                class="ion-padding-start ion-padding-end"
                 tableStyle="min-width: 50rem" selectionMode="single"
                 v-model:selection="selectedRow" 
                 showGridlines 
@@ -61,11 +62,14 @@
                             <template v-else-if="col.fieldtype == 'Currency'">
                                 <ComCurrency :value="slotProps.data[col.fieldname]" />
                             </template>
-                            <template v-else-if="col.url">
-                                <router-link
+                            <template v-else-if="col.url ">
+                                
+                                <router-link 
+                                    v-if="slotProps.data[col.fieldname]"
                                     :to="`${col.url}/${slotProps.data[col.id_field] || slotProps.data[col.fieldname]}`">
                                     {{ slotProps.data[col.fieldname] }}
                                 </router-link>
+                                <ion-label v-else>{{ slotProps.data[col.fieldname] }}</ion-label>
                             </template>
                             <template v-else>
                                 <span v-if="col.fieldname == 'owner' || col.fieldname == 'modified_by'">

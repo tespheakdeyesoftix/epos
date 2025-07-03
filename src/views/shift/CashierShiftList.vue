@@ -1,7 +1,8 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Cashier Shift List") }}</AppBar>
-        <ion-content>
+        <ion-content >
+          
             <DocList docType="Cashier Shift" :options="options"
             @onRowDblClick="onRowDblClick"
             >
