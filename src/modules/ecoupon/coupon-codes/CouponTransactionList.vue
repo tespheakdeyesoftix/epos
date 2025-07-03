@@ -8,8 +8,8 @@
             @onRowDblClick="onRowDblClick"
             ref="docListRef"
             >
-                <template #coupon_status="{ item, index }">
-                    <ComStatus :status="item.coupon_status"/>
+                <template #transaction_type="{ item, index }">
+                    <ComStatus :status="item.transaction_type"/>
                 </template>
                 <template #posting_date="{ item, index }">
                     
@@ -17,10 +17,11 @@
                     <ion-label v-else></ion-label>
                 </template>
                 <template #actual_amount="{ item, index }">
-                     {{ Math.abs(item.actual_amount) }}
+                    <ComCurrency :value="Math.abs(item.actual_amount)" />
                 </template>
                 <template #coupon_amount="{ item, index }">
-                     {{ Math.abs(item.coupon_amount) }}
+                     <!-- {{ Math.abs(item.coupon_amount) }} -->
+                    <ComCurrency :value="Math.abs(item.coupon_amount)" />
                 </template>
                 
             </DocList>
@@ -36,8 +37,7 @@
         </ion-content>
         <ComFooter>
              <ion-button :disabled="!selectedRow" :routerLink="'/coupon-detail/' + selectedRow?.coupon_code">{{ t("View Detail") }}</ion-button>
-            <ion-button :disabled="!selectedRow">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" :disabled="!selectedRow">{{ t("Delete") }}</ion-button>
+           
         </ComFooter>
     </ion-page>
 </template>
@@ -60,8 +60,9 @@ const options = {
         {fieldname:"customer_name",header:"Customer", url:"/customer-detail",id_field:"customer"},
         {fieldname:"posting_date",header:"Posting Date",},
         {fieldname:"pos_station",header:"POS Station",},
-        {fieldname:"actual_amount",header:"Actual Amount",},
-        {fieldname:"coupon_amount",header:"Coupon Amount",},
+        {fieldname:"actual_amount",header:"Actual Amount",fieldtype:"Currency"},
+        {fieldname:"coupon_amount",header:"Coupon Amount",fieldtype:"Currency"},
+        {fieldname:"transaction_type",header:"Status",},
         {fieldname:"created_by",header:"Created By",},
         {fieldname:"creation",header:"Date",fieldtype:"Datetime"},
     ],
@@ -81,7 +82,7 @@ const options = {
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
     {fieldname:"pos_station", fieldtype:"Link",options:"POS Station", label:t("POS Station #")},
     {fieldname:"pos_profile", fieldtype:"Link",options:"POS Profile", label:t("POS Profile")},
-    {fieldname:"posting_date", fieldtype:"Date", label:t("Date")},
+    {fieldname:"posting_date", fieldtype:"Date",  label:t("Date"),clear:true},
     {fieldname:"sale", fieldtype:"Link",options:"Sale", label:t("Sale #")},
     {fieldname:"customer", fieldtype:"Link",options:"Customer", label:t("Customer")}
     
