@@ -2,11 +2,25 @@
     <ion-page>
         <AppBar v-if="showAppBar ">
          {{ t("Check Coupon Code") }}
+         <template #end>
+ <ion-button @click="onReloadData" shape="round">
+             <ion-icon :icon="refreshOutline" slot="icon-only"/>
+        </ion-button>
+         </template>
+         
         </AppBar>
         <ToolBar v-else>
          {{ t("Coupon Detail") }}
+             <template #end>
+ <ion-button @click="onReloadData" shape="round">
+             <ion-icon :icon="refreshOutline" slot="icon-only"/>
+        </ion-button>
+         </template>
         </ToolBar>
         <ion-content>
+            <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
             <div class="fix-container">
                
              <template v-if="data?.length>0">
@@ -62,6 +76,19 @@ async function getCouponDetail(couponCode){
         couponDetail.value = res.data;
     }
 }
+const onRefreshData = async (event) => {
+   await getData();
+    event.target.complete();
+  
+};
+async function onReloadData(){
+    const l = await app.showLoading()
+    await getData()
+    await l.dismiss()
+    
+}
+
+
 onMounted(async ()=>{
 await getData();
 })

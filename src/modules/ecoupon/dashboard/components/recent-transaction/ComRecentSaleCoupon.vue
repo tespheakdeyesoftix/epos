@@ -1,4 +1,5 @@
 <template>
+    
    <ComRecentSaleCouponTable :data="data" v-if="plateform=='desktop'"/>
    <ComSaleOrderCard v-for="(d,index) in data" :key="index" :data="d" v-else/> 
    <ion-button  expand="full" fill="clear" routerLink="/sale-coupon-list">{{ t("View all orders") }}</ion-button>

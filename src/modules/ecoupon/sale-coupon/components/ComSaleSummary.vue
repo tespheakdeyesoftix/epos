@@ -1,5 +1,5 @@
 <template>
-    
+ 
 <ion-list class="summary-sale">
     <ion-item v-if="totalQuantity>0">
         <ion-label class="ion-no-padding">{{ t("Total Coupon") }}</ion-label>
@@ -27,6 +27,10 @@
          <ion-icon :icon="alertCircleOutline"  v-tooltip.top+="saleDoc.discount_note"></ion-icon>
         <ion-label slot="end"><ComCurrency :value="totalSaleDiscountAmount"/></ion-label>
     </ion-item>
+    <ion-item v-if="totalCouponValue>0">
+        <ion-label>{{ t("Total Coupon Value") }}</ion-label>
+        <ion-label slot="end"><ComCurrency :value="totalCouponValue"/></ion-label>
+    </ion-item>
     <ion-item v-if="saleDoc.note">
         <ion-label>{{ t("Note") }}</ion-label>
         <ion-label slot="end">{{ saleDoc.note }}</ion-label>
@@ -38,7 +42,7 @@
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { alertCircleOutline, alertOutline } from "ionicons/icons";
  
-const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAmount,totalSaleDiscountAmount} = useSaleCoupon()
+const {saleDoc,totalQuantity,subTotal,totalSaleProductDiscount,saleDiscoutableAmount,totalSaleDiscountAmount,totalCouponValue} = useSaleCoupon()
 
 const t = window.t;
 

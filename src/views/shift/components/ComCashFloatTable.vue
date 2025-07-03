@@ -25,7 +25,7 @@
         <ComCurrency :value="slotProps.data.input_close_amount" :currency="slotProps.data.currency"/>
     </template>
     </Column>
-    <Column field="input_different_amount" :header="t('Close Amount')" headerClass="text-right" bodyClass="text-right">
+    <Column field="input_different_amount" :header="t('Difference Amount')" headerClass="text-right" bodyClass="text-right">
     <template #body="slotProps">
         <ComCurrency :value="slotProps.data.input_different_amount" :currency="slotProps.data.currency"/>
     </template>
