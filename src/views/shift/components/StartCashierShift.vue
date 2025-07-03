@@ -19,7 +19,7 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6" v-for="pt in payment_type">
-                            <com-input :label="pt.payment_type" v-model="pt.input_amount" type="number"></com-input>
+                            <com-input :label="pt.payment_type" v-model="pt.input_amount" type="number" keyboard></com-input>
                         </ion-col>
                     </ion-row>
                     <ion-row>

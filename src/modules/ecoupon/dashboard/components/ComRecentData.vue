@@ -14,7 +14,10 @@
             </ion-segment>
             <ion-segment-view>
                 <ion-segment-content v-for="(d,index) in transactionType" :key="index"  :id="'recent_' + index">
-                    <component :is="d.component"  v-if="d.is_loaded==true"/>
+                    <div class="ion-padding">
+<component :is="d.component"  v-if="d.is_loaded==true"/>
+                    </div>
+                    
                 </ion-segment-content>
                  
             </ion-segment-view>
@@ -33,7 +36,7 @@ const t = window.t;
 const transactionType = ref([
     { label: "Sale Coupon", is_loaded: true, component: ComRecentSaleCoupon },
     { label: "Top Up", is_loaded: false, component: ComRecentTopUp },
-    { label: "Use Coupon", is_loaded: false, component: ComRecentUseCoupon },
+    { label: "Use Coupon Transaction", is_loaded: false, component: ComRecentUseCoupon },
     { label: "Redeem", is_loaded: false, component: ComRecentRedeem }
 ])
 

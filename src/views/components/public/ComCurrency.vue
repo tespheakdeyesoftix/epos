@@ -1,6 +1,6 @@
 <template>
-     
-    <span >
+    
+    <ion-text :color="color">
       
         <template v-if="format" >
         
@@ -14,16 +14,18 @@
 <template v-if="symbol_on_right==1">{{ curencySymbol }}</template>
         </template>
        
-    </span>
+      </ion-text>
 
 </template>
 <script setup>
- import {computed} from "vue"
+ 
+import {computed} from "vue"
 const props = defineProps({
     currency:String,
     value:Number,
     hideAmount:Boolean,
-    format:String
+    format:String,
+    color:String
 })
 
 const setting = app.setting;

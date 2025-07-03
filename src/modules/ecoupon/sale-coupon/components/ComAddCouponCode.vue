@@ -214,7 +214,7 @@ function onConfirm() {
         unit: props.data.unit,
         sub_total: props.data.price,
         price: props.data.is_open_product==1? doc.value.price:props.data.price,
-        total_amount: coupounList.value.length * props.data.price,
+        amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value,
         allow_discount: props.data.allow_discount,
         coupon_markup_type : doc.value.coupon_markup_type,

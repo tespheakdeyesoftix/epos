@@ -96,7 +96,7 @@
                         </stack>
                         <stack row equal>
                             <ion-label><strong>{{ t("System Close Amount") }}</strong></ion-label>
-                            <ion-label><ComCurrency :value="data?.shift_doc.total_opening_amount" /></ion-label>
+                            <ion-label><ComCurrency :value="data?.shift_doc.total_system_close_amount" /></ion-label>
                             
                             <ion-label><strong>{{ t("Total Difference Amount") }}</strong></ion-label>
                             <ion-label><ComCurrency :value="data?.shift_doc.total_different_amount" /></ion-label>
@@ -112,13 +112,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title>
-                            {{ t("Summary") }}
-                        </ion-card-title>
-                    </ion-card-header>
-                </ion-card>
+                <ComSaleSumamry v-if="data?.shift_doc.name" :cashier_shift="data?.shift_doc.name"/>
             </ion-col>
         </ion-row>
     </ion-grid>
@@ -128,6 +122,7 @@
 import dayjs from 'dayjs';
 import { ref } from 'vue';
 import ComCashFloatTable from "@/views/shift/components/ComCashFloatTable.vue"
+import ComSaleSumamry from "@/views/shift/components/ComSaleSumamry.vue"
  
 const props = defineProps({
     data:Object

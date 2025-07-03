@@ -28,6 +28,7 @@ const subTotal = computed(() => {
 })
 
 
+
 const saleDiscoutableAmount = computed(() => {
 
     return saleDoc.value.sale_products.
@@ -50,6 +51,11 @@ const totalSaleProductDiscount = computed(() => {
 
 const grandTotal = computed(() => {
     const total =  (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
+    return total || 0
+})
+
+const totalCouponValue = computed(() => {
+    const total = saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.total_coupon_value || 0), 0);
     return total || 0
 })
 
@@ -312,8 +318,10 @@ async function onCloseSale(isPrint = true) {
 }
 
 async function printBill(doc_name) {
+    if(!selectedPrintFormat.value) return;
+    if(selectedPrintFormat.value.print_receipt_copies<=0) return;
 
-    alert(555)
+    
     const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
         pdf: 0,
         station: app.setting.station_name,
@@ -322,8 +330,7 @@ async function printBill(doc_name) {
         template: selectedPrintFormat.value.pos_receipt_template
     })
 
-    console.log( selectedPrintFormat.value.pos_receipt_template)
-    console.log(result)
+ 
 
     if (result.data) {
         for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {
@@ -378,7 +385,7 @@ function updateSaleProduct(sp) {
     if (sp.discount_type == "Percent") {
         sp.discount_amount = sp.sub_total * (sp.discount || 0) / 100
     }
-    sp.total_amount = sp.sub_total - (sp.discount_amount ?? 0)
+    sp.amount = sp.sub_total - (sp.discount_amount ?? 0)
     // more with discount and tax later
 
 }
@@ -736,6 +743,7 @@ export function useSaleCoupon() {
         saleDoc,
         inputScanQRCode,
         grandTotal,
+        totalCouponValue,
         grandTotalSecondCurrency,
         customer,
         totalQuantity,
