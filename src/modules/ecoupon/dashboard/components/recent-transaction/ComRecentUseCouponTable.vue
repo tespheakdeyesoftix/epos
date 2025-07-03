@@ -21,7 +21,9 @@
        
         <Column :header="t('Coupon Number')" headerClass="text-center" bodyClass="text-center">
             <template #body="slotProps">
-                {{ slotProps.data.coupon_number }}
+                <router-link :to="'/coupon-detail/' + slotProps.data.coupon_code">
+                    {{ slotProps.data.coupon_number }}
+                </router-link>
             </template>
         </Column>
         

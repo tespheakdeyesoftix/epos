@@ -197,6 +197,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/dashboard/components/SoldCoupon.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/coupon-transaction-list",
+    component: () => import('@/modules/ecoupon/coupon-codes/CouponTransactionList.vue'),
+    meta: { requiresAuth: true }
+  },
     {
     path: "/customer-detail/:name",
     component: () => import('@/views/customer/CustomerDetail.vue'),

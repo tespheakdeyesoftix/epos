@@ -46,13 +46,14 @@ import dayjs from 'dayjs';
 const t = window.t;
 
 const bgImages = [
-  "/assets/back2.jpg",
-  "/assets/back3.jpg",
-  "/assets/back9.jpg",
+  "./assets/back2.jpg",
+  "./assets/back3.jpg",
+  "./assets/back9.jpg",
+  "./assets/back10.jpg",
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg/1200px-Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg",
   "https://c4.wallpaperflare.com/wallpaper/800/831/598/digital-art-neon-mountains-lake-wallpaper-thumb.jpg",
   "https://i.etsystatic.com/56713946/r/il/0d08c9/6638762685/il_fullxfull.6638762685_p2xv.jpg",
-  "/assets/back10.jpg"
+  
 ];
 const randomBgImage = ref("");
 
