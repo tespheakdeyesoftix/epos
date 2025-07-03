@@ -20,25 +20,30 @@
            
          <stack grap="20px">
             <stack row equal>
-                <label><strong>{{ t("Customer") }}</strong> : {{ data.customer }} - {{ data.customer_name }}</label>
-                <label><strong>{{ t("Coupon Code") }}</strong> : {{ data.coupon_code }}</label>
+                <ion-label>
+                <strong>{{ t("Customer") }}</strong>:
+                <router-link :to="'/customer-detail/' + data?.customer">
+                    {{ data?.customer }} - {{ data?.customer_name }}
+                </router-link>
+                </ion-label>
+                <ion-label><strong>{{ t("Coupon Code") }}</strong> : {{ data.coupon_code }}</ion-label>
             </stack>
             <stack row equal>
-            <label><strong>{{ t("Amount") }}</strong>: <ComCurrency :value="Math.abs(data.coupon_amount)" /></label>
-             <label><strong>{{ t("Actual Amount") }}</strong> :  <ComCurrency :value="Math.abs(data.actual_amount)" /></label>
+            <ion-label><strong>{{ t("Amount") }}</strong>: <ComCurrency :value="Math.abs(data.coupon_amount)" /></ion-label>
+             <ion-label><strong>{{ t("Actual Amount") }}</strong> :  <ComCurrency :value="Math.abs(data.actual_amount)" /></ion-label>
            
             </stack>
             <stack row equal>
-             <label><strong>{{ t("POS Station") }}</strong> : {{ data.pos_station }}</label>
-            <label><strong>{{ t("Status") }}</strong> : {{ data.status }}</label>
+             <ion-label><strong>{{ t("POS Station") }}</strong> : {{ data.pos_station }}</ion-label>
+            <ion-label><strong>{{ t("Status") }}</strong> : {{ data.status }}</ion-label>
             </stack>
             <stack row equal>
            
-             <label><strong>{{ t("Modified") }}</strong> : {{ dayjs(data.modified).format("DD/MM/YYYY") }}</label>
-              <label><strong>{{ t("Posting Date") }}</strong> : {{ data.posting_date ? dayjs(data.posting_date).format("DD/MM/YYYY") : '' }}</label>
+             <ion-label><strong>{{ t("Modified") }}</strong> : {{ dayjs(data.modified).format("DD/MM/YYYY") }}</ion-label>
+              <ion-label><strong>{{ t("Posting Date") }}</strong> : {{ data.posting_date ? dayjs(data.posting_date).format("DD/MM/YYYY") : '' }}</ion-label>
             </stack>
             <stack row equal>
-              <label><strong>{{ t("Created By") }}</strong> : {{ data.owner.split("@")[0] }} {{ dayjs(data.creation).fromNow() }}</label>
+              <ion-label><strong>{{ t("Created By") }}</strong> : {{ data.owner.split("@")[0] }} {{ dayjs(data.creation).fromNow() }}</ion-label>
             </stack>
            
            
@@ -52,6 +57,7 @@
 </template>
 
 <script setup>
+import { IonLabel } from '@ionic/vue';
 import { ref, onMounted } from 'vue'
 const t = window.t
 import dayjs from 'dayjs'

@@ -1,4 +1,4 @@
-<!-- Parent.vue -->
+ 
 <template>
   <ion-page>
     <AppBar>{{ t("Coupon Transaction List") }}</AppBar>
