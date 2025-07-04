@@ -44,9 +44,11 @@ const options = {
 ],
 
   filterOptions:[
-    {fieldname:"posting_date", fieldtype:"Date", label:t('Sale Date'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal'},
+    {fieldname:"posting_date", fieldtype:"Date", label:t('Date'),clear:true,modal_type:plateform=='mobile'?'sheet_modal':'modal'},
     {fieldname:"pos_profile", fieldtype:"Link",options:"POS Profile", label:t('POS Profile')},
     {fieldname:"outlet", fieldtype:"Link",options:"Outlet", label:t('Outlet')},
+    {fieldname:"is_closed", fieldtype:"Select",options:[{label:t("Opened"),name:0},{label:t("Closed"),name:1}], label:t("Status"),clear:true}
+   
      
   ]
 }
