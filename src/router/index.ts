@@ -54,7 +54,6 @@ router.beforeEach(async (to, from, next) => {
   }else  if (to.path =="/login" && !currentProperty) {
     
     next("/select-workspace");
-
   } 
   else if(['/sale-coupon','/start-working-day',"/start-shift"].includes(to.path) && !station_name && to.path!="/enter-station-name"){
     next("/enter-station-name?return_url=" + to.path);
@@ -80,6 +79,15 @@ router.beforeEach(async (to, from, next) => {
     }else {
       next();
     }
+  }
+  else if (to.path == "/close-shift"){
+    alert("check shift still open")
+    // const result = await app.shift.checkWorkingDay()
+    // if(result>0){
+    //    next("/message/" + result )
+    // }else {
+    //   next();
+    // }
   }
   else if (to.path == "/close-working-day"){
     if(isCashierShiftOpened.value){

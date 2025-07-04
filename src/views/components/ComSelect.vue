@@ -2,7 +2,7 @@
   <div @click.stop="openSheetModal" :class="csClass" style="display: inline;" v-if="!loading">
     <slot>
       <ion-chip v-bind="$attrs" :color="selected?'secondary':''">
-        <ion-label>{{ getLabel() }}</ion-label>
+        <ion-label>{{ t(getLabel()) }}</ion-label>
         <ion-icon v-if="model && clear" :icon="close" @click.stop="onClear"></ion-icon>
       </ion-chip>
     </slot>

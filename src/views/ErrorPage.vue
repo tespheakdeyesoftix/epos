@@ -1,28 +1,28 @@
 <template>
     <ion-page>
         <AppBar>{{ error.page_title }}</AppBar>
-        <ion-content class="ion-align-items-center">
-            <div class="fix-container">
-                <ion-text color="primary"> 
-                    <div class="border-1 p-2 border-round flex align-items-center gap-2 info__message_bg">
-                        <ion-icon :icon="alertCircleOutline" size="large"></ion-icon>
-                        <p>{{ error.message }}</p>
-                    </div>
-                </ion-text>
-            </div>
-        </ion-content>
-        <ion-footer>
-            <ion-toolbar class="ion-text-center">
-                <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
+        <ion-content class="ion-padding" :fullscreen="true">
+      <div class="error-container">
+        <ion-icon :icon="error.icon || warningOutline" class="error-icon"></ion-icon>
+
+        <h2 class="error-title">{{  error.page_title }}</h2>
+        <p class="error-message">
+          {{ error.message }}
+        </p>
+
+        <div class="button-group">
+          <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
                     {{ d.title }}
                 </ion-button>
-            </ion-toolbar>
-        </ion-footer>
+        </div>
+      </div>
+    </ion-content>
+         
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
-import { alertCircleOutline } from 'ionicons/icons';
+import { alertCircleOutline, warningOutline, calendarOutline } from 'ionicons/icons';
 
 const t = window.t;
 function openRoute(url){
@@ -33,8 +33,10 @@ function openRoute(url){
 const errorCodes =
 {
     1: {
+        
         message: t("This sale coupon transaction number " + app.route.query.name + " is not exist."),
         page_title:t("Sale Coupon Not Found"),
+        icon:"",
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"},
             {title:t("New Sale Coupon"),router_link:"/sale-coupon","color":"success"},
@@ -72,6 +74,7 @@ const errorCodes =
     203:{
         page_title:t("Start Cashier Shift"),
         message: t("There's no working day opened. Please start working day first."),
+        icon:calendarOutline,
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"},
             {title:t("Start Working Day Now"),router_link:"/start-working-day","color":"secondary"}
@@ -89,3 +92,41 @@ const errorCodes =
 
 const error = ref(errorCodes[app.route.params.id])
 </script>
+
+<style scoped>
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+      margin-top: -100px;
+}
+
+.error-icon {
+  font-size: 64px;
+  color: var(--ion-color-danger);
+  margin-bottom: 16px;
+}
+
+.error-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.error-message {
+  font-size: 16px;
+  color: var(--ion-color-medium);
+  margin-bottom: 24px;
+  max-width: 500px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+</style>

@@ -10,7 +10,7 @@
                     </stack>
                     <stack row equal>
                         <com-input v-model="workingDay.pos_profile" readonly :label="t('POS Profile')"></com-input>
-                        <ComSelectInput docType="Shift Type" v-model="doc.shift_name" :label="t('Shift')" />
+                        <ComSelectInput docType="Shift Type" v-model="doc.shift_name" :label="t('Shift')"  :placeholder="t('Shift')"/>
                     </stack>
                 </stack>
                 <ion-text color="primary">
@@ -19,7 +19,7 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col size="6" v-for="pt in payment_type">
-                            <com-input :label="pt.payment_type" v-model="pt.input_amount" type="number" keyboard></com-input>
+                            <com-input :label="t(pt.payment_type)" v-model="pt.input_amount" type="number" keyboard></com-input>
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -95,7 +95,7 @@ async function onStartCashierShift() {
     })
     let confirm = false
     if (res.data.length>0) {
-        confirm = await app.onConfirm("Warning", `The ${doc.value.shift_name} is already opened and closed. Do you want to continue open it?`)
+        confirm = await app.onConfirm("Warning", t("shift_already_opened",{shift_name:t(doc.value.shift_name)}))
     }
     else {
         confirm = await app.onConfirm("Start Cashier Shift", "Are you sure you want start cashier shift?")

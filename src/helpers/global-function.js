@@ -50,8 +50,6 @@ globalThis.app.setValue =  async function (DocType,name,fields,value=null) {
 }
 
 
-
-
 globalThis.app.deleteDoc =  async function (DocType,DocName) {
   return await deleteDoc(DocType,DocName)
 }
@@ -68,6 +66,13 @@ globalThis.app.getApi =  async function (api_url,param) {
  
 globalThis.app.postApi =  async function (api_url,param) {
   return await postApi(api_url,param)
+}
+
+globalThis.app.sql =  async function (statement,params) {
+  return await postApi("epos_restaurant_2023.api.api.sql",{
+    sql_command:statement,
+    params:params
+  })
 }
 
 globalThis.app.getDocList =  async function (DocType,param) {

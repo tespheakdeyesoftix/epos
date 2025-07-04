@@ -10,8 +10,8 @@
                     getAvatarLetter(data[labelField] ?? data[valueField]) }}</div>
             </ion-avatar>
             <ion-label>
-              <h2>{{ data[labelField] ?? data[valueField] }}</h2>
-              <p  v-if="description">{{ description }}</p>
+              <h2>{{ t(data[labelField] ?? data[valueField]) }} </h2>
+              <p  v-if="description">{{ description }} </p>
             </ion-label>
             <ion-icon slot="end" :icon="checkmarkCircle" v-if="data.selected" size="medium" color="primary" />
           </ion-item>
@@ -43,7 +43,7 @@ const props = defineProps({
     selectedValues:Object
 
 })
-
+const t = window.t
 
 const emit = defineEmits();
 

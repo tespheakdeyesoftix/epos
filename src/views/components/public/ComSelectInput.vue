@@ -5,7 +5,11 @@
                 <ion-icon slot="icon-only" :icon="closeOutline" aria-hidden="true"></ion-icon>
             </ion-button>
             <ion-icon  style="position: absolute;  right: 12px;top:20px;z-index: 999999999"  v-if="!model"   :icon="chevronDownOutline"></ion-icon>
-            <ion-input v-bind="$attrs"  :value="model" readonly
+            <ion-input v-if="!model" v-bind="$attrs"  :value="model" readonly
+                label-placement="floating" fill="outline">
+                
+            </ion-input>
+            <ion-input v-else v-bind="$attrs"  :value="t(model)" readonly
                 label-placement="floating" fill="outline">
                 
             </ion-input>
@@ -29,8 +33,7 @@ const props = defineProps({
         default: []
     }
 }
-)
-
+) 
 async function onSelect(data) {
    emit("onSelected", data)
 }

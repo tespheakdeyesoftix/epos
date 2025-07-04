@@ -2,8 +2,8 @@
 <template>
     
      
-  <ion-button  @click="openPopover($event)" >
-<ion-icon :icon="addOutline" slot="icon-only" />
+  <ion-button  @click="openPopover($event)"    shape="round">
+<ion-icon :icon="addOutline" slot="icon-only" color="danger" />
   </ion-button>
   <ion-popover  :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false" :dismiss-on-select="true">
     <ion-content class="ion-padding">

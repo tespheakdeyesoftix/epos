@@ -387,6 +387,18 @@
     "Close Amount": "ប្រាក់បិទបញ្ជីរ",
     "Difference Amount": "ប្រាក់លម្អៀង",
     "Total Bill": "សរុបវិកយប័ត្រ",
+    "Warning": "ព្រមាន",
+    "shift_already_opened": "{shift_name} ត្រូវបានបើក និងបិទរួចហើយក្នុងថ្ងៃនេះ. តើអ្នកពិតជាចង់បើកម្តងទៀតមែនទេ?",
+    "Are you sure you want start cashier shift?": "តើអ្នកពិតជាចង់បើកវេណលក់មែនទេ?",
+    "Morning Shift":"វេណព្រឹក",
+    "Afternoon Shift":"វេណរសៀល",
+    "Night Shift":"វេណយប់",
+    "Open shift note":"កំណត់ចំណាំពេលបើកវេណ",
+    "Total Cash Float":"សរុបប្រាក់បើកឲ្យដំបូង",
+    "Go Home":"ទៅទំព័រដើម",
+    "Working Date":"ថ្ងៃធ្វើការ",
+    "There's no working day opened. Please start working day first.":"អ្នកមិនទាន់បានបើកថ្ងៃលក់ទេ។ សូមបើកថ្ងៃលក់ជាមុនសិន។",
+    "Start Working Day Now":"ចាប់ផ្តើមបើកថ្ងៃធ្វើការឥឡូវនេះ",
     "No Selected": "មិនបានជ្រើសរើស"
      
 

@@ -29,7 +29,7 @@
   </ion-segment-view>
     </ion-content>
     <ComFooter>
-       
+       <ion-button :disabled="data?.shift_doc.is_closed == 1" :routerLink="'/close-shift'">{{ t("Close Shift") }}</ion-button>
     </ComFooter>
     </ion-page>
 
