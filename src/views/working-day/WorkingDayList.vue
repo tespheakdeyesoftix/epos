@@ -2,8 +2,6 @@
     <ion-page>
         <AppBar>{{ t("Working Day List") }}</AppBar>
         <ion-content >
-
-          
             <DocList docType="Working Day" :options="options"
             @onRowDblClick="onRowDblClick"
             >
