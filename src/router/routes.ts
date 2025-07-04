@@ -242,6 +242,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/shift/CashierShiftList.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/working-day-list",
+    component: () => import('@/views/working-day/WorkingDayList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/working-day-detail/:name",
+    component: () => import('@/views/working-day/WorkingDayDetail.vue'),
+    meta: { requiresAuth: true }
+  },
 
 
   

@@ -399,6 +399,9 @@
     "Working Date":"ថ្ងៃធ្វើការ",
     "There's no working day opened. Please start working day first.":"អ្នកមិនទាន់បានបើកថ្ងៃលក់ទេ។ សូមបើកថ្ងៃលក់ជាមុនសិន។",
     "Start Working Day Now":"ចាប់ផ្តើមបើកថ្ងៃធ្វើការឥឡូវនេះ",
+    "Closed Date": "ថ្ងៃបិទ",
+    "Closed By": "បិទដោយ",
+    "Working Day List": "បញ្ជីថ្ងៃធ្វើការ",
     "No Selected": "មិនបានជ្រើសរើស"
      
 
