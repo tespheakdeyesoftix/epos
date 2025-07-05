@@ -89,7 +89,7 @@
     </ion-segment-content>
 
     <ion-segment-content id="Recent Order">
-      <ComCustomerRecentOrder v-if="isRecentOrderLoaded" :customer="data.name" :address="data.address"/>
+      <ComCustomerRecentOrder v-if="isRecentOrderLoaded" :customer="data.name"/>
     </ion-segment-content>
   </ion-segment-view>
 
