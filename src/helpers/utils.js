@@ -11,6 +11,7 @@ import ComAuth from '@/views/components/public/ComAuth.vue';
 import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
 import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
 import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
+import ComEditCustomer from "@/views/customer/components/ComEditCustomer.vue"; 
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
@@ -649,6 +650,14 @@ export async function onAddCustomer(){
   const modal = await app.openModal({
     component: ComAddCustomer,
     cssClass:"add-customer-modal"
+  })
+
+  return modal;
+}
+export async function onEditCustomer(){
+  const modal = await app.openModal({
+    component: ComEditCustomer,
+    cssClass:"edit-customer-modal"
   })
 
   return modal;

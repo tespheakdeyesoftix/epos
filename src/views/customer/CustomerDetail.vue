@@ -31,7 +31,9 @@
       </div>
     
     </ion-content>
-      <ComCustomerFooter/>
+      <ComCustomerFooter :data="data"  @reload="loadData"/>
+
+    
   </ion-page>
 </template>
 
@@ -39,9 +41,12 @@
 import { onMounted, ref } from 'vue';
 import ComSegment from "@/views/customer/components/ComSegment.vue";
 import ComCustomerFooter from "@/views/customer/components/ComCustomerFooter.vue";
+ 
 import ComViewCard from "@/views/customer/components/ComViewCard.vue";
 import { getAvatarLetter } from "@/helpers/utils";
+
 const data = ref();
+const showEditModal = ref(false);
 import dayjs from 'dayjs';
 const t = window.t;
 
@@ -66,6 +71,7 @@ async function loadData() {
   await l.dismiss();
 }
 
+ 
 onMounted(async () => {
 
   const index = Math.floor(Math.random() * bgImages.length);
@@ -74,6 +80,8 @@ onMounted(async () => {
 
   await loadData();
 });
+
+
 </script>
 
 <style scoped>

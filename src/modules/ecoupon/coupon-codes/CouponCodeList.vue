@@ -31,7 +31,7 @@
         <ComFooter>
              <ion-button :disabled="!selectedRow" :routerLink="'/coupon-detail/' + selectedRow?.name">{{ t("View Detail") }}</ion-button>
             <ion-button :disabled="!selectedRow">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" :disabled="!selectedRow">{{ t("Delete") }}</ion-button>
+            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
         </ComFooter>
     </ion-page>
 </template>
@@ -55,8 +55,8 @@ const options = {
         {fieldname:"sale_date",header:"Sale Date", fieldtype:"Date"},
         {fieldname:"customer_name",header:"Customer", url:"/customer-detail",id_field:"customer"},
         {fieldname:"price",header:"Price",fieldtype:"Currency"},
-        {fieldname:"coupon_value",header:"Cupon Value",fieldtype:"Currency"},
-        {fieldname:"created_by",header:"By",},
+        {fieldname:"coupon_value",header:"Coupon Value",fieldtype:"Currency"},
+        {fieldname:"created_by",header:"Created By",},
         {fieldname:"creation",header:"Date",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
@@ -103,6 +103,19 @@ onIonViewDidEnter(async ()=>{
 
     }
 })
+
+async function onDelete(){
+  const confirm = await app.utils.onConfirm("Delete Coupon", "Are you sure you want to delete this coupon code?");
+  if (!confirm) return;
+  const l = await app.showLoading();
+  const res = await app.deleteDoc("Coupon Codes", selectedRow.value.name);  
+  if (res.data) {
+    await docListRef.value.onRefresh();
+    app.ionRouter.navigate("/coupon-code-list", "back", "replace");
+  }
+
+  await l.dismiss();
+}
 
 </script>
 <style scoped>
