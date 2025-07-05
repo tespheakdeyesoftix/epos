@@ -13,7 +13,7 @@
     </Column>
 
 
-    <Column field="total_quantity" header="Quantity" headerClass="text-center" bodyClass="text-center">
+    <Column field="total_quantity" :header="t('Quantity')" headerClass="text-center" bodyClass="text-center">
     <template #body="slotProps">
         {{ Math.abs(slotProps.data.total_quantity) }}
     </template>

@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <AppBar>
-            {{ t("Dashbard") }}
+            {{ t("Dashboard") }}
              <template #end>
                 <ion-button @click="onReloadData" shape="round" class="ion-hide-sm-down">
                     <ion-icon :icon="refreshOutline" slot="icon-only" />
