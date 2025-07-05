@@ -6,6 +6,7 @@ import  * as utils from '@/helpers/utils';
 import  * as storageService from '@/services/storage-service.ts';
 import  * as sale from "@/helpers/sale-action.js";
 import  * as shift from "@/helpers/shift-action.js";
+import  * as printing from "@/helpers/printing.js";
 
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
@@ -22,6 +23,7 @@ globalThis.app = globalThis.app || {};
 globalThis.app.utils = utils;
 globalThis.app.sale = sale;
 globalThis.app.shift = shift;
+globalThis.app.printing = printing;
 globalThis.app.storageService = storageService;
 globalThis.app.setting = {};
 

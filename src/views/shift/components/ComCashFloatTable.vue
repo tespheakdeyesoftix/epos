@@ -1,6 +1,6 @@
 <template>
    
-<DataTable :value="data">
+<DataTable :value="data" v-if="data?.length>0"> 
     <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center"  
           style="width: 60px"
             
@@ -37,6 +37,9 @@
 
     
 </DataTable>
+<div class="ion-padding">
+    {{ t("No cash float transaction") }}
+</div>
 
 </template>
 <script setup>

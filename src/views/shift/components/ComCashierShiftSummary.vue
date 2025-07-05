@@ -2,7 +2,7 @@
     <div class="fix-container">
     <ion-grid>
         <ion-row>
-        <ion-col>
+        <ion-col size="12" size-md="6" >
             <ion-card>
                 <ion-card-content>
                     <stack row equal>
@@ -40,7 +40,7 @@
                 </ion-card-content>
             </ion-card>
         </ion-col>
-        <ion-col>
+        <ion-col size="12" size-md="6">
             <ion-card>
                 <ion-card-content>
                      <stack row equal>
@@ -112,6 +112,11 @@
         </ion-row>
         <ion-row>
             <ion-col>
+                <ComCashInOut />
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
                 <ComSaleSumamry v-if="data?.shift_doc.name" :cashier_shift="data?.shift_doc.name"/>
             </ion-col>
         </ion-row>
@@ -129,7 +134,7 @@ import { ref } from 'vue';
 import ComCashFloatTable from "@/views/shift/components/ComCashFloatTable.vue"
 import ComSaleSumamry from "@/views/shift/components/ComSaleSumamry.vue"
 import ComPaymentBreakdown from "@/views/shift/components/ComPaymentBreakdown.vue"
- 
+ import ComCashInOut from "@/views/shift/components/ComCashInOut.vue"
 const props = defineProps({
     data:Object
 })

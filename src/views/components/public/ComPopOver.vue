@@ -6,6 +6,7 @@
   </span>
   <ion-popover
      :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"
+      :dismiss-on-select="true"
   >
     <ion-content class="ion-padding">
       <slot name="content" :close="closePopover">
