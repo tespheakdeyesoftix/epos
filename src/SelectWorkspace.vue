@@ -154,7 +154,6 @@ onIonViewWillEnter(() => {
   if (isAuthenticated) {
     ionRouter.navigate('/home', 'forward', 'replace');
   }
-
   const strProperties = window.storageService.getItem('properties');
   if (strProperties) {
     properties.value = JSON.parse(strProperties);

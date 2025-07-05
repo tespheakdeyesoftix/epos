@@ -6,7 +6,8 @@
         <template #footer>
            <ion-toolbar>
             <div style="display: flex; justify-content: center; gap: 10px;">
-                <ion-button>{{ t("Print") }}</ion-button>
+                <ion-button @click="onPrint">{{ t("Print") }}</ion-button>
+                <ion-button @click="onDownloadPDF">{{ t("Download PDF") }}</ion-button>
             </div>
         </ion-toolbar>
         </template>
@@ -45,6 +46,17 @@ async function getData(){
 
     }
 }
+
+function onPrint(){
+      const printer = app.storageService.getItem("cashierShiftPrinter")
+   
+    app.printing.onPrint(props.doctype,props.docname, props.template,printer)
+}
+function onDownloadPDF(){
+   
+    app.printing.downloadPdf(props.doctype,props.docname, props.template)
+}
+
 
 onMounted(async ()=>{
     const l = await app.showLoading()

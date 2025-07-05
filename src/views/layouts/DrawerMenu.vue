@@ -97,6 +97,7 @@ onMounted(async ()=>{
   
   const res = await app.getDocList("Mobile App Module",{
     fields:["name","parent_mobile_app_module","is_group","title","route_url","icon","color"],
+    limit:5000,
     filters:[["show_in_drawer_menu","=","1"],["is_active","=",1]],
      orderBy: {
             field: 'sort_order',

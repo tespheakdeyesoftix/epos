@@ -579,6 +579,7 @@ export async function getPrintPrintFormat(){
 
 
 export async function getPOSConfig(pos_config){
+
   const res =await app.getDoc("POS Config",pos_config)
  
 
@@ -588,16 +589,25 @@ export async function getPOSConfig(pos_config){
 
     // update print service url
     
-    app.printService =new WebSocketPrinter({
-    url: res.data.print_service_url,
-    onConnect: () => {
-        
-    },
+    app.printService = new WebSocketPrinter({
+      url: res.data.print_service_url,
+      onConnect: () => {
+         
+      },
+       onPrinterList: function (printers) {
+        alert(5555)
+        console.log("Available printers:", printers);
+      },
+       onUpdate: (msg) => console.log("Message:", msg),
+
+
 });
   }
 
   
 }
+ 
+
 
 export async function onSelectCustomer(){
   const modal = await app.openModal({

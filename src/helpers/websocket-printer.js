@@ -1,29 +1,37 @@
 export default function WebSocketPrinter(options) {
- 
+
     var defaults = {
-        // we have setting in pos config to change url
         url: "ws://192.168.10.81:12212/print/",
-        onConnect: function () {
-        },
-        onDisconnect: function () {
-        },
-        onUpdate: function () {
-        },
+        onConnect: function () {},
+        onDisconnect: function () {},
+        onUpdate: function () {},
+        onPrinterList: function () {},
     };
- 
+
     var settings = Object.assign({}, defaults, options);
- 
 
     var websocket;
     var connected = false;
 
     var onMessage = function (evt) {
-        settings.onUpdate(evt.data);
+        let message;
+        try {
+            message = JSON.parse(evt.data);
+        } catch (e) {
+            console.error("Invalid JSON:", evt.data);
+            return;
+        }
+        if (message.cmd === "get_printers") {
+            settings.onPrinterList && settings.onPrinterList(message.printers);
+        } else {
+            settings.onUpdate(evt.data);
+        }
     };
 
     var onConnect = function () {
         connected = true;
         settings.onConnect();
+        websocket.send(JSON.stringify({ cmd: "get_printers" }));
     };
 
     var onDisconnect = function () {
@@ -40,7 +48,7 @@ export default function WebSocketPrinter(options) {
     };
 
     var reconnect = function () {
-        connect();
+        setTimeout(connect, 2000);
     };
 
     this.submit = function (data) {
@@ -50,6 +58,12 @@ export default function WebSocketPrinter(options) {
             });
         } else {
             websocket.send(JSON.stringify(data));
+        }
+    };
+
+    this.getPrinterList = function () {
+        if (connected) {
+            websocket.send(JSON.stringify({ cmd: "get_printers" }));
         }
     };
 

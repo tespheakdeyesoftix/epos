@@ -4,11 +4,15 @@
             {{ t("Cashier Shift Detail") }} - {{ name }}
         </ToolBar>
     <ion-content>
-       
+      <div class="fixed-container ion-padding mt-4 mb-2" v-if="!cashierShiftPrinter && !loading"> 
+<Message severity="warn">{{ t("There's no default printer for shift report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
+      </div>
+        
           <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
        <div style="position: sticky; top: 0; z-index: 10; background: white;">
+       
         <ion-segment @ionChange="onSelected">
 <ion-segment-button v-for="(d,index) in tabs" :key="index" :value="d.label" :content-id="'recent_' + index">
                     <ion-label>{{ t(d.label) }}</ion-label>
@@ -57,14 +61,17 @@ import { onMounted, ref } from 'vue';
 import ComCashierShiftSummary from "@/views/shift/components/ComCashierShiftSummary.vue"
 import ComReceiptList from "@/views/shift/components/ComReceiptList.vue"
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
-
+import Message from 'primevue/message';
 const selected  = ref({ label: "Shift Information", print_template:"Coupon Shift Summary" })
 const tabs = ref([
     { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary" },
     { label: "Receipt List", is_loaded: false, component:ComReceiptList },
+    { label: "Coupon Detail", is_loaded: false, component:ComReceiptList },
  
 ])
+const loading = ref(true)
 
+const cashierShiftPrinter = ref()
 
 const t = window.t;
 const data = ref()
@@ -96,17 +103,25 @@ function onSelected(event) {
 
 }
 
-function onPrint(return_type="base64"){
+async function onPrint(return_type="base64"){
+   
   if(return_type=="pdf"){
     app.printing.downloadPdf("Cashier Shift",name.value, selected.value.print_template)
-  }else if(return_type="html"){
+  }else if(return_type=="html"){
     app.printing.printPreview("Cashier Shift", name.value, selected.value.print_template)
+  }else {
+     app.printing.onPrint("Cashier Shift",name.value,selected.value.print_template,cashierShiftPrinter.value)
   }
 }
 
 
 onMounted(async ()=>{
 await getData();
+  const printer = app.storageService.getItem("cashierShiftPrinter")
+  cashierShiftPrinter.value = printer || ""
+
+
+  loading.value = false;
 })
 
 

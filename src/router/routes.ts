@@ -252,6 +252,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/working-day/WorkingDayDetail.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/setting",
+    component: () => import('@/views/Setting.vue'),
+    meta: { requiresAuth: true }
+  },
 
 
   

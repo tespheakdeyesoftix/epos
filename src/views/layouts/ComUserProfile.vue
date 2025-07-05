@@ -9,7 +9,7 @@
     </ion-avatar>
   </ion-buttons>
 
-  <ion-popover :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false">
+  <ion-popover :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"  :dismiss-on-select="true">
     <ion-content class="ion-padding">
       <div class="user-info">
         <ion-avatar>
@@ -25,13 +25,18 @@
       </div>
 
       <ion-list>
-        <ion-item button detail="false" router-link="/my-profile" @click="popoverOpen = false">
+        <ion-item button lines="full" router-link="/my-profile" @click="popoverOpen = false">
           <ion-icon slot="start" :icon="personOutline"></ion-icon>
           <span>{{ t("My Profile") }}</span>
         </ion-item>
-        <ion-item button detail="false" @click="onChangeLanguage" id="open-custom-dialog">
+        <ion-item button lines="full" @click="onChangeLanguage" id="open-custom-dialog">
           <ion-icon slot="start" :icon="languageOutline"></ion-icon>
           <span>{{ t("Change Language") }}</span>
+        </ion-item>
+        
+        <ion-item routerLink="/setting" lines="full">
+          <ion-icon slot="start" :icon="settingsOutline"></ion-icon>
+          <span>{{ t("Setting") }}</span>
         </ion-item>
         
         <ion-item button detail="false" lines="none" color="danger" @click="onLogout">
@@ -64,7 +69,7 @@ import { ref } from 'vue'
 import { imageUrl, getAvatarLetter } from "@/helpers/utils"
 import { useAuth } from "@/hooks/useAuth"
 
-import { personOutline, helpCircleOutline, logOutOutline,languageOutline } from 'ionicons/icons';
+import { personOutline, helpCircleOutline, logOutOutline,languageOutline, settingsOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { useApp } from '@/hooks/useApp';
 const modal = ref();
