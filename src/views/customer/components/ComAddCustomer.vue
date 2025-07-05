@@ -1,5 +1,6 @@
 <template>
-  <BaseModal :title="t('Add Customer')" @onConfirm="onSave" :confirmText="t('Save')">
+  <BaseModal :title="t(docname?'Edit Customer':'Add Customer')" @onConfirm="onSave" :confirmText="t('Save')">
+    
     <stack>
       <stack row equal>
         <com-input keyboard :label="t('Customer Code')" v-model="doc.customer_code" />
@@ -53,9 +54,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { modalController } from '@ionic/vue'
 import dayjs from 'dayjs'
+const props = defineProps({
+  docname:String,
+
+})
 
 const t = window.t
 const doc = ref({})
@@ -73,10 +78,30 @@ async function onSave() {
       result = await app.createDoc("Customer", doc.value)
     }
     if (result.data) {
-    app.showSuccess(`Added successfully.`)
+      if(doc.value.name){
+        app.showSuccess(`Update successfully.`)
+      }
+       else {
+        app.showSuccess(`Added successfully.`)
+       }
       modalController.dismiss(result.data, 'confirm')
       
     } 
     await loading.dismiss() 
   }
+
+
+  onMounted(async ()=>{
+    if(props.docname){
+        const l = await app.showLoading();
+        const res =await  app.getDoc("Customer", props.docname)
+        if(res.data){
+          doc.value = res.data
+        }
+        await l.dismiss();
+
+
+    } 
+  })
+
     </script >

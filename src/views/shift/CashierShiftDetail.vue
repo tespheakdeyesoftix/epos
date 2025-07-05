@@ -28,30 +28,54 @@
   </ion-segment-view>
     </ion-content>
     <ComFooter>
+
        <ion-button :disabled="data?.shift_doc.is_closed == 1" :routerLink="'/close-shift'">{{ t("Close Shift") }}</ion-button>
        <ComPopOver>
-         <ion-button>{{ t("Print") }}</ion-button>
-          <template #content>
+
+       <ion-button>
+        <ion-icon :icon="eyeOutline" slot="start"></ion-icon>
+        {{ t("Print Preview") }}
+       </ion-button>
+       <template #content>
           <ion-list>
-              <ion-item lines="full" @click="onPrint('html')">
-                <ion-icon slot="start" :icon="eyeOutline"/>
-                <ion-label>{{ t("Print Preview") }}</ion-label>
-                  </ion-item>
-                  
-              <ion-item lines="full"  @click="onPrint()">
-                <ion-icon :icon="printOutline" slot="start"/>
-                <ion-label>{{ t("Print") }}</ion-label>
-                  </ion-item>
-                  
-              <ion-item lines="full" @click="onPrint('pdf')">
-                 <ion-icon :icon="cloudDownloadOutline" slot="start"/>
-                <ion-label>{{ t("Download PDF") }}</ion-label>
-                  </ion-item>
-
-
-            </ion-list>  
-          </template>
-        </ComPopOver>
+            <ion-item v-for="l in languages"  lines="full" @click="onPrint('html',l.server_lang)">
+              <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+              <ion-label>{{ l.label }}</ion-label>  
+            </ion-item>
+          </ion-list>
+        </template>
+       </ComPopOver>
+       <ComPopOver>
+       <ion-button>
+        <ion-icon :icon="printOutline" slot="start"></ion-icon>
+        {{ t("Print") }}
+       </ion-button>
+       <template #content>
+          <ion-list>
+            <ion-item v-for="l in languages"  lines="full" @click="onPrint('base64',l.server_lang)">
+              <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+              <ion-label>{{ l.label }}</ion-label>  
+            </ion-item>
+          </ion-list>
+        </template>
+       </ComPopOver>
+       
+       <ComPopOver>
+       <ion-button>
+        <ion-icon :icon="cloudDownloadOutline" slot="start"></ion-icon>
+        {{ t("Download PDF") }}
+       </ion-button>
+       <template #content>
+          <ion-list>
+            <ion-item v-for="l in languages"  lines="full" @click="onPrint('pdf',l.server_lang)">
+              <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+              <ion-label>{{ l.label }}</ion-label>  
+            </ion-item>
+          </ion-list>
+        </template>
+       </ComPopOver>
+       
+       
     </ComFooter>
     </ion-page>
 
@@ -62,10 +86,12 @@ import ComCashierShiftSummary from "@/views/shift/components/ComCashierShiftSumm
 import ComReceiptList from "@/views/shift/components/ComReceiptList.vue"
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
 import Message from 'primevue/message';
+import { useApp } from '@/hooks/useApp';
+const {languages} = useApp()
 const selected  = ref({ label: "Shift Information", print_template:"Coupon Shift Summary" })
 const tabs = ref([
     { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary" },
-    { label: "Receipt List", is_loaded: false, component:ComReceiptList },
+    { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Shift Receipt List"},
     { label: "Coupon Detail", is_loaded: false, component:ComReceiptList },
  
 ])
@@ -103,14 +129,14 @@ function onSelected(event) {
 
 }
 
-async function onPrint(return_type="base64"){
+async function onPrint(return_type="base64",lang="en"){
    
   if(return_type=="pdf"){
-    app.printing.downloadPdf("Cashier Shift",name.value, selected.value.print_template)
+    app.printing.downloadPdf( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
   }else if(return_type=="html"){
-    app.printing.printPreview("Cashier Shift", name.value, selected.value.print_template)
+    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
   }else {
-     app.printing.onPrint("Cashier Shift",name.value,selected.value.print_template,cashierShiftPrinter.value)
+     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:cashierShiftPrinter.value, lang:lang})
   }
 }
 

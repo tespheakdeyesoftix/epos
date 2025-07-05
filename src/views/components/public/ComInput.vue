@@ -13,7 +13,7 @@
 
     <ion-textarea @ionInput="onInput" :value="model" :label="label" label-placement="stacked" fill="outline"
       :placeholder="placeholder || label" style="min-height: 120px;">
-      <ion-button @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-button  v-if="keyboard && plateform=='desktop'" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-textarea>
@@ -38,7 +38,7 @@
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
       
-      <ion-button v-if="keyboard" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-button v-if="keyboard && plateform=='desktop'" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-input>
@@ -54,7 +54,7 @@ import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
 const inputRef = ref(null)
-
+const plateform = app.utils.getPlateform();
 
 const props = defineProps({
   label: String,

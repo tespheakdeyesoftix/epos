@@ -1,45 +1,42 @@
 <template>
-  <stack row equal>
-    <ion-card button color="primary">
-      <ion-card-content class="text-center">
-        <ion-card-subtitle style="font-size: 18px;">
-          {{ data?.total_visit ?? 0 }}
-        </ion-card-subtitle>
-        <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-          {{ t("Total Visit") }}
-        </ion-card-subtitle>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card button color="warning">
-      <ion-card-content class="text-center">
-        <ion-card-subtitle slot="end" style="font-size: 18px;">
-          <ComCurrency :value="data?.total_annual_order ?? 0" />
-        </ion-card-subtitle>
-        <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-          {{ t("Total Annual order") }}
-        </ion-card-subtitle>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card button color="success">
-      <ion-card-content class="text-center">
-        <ion-card-subtitle slot="end" style="font-size: 18px;">
-          <ComCurrency :value="data?.total_order ?? 0" />
-        </ion-card-subtitle>
-        <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-          {{ t("Total Order") }}
-        </ion-card-subtitle>
-      </ion-card-content>
-    </ion-card>
+  <div class="ion-padding">
+  <stack row equal itemClass="col-6 sm:col-6 lg:col-4 " gap="0px">
+    <card color="primary" :value = "data?.total_visit ?? 0" label="Total Visit" />
+    <card color="warning" :value = "data?.total_annual_order ?? 0" label="Total Anual Order" />
+    <card color="success" :value = "data?.total_order ?? 0" label="Total Order" />
   </stack>
+  </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
+<script setup lang="tsx">
+import { ref, onMounted,defineComponent } from 'vue'
 
 const t = window.t
 const data = ref(null)
+
+
+const card = defineComponent({
+  props: {
+     
+    label: String,
+    color: String,
+    value:Number
+  },
+  setup(props) {
+    return () => (
+      <ion-card button color={props.color} class="ion-no-margin">
+      <ion-card-content class="text-center">
+        <ion-card-subtitle slot="end" style="font-size: 18px;">
+          <ComCurrency value={props.value} />
+        </ion-card-subtitle>
+        <ion-card-subtitle class="mt-2" style="font-size: 18px;">
+          {t(props.label)}
+        </ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+    )
+  }
+})
 
 async function getData() {
   

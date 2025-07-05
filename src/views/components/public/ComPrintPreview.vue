@@ -20,7 +20,8 @@ const t = window.t;
 const props = defineProps({
     doctype:String,
     docname:String,
-    template:String
+    template:String,
+    lang:String,
 })
 
 const data =ref()
@@ -30,19 +31,21 @@ async function getData(){
         doctype:props.doctype,
         docname:props.docname,
         template:props.template,
-        return_type:"html"
+        return_type:"html",
+        lang:props.lang || "en"
+
     })
     if(res.data){
         data.value = res.data.html;
 
         const cssText = res.data.css
 
-  const style = document.createElement('style');
-  style.innerText = cssText;
+        const style = document.createElement('style');
+        style.innerText = cssText;
 
-  if (targetRef.value) {
-    targetRef.value.appendChild(style);
-  }
+        if (targetRef.value) {
+        targetRef.value.appendChild(style);
+        }
 
     }
 }

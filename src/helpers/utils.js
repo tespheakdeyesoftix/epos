@@ -646,22 +646,18 @@ export async function onScanMemberCard(){
 
   return modal;
 }
-export async function onAddCustomer(){
+export async function onAddCustomer(docname=""){
   const modal = await app.openModal({
     component: ComAddCustomer,
-    cssClass:"add-customer-modal"
+    componentProps:{
+      docname:docname
+    },
+    cssClass: getPlateform() == "desktop"?"add-customer-modal":""
   })
 
   return modal;
 }
-export async function onEditCustomer(){
-  const modal = await app.openModal({
-    component: ComEditCustomer,
-    cssClass:"edit-customer-modal"
-  })
-
-  return modal;
-}
+ 
 
 export async function onOpenKeypad(title="Enter Number"){
   const result = await app.openModal({

@@ -18,12 +18,14 @@ export function useApp() {
   const languages = [
     {
       lang:"en",
+      server_lang:"en",
       icon:"assets/en.svg",
       label:"English"
     },
     
     {
       lang:"kh",
+      server_lang:"km",
       icon:"assets/kh.svg",
       label:"ភាសារខ្មែរ"
     }

@@ -52,7 +52,10 @@
                         <slot :name="col.fieldname" :item="slotProps.data" :index="col.fieldname + '_' + index">
                             <!-- date column -->
                             <template v-if="col.fieldtype == 'Date'">
-                                {{ dayjs(slotProps.data[col.fieldname]).format("DD-MM-YYYY") }}
+                                <template v-if="slotProps.data[col.fieldname]">
+                                         {{ dayjs(slotProps.data[col.fieldname]).format("DD-MM-YYYY") }}
+                                </template>
+                                
                             </template>
                             <template v-else-if="col.fieldtype == 'Datetime'">
                                 <span v-tooltip="`${dayjs(slotProps.data[col.fieldname])}`">

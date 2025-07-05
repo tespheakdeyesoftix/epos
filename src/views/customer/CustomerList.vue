@@ -2,9 +2,13 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content ref="contentRef">
+         
             <DocList docType="Customer" :options="options"  
                 :contentRef="contentRef"
                 @onRowDblClick="onRowDblClick"
+                v-model:selectedRow="selectedRow"
+                ref="docListRef"
+                
                 >    
             </DocList>
         </ion-content>
@@ -13,15 +17,18 @@
     <ion-icon :icon="addOutline"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
+<ComFooter>
+    <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
+</ComFooter>
     </ion-page>
 </template>
 <script setup>
 import { ref  } from 'vue';
 import { addOutline } from "ionicons/icons";
 const contentRef = ref(null)
+const docListRef = ref(null)
 const plateform = ref(app.utils.getPlateform())
-
+const selectedRow = ref()
 const t = window.t
 const options = {
    
@@ -30,7 +37,7 @@ const options = {
         {fieldname:"customer_name_kh",header:"Name Kh"},
         {fieldname:"gender",header:"Gender"},
         {fieldname:"customer_group",header:"Group"},
-        {fieldname:"date_of_birth",header:"Date of Birth"},
+        {fieldname:"date_of_birth",header:"Date of Birth",fieldtype:"Date"},
         {fieldname:"phone_number",header:"Phone Number"},
         {fieldname:"company_name",header:"Company Name"},
         {fieldname:"address",header:"Location"},
@@ -52,9 +59,9 @@ const options = {
   ]
 }
 
-// function onRowDblClick(data){
-//     app.ionRouter.navigate("/customer/" + data.name, "forward", "push");
-// }
+function onRowDblClick(data){
+    app.ionRouter.navigate("/customer-detail/" + data.name, "forward", "push");
+}
 async function onAddCustomer(){
  
     const result = await app.utils.onAddCustomer();
@@ -63,6 +70,16 @@ async function onAddCustomer(){
       await getCustomer(result)   
     
     }
+}
+
+async function onEdit(){
+   const result =await app.utils.onAddCustomer(selectedRow.value.name);
+     
+   if(result){
+        const l = await app.showLoading();
+        await docListRef.value.onRefresh();
+        await l.dismiss();
+   }
 }
 
 </script>
