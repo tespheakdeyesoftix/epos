@@ -31,7 +31,7 @@
       </div>
     
     </ion-content>
-      <ComCustomerFooter/>
+      <ComCustomerFooter :data="data"  @reload="loadData"/>
   </ion-page>
 </template>
 
@@ -74,6 +74,8 @@ onMounted(async () => {
 
   await loadData();
 });
+
+
 </script>
 
 <style scoped>

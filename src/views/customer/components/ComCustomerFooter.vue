@@ -6,7 +6,7 @@
             <ion-button  @click="onClose" color="danger"> {{ t('Close') }}</ion-button>
             
             <ComQuickPayButton/>
-            <ion-button color="success" @click="onEditClick"> {{ t('Edit') }}</ion-button>
+            <ion-button color="success" @click="onEdit"> {{ t('Edit') }}</ion-button>
             </div>
            
         </ion-toolbar>
@@ -16,5 +16,8 @@
 const t = window.t;
 function onClose(){
     app.router.back();
+}
+async function onEdit(){
+    alert(111111)  
 }
 </script>
