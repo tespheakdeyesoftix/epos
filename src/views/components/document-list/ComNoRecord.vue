@@ -7,7 +7,6 @@
           {{ message }}
         </p>
 
-       
         <div class="button-group">
           <ion-button v-for="(d,index) in actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
                     {{ d.title }}
