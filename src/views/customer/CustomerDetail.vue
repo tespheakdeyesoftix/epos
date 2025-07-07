@@ -1,4 +1,4 @@
-<template>
+  <template>
   <ion-page>
     <ToolBar>
       {{ t("Customer Detail") }} - {{ data?.name }}
@@ -31,7 +31,7 @@
       </div>
     
     </ion-content>
-      <ComCustomerFooter :data="data"  @reload="loadData"/>
+      <ComCustomerFooter :data="data" @reload="onRefresh" ref="docListRef"/>
 
     
   </ion-page>
@@ -70,6 +70,16 @@ async function loadData() {
   }
   await l.dismiss();
 }
+async function onRefresh() {
+  const l = await app.showLoading();
+  const res = await app.getDoc("Customer", app.route.params.name);
+  if (res.data) {
+    data.value = res.data;
+    
+  }
+  await l.dismiss();
+}
+
 
  
 onMounted(async () => {

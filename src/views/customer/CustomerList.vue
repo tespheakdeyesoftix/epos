@@ -19,12 +19,14 @@
 </ion-fab>
 <ComFooter>
     <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
+    <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
 </ComFooter>
     </ion-page>
 </template>
 <script setup>
 import { ref  } from 'vue';
 import { addOutline } from "ionicons/icons";
+
 const contentRef = ref(null)
 const docListRef = ref(null)
 const plateform = ref(app.utils.getPlateform())
@@ -80,6 +82,18 @@ async function onEdit(){
         await docListRef.value.onRefresh();
         await l.dismiss();
    }
+}
+async function onDelete(){
+  const confirm = await app.utils.onConfirm("Delete Customer", "Are you sure you want to delete this customer?");
+  if (!confirm) return;
+  const l = await app.showLoading();
+  const res = await app.deleteDoc("Customer", selectedRow.value.name);  
+  if (res.data) {
+    await docListRef.value.onRefresh();
+    app.ionRouter.navigate("/customer", "back", "replace");
+  }
+
+  await l.dismiss();
 }
 
 </script>
