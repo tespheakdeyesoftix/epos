@@ -22,7 +22,7 @@
   </div>
   <ion-segment-view>
    <ion-segment-content v-for="(d,index) in tabs" :key="index"  :id="'recent_' + index">
-       <component :is="d.component"  v-if="d.is_loaded==true" :data="data" :cashier_shift="name"/>
+       <component :is="d.component"  v-if="d.is_loaded==true" :data="data" :cashier_shift="name" :options="d.props || {}"/>
     </ion-segment-content>
     
   </ion-segment-view>
@@ -84,15 +84,21 @@
 import { onMounted, ref } from 'vue';
 import ComCashierShiftSummary from "@/views/shift/components/ComCashierShiftSummary.vue"
 import ComReceiptList from "@/views/shift/components/ComReceiptList.vue"
+import ComServerContent from "@/views/components/public/ComServerContent.vue"
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
 import Message from 'primevue/message';
 import { useApp } from '@/hooks/useApp';
 const {languages} = useApp()
 const selected  = ref({ label: "Shift Information", print_template:"Coupon Shift Summary" })
+const name = ref(app.route.params.name)
 const tabs = ref([
     { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary" },
     { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Shift Receipt List"},
-    { label: "Coupon Detail", is_loaded: false, component:ComReceiptList },
+    { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, props:{
+      doctype:"Cashier Shift",
+      docname: name.value,
+      template: "Cashier Shift Sale Product Summary - UI"
+    } },
  
 ])
 const loading = ref(true)
@@ -101,7 +107,7 @@ const cashierShiftPrinter = ref()
 
 const t = window.t;
 const data = ref()
-const name = ref(app.route.params.name)
+
 async function getData(){
   const l = await app.showLoading()
   const res = await app.getApi("epos_restaurant_2023.api.mobile.coupon_cashier_shift.get_cashier_shift_summary_inrormation",{

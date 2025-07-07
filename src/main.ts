@@ -156,6 +156,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/km' // import Khmer locale
 
 import { Capacitor } from '@capacitor/core';
+import ComServerContent from './views/components/public/ComServerContent.vue';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
@@ -245,6 +246,7 @@ if (Capacitor.isNativePlatform()) {
   app.component('ComSelect', ComSelect)
   app.component('ion-footer', IonFooter)
   app.component('Loading', Loading)
+  app.component('ComServerContent', ComServerContent)
   app.component('ion-ripple-effect', IonRippleEffect)
   app.component('ion-infinite-scroll', IonInfiniteScroll)
   app.component('ion-infinite-scroll-content', IonInfiniteScrollContent)
@@ -303,6 +305,7 @@ if (Capacitor.isNativePlatform()) {
   app.component('ComCurrency',ComCurrency)
   app.component('ComSelectDateFilter',ComSelectDateFilter)
   app.component('ComDatePicker',ComDatePicker)
+  app.component('ComServerContent',ComServerContent)
   app.component('ComPopOver',ComPopOver)
   app.component('ComNumber',ComNumber)
   app.component('DocList',DocList)
