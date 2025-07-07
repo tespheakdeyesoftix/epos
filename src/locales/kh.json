@@ -363,6 +363,7 @@
     "Totals:": "សរុប:",
     "Sale Revenue": "ចំណូលលក់",
     "Closed": "បិទ",
+    "Close": "បិទ",
     "Opened": "បើក",
     "View Graph as Bar Chart": "មើលក្រាហ្វជាប្រភេទសសរ",
     "Recent Transactions": "ប្រតិបត្តិការថ្មីៗ",
@@ -424,7 +425,14 @@
     "Redeem Note": "កំណត់ចំណាំដកប្រាក់",
     "No Record Found": "មិនមានទិន្នន័យ",
     "empty_record_message":"មិនមាន {doctype} ដែលត្រូវនិងការចម្រោះរបស់អ្នក។ សូមជម្រះចម្រោះ ដើម្បីមើល {doctype} ទាំងអស់។",
-    "No Selected": "មិនបានជ្រើសរើស"
+    "About": "អំពី",
+    "No Selected": "មិនបានជ្រើសរើស",
+    "Show Record": "បង្ហាញទិន្នន័យ",
+    "Show record": "បង្ហាញទិន្នន័យ",
+    "Showing Record": "បង្ហាញទិន្នន័យ",
+    "Showing record": "បង្ហាញទិន្នន័យ",
+    "of": "នៃ"
+    
      
 
   } 

@@ -25,6 +25,7 @@ const props = defineProps({
 })
 
 const data =ref()
+
 const targetRef = ref(null);
 async function getData(){
     const res = await app.getApi("epos_restaurant_2023.api.printing.get_print_data",{

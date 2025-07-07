@@ -18,7 +18,7 @@
       </ion-toolbar>
     </ion-header>
   
-    <ion-content class="ion-padding" color="blue">
+    <ion-content class="ion-padding" >
       <slot />
     </ion-content>
     <ion-footer v-if="!hideFooter"> 
