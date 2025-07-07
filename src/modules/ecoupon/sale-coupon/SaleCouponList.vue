@@ -52,8 +52,12 @@ const options = {
     {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
     {fieldname:"pos_station_name", fieldtype:"Link",options:"POS Station", label:t("POS Station"),multiple:true},
-  ]
+  ],
+  noRecordActions:[
+   {title:t("Create New Sale Coupon"),router_link:"/sale-coupon","color":"primary"},
+]
 }
+
 
 function onRowDblClick(data){
     app.ionRouter.navigate("/sale-detail/" + data.name, "forward", "push");

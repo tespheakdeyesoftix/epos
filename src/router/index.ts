@@ -81,13 +81,12 @@ router.beforeEach(async (to, from, next) => {
     }
   }
   else if (to.path == "/close-shift"){
-    alert("check shift still open")
-    // const result = await app.shift.checkWorkingDay()
-    // if(result>0){
-    //    next("/message/" + result )
-    // }else {
-    //   next();
-    // }
+    const result = await app.shift.validateCloseShift()
+    if(result!=""){
+       next("/message/" + result )
+    }else {
+      next();
+    }
   }
   else if (to.path == "/close-working-day"){
     if(isCashierShiftOpened.value){

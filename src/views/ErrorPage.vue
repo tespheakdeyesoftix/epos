@@ -22,7 +22,7 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { alertCircleOutline, warningOutline, calendarOutline } from 'ionicons/icons';
+import { alertCircleOutline, warningOutline, calendarOutline,cartOutline } from 'ionicons/icons';
 
 const t = window.t;
 function openRoute(url){
@@ -43,10 +43,11 @@ const errorCodes =
         ]
     },
     2:{
-        message: t("This sale coupon is already closed"),
-        page_title:t("Sale Coupon is Closed"),
+        message: t("This sale coupon is already closed. If you want to edit or delete please go to view sale detail."),
+        page_title:t("Sale Coupon is Closed" ) + "-" + app.route.query.name,
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"},
+            {title:t("View Sale Detail"),router_link:"/sale-detail/" + app.route.query.name,"color":"primary"},
             {title:t("New Sale Coupon"),router_link:"/sale-coupon","color":"success"},
         ]
     },
@@ -86,6 +87,24 @@ const errorCodes =
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"},
             {title:t("Close Cashier Shift Now"),router_link:"/close-shift","color":"danger"}
+        ]
+    },
+    "No Shift Opened":{
+        page_title:t("No Cashier Shift Opened"),
+        message: t("There's no cashier shift opened. Please start cashier shift first"),
+        ion:calendarOutline,
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"},
+            {title:t("Start Cashier Shift Now"),router_link:"/start-shift","color":"danger"}
+        ]
+    },
+    "Shift Has Pending Sale":{
+        page_title:t("Has Pending Order"),
+        message: t("There's pending order in your current open shift. Please close all your pending order first."),
+        icon:cartOutline,
+        actions:[
+            {title:t("Go Home"),router_link:"/home","color":"primary"},
+            {title:t("View Pending Order"),router_link:"/pending-order-list","color":"warning"}
         ]
     },
 }

@@ -45,3 +45,24 @@ export async function checkCashierShift(){
     l.dismiss()
     return 0//no any error
 }
+
+
+export async function validateCloseShift(){
+
+    const l = await app.showLoading();
+    // chekc if shift is still open
+    const res = await app.getApi("epos_restaurant_2023.selling.doctype.cashier_shift.cashier_shift.validate_before_close_shift",{
+        pos_profile:app.setting.pos_profile.name
+    });
+    if(res.data){
+        if(res.data.error_code == "No Shift Opened"){
+            isCashierShiftOpened.value = false
+            app.setting.cashier_shift = null
+        }
+
+            await l.dismiss()
+        return res.data.error_code
+    }
+await l.dismiss()
+    return ""
+}
