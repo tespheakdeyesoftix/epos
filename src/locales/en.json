@@ -6,5 +6,6 @@
     "property_not_exist_message": "Property code {property_code} does not exists.",
     "coupon_code_number_does_not_exist": "Coupon code {coupon} does not exist.",
     "shift_already_opened": "The {shift_name} is already opened and closed. Do you want to continue open it?",
-    "on_date_time": "on"
+    "on_date_time": "on",
+    "empty_record_message":"No {doctype} found with matching filters. Clear filters to see all {doctype}."
 }

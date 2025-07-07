@@ -96,7 +96,7 @@ export function useDocList(props) {
 
   async function onSearch(str = "") {
     if (meta) {
-      loading.value = true;
+      const l = await app.showLoading("Searching record...");
       canLoadMore.value = true;
       startIndex.value = 0;
       if (str) {
@@ -123,7 +123,8 @@ export function useDocList(props) {
         options.value.orFilters = [];
       }
       data.value = await getData();
-      loading.value = false;
+      
+      await l.dismiss();
     }
   }
 

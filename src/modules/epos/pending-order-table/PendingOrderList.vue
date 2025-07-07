@@ -5,15 +5,12 @@
             {{ t("Pending Order") }}
         </AppBar>
         <ion-content>
+          
 <DocList docType="Sale" :options="options"
               @onRowDblClick="onSelect"
               v-model:selectedRow="selectedRow"
               >
-               <template #name="{ item }">
-                  <a class="link" @click="onSelect(item)">
-                    {{item.name}}
-                  </a>
-                </template>
+               
 
             </DocList>
         </ion-content>
@@ -29,12 +26,12 @@ const selectedRow = ref()
 const t = window.t
 const options = {
      columns:[
-        {fieldname:"name",header:"Sale #"},
+        {fieldname:"name",header:"Sale #",url:"/sale-coupon"},
         {fieldname:"customer_name",header:"Customer"},
         {fieldname:"total_quantity",header:"Quantity",fieldtype:"Float"},
         {fieldname:"grand_total",header:"Total Amount",fieldtype:"Currency"},
         {fieldname:"modified_by",header:"User"},
-        {fieldname:"modified",header:"Modified Date",fieldtype:"datetime"}
+        {fieldname:"modified",header:"Modified Date",fieldtype:"Datetime"}
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
@@ -48,16 +45,16 @@ const options = {
 
   filterOptions:[
     // {fieldname:"posting_date", fieldtype:"Date", label:t('Sale Date'),clear:true,modal_type:'sheet_modal'},
+],
+noRecordActions:[
+   {title:t("Create New Sale Coupon"),router_link:"/sale-coupon","color":"primary"},
 ]
 }
 async function onSelect(item = null){
-  alert(58555)
-    if(item)  selectedRow.value = item;
-    
-    if(!selectedRow.value){
-        await app.showWarning("Please select pending order")
-        return 
-    }
+  
+     
+   
+    app.ionRouter.navigation("/sale-coupon/" + item.name,"forward","replace")
 
     
 }

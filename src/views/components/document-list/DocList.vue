@@ -16,11 +16,11 @@
                     <ion-col :size="10">
                         <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
                     </ion-col>
-                    <ion-col :size="2" >
+                    <ion-col :size="2" v-if="data.length>0" >
                         <div style="display: flex; justify-content: right;">
-                            <ion-label class="ion-padding">
-{{ data.length  }} {{ t("of") }} {{ totalRecord }}
-                            </ion-label>
+                            <ion-chip >
+                               {{ t("Showing Record") }} {{ data.length  }} {{ t("of") }} {{ totalRecord }}
+                            </ion-chip>
                             
                         </div>
                     </ion-col>
@@ -90,7 +90,8 @@
         </slot>
         <div v-else>
             <slot name="empty">
-                {{ t("No Data") }}
+                
+                 <ComNoRecord :title="t('No Record Found')" :message="emptyRecordMessage" :actions="options.noRecordActions"/>
             </slot>
         </div>
         <div style="padding-bottom: 50px;" v-if="!options.disableLoadMore">
@@ -99,7 +100,9 @@
             </ion-infinite-scroll>
         </div>
     </template>
-
+<ion-chip v-if="data.length>0"  style="position: fixed; background: #e4eaf5; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+  {{ t("Showing record ") }} {{ data.length }} {{ t("of") }} {{ totalRecord }}
+</ion-chip>
 </template>
 <script setup>
 import DataTable from 'primevue/datatable';
@@ -111,10 +114,10 @@ import { useAttrs, watch } from "vue"
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
 import ComFilter from '@/views/components/document-list/ComFilter.vue';
+import ComNoRecord from '@/views/components/document-list/ComNoRecord.vue';
 
 const attrs = useAttrs();
 const t = window.t;
-
 
 const emit = defineEmits()
 const props = defineProps({
@@ -125,13 +128,15 @@ const props = defineProps({
             showSearchBar: true,
             showBarcodeScanner: false,
             fields: ["name"]
-        }
+        },
+        noRecordActions:[]
     },
     contentRef:Object
 
 
 })
 
+const emptyRecordMessage = t("empty_record_message", {doctype: props.docType})
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
     onSort, options,onFilter,totalRecord

@@ -423,8 +423,16 @@
     "Scan qr code here": "ស្កេន code qr នៅទីនេះ",
     "Top Up Note": "កំណត់ចំណាំបញ្ចូលទឹកប្រាក់",
     "Redeem Note": "កំណត់ចំណាំដកប្រាក់",
+    "No Record Found": "មិនមានទិន្នន័យ",
+    "empty_record_message":"មិនមាន {doctype} ដែលត្រូវនិងការចម្រោះរបស់អ្នក។ សូមជម្រះចម្រោះ ដើម្បីមើល {doctype} ទាំងអស់។",
     "About": "អំពី",
-    "No Selected": "មិនបានជ្រើសរើស"
+    "No Selected": "មិនបានជ្រើសរើស",
+    "Show Record": "បង្ហាញទិន្នន័យ",
+    "Show record": "បង្ហាញទិន្នន័យ",
+    "Showing Record": "បង្ហាញទិន្នន័យ",
+    "Showing record": "បង្ហាញទិន្នន័យ",
+    "of": "នៃ"
+    
      
 
   } 
