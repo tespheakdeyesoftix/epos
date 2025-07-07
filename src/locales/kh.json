@@ -363,6 +363,7 @@
     "Totals:": "សរុប:",
     "Sale Revenue": "ចំណូលលក់",
     "Closed": "បិទ",
+    "Close": "បិទ",
     "Opened": "បើក",
     "View Graph as Bar Chart": "មើលក្រាហ្វជាប្រភេទសសរ",
     "Recent Transactions": "ប្រតិបត្តិការថ្មីៗ",
@@ -422,6 +423,7 @@
     "Scan qr code here": "ស្កេន code qr នៅទីនេះ",
     "Top Up Note": "កំណត់ចំណាំបញ្ចូលទឹកប្រាក់",
     "Redeem Note": "កំណត់ចំណាំដកប្រាក់",
+    "About": "អំពី",
     "No Selected": "មិនបានជ្រើសរើស"
      
 
