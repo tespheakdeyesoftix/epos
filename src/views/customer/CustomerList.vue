@@ -47,7 +47,7 @@ const options = {
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer_name_en","customer_name_kh","gender","company_name","address","customer_group","date_of_birth","phone_number","modified"],
+    fields: ["name","customer_name_en","customer_name_kh","photo","gender","company_name","address","customer_group","date_of_birth","phone_number","modified"],
     orderBy:{
       field: "modified",
       order: "desc",

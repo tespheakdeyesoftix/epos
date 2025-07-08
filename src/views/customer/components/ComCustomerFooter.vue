@@ -6,6 +6,7 @@
         <ComQuickPayButton/>
         <ion-button color="success" @click="onEdit"> {{ t('Edit') }}</ion-button>
         <ion-button color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>  
+        <ComUploadPhoto/>
       </div>
     </ion-toolbar>
   </ion-footer>
@@ -14,7 +15,8 @@
 <script setup>
 import { ref } from 'vue'
 import { modalController } from '@ionic/vue'
-import ComEditCustomer from '@/views/customer/components/ComEditCustomer.vue'  
+import ComEditCustomer from '@/views/customer/components/ComEditCustomer.vue' 
+import ComUploadPhoto from '@/views/customer/components/ComUploadPhoto.vue'
 const t = window.t;
  const docListRef = ref(null)
 const props = defineProps({
