@@ -6,7 +6,9 @@
         <ComQuickPayButton/>
         <ion-button color="success" @click="onEdit"> {{ t('Edit') }}</ion-button>
         <ion-button color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>  
-        <ComUploadPhoto/>
+        <ComUploadPhoto ref="uploadRef"  
+          :customerName="props.data?.name"
+          @uploaded="$emit('reload')"/>
       </div>
     </ion-toolbar>
   </ion-footer>
@@ -15,10 +17,12 @@
 <script setup>
 import { ref } from 'vue'
 import { modalController } from '@ionic/vue'
-import ComEditCustomer from '@/views/customer/components/ComEditCustomer.vue' 
 import ComUploadPhoto from '@/views/customer/components/ComUploadPhoto.vue'
 const t = window.t;
- const docListRef = ref(null)
+const uploadRef = ref(null)
+defineExpose({ uploadRef }) 
+
+ 
 const props = defineProps({
   data: Object
 })
@@ -44,7 +48,7 @@ async function onDelete(){
   const l = await app.showLoading();
   const res = await app.deleteDoc("Customer", props.data.name);  
   if (res.data) {
-    await onRefresh();
+     
     app.ionRouter.navigate("/customer", "back", "replace");
   }
 

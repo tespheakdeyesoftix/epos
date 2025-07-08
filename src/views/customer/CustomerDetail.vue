@@ -1,22 +1,40 @@
-  <template>
+<template>
   <ion-page>
     <ToolBar>
       {{ t("Customer Detail") }} - {{ data?.name }}
     </ToolBar>
- 
-    <ion-content >
+
+    <ion-content>
       <!-- Header with background image -->
       <div class="profile-header">
-         <div
+        <div
           class="header-background"
           :style="{ backgroundImage: `url('${randomBgImage}')` }"
         ></div>
-        <ion-avatar class="custom-avatar">
-          <Img v-if="data?.photo" :src="data?.photo" />
-          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.customer_name_en) }}</div>
-        </ion-avatar>
-      </div>
 
+        <!-- Avatar wrapper with overlay icon -->
+        <div class="avatar-wrapper">
+          <ion-avatar class="custom-avatar" @click="onAvatarClick" style="cursor: pointer">
+            <img
+              v-if="data?.photo"
+              :src="data.photo"
+              alt="avatar"
+              style="width: 100%; height: 100%; object-fit: cover;"
+            />
+            <div class="avatar-placeholder" v-else>
+              {{ getAvatarLetter(data?.customer_name_en) }}
+            </div>
+          </ion-avatar>
+          <!-- Trash icon to clear photo -->
+          <ion-icon
+            v-if="data?.photo"
+            :icon="trash"
+            @click.stop="onClearPhoto"
+            class="trash-icon"
+          ></ion-icon>
+        </div>
+      </div>
+  
       <!-- Name below avatar -->
       <div class="profile-name">
         {{ data?.name }} - {{ data?.customer_name_en }}
@@ -24,31 +42,29 @@
 
       <!-- Info Cards -->
       <div class="fix-container">
-        
         <ComViewCard />
-        <!-- Segment -->
-        <ComSegment :data="data"/>
+        <ComSegment :data="data" />
       </div>
-    
     </ion-content>
-      <ComCustomerFooter :data="data" @reload="onRefresh" ref="docListRef"/>
 
-    
+    <!-- Footer with UploadPhoto ref -->
+    <ComCustomerFooter :data="data" @reload="onRefresh" ref="docListRef" />
   </ion-page>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import ComSegment from "@/views/customer/components/ComSegment.vue";
-import ComCustomerFooter from "@/views/customer/components/ComCustomerFooter.vue";
- 
-import ComViewCard from "@/views/customer/components/ComViewCard.vue";
-import { getAvatarLetter } from "@/helpers/utils";
+  import { IonIcon } from '@ionic/vue';
+import { trash } from 'ionicons/icons';
+import { onMounted, ref } from 'vue'
+import ComSegment from "@/views/customer/components/ComSegment.vue"
+import ComCustomerFooter from "@/views/customer/components/ComCustomerFooter.vue"
+import ComViewCard from "@/views/customer/components/ComViewCard.vue"
+import { getAvatarLetter } from "@/helpers/utils"
 
-const data = ref();
-const showEditModal = ref(false);
-import dayjs from 'dayjs';
-const t = window.t;
+const t = window.t
+const footerRef = ref(null)
+const data = ref()
+const randomBgImage = ref("")
 
 const bgImages = [
   "./assets/back2.jpg",
@@ -58,44 +74,54 @@ const bgImages = [
   "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg/1200px-Gull_feeding_on_flies_with_tufa_and_Sierra_Nevada_in_background-2000px.jpeg",
   "https://c4.wallpaperflare.com/wallpaper/800/831/598/digital-art-neon-mountains-lake-wallpaper-thumb.jpg",
   "https://i.etsystatic.com/56713946/r/il/0d08c9/6638762685/il_fullxfull.6638762685_p2xv.jpg",
-  
-];
-const randomBgImage = ref("");
+]
+
+const onAvatarClick = () => {
+  footerRef.value?.uploadRef?.triggerFileInput('brows')
+}
+
+const onClearPhoto = async () => {
+  const confirmed = await app.utils.onConfirm(t("Remove Photo"), t("Are you sure you want to remove this photo?"))
+  if (!confirmed) return
+
+  const loading = await app.showLoading("Removing...")
+  const res = await app.updateDoc("Customer", data.value.name, { photo: null })
+  await loading.dismiss()
+
+  if (res?.data) {
+    app.showSuccess(t("Photo removed successfully"))
+    await onRefresh()
+  } else {
+    app.showError(t("Failed to remove photo"))
+  }
+}
 
 async function loadData() {
-  const l = await app.showLoading();
-  let res = await app.getDoc("Customer", app.route.params.name);
+  const l = await app.showLoading()
+  let res = await app.getDoc("Customer", app.route.params.name)
   if (res.data) {
-    data.value = res.data;
+    data.value = res.data
   }
-  await l.dismiss();
+  await l.dismiss()
 }
+
 async function onRefresh() {
-  const l = await app.showLoading();
-  const res = await app.getDoc("Customer", app.route.params.name);
+  const l = await app.showLoading()
+  const res = await app.getDoc("Customer", app.route.params.name)
   if (res.data) {
-    data.value = res.data;
-    
+    data.value = res.data
   }
-  await l.dismiss();
+  await l.dismiss()
 }
 
-
- 
 onMounted(async () => {
-
-  const index = Math.floor(Math.random() * bgImages.length);
-  randomBgImage.value = bgImages[index];
-  console.log("Random background image:", randomBgImage.value);
-
-  await loadData();
-});
-
-
+  const index = Math.floor(Math.random() * bgImages.length)
+  randomBgImage.value = bgImages[index]
+  await loadData()
+})
 </script>
 
 <style scoped>
-/* Header section */
 .profile-header {
   position: relative;
   height: 300px;
@@ -103,30 +129,43 @@ onMounted(async () => {
 }
 
 .header-background {
-  
   background-size: cover;
   background-position: center;
   height: 100%;
   width: 100%;
-  
 }
 
-/* Avatar */
-.custom-avatar {
-  width: 150px;
-  height: 150px;
-  border: 1px solid white;
-  
-  overflow: hidden;
+.avatar-wrapper {
   position: absolute;
   left: 50%;
   bottom: -70px;
   transform: translateX(-50%);
+  z-index: 2;
+}
+
+.custom-avatar {
+  width: 150px;
+  height: 150px;
+  border: 1px solid white;
+  overflow: hidden;
   background-color: white;
   z-index: 2;
 }
 
-/* Name */
+.trash-icon {
+  position: absolute;
+  top: -2px;
+  right: 20px;
+  background: white;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 5px;
+  color: red;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  z-index: 5;
+}
+
 .profile-name {
   margin-top: 80px;
   text-align: center;
@@ -134,7 +173,6 @@ onMounted(async () => {
   font-weight: bold;
 }
 
-/* Optional fixes */
 ion-item {
   --background: transparent;
 }
