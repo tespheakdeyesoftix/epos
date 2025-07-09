@@ -15,7 +15,7 @@
                 <div style="display: flex;justify-content: center;gap:10px">
                 <ion-button @click="onEdit" shape="round" >{{ t("Edit") }}</ion-button>
                 <ComPrintBillButton  :name="doc?.name"/>
-                <ion-button shape="round" color="danger">{{ t("Delete") }}</ion-button>
+                <ion-button shape="round" color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>
                                 </div>
                                 
             </ion-toolbar>
@@ -56,6 +56,26 @@ async function onEdit(){
     if(!hasPermission)  return;
 
     
+}
+async function onDelete(){
+  const confirm = await app.utils.onConfirm("Delete Sale Detail", "Are you sure you want to delete this Sale Detail?");
+  if (!confirm) return;
+  const l = await app.showLoading();
+  const res = await app.postApi("epos_restaurant_2023.api.api.delete_sale_coupon",{
+      name:doc.value.name,
+      auth:{
+            full_name:app.currentUser.full_name,
+            username:app.currentUser.name,
+            // full_name:"",
+            note:""
+        }
+  });  
+  if (res.data) {   
+     
+    app.ionRouter.navigate("/sale-coupon-list/", "back", "replace");
+  }
+
+  await l.dismiss();    
 }
 
  

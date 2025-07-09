@@ -10,8 +10,9 @@
                                 </div>
                             </ion-avatar>
                             <stack>
-                                <ion-text>
-                                    {{ doc?.customer  }} - {{ doc?.customer_name }}
+                                <ion-text >
+                                    <RouterLink :to="'/customer-detail/' + doc?.customer"> {{ doc?.customer  }} - {{ doc?.customer_name }}</RouterLink>
+                                    
                                 </ion-text>
                                 <ion-text>
                                     <ion-icon :icon="phonePortraitOutline" />

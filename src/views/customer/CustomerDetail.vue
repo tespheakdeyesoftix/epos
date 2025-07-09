@@ -25,7 +25,7 @@
               {{ getAvatarLetter(data?.customer_name_en) }}
             </div>
           </ion-avatar>
-          <!-- Trash icon to clear photo -->
+         
           <ion-icon
             v-if="data?.photo"
             :icon="trash"
@@ -35,19 +35,19 @@
         </div>
       </div>
   
-      <!-- Name below avatar -->
+     
       <div class="profile-name">
         {{ data?.name }} - {{ data?.customer_name_en }}
       </div>
 
-      <!-- Info Cards -->
+      
       <div class="fix-container">
         <ComViewCard />
         <ComSegment :data="data" />
       </div>
     </ion-content>
 
-    <!-- Footer with UploadPhoto ref -->
+    
     <ComCustomerFooter :data="data" @reload="onRefresh" ref="docListRef" />
   </ion-page>
 </template>
