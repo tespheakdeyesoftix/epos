@@ -6,11 +6,7 @@
             @onRowDblClick="onRowDblClick"
             :contentRef="contentRef"
             >
-                 <template #name="{ item, index }">
-                   <ion-button class="ion-no-margin" fill="clear" :routerLink="'sale-detail/' + item.name">
-                    {{item.name}}
-                    </ion-button>
-                </template>
+                
                 <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
                     <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
@@ -27,7 +23,7 @@ const plateform = ref(app.utils.getPlateform())
 const t = window.t
 const options = {
     columns:[
-        {fieldname:"name",header:"Sale #"},
+        {fieldname:"name",header:"Sale #",url:"/sale-detail"},
         {fieldname:"pos_station_name",header:"Station"},
         {fieldname:"posting_date",header:"Sale Date",fieldtype:"Date"},
         {fieldname:"total_quantity",header:"Quantity",fieldtype:"Float"},
