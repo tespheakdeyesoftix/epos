@@ -19,6 +19,9 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   
+  // add from route path to window object, in case that we want to go back to previouse router on delete operation\
+  window.fromRoute = from.path;
+  
   // this logic here is set timer to check wait until all setting is geting from 
   // db then we start check router redirecting
   
@@ -113,6 +116,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   }
+
   else {
       
       next();

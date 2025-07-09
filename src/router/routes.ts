@@ -135,6 +135,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/sale-detail/:name",
+    name:"SaleDetail",
     component: () => import('@/views/sales/SaleDetail.vue'),
     meta: { requiresAuth: true }
   },

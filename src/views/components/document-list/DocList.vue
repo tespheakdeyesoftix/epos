@@ -21,6 +21,9 @@
                             <ion-chip >
                                {{ t("Showing Record") }} {{ data.length  }} {{ t("of") }} {{ totalRecord }}
                             </ion-chip>
+                            <ion-button @click="onReloadData" fill="clear" shape="round"  v-tooltip.left="`${t('Refresh Data')}`">
+                                <ion-icon :icon="refreshOutline" slot="icon-only"/>
+                            </ion-button>
                             
                         </div>
                     </ion-col>
@@ -44,10 +47,15 @@
                 :sortField="options.presort" 
                 :sortOrder="options.sortOrder || 1"
             >
-                
+                 <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center" style="width: 60px">
+                    <template #body="slotProps">
+                        {{ slotProps.index + 1 }}
+                    </template>
+                </Column>
                 <Column v-for="col of options.columns" :key="col.fieldname" :field="col.fieldname"
                     :header="t(col.header)" :headerClass="col.align || getAligment(col.fieldtype)"
                     :bodyClass="col.align || getAligment(col.fieldtype)" sortable>
+                    
                     <template #body="slotProps">
                         <slot :name="col.fieldname" :item="slotProps.data" :index="col.fieldname + '_' + index">
                             <!-- date column -->
@@ -101,7 +109,7 @@
         </div>
     </template>
 <ion-chip v-if="data.length>0"  style="position: fixed; background: #e4eaf5; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000;">
-  {{ t("Showing record ") }} {{ data.length }} {{ t("of") }} {{ totalRecord }}
+  {{ t("Showing Record") }} {{ data.length }} {{ t("of") }} {{ totalRecord }}
 </ion-chip>
 </template>
 <script setup>
@@ -115,6 +123,7 @@ import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
 import ComFilter from '@/views/components/document-list/ComFilter.vue';
 import ComNoRecord from '@/views/components/document-list/ComNoRecord.vue';
+import { refreshOutline } from 'ionicons/icons';
 
 const attrs = useAttrs();
 const t = window.t;
@@ -160,6 +169,13 @@ const onRefreshData = async (event) => {
   }
 };
 
+const onReloadData = async () => {
+    const l = await app.showLoading();
+    await onRefresh();
+    await l.dismiss();
+
+};
+
 
 
 function onRowDblClick(event) {
@@ -173,18 +189,11 @@ function onRowDblClick(event) {
  
 
 defineExpose({
-   onRefresh
+   onRefresh,
+   onReloadData
 })
 
 
 
-
 </script>
-<style scoped>
-
-a{
-    padding:5px 0px !important;
-    display: block!important;
-}
-
-</style>
+ 

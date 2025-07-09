@@ -49,7 +49,10 @@ const options = {
     {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
     {fieldname:"pos_station_name", fieldtype:"Link",options:"POS Station", label:t("POS Station"),multiple:true},
-  ]
+  ],
+    noRecordActions:[
+   {title:t("Create New Redeem"),router_link:"/redeem","color":"primary"},
+]
 }
 
 function onRowDblClick(data){

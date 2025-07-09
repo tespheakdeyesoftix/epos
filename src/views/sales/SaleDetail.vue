@@ -25,7 +25,7 @@
 
 </template>
 <script setup>
-import { timeOutline, personOutline} from 'ionicons/icons';
+import { timeOutline, personOutline, returnUpBackOutline} from 'ionicons/icons';
 import { onMounted, ref, computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import   ComSaleDetailDesktop   from "@/views/sales/components/ComSaleDetailDesktop.vue"
@@ -33,8 +33,7 @@ import   ComSaleDetailMobile   from "@/views/sales/components/ComSaleDetailMobil
 import   ComPrintBillButton   from "@/views/sales/components/ComPrintBillButton.vue"
 
 const plateform = ref(app.utils.getPlateform())
-import dayjs from 'dayjs';
-import Enumerable from 'linq';
+ 
 const showMoreInfo = ref(false)
 const t = window.t;
 const doc = ref()
@@ -58,6 +57,8 @@ async function onEdit(){
     
 }
 async function onDelete(){
+  
+ 
   const confirm = await app.utils.onConfirm("Delete Sale Detail", "Are you sure you want to delete this Sale Detail?");
   if (!confirm) return;
   const l = await app.showLoading();
@@ -71,8 +72,15 @@ async function onDelete(){
         }
   });  
   if (res.data) {   
-     
-    app.ionRouter.navigate("/sale-coupon-list/", "back", "replace");
+    app.showSuccess("Delete record successfully")
+    if(window.history.length<=1){
+app.router.back()
+    }else {
+       
+        app.ionRouter.navigate(window.fromRoute, "forward","replace")
+    }
+    window.reloadData = true
+
   }
 
   await l.dismiss();    

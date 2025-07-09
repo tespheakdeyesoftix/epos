@@ -31,7 +31,7 @@
         </stack>
 
         <ion-text color="primary">
-          <h4>{{ t("Close shift summary") }}</h4>
+          <h4>{{ t("Close Shift Amount") }}</h4>
         </ion-text>
 
         <DataTable :value="closeShiftSummary" tableStyle="min-width: 50rem">

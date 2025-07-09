@@ -54,6 +54,8 @@ export function useDocList(props) {
 
 
   async function getCount() {
+    console.log(options.value.filters) 
+    console.log(options.value?.orFilters) 
     const response = await getDocList(props.docType, {
       fields: ["count(name) as total"],
       filters: options.value.filters,
@@ -150,7 +152,7 @@ export function useDocList(props) {
 
     canLoadMore.value = true;
     startIndex.value = 0;
-    options.value.filters = structuredClone(defaultFilters) || [];
+    options.value.filters = structuredClone(defaultFilters || []);
     if (f) {
       Object.keys(f).forEach((key) => {
         const fieldType = options.value.filterOptions.find(x=>x.fieldname == key).fieldtype;

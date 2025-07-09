@@ -1,15 +1,14 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Sale Coupon List") }}</AppBar>
-        <ion-content>
+        <ion-content ref="contentRef">
             <DocList docType="Sale" :options="options"
             @onRowDblClick="onRowDblClick"
+            ref="docListRef"
+             :contentRef="contentRef"
+            
             >
-                <template #name="{ item, index }">
-                    <ion-button class="ion-no-margin" fill="clear" :routerLink="'/sale-detail/' + item.name">
-                        {{item.name}}
-                    </ion-button>
-                </template>
+                
                 <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
                     <ComSaleOrderCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template>
@@ -21,11 +20,13 @@
 import { ref } from 'vue';
 import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
 const plateform = ref(app.utils.getPlateform())
- 
+import { onIonViewWillEnter } from '@ionic/vue';
 const t = window.t
+const contentRef = ref(null)
+const docListRef = ref(null)
 const options = {
     columns:[
-        {fieldname:"name",header:"Sale #"},
+        {fieldname:"name",header:"Sale #",url:"/sale-detail"},
         {fieldname:"pos_station_name",header:"Station"},
         {fieldname:"posting_date",header:"Sale Date",fieldtype:"Date"},
         {fieldname:"customer_name",header:"Customer",url:"/customer-detail", id_field:"customer"},
@@ -62,4 +63,14 @@ const options = {
 function onRowDblClick(data){
     app.ionRouter.navigate("/sale-detail/" + data.name, "forward", "push");
 }
+onIonViewWillEnter(async ()=>{
+   
+
+    if(window.reloadData){
+        await docListRef.value.onReloadData();
+        window.reloadData = false;
+    }
+})
+
+
 </script>
