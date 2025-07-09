@@ -26,7 +26,7 @@
 <script setup>
 import { ref  } from 'vue';
 import { addOutline } from "ionicons/icons";
-
+import { onIonViewWillEnter } from '@ionic/vue';
 const contentRef = ref(null)
 const docListRef = ref(null)
 const plateform = ref(app.utils.getPlateform())
@@ -95,6 +95,15 @@ async function onDelete(){
 
   await l.dismiss();
 }
+
+onIonViewWillEnter(async ()=>{
+   
+
+    if(window.reloadData){
+        await docListRef.value.onReloadData();
+        window.reloadData = false;
+    }
+})
 
 </script>
 <style>

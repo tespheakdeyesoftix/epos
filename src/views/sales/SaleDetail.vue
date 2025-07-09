@@ -67,22 +67,18 @@ async function onDelete(){
       auth:{
             full_name:app.currentUser.full_name,
             username:app.currentUser.name,
-            // full_name:"",
             note:""
         }
   });  
   if (res.data) {   
     app.showSuccess("Delete record successfully")
     if(window.history.length<=1){
-app.router.back()
-    }else {
-       
+        app.router.back()
+    }else {  
         app.ionRouter.navigate(window.fromRoute, "forward","replace")
     }
     window.reloadData = true
-
   }
-
   await l.dismiss();    
 }
 

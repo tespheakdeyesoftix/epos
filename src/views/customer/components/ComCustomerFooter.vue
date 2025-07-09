@@ -47,10 +47,20 @@ async function onDelete(){
   if (!confirm) return;
   const l = await app.showLoading();
   const res = await app.deleteDoc("Customer", props.data.name);  
-  if (res.data) {
-     
-    app.ionRouter.navigate("/customer", "back", "replace");
+
+  if (res.data) {   
+    app.showSuccess("Delete record successfully")
+    if(window.history.length<=1){
+        app.router.back()
+    }else {  
+        app.ionRouter.navigate(window.fromRoute, "forward","replace")
+    }
+    window.reloadData = true
   }
+  // if (res.data) {
+     
+  //   app.ionRouter.navigate("/customer", "back", "replace");
+  // }
 
   await l.dismiss();
 }

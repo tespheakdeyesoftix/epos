@@ -1,9 +1,10 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Redeem List") }}</AppBar>
-        <ion-content>
+        <ion-content ref="contentRef">
             <DocList docType="Sale" :options="options"
             @onRowDblClick="onRowDblClick"
+            :contentRef="contentRef"
             >
                  <template #name="{ item, index }">
                    <ion-button class="ion-no-margin" fill="clear" :routerLink="'sale-detail/' + item.name">
@@ -20,7 +21,7 @@
 <script setup>
 import { ref } from 'vue';
 import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
- 
+ const contentRef = ref(null)
 const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
