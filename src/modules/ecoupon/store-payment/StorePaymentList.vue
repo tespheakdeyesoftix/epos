@@ -1,6 +1,7 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Store Payment List") }}</AppBar>
+        {{ doc }}
         <ion-content ref="contentRef">
             <DocList docType="Store Payment" :options="options"
             v-model:selectedRow="selectedRow"
@@ -14,15 +15,21 @@
                 </template>
             </DocList>
         </ion-content>
+        <ion-fab slot="fixed" horizontal="end" vertical="bottom">
+            <ion-fab-button v-tooltip.top="t('Add new Store Payment')" @click="onStorePayment" >
+                <ion-icon :icon="addOutline"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
         <ComFooter>
-    <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
-    <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
-</ComFooter>
+            <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
+            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
+        </ComFooter>
     </ion-page>
 </template>
 <script setup>
 import { ref } from 'vue';
 import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
+import { addOutline } from "ionicons/icons";
  const contentRef = ref(null)
  const selectedRow = ref()
 const plateform = ref(app.utils.getPlateform())
@@ -63,8 +70,18 @@ function onRowDblClick(data){
     app.ionRouter.navigate("/store-payment-detail/" + data.name, "forward", "push");
 }
 
+async function onStorePayment(){
+ 
+    const result = await app.utils.onStorePayment();
+    if(result){
+       saleDoc.value.customer = result
+      await getCustomer(result)   
+    
+    }
+}
+
 async function onEdit(){
-   const result =await app.utils.onAddCustomer(selectedRow.value.name);
+   const result =await app.utils.onStorePayment(selectedRow.value.name);
      
    if(result){
         const l = await app.showLoading();

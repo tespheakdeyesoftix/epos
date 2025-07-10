@@ -11,6 +11,7 @@ import ComAuth from '@/views/components/public/ComAuth.vue';
 import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
 import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
 import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
+import ComAddPayment from "@/modules/ecoupon/store-payment/ComAddPayment.vue"; 
 import ComEditCustomer from "@/views/customer/components/ComEditCustomer.vue"; 
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
@@ -653,6 +654,18 @@ export async function onAddCustomer(docname=""){
       docname:docname
     },
     cssClass: getPlateform() == "desktop"?"add-customer-modal":""
+  })
+
+  return modal;
+}
+
+export async function onStorePayment( docname=""){
+  const modal = await app.openModal({
+    component: ComAddPayment,
+    componentProps:{
+      docname:docname
+    },
+    cssClass:"store-payment-modal"
   })
 
   return modal;
