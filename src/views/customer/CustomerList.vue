@@ -68,8 +68,9 @@ async function onAddCustomer(){
  
     const result = await app.utils.onAddCustomer();
     if(result){
-       saleDoc.value.customer = result
-      await getCustomer(result)   
+        await docListRef.value.onRefresh();
+        saleDoc.value.customer = result
+        await getCustomer(result)   
     
     }
 }

@@ -74,10 +74,12 @@ function onRowDblClick(data){
 async function onStorePayment(){
  
     const result = await app.utils.onStorePayment();
-    // if (result) {
-    //     saleDoc.value.store_payment = result;
-    //     await getStorePayment(result);
-    // }
+    if (result) {
+        await docListRef.value.onRefresh();
+        saleDoc.value.store_payment = result;
+        
+        await getStorePayment(result);
+    }
 }
 
 async function onEdit(){
