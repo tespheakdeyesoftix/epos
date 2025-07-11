@@ -83,7 +83,7 @@ const errorCodes =
     },
     204:{
         page_title:t("Close Working Day"),
-        message: t("There's cashier shift opened. Please close cashier shift first"),
+        message: t("There's cashier shift still opened. Please close cashier shift first"),
         actions:[
             {title:t("Go Home"),router_link:"/home","color":"primary"},
             {title:t("Close Cashier Shift Now"),router_link:"/close-shift","color":"danger"}

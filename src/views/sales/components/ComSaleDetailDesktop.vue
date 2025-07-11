@@ -85,7 +85,7 @@
            {{slotProps.data.product_name}}</ion-text>
            <br/>
           
-           <ion-chip color="medium" v-for="c in getDisplayCoupon(slotProps.data.coupons)">{{ c }}</ion-chip>
+           <ion-chip color="medium" v-for="c in getDisplayCoupon(slotProps.data.coupons)" :routerLink="'/coupon-detail/' + c">{{ c }}</ion-chip>
            <ion-chip @click="onViewAllCouponCodes(slotProps.data)" color="primary" v-if="slotProps.data.coupons.length - 3>0">{{ slotProps.data.coupons.length - 3 }} {{t("Mores")}}</ion-chip>
 
             </div>

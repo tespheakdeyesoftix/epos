@@ -153,7 +153,7 @@ function onCancel(){
 }
 
 async function onCloseCashierShift(){
-  const printSettings = app.setting.pos_config.print_settings || []
+  
 
 
   const confirm = await app.onConfirm("Close Cashier Shift","Are you sure you want to close cashier shift?")
@@ -169,11 +169,7 @@ async function onCloseCashierShift(){
     delete app.setting.cashier_shift;
 
     await app.showSuccess("Close shift successfully")
-    // get print 
-    printSettings.forEach(p => {
-    app.printing.onPrint( {doctype:"Cashier Shift", docname: cashierShift.value.name, template:p.print_template ,printer_name:p.printer_name, lang:p.lang,copy:p.copies,show_loading:false})
-    }); 
-
+ await printReport();
  
     app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
     
@@ -198,6 +194,16 @@ onMounted(async ()=>{
   
   await loading.dismiss();
 })
+
+
+async function printReport() {
+       const printSettings = app.setting.pos_config.print_settings.filter(x=>x.print_type=="Cashier Shift") || []
+       for (const p of printSettings) {
+            await app.printing.onPrint( {doctype:"Cashier Shift", docname: cashierShift.value.name, template:p.print_template ,printer_name:p.printer_name, lang:p.lang,copy:p.copies,show_loading:false})
+        }
+        
+
+        }
 
 
 </script>

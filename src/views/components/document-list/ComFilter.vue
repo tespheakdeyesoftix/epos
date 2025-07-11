@@ -1,5 +1,7 @@
 <template>
-    <div class="m-2">
+    <div class="m-2" style="display: flex;
+  overflow-x: auto;
+  white-space: nowrap;">
         <stack row gap="10px">
             <template  v-for="(f, index) in filterOptions" :key="index">
                 <ComSelect :multiple="f.multiple" :color="filter[f.fieldname]?'primary':''" v-if="f.fieldtype=='Link'" :docType="f.options" :label="f.label || f.options"  v-model ="filter[f.fieldname]" @onSelected="onSelected" @onClear="onClear"/> 

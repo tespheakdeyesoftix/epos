@@ -46,11 +46,13 @@ const doc = ref({
 
 
 async function onCloseWorkingDay(){
+   
+ 
     const result = await app.onConfirm("Close Working Day","Are you sure you want to close working day.")
     if(!result) return 
     const loading = await app.showLoading();
     const res = await app.setValue("Working Day",app.setting.working_day.name,{
-    is_closed : 1,
+    is_closed : 0,
     close_pos_profile: app.setting.pos_profile.name,
     closed_note: doc.note,
     closed_date: dayjs().format('YYYY-MM-DD HH:mm:ss')
@@ -58,10 +60,31 @@ async function onCloseWorkingDay(){
     if(res.data){
         app.setting.working_day = ""
         isWorkingDayOpened.value = false;
-        app.ionRouter.navigate('/home', 'back', 'replace');
+         // get print 
+       await printReport()
+
+        app.ionRouter.navigate('/working-day-detail/' + res.data.name, 'push', 'replace');
     }
     await loading.dismiss()
 }
+
+async function printReport() {
+       const printSettings = app.setting.pos_config?.print_settings.filter(x=>x.print_type=="Working Day") || []
+       for (const p of printSettings) {
+            await app.printing.onPrint({
+            doctype: "Working Day",
+            docname: doc.value.name,
+            template: p.print_template,
+            printer_name: p.printer_name,
+            lang: p.lang,
+            copy: p.copies,
+            show_loading: false
+            });
+        }
+        
+
+        }
+
 function onCancel(){
      app.ionRouter.navigate('/home', 'back', 'replace');
 }

@@ -13,10 +13,10 @@
         <slot name="filter">
             <ion-grid>
                 <ion-row>
-                    <ion-col :size="10">
+                    <ion-col :size="12" :size-md="10" >
                         <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
                     </ion-col>
-                    <ion-col :size="2" v-if="data.length>0" >
+                    <ion-col :size="2" v-if="data.length>0" class="ion-hide-sm-down">
                         <div style="display: flex; justify-content: right;">
                             <ion-chip >
                                {{ t("Showing Record") }} {{ data.length  }} {{ t("of") }} {{ totalRecord }}

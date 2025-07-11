@@ -439,7 +439,9 @@
     "Clear": "ជម្រះ",
     "of": "នៃ",
     "Store Payment List":"បញ្ជីទូទាត់តាមហាង",
-    "Vendor":"អ្នកផ្គត់ផ្គង់"
+    "Vendor":"អ្នកផ្គត់ផ្គង់",
+    "There's cashier shift still opened. Please close cashier shift first":"មានវេណលក់កំពុងតែបើក។ សូមបិទវេណលក់ជាមុនសិន មុននឹងបិទថ្ងៃលក់",
+    "Close Cashier Shift Now":"បិទវេនលក់ឥឡូវនេះ"
     
      
 
