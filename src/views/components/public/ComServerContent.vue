@@ -1,6 +1,6 @@
 <template>
     <div ref="targetRef">
-<ion-button @click="getData">refresh</ion-button>      
+  
         <div v-if="loading" style="height: 70vh; display: flex; justify-content: center; align-items: center;">
         <ion-spinner name="crescent"></ion-spinner>
         </div>
@@ -53,7 +53,7 @@ onMounted(async ()=>{
   
     await getData();
     loading.value = false;    
-    }, 500);
+    }, 1000);
     
 })
 </script>

@@ -19,8 +19,10 @@
         <ion-footer>
             <ion-toolbar>
                  <div style=" display: flex;justify-content: center;gap: 10px;">
-                <ion-button @click="onCloseWorkingDay">{{ t("Close Working Day") }}</ion-button>
-                <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+                    <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+               
+                <ion-button :routerLink="'/working-day-detail/' + doc.name" >{{ t("View Working Day Detail") }}</ion-button>
+                <ion-button @click="onCloseWorkingDay" color="success">{{ t("Close Working Day") }}</ion-button> 
               </div>
             </ion-toolbar>
         </ion-footer>
@@ -34,7 +36,9 @@ import { useApp } from '@/hooks/useApp';
 const { isWorkingDayOpened } = useApp();
 const t = window.t;
 const posting_date = ref(dayjs().format("DD/MM/YYYY"))
+
 const doc = ref({
+    name:app.setting.working_day.name,
     posting_date: dayjs().format("YYYY-MM-DD"),
     pos_profile: app.setting.pos_profile.name,
     note: ""
@@ -45,7 +49,7 @@ async function onCloseWorkingDay(){
     const result = await app.onConfirm("Close Working Day","Are you sure you want to close working day.")
     if(!result) return 
     const loading = await app.showLoading();
-    const res = await app.setValue("Working Day",app.setting.working_day,{
+    const res = await app.setValue("Working Day",app.setting.working_day.name,{
     is_closed : 1,
     close_pos_profile: app.setting.pos_profile.name,
     closed_note: doc.note,

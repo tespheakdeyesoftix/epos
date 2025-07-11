@@ -6,7 +6,9 @@ export async function onPrint(options={
   docname:"", 
   template:"",
   printer_name:"",
-  lang:"en"
+  lang:"en",
+  copy:1,
+  show_loading:true
 }){
   
   if(!options.printer_name){
@@ -29,26 +31,30 @@ export async function onPrint(options={
     return
   }
  
-  const l = await app.showLoading()
+  let l = null
+  if(options.show_loading) l = await app.showLoading()
   const res = await app.postApi("epos_restaurant_2023.api.printing.get_print_data",{
     doctype:options.doctype,
     docname:options.docname,
     template:options.template,
     return_type:"base64",
     lang: options.lang || "en"
+    
   })
 
   if(res.data){
-    app.printService.submit({
-                'type':  options.printer_name,
-                'url': 'file.pdf',
-                'file_content': res.data
-            });
+    for (let i = 1; i <= (options.copy || 1); i++) {
+        app.printService.submit({
+                    'type':  options.printer_name,
+                    'url': 'file.pdf',
+                    'file_content': res.data,
+                });
+        }
   }else {
     app.showWarning("Print report fail. Please try again.")
   }
 
-  await l.dismiss()
+  if(l)   await l.dismiss()
   
 }
 
@@ -68,17 +74,13 @@ export async function printPreview(options={
   doctype:"",
   docname:"", 
   template:"",
-  lang:"en"
+  lang:"en",
+  printer_name:""
 }){
   
   app.openModal({
     component:ComPrintPreview,
-    componentProps:{
-      doctype:options.doctype,
-      docname:options.docname,
-      template:options.template,
-      lang:options.lang
-    },
+    componentProps:options,
     cssClass :  "print-preview-modal"
   })
 

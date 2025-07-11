@@ -1,13 +1,13 @@
 <template>
     <BaseModal :title="t(title || 'Enter Number')" @onConfirm="onConfirm">
-            <com-input focus @keyup="onInput" v-model="numberInput"   :placeholder="title" class="my-2"/> 
+            <com-input focus @keyup="onInput" v-model="numberInput"    :placeholder="t(title || 'Enter Number')" clear class="my-2"/> 
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">
                     <ion-col v-for="k in r" class="px-2 py-2">
                         <ion-button shape="round"  
                          @click="onKeyPadClick(k)" size="large"
-                          expand="full" :color="k==t('Clear')?'danger':'light'">
-                            {{ k }}
+                          expand="full" :color="k=='Clear'?'danger':'light'">
+                            {{ t(k) }}
                         </ion-button>
                     </ion-col>
                 </ion-row>
@@ -28,7 +28,7 @@ const numberInput = ref("")
         [1,2,3],
         [4,5,6],
         [7,8,9],
-        [0,'.',t('Clear')],
+        [0,'.','Clear'],
     ]
 function onKeyPadClick(key){
 

@@ -70,7 +70,7 @@ import { useDashboard } from "@/hooks/useDashboard.js"
 import { computed, onMounted, ref } from "vue";
 import { selectDate } from "@/helpers/utils";
 const {selectedPOSProfiles,onChangePOSProfile,onRefresh,kpiData,chartData,recentData,paymentbreakdown,selectedBranch} =  useDashboard()
-const property_name = app.property_name;
+const property_name = app.setting.property?.property_name;
 const selectedBranches = ref("")
 const clearselectedvalues = ref(false)
 const selectedDate = ref(false)

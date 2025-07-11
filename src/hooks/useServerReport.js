@@ -5,8 +5,9 @@ export function useServerReport() {
     const reportFilters = ref()
     
     function getFilters(filter){
+        
         let filters = {
-            business_branch:[app.property_name],
+            business_branch:[app.setting.property?.property_name],
         }
         if(app.route.query){
             filters = {...filters, ...app.route.query}

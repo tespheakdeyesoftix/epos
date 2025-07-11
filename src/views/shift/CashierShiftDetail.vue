@@ -4,6 +4,7 @@
             {{ t("Cashier Shift Detail") }} - {{ name }}
         </ToolBar>
     <ion-content>
+ 
       <div class="fixed-container ion-padding mt-4 mb-2" v-if="!cashierShiftPrinter && !loading"> 
 <Message severity="warn">{{ t("There's no default printer for shift report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
       </div>
@@ -29,7 +30,7 @@
     </ion-content>
     <ComFooter>
 
-       <ion-button :disabled="data?.shift_doc.is_closed == 1" :routerLink="'/close-shift'">{{ t("Close Shift") }}</ion-button>
+       <ion-button :disabled="data?.shift_doc.is_closed == 1" @click="onOpenCloseShift">{{ t("Close Shift") }}</ion-button>
        <ComPopOver>
 
        <ion-button>
@@ -94,10 +95,11 @@ const name = ref(app.route.params.name)
 const tabs = ref([
     { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary" },
     { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Shift Receipt List"},
-    { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, props:{
+    { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, print_template:"Cashier Shift Sale Product Summary - Print", props:{
       doctype:"Cashier Shift",
       docname: name.value,
-      template: "Cashier Shift Sale Product Summary - UI"
+      template: "Cashier Shift Sale Product Summary - UI",
+     
     } },
  
 ])
@@ -120,6 +122,13 @@ async function getData(){
   
 }
 
+function onOpenCloseShift(){
+  if(window.fromRoute == "/close-shift"){
+    app.router.back()
+  }else {
+    app.ionRouter("/close-shift","push","replace")
+  }
+}
 
 const onRefreshData = async (event) => {
     await getData()
@@ -136,11 +145,11 @@ function onSelected(event) {
 }
 
 async function onPrint(return_type="base64",lang="en"){
-   
+ 
   if(return_type=="pdf"){
     app.printing.downloadPdf( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
   }else if(return_type=="html"){
-    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
+    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:cashierShiftPrinter.value})
   }else {
      app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:cashierShiftPrinter.value, lang:lang})
   }

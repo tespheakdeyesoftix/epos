@@ -26,6 +26,7 @@
       :placeholder="placeholder || label" 
       :label="label" @ionChange="onChange"
        :fill="fill" 
+        :clear-input="clear"
        :label-placement="labelPlacement">
        
       <ion-button v-if="icon"  fill="clear" slot="end"
@@ -78,6 +79,12 @@ const props = defineProps({
     type: String,
     default: "stacked"
   },
+  
+  clear: {
+    type:Boolean,
+    default: false
+  },
+
  
   storageKey:String
 })

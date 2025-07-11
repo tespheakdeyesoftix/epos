@@ -34,6 +34,7 @@ onMounted(async ()=>{
     printers.value = p
     const shiftPrinter = await app.storageService.getItem("cashierShiftPrinter")
     cashierShiftPrinter.value = shiftPrinter || "";
+    
 
 })
 

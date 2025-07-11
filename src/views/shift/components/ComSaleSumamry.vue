@@ -42,11 +42,11 @@
                             :color="slotProps.data.sale_type == 'Redeem' ? 'danger' : ''" />
                     </template>
                 </Column>
-                <Column field="total_coupon" :header="t('Coupon Value')" headerClass="text-right"
+                <Column field="coupon_value" :header="t('Coupon Value')" headerClass="text-right"
                     bodyClass="text-right">
                     <template #body="slotProps">
 
-                        <ComCurrency :value="Math.abs(slotProps.data.total_coupon)"
+                        <ComCurrency :value="Math.abs(slotProps.data.coupon_value)"
                             :color="slotProps.data.sale_type == 'Redeem' ? 'danger' : ''" />
                     </template>
                 </Column>
@@ -111,13 +111,15 @@ import Row from 'primevue/row';                   // optional
 import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
-    cashier_shift: String
+    cashier_shift: String,
+    working_day:String
 })
 const data = ref()
 const t = window.t;
 async function getData() {
     const res = await app.getApi("epos_restaurant_2023.api.mobile.coupon_cashier_shift.get_sale_summary", {
-        cashier_shift: props.cashier_shift
+        cashier_shift: props.cashier_shift,
+        working_day:props.working_day
     })
     if (res.data) {
         data.value = res.data

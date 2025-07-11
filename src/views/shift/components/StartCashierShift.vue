@@ -43,9 +43,10 @@
         <ion-footer>
             <ion-toolbar>
                 <div style="display: flex; justify-content: center;gap:10px">
-                    <ion-button @click="onStartCashierShift" shape="round" color="success">{{ t("Start Cashier Shift")
-                        }}</ion-button>
+                   
                     <ion-button @click="onCancel" color="danger" shape="round">{{ t("Cancel") }}</ion-button>
+                     <ion-button @click="onStartCashierShift" shape="round" color="success">{{ t("Start Cashier Shift")
+                        }}</ion-button>
                 </div>
             </ion-toolbar>
         </ion-footer>

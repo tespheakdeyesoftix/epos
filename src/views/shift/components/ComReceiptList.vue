@@ -1,6 +1,10 @@
 <template>
     <div class="fix-container">
-        <ion-accordion-group expand="inset" value="Sale Coupon">
+        <div v-if="loading" style="height: 70vh; display: flex; justify-content: center; align-items: center;">
+        <ion-spinner name="crescent"></ion-spinner>
+        </div>
+
+        <ion-accordion-group expand="inset" value="Sale Coupon" v-else>
     <ion-accordion v-for="(tran, index) in transactionType" :key="index" :value="tran">
       <ion-item slot="header" color="light">
         <ion-label>{{ t(tran) }}
@@ -84,20 +88,27 @@ import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 import dayjs from 'dayjs';
 const props = defineProps({
-    cashier_shift: String
+    cashier_shift: String,
+working_day: String,
 });
 
 const transactionType = ["Sale Coupon","Top Up","Redeem"]
 
-    
+const loading = ref(true)
 const t = window.t;
 const data = ref();
 async function getData(){
+    let filters = [["docstatus", "=", 1]]
+    if(props.cashier_shift){
+        filters.push(["cashier_shift","=",props.cashier_shift])
+    }
+    
+    if(props.working_day){
+        filters.push(["working_day","=",props.working_day])
+    }
+
     const res = await app.getDocList("Sale",{
-        filters: [
-            ["docstatus", "=", 1],
-            ["cashier_shift", "=", props.cashier_shift]
-        ],
+        filters: filters,
         fields: ["name","sale_type", "sub_total","total_discount", "customer","customer_name" ,
          "total_quantity" , "grand_total",
             "total_coupon_value","closed_by","modified"
@@ -112,6 +123,10 @@ async function getData(){
 }
 
 onMounted(async ()=>{
-    await getData();
+    setTimeout(async ()=>{
+await getData();
+loading.value = false;
+    },1000)
+    
 })
 </script>

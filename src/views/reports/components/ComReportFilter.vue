@@ -99,7 +99,7 @@ function getSelectDefaultFilter(f) {
   if (filter) {
     filter.forEach(x => {
       if (["business_branch", "property"].includes(x[0])) {
-        x[2] = app.property_name
+        x[2] = app.setting.property?.property_name
       }
     })
   }

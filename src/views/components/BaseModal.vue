@@ -9,6 +9,7 @@
         </ion-buttons>
         <ion-title>{{ t(title) }}</ion-title>
         <ion-buttons slot="end">
+          <slot name="end"></slot>
           <ion-button size="large" shape="round" @click="onConfirm" v-if="showConfirm">
             <ion-icon :icon="checkmarkOutline" />
             {{ t(confirmText) }}

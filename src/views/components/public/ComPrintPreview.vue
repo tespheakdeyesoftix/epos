@@ -1,5 +1,14 @@
 <template>
     <BaseModal :title="t('Print Preview')" :hideFooter="false">
+        <template #end>
+            <ion-button size="large" shape="round" @click="onReloadData">
+                <ion-icon :icon="refreshOutline"></ion-icon>
+            </ion-button>
+        </template>
+            <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
         <div class="container" ref="targetRef">
             <div v-html="data" />
         </div>
@@ -14,6 +23,7 @@
     </BaseModal>
 </template>
 <script setup>
+import { refreshOutline } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 
 const t = window.t;
@@ -22,6 +32,7 @@ const props = defineProps({
     docname:String,
     template:String,
     lang:String,
+    printer_name:String
 })
 
 const data =ref()
@@ -33,7 +44,8 @@ async function getData(){
         docname:props.docname,
         template:props.template,
         return_type:"html",
-        lang:props.lang || "en"
+        lang:props.lang || "en",
+        printer_name:String
 
     })
     if(res.data){
@@ -52,14 +64,25 @@ async function getData(){
 }
 
 function onPrint(){
-      const printer = app.storageService.getItem("cashierShiftPrinter")
-   
-    app.printing.onPrint(props.doctype,props.docname, props.template,printer)
+ 
+    app.printing.onPrint( {...props,  show_loading:true}    )
 }
 function onDownloadPDF(){
    
-    app.printing.downloadPdf(props.doctype,props.docname, props.template)
+    app.printing.downloadPdf(props)
 }
+
+
+async function onReloadData(){
+      const l = await app.showLoading()
+    await getData()
+    await l.dismiss();
+}
+const onRefreshData = async (event) => {
+   await getData()
+    event.target.complete();
+
+};
 
 
 onMounted(async ()=>{

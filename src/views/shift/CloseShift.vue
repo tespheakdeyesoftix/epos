@@ -101,8 +101,11 @@
          </div>
     </ion-content>
      <ComFooter>
-      <ion-button color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
+      
       <ion-button color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
+      <ion-button  :routerLink="'/shift-detail/' + cashierShift.name">{{ t("View Shift Detail") }}</ion-button>
+
+      <ion-button color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
      </ComFooter>
   </ion-page>
 </template>
@@ -150,6 +153,9 @@ function onCancel(){
 }
 
 async function onCloseCashierShift(){
+  const printSettings = app.setting.pos_config.print_settings || []
+
+
   const confirm = await app.onConfirm("Close Cashier Shift","Are you sure you want to close cashier shift?")
   if(!confirm) return
   const loading = await app.showLoading();
@@ -163,6 +169,12 @@ async function onCloseCashierShift(){
     delete app.setting.cashier_shift;
 
     await app.showSuccess("Close shift successfully")
+    // get print 
+    printSettings.forEach(p => {
+    app.printing.onPrint( {doctype:"Cashier Shift", docname: cashierShift.value.name, template:p.print_template ,printer_name:p.printer_name, lang:p.lang,copy:p.copies,show_loading:false})
+    }); 
+
+ 
     app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
     
   }

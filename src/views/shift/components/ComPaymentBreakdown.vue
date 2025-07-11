@@ -4,6 +4,7 @@
             <ion-card-title>{{ t("Payment Breakdown") }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
+        
            <DataTable :value="data">
                 <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center" style="width: 60px">
                     <template #body="slotProps">
@@ -56,14 +57,18 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 const props = defineProps({
-    cashier_shift:String
+    cashier_shift:String,
+    working_day:String
 })
 const data = ref()
 const t = window.t
 async function getData(){
-    const res = await app.sql("select payment_type,currency, count(*) as total_transaction, sum(input_amount) as payment_amount,sum(payment_amount) as base_payment_amount from `tabSale Payment` where docstatus=1 and cashier_shift=%(cashier_shift)s group by payment_type,currency",
+    let sql = "select payment_type,currency, count(*) as total_transaction, sum(input_amount) as payment_amount,sum(payment_amount) as base_payment_amount from `tabSale Payment` "
+    sql = sql + " where docstatus=1 and (%(cashier_shift)s = '' or cashier_shift=%(cashier_shift)s) and (%(working_day)s = '' or working_day=%(working_day)s)  group by payment_type,currency"
+    const res = await app.sql(sql,
         {
-            cashier_shift: props.cashier_shift
+            cashier_shift: props.cashier_shift || '',
+            working_day: props.working_day || '',
         }
     )
     data.value = res.data
