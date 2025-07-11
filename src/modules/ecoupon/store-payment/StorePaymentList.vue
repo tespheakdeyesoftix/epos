@@ -41,7 +41,7 @@ const options = {
         {fieldname:"name",header:"Sale #",url:"/store-payment-detail",id_field:"name"},
         {fieldname:"pos_profile",header:"POS Profile"},
         {fieldname:"posting_date",header:"Date",fieldtype:"Date"},
-        {fieldname:"working_day",header:"Working Day",fieldtype:"Date"},
+        // {fieldname:"working_day",header:"Working Day",fieldtype:"Date"},
         {fieldname:"cashier_shift",header:"Cashier Shift"},
         {fieldname:"vendor",header:"Vendor"},
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
@@ -74,11 +74,10 @@ function onRowDblClick(data){
 async function onStorePayment(){
  
     const result = await app.utils.onStorePayment();
-    if(result){
-       saleDoc.value.customer = result
-      await getCustomer(result)   
-    
-    }
+    // if (result) {
+    //     saleDoc.value.store_payment = result;
+    //     await getStorePayment(result);
+    // }
 }
 
 async function onEdit(){
