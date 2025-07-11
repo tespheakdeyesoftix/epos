@@ -13,12 +13,6 @@
          <com-input keyboard :label="t('Note')" v-model="doc.note" />
          
       </stack>
-      <!-- <stack row equal> 
-         
-         <ComSelectInput docType="Payment Types" v-model="doc.payment_types" :label="t('Payment Types')" />
-         <com-input keyboard :label="t('Payment Amount')" v-model="doc.company_name" />
-      </stack> -->
-
     </stack>
   </BaseModal>
 </template>

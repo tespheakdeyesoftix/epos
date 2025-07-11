@@ -1,12 +1,12 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Store Payment List") }}</AppBar>
-        {{ doc }}
         <ion-content ref="contentRef">
             <DocList docType="Store Payment" :options="options"
             v-model:selectedRow="selectedRow"
             @onRowDblClick="onRowDblClick"
             :contentRef="contentRef"
+            ref="docListRef"
             
             >
                 
@@ -31,6 +31,7 @@ import { ref } from 'vue';
 import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
 import { addOutline } from "ionicons/icons";
  const contentRef = ref(null)
+ const docListRef = ref(null)
  const selectedRow = ref()
 const plateform = ref(app.utils.getPlateform())
 
