@@ -150,6 +150,7 @@ import ComInput from '@/views/components/public/ComInput.vue';
 import ComSelectInput from '@/views/components/public/ComSelectInput.vue';
 import Stack from '@/views/components/public/Stack.vue';
 import GetData from '@/views/components/public/GetData.vue';
+import Card from '@/views/components/public/Card.vue';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -316,6 +317,8 @@ if (Capacitor.isNativePlatform()) {
   app.component('Stack',Stack)
   app.component('get-data',GetData)
   app.component('GetData',GetData)
+  app.component('Card',Card)
+  app.component('card',Card)
 
   app.component('BaseModal',BaseModal)
   app.directive('longPress', longPress);

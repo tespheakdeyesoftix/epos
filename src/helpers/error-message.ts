@@ -70,8 +70,9 @@ export async function handleErrorMessage(error_data:any){
 
 
 export async  function showWarningMessage(message:string){
+
     const toast = await toastController.create({
-        message: stripHtmlTags(message),
+        message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
         duration: 5000,
         position: "top",
         swipeGesture:"vertical",

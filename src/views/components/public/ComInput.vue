@@ -18,8 +18,18 @@
       </ion-button>
     </ion-textarea>
   </template>
+  <template v-else-if="type == 'date'">
+<FloatLabel variant="on" >
+        <DatePicker style="height:55px" dateFormat="dd/mm/yy" size="large" v-model="model" inputId="in_label" showIcon iconDisplay="input" variant="filled" 
+        class="w-full"
+        />
+        <label for="in_label">{{ label  }}</label>
+    </FloatLabel>
+
+
+  </template>
   <template v-else>
-    <ion-input v-bind="$attrs" ref="ionInputRef" 
+  <ion-input v-bind="$attrs" ref="ionInputRef" 
     :value="model"
      @ionInput="onInput" 
      :type="type"
@@ -27,7 +37,9 @@
       :label="label" @ionChange="onChange"
        :fill="fill" 
         :clear-input="clear"
-       :label-placement="labelPlacement">
+       :label-placement="labelPlacement"
+        
+       >
        
       <ion-button v-if="icon"  fill="clear" slot="end"
         aria-label="Show/hide">
@@ -51,6 +63,8 @@ import {  keypadOutline, scan } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import { IonTextarea } from '@ionic/vue';
 import InputNumber from 'primevue/inputnumber';
+
+import DatePicker from 'primevue/datepicker';
 
 import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
