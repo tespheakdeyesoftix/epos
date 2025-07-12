@@ -7,9 +7,11 @@
   >
   
   <Message v-if="doc.name && doc.docstatus == 0 && !docChanged" severity="info" class="mb-3">{{ t('Submit this document to confirm') }}</Message>
-    <stack>
+  <Message v-if="doc.pos_profile" severity="success" class="mb-3">{{ t('Current Balance:') }} <ComCurrency :value="creditBalance" /> </Message>
+  
+  <stack>
       <stack row equal>
-        <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('POS profile')" />
+        <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('POS profile')" @onSelected="onSelectPOSProfile" />
         <com-input type="date" :label="t('Posting Date')" v-model="doc.posting_date" />
       </stack>
     </stack>
@@ -72,23 +74,22 @@ import { modalController } from '@ionic/vue'
 import Select from 'primevue/select'
 import { addOutline, removeOutline } from 'ionicons/icons'
 import dayjs from 'dayjs'
-
 import Message from 'primevue/message';
 import beep from '/assets/sound/submit.mp3'
- 
 const beepSound = new Audio(beep)
-
-
 
 const props = defineProps({
   docname: String,
   docListRef:Object
 })
 
+const creditBalance = ref(0)
+
 const t = window.t
 const paymentTypes = app.setting.pos_config.payment_type
 
 const doc = ref({
+  docstatus:0,
   working_day: app.setting.working_day.name,
   cashier_shift: app.setting.cashier_shift.name,
   posting_date: new Date(app.setting.working_day.posting_date),
@@ -104,6 +105,8 @@ const docChanged = ref(false)
 function isDocChanged(newDoc, oldDoc) {
   return JSON.stringify(newDoc) !== JSON.stringify(oldDoc)
 }
+
+
 
 // Watch doc deeply and update docChanged
 watch(
@@ -130,6 +133,17 @@ const totalPaymentAmount = computed(() => {
     0
   )
 })
+
+function onSelectPOSProfile(profile){
+ 
+  const res = app.getApi("epos_restaurant_2023.selling.doctype.store_payment.store_payment.get_vendor_credit_balance",{
+    pos_profile:profile.name
+  });
+  if(res.data){
+    creditBalance.value = res.data
+  }
+
+}
 
 function onSelectPayemntType(event, p) {
   let pt = event.value
