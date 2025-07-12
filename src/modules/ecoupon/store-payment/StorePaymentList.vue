@@ -46,6 +46,8 @@ const options = {
         {fieldname:"vendor_name",header:"Vendor"},
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
+        {fieldname:"payment_types",header:"Status",},
+         
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
@@ -72,13 +74,13 @@ function onRowDblClick(data){
 }
 
 async function onStorePayment(){
- 
+  
     const result = await app.utils.onStorePayment();
     if (result) {
         await docListRef.value.onRefresh();
-        saleDoc.value.store_payment = result;
+        // saleDoc.value.store_payment = result;
         
-        await getStorePayment(result);
+        // await getStorePayment(result);
     }
 }
 
@@ -99,7 +101,7 @@ async function onDelete(){
   const res = await app.deleteDoc("Store Payment", selectedRow.value.name);  
   if (res.data) {
     await docListRef.value.onRefresh();
-    app.ionRouter.navigate("/store-payment-list", "back", "replace");
+    // app.ionRouter.navigate("/store-payment-list", "back", "replace");
   }
 
   await l.dismiss();
