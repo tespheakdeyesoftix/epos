@@ -9,14 +9,16 @@
             ref="docListRef"
             
             >
-                
-                <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
-                    <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
-                </template>
+
+            <template #docstatus="{item}">
+                 
+                <ComStatus :status="getStatusText(item.docstatus)"/>
+            </template>
+
             </DocList>
         </ion-content>
         <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-            <ion-fab-button v-tooltip.top="t('Add new Store Payment')" @click="onStorePayment" >
+            <ion-fab-button v-tooltip.top="t('Add new Store Payment')" @click="onAddStorePayment" >
                 <ion-icon :icon="addOutline"></ion-icon>
             </ion-fab-button>
         </ion-fab>
@@ -28,12 +30,13 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import ComTopUpCard from '@/modules/ecoupon/TopUpList/components/ComTopUpCard.vue';
+import ComAddPayment from "@/modules/ecoupon/store-payment/ComAddPayment.vue"; 
 import { addOutline } from "ionicons/icons";
  const contentRef = ref(null)
  const docListRef = ref(null)
  const selectedRow = ref()
 const plateform = ref(app.utils.getPlateform())
+
 
 const t = window.t
 const options = {
@@ -46,7 +49,8 @@ const options = {
         {fieldname:"vendor_name",header:"Vendor"},
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
-        {fieldname:"payment_types",header:"Status",},
+        {fieldname:"docstatus",header:"Status",},
+        {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
          
     ],
     showSearchBar:true,
@@ -69,33 +73,46 @@ const options = {
 // ]
 }
 
+
+function getStatusText(id){
+    return app.utils.getDocStatusText(id);
+}
+
+
 function onRowDblClick(data){
     app.ionRouter.navigate("/store-payment-detail/" + data.name, "forward", "push");
 }
 
-async function onStorePayment(){
-  
-    const result = await app.utils.onStorePayment();
-    if (result) {
-        await docListRef.value.onRefresh();
-        // saleDoc.value.store_payment = result;
-        
-        // await getStorePayment(result);
-    }
+async function onAddStorePayment(){
+   
+      const modal = await app.openModal({
+
+    component: ComAddPayment,
+    componentProps:{
+      
+        docListRef:docListRef
+    },
+    cssClass:"store-payment-modal"
+  })
 }
 
 async function onEdit(){
-   const result =await app.utils.onStorePayment(selectedRow.value.name);
-     
-   if(result){
-        const l = await app.showLoading();
-        await docListRef.value.onRefresh();
-        await l.dismiss();
-   }
+   
+      const modal = await app.openModal({
+
+    component: ComAddPayment,
+    componentProps:{
+        docname:selectedRow.value.name,
+        docListRef:docListRef
+    },
+    cssClass:"store-payment-modal"
+  })
+
+ 
 }
 
 async function onDelete(){
-  const confirm = await app.utils.onConfirm("Delete Store Payment", "Are you sure you want to delete this Store Payment?");
+  const confirm = await app.utils.onConfirm("Delete Store Payment", "Are you sure you want to delete this Store Payment?",{background:"danger"});
   if (!confirm) return;
   const l = await app.showLoading();
   const res = await app.deleteDoc("Store Payment", selectedRow.value.name);  

@@ -21,11 +21,13 @@ const getSeverity = () => {
             return 'success';    
         case 'Used':
             return 'success';
+        case 'Submitted':
+            return 'success';
 
         case 'Unpaid':
             return 'danger';
         case 'Draft':
-            return 'danger';
+            return 'warning';
 
         case 'Partially Paid':
             return 'warning';

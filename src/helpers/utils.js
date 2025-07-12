@@ -11,7 +11,7 @@ import ComAuth from '@/views/components/public/ComAuth.vue';
 import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
 import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
 import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
-import ComAddPayment from "@/modules/ecoupon/store-payment/ComAddPayment.vue"; 
+
 import ComEditCustomer from "@/views/customer/components/ComEditCustomer.vue"; 
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
@@ -147,7 +147,7 @@ export async function openModal(props) {
   return false;
 }
 
-export async function onConfirm(title = "Confirm", message = "Are you sure you want to process this action?", options = {}) {
+export async function onConfirm(title = "Confirm", message = "Are you sure you want to process this action?", options = {background:"success"}) {
   let defaultButtons = [
     {
       text: window.t('Cancel'),
@@ -156,7 +156,7 @@ export async function onConfirm(title = "Confirm", message = "Are you sure you w
     {
       text: window.t('OK'),
       role: 'confirm',
-      cssClass: 'alert-button-confirm',
+      cssClass: options.background =="success"?'alert-button-confirm-success':"alert-button-confirm-danger",
     },
   ];
 
@@ -659,19 +659,7 @@ export async function onAddCustomer(docname=""){
   return modal;
 }
 
-export async function onStorePayment( docname=""){
-  const modal = await app.openModal({
-    component: ComAddPayment,
-    componentProps:{
-      docname:docname
-    },
-    cssClass:"store-payment-modal"
-  })
-
-  return modal;
-}
  
-
 export async function onOpenKeypad(title="Enter Number"){
   const result = await app.openModal({
     component: ComKeypad,
@@ -774,4 +762,9 @@ export function getWeekStartAndEnd(dateInput) {
     start: startOfWeek.format('YYYY-MM-DD'),
     end: endOfWeek.format('YYYY-MM-DD')
   }
+}
+
+export function getDocStatusText(id){
+  const status = [window.t("Draft"), window.t('Submitted'), window.t("Cancelled")]
+  return status[id]
 }

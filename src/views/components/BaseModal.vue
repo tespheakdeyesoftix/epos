@@ -10,7 +10,7 @@
         <ion-title>{{ t(title) }}</ion-title>
         <ion-buttons slot="end">
           <slot name="end"></slot>
-          <ion-button size="large" shape="round" @click="onConfirm" v-if="showConfirm">
+          <ion-button size="large" shape="round" @click="onConfirm" v-if="showConfirm && !hideConfirm">
             <ion-icon :icon="checkmarkOutline" />
             {{ t(confirmText) }}
           </ion-button>
@@ -52,7 +52,8 @@ const props = defineProps({
   hideFooter:{
     type:Boolean,
     default:true
-  }
+  },
+  hideConfirm:Boolean
 });
 
 
@@ -73,7 +74,7 @@ function onConfirm(){
 
 onMounted(()=>{
   const instance = getCurrentInstance()
-  showConfirm.value = !!instance?.vnode?.props?.onOnConfirm
+  showConfirm.value = !!instance?.vnode?.props?.onOnConfirm 
  
 })
 

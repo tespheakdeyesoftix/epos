@@ -96,7 +96,7 @@ globalThis.app.submitDoc =  async function (doc) {
 }
 
 
- globalThis.app.onConfirm =  async function (title="Confirm", message ="Are you sure you want to process this action?",options=[]) {
+ globalThis.app.onConfirm =  async function (title="Confirm", message ="Are you sure you want to process this action?",options={background:"success"}) {
   const isConfirm = await onConfirm(title,message,options);
   return isConfirm
 }
