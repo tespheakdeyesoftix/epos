@@ -259,6 +259,11 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/store-payment-detail/:name",
+    component: () => import('@/modules/ecoupon/store-payment/StorePaymentDetail.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: "/setting",
     component: () => import('@/views/Setting.vue'),
     meta: { requiresAuth: true }
