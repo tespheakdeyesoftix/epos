@@ -11,7 +11,11 @@
             <ion-card-header>
                <ion-item class="ion-no-padding" lines="none">
                     <ion-label><h1>{{ t("Sale #") }}: {{ data?.name }}</h1></ion-label>
-                    <ComStatus :status="data?.transaction_type "></ComStatus>
+                    <!-- <ComStatus :status="data?.docstatus "></ComStatus> -->
+                   
+                    
+                        <ComStatus :status="getStatusText(data?.docstatus)"/>
+                  
                 </ion-item>
             </ion-card-header>
            
@@ -38,8 +42,8 @@
               <ion-label><strong>{{ t("Working Day") }}</strong> : {{ data?.working_day }}</ion-label>
             </stack>
             <stack row equal>
-              <ion-label><strong>{{ t("payment Type") }}</strong> : {{ data.payment_types }}</ion-label>
-              <!-- <ion-label><strong>{{ t("Payment Input") }}</strong> : {{ data?.payments }}</ion-label> -->
+              <ion-label><strong>{{ t("Payment Type") }}</strong> : {{ data.payment_types }}</ion-label>
+              <ion-label v-if="data?.note"><strong>{{ t("Note") }}</strong> : {{ data?.note }}</ion-label>
             </stack>
            
            
@@ -58,7 +62,9 @@
 import { ref, onMounted } from 'vue'
 const t = window.t
 import dayjs from 'dayjs'
-
+function getStatusText(id){
+    return app.utils.getDocStatusText(id);
+}
 const data = ref(null)
 
 async function loadData() {

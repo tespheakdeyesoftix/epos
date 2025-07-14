@@ -18,8 +18,8 @@
   </ion-fab-button>
 </ion-fab>
 <ComFooter>
-    <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
-    <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
+    <ion-button :disabled="!selectedRow" @click="onEdit" style="width: 5rem">{{ t("Edit") }}</ion-button>
+    <ion-button color="danger" :disabled="!selectedRow" @click="onDelete" style="width: 5rem">{{ t("Delete") }}</ion-button>
 </ComFooter>
     </ion-page>
 </template>
