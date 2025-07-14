@@ -50,12 +50,14 @@ const options = {
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
         {fieldname:"docstatus",header:"Status",},
+        {fieldname:"receive_by",header:"Receive By",},
+        {fieldname:"receive_by_phone_number",header:"Receive By Phone",},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
          
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name", "pos_profile","posting_date", "working_day","cashier_shift","vendor","payment_amount","payment_types"],
+    fields: ["name", "pos_profile","posting_date", "working_day","cashier_shift","receive_by","receive_by_phone_number","vendor","vendor_name","payment_amount","payment_types"],
     orderBy:{
       field: "modified",
       order: "desc",

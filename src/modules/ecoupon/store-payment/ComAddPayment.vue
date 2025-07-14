@@ -62,6 +62,13 @@
         <ion-icon :icon="addOutline" slot="start" />
         {{ t("Add Payment") }}
       </ion-button>
+
+      <stack >
+        <stack row equal>
+          <com-input keyboard :label="t('Receive By')" v-model="doc.receive_by" />
+          <com-input keyboard :label="t('Receive By Phone')" v-model="doc.receive_by_phone_number" />
+        </stack>
+      </stack>
     </card>
 
     <com-input type="text-area" keyboard :label="t('Note')" v-model="doc.note" />
@@ -76,6 +83,7 @@ import { addOutline, removeOutline } from 'ionicons/icons'
 import dayjs from 'dayjs'
 import Message from 'primevue/message';
 import beep from '/assets/sound/submit.mp3'
+import Stack from '@/views/components/public/Stack.vue'
 const beepSound = new Audio(beep)
 
 const props = defineProps({
@@ -195,7 +203,7 @@ async function onSave() {
   }
   
   await loading.dismiss()
-  props.docListRef.value.onRefresh();
+  // props.docListRef.value.onRefresh();
 
 }
 
