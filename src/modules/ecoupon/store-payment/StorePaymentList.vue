@@ -1,6 +1,8 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Store Payment List") }}</AppBar>
+
+        
         <ion-content ref="contentRef">
             <DocList docType="Store Payment" :options="options"
             v-model:selectedRow="selectedRow"
@@ -35,6 +37,7 @@ import { addOutline } from "ionicons/icons";
  const contentRef = ref(null)
  const docListRef = ref(null)
  const selectedRow = ref()
+ import { onIonViewWillEnter } from '@ionic/vue';
 const plateform = ref(app.utils.getPlateform())
 
 
@@ -97,6 +100,15 @@ async function onAddStorePayment(){
     cssClass:"store-payment-modal"
   })
 }
+
+onIonViewWillEnter(async ()=>{
+   
+
+    if(window.reloadData){
+        await docListRef.value.onReloadData();
+        window.reloadData = false;
+    }
+})
 
 async function onEdit(){
    
