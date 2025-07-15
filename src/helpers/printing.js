@@ -111,3 +111,50 @@ export async function getPrinterNames(){
       app.showWarning("Cannot get printer list")
     }
 }
+
+
+export async function onPrintBill(options = {docname:"",  template:"",  copies:1,  is_reprint:0,show_loading:false}) {
+ 
+    let loading = null
+    
+    if(options.show_loading) loading = await app.showLoading();
+    
+    const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
+        pdf: 0,
+        station: app.setting.station_name,
+        name: options.docname,
+        reprint: options.re_print,
+        template:options.template
+    })
+
+ 
+
+    if (result.data) {
+ 
+      for (let i = 0; i < (options.copies || 1); i++) {
+          
+            app.printService.submit({
+                'type': "Cashier Printer",//printer name
+                'url': 'file.pdf',
+                'file_content': result.data
+            });
+        }
+
+
+    }
+
+    if(loading) await loading.dismiss();
+
+}
+
+
+export async function getPrintFormat(pos_profile){
+  // can improve by cached
+  const res=await app.getApi("epos_restaurant_2023.api.setting.get_print_format",{
+    pos_profile:pos_profile
+  });
+  if(res.data){
+  return res.data
+  }
+  return []
+}

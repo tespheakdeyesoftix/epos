@@ -10,7 +10,8 @@
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "deploy": "ionic build --proc && node deploy.cjs",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "apk": "ionic build --proc && npx cap copy && npx cap sync && npx cap open android"
   },
   "dependencies": {
     "@capacitor/android": "7.2.0",

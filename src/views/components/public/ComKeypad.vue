@@ -31,7 +31,7 @@ const numberInput = ref("")
         [0,'.','Clear'],
     ]
 function onKeyPadClick(key){
-
+   
         if(key=="Clear"){
             numberInput.value = ""
 

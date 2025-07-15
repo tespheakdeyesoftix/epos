@@ -2,13 +2,11 @@
     <ion-page>
         <AppBar>{{ t("Customer List") }}</AppBar>
         <ion-content ref="contentRef">
-         
             <DocList docType="Customer" :options="options"  
                 :contentRef="contentRef"
                 @onRowDblClick="onRowDblClick"
                 v-model:selectedRow="selectedRow"
                 ref="docListRef"
-                
                 >    
             </DocList>
         </ion-content>
@@ -17,7 +15,7 @@
     <ion-icon :icon="addOutline"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-<ComFooter>
+<ComFooter class="ion-hide-sm-down"> 
     <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
     <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
 </ComFooter>
@@ -47,7 +45,7 @@ const options = {
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer_name_en","customer_name_kh","photo","gender","company_name","address","customer_group","date_of_birth","phone_number","modified"],
+    fields: ["name","customer_name_en","customer_name_kh","photo","gender","company_name","address","customer_group","date_of_birth","phone_number","modified","is_disabled"],
     orderBy:{
       field: "modified",
       order: "desc",

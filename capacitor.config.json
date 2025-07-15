@@ -1,4 +1,9 @@
 {
+   "appId": "com.estccouputer.app.epos",
+  "appName": "ePOS",
+   "server": {
+    "cleartext": true
+  },
   "plugins": {
     "StatusBar": {
       "overlaysWebView": true,

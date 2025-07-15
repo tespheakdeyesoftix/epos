@@ -6,7 +6,7 @@
                     <ion-col v-for="k in r" class="px-2 py-2">
                         <ion-button shape="round"  
                          @click="onKeyPadClick(k)" size="large"
-                          expand="full" :color="k==t('Clear')?'danger':'light'">
+                          expand="full" :color="k=='Clear'?'danger':'light'">
                             {{ k }}
                         </ion-button>
                     </ion-col>
@@ -28,7 +28,7 @@ const numberInput = ref("")
         [1,2,3],
         [4,5,6],
         [7,8,9],
-        [0,'.',t('Clear')],
+        [0,'.','Clear'],
     ]
 function onKeyPadClick(key){
 

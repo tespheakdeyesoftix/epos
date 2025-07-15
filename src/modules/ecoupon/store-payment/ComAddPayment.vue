@@ -11,7 +11,7 @@
   
   <stack>
       <stack row equal>
-        <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('POS profile')" @onSelected="onSelectPOSProfile" />
+        <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('Select Store')" @onSelected="onSelectPOSProfile" />
         <com-input type="date" :label="t('Posting Date')" v-model="doc.posting_date" />
       </stack>
     </stack>

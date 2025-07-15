@@ -7,9 +7,9 @@
             :contentRef="contentRef"
             >
                 
-                <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
+                <!-- <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
                     <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
-                </template>
+                </template> -->
             </DocList>
         </ion-content>
     </ion-page>

@@ -193,7 +193,7 @@ const onSelectAll = (event) => {
 
 onMounted(() => {
    
-  if (props.focus) {
+  if (props.focus && plateform=="desktop") {
     setTimeout(function () {
 
       ionInputRef.value?.$el?.setFocus()

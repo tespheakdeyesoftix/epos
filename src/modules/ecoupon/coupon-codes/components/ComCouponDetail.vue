@@ -88,7 +88,7 @@
  
         </ion-card-content>
     </ion-card>
-
+ 
 
     <ion-card v-if="data?.coupon_transaction.length>0">
         <ion-card-header>
@@ -100,7 +100,6 @@
             <ion-list>
                 <ion-item>
                     <ion-label>{{ t("Description") }}</ion-label>
-                    
                     <ion-label slot="end">{{ t("Coupon Value") }}</ion-label>
                 </ion-item>
                 <ion-item v-for="(item, index) in data?.coupon_transaction" :key="index" lines="full">
@@ -109,12 +108,15 @@
                         <p>
                             <ion-text v-if="item.sale"><strong>{{ t("Invoice #") }}:</strong> <router-link :to="'/sale-detail/' + item.sale"> {{ item.sale }}</router-link><br></ion-text>
                             <ion-text><strong>{{ t("Actual Amount") }}:</strong> <ComCurrency :value="item.input_actual_amount"/><br></ion-text>
+                            <ion-text><strong>{{ t("POS Profile") }}:</strong> {{ item.pos_profile }}/{{ item.pos_station }}<br></ion-text>
+                            
                         </p>
+                         
                         <ion-text color="medium">{{ t("Created by") }}: {{ item.created_by.split("@")[0] }} / 
                             <span v-tooltip.top="`${dayjs(item.transaction_date)}`">{{  dayjs(item.transaction_date).fromNow() }}</span></ion-text>                    </ion-label>
                     
                             <ion-chip  :color="getColor(item.transaction_type)" slot="end" >
-   <ComCurrency  :value="item.coupon_amount"/>
+                            <ComCurrency  :value="item.coupon_amount"/>
                     </ion-chip>
                  
                 </ion-item>

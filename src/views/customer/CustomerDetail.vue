@@ -2,6 +2,20 @@
   <ion-page>
     <ToolBar>
       {{ t("Customer Detail") }} - {{ data?.name }}
+      <template #end>
+        <ComPopOver>
+          <ion-button shape="round">
+          <ion-icon slot="icon-only" :icon="ellipsisVertical"/>
+        </ion-button>
+        <template #content>
+            <ion-list>
+              <ion-item>
+                <ion-label>{{ t("Edit") }}</ion-label>
+              </ion-item>
+            </ion-list>
+        </template>
+        </ComPopOver>
+      </template>
     </ToolBar>
 
     <ion-content>
@@ -48,13 +62,13 @@
     </ion-content>
 
     
-    <ComCustomerFooter :data="data" @reload="onRefresh" ref="docListRef" />
+    <ComCustomerFooter class="ion-hide-sm-down" :data="data" @reload="onRefresh" ref="docListRef" />
   </ion-page>
 </template>
 
 <script setup>
   import { IonIcon } from '@ionic/vue';
-import { trash } from 'ionicons/icons';
+import {   ellipsisVertical, trash } from 'ionicons/icons';
 import { onMounted, ref } from 'vue'
 import ComSegment from "@/views/customer/components/ComSegment.vue"
 import ComCustomerFooter from "@/views/customer/components/ComCustomerFooter.vue"

@@ -661,10 +661,11 @@ export async function onAddCustomer(docname=""){
 
  
 export async function onOpenKeypad(title="Enter Number"){
+  
   const result = await app.openModal({
     component: ComKeypad,
     componentProps:{title:title},
-    cssClass:"keypad-modal"
+    cssClass:getPlateform() =="desktop"?"keypad-modal":""
   })
 
   return result;
@@ -673,7 +674,7 @@ export async function onInputPinCode(title="Enter Pin Code"){
   const result = await app.openModal({
     component: ComAuth,
     componentProps:{title:title},
-    cssClass:"keypad-modal"
+     cssClass:getPlateform() =="desktop"?"keypad-modal":""
   })
 
   return result;

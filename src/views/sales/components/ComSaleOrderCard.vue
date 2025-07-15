@@ -1,8 +1,7 @@
 <template>
     
-    <ion-card class="ion-no-margin mb-3" :routerLink="'/sale-detail/' + data.name" >
-        <ion-item lines="none">
-             
+    <ion-card button class="ion-no-margin mb-3" :routerLink="'/sale-detail/' + data.name" >
+        <ion-item lines="none" style="--background: rgba(255, 0, 0, 0);">   
 
             <!-- Middle Text -->
             <ion-label>
@@ -32,15 +31,12 @@ const props = defineProps({
     data: Object
 })
 
-import { ref } from "vue";
  
 import dayjs from "dayjs";
  
 const t = window.t;
  
-const formatDate = (value) =>{
-  return dayjs(value).format("DD-MM-YYYY")
-} 
+ 
 </script>
 
 <style scoped>

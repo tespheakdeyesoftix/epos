@@ -7,14 +7,14 @@ import dayjs from "dayjs";
 export function useDocList(props) {
   const { getMeta } = useApp();
   const loading = ref(true);
-  let meta = {};
+  let meta = ref({});
   const canLoadMore = ref(true);
   const pageSize = ref(20);
   const data = ref([]);
   const keyword = ref(''); // no explicit type
   const startIndex = ref(0);
   const loadingMoreData = ref(false);
-  const defaultFilters = structuredClone(props.options.filters);
+  const defaultFilters = structuredClone(props.options.filters || []);
   let options = ref(props.options);
   const totalRecord = ref(0)
   const orderBy = ref({
@@ -29,7 +29,23 @@ export function useDocList(props) {
   function getFields(){
     let f = options.value.fields;
     f=[...f,...(options.value.columns || []).map(x=>x.fieldname)]
+ 
+    // include titrle field
+   
+    if(meta.value.title_field){
+      f.push(meta.value.title_field)
+    }
+    
+    // include search field
+    if(meta.value.search_fields) 
+    {     
+      
+      meta.value.search_fields.split(",").forEach(x=>{
+        f.push(x.trim())
+      })
+    }
     f = [...new Set(f)];
+    
     return f
   }
 
@@ -97,7 +113,7 @@ export function useDocList(props) {
   };
 
   async function onSearch(str = "") {
-    if (meta) {
+    if (meta.value) {
       const l = await app.showLoading("Searching record...");
       canLoadMore.value = true;
       startIndex.value = 0;
@@ -107,11 +123,11 @@ export function useDocList(props) {
 
         filter.push(["name", "like", `%${keywordEncode}%`]);
         // title field
-        if (meta.title_field) {
-          filter.push([meta.title_field, "like", `%${keywordEncode}%`]);
+        if (meta.value.title_field) {
+          filter.push([meta.value.title_field, "like", `%${keywordEncode}%`]);
         }
-        if (meta.search_fields) {
-          meta.search_fields
+        if (meta.value.search_fields) {
+          meta.value.search_fields
             .split(",")
             .filter((x) => x !== "posting_date")
             .map((item) => item.trim())
@@ -210,6 +226,7 @@ function getDefaultFilter(){
 
   onMounted(async () => {
     loading.value = true;
+        meta.value = await getMeta(props.docType);
   getDefaultFilter();
 
     
@@ -217,7 +234,7 @@ function getDefaultFilter(){
     const result = await getData();
     data.value = result;
     
-    meta = await getMeta(props.docType);
+
      if(props.contentRef){
       await checkScrollFillsScreen();
      }

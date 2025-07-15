@@ -34,7 +34,7 @@
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-            
+            <template  v-if="plateform=='desktop'">
             <DataTable :value="data" 
                 class="ion-padding-start ion-padding-end"
                 tableStyle="min-width: 50rem" selectionMode="single"
@@ -95,6 +95,10 @@
                     </template>
                 </Column>
             </DataTable>
+       </template>
+       <ComDocCard v-else :data="d" v-for="(d,index ) in data" :key="index" :fields="options.columns" 
+       :titleFields="options.title_fields ||  meta.title_field" :subTitleFields="options.subTitleFields || meta.search_fields"/>
+
         </slot>
         <div v-else>
             <slot name="empty">
@@ -121,10 +125,11 @@ import { useAttrs, watch } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
+import ComDocCard from '@/views/components/document-list/ComDocCard.vue';
 import ComFilter from '@/views/components/document-list/ComFilter.vue';
 import ComNoRecord from '@/views/components/document-list/ComNoRecord.vue';
 import { refreshOutline } from 'ionicons/icons';
-
+const plateform= app.utils.getPlateform();
 const attrs = useAttrs();
 const t = window.t;
 
@@ -148,7 +153,7 @@ const props = defineProps({
 const emptyRecordMessage = t("empty_record_message", {doctype: props.docType})
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
-    onSort, options,onFilter,totalRecord
+    onSort, options,onFilter,totalRecord,meta
 } = useDocList(props)
 
 const selectedRow = defineModel("selectedRow")

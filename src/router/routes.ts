@@ -258,6 +258,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/store-payment/StorePaymentList.vue'),
     meta: { requiresAuth: true }
   },
+  
+  {
+    path: "/store-list",
+    component: () => import('@/modules/ecoupon/store/StoreList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/store-detail/:name",
+    component: () => import('@/modules/ecoupon/store/StoreDetail.vue'),
+    meta: { requiresAuth: true }
+  },
+
   {
     path: "/store-payment-detail/:name",
     component: () => import('@/modules/ecoupon/store-payment/StorePaymentDetail.vue'),
