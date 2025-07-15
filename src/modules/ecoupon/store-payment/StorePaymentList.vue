@@ -23,8 +23,8 @@
             </ion-fab-button>
         </ion-fab>
         <ComFooter>
-            <ion-button :disabled="!selectedRow" @click="onEdit">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>
+            <ion-button :disabled="!selectedRow" @click="onEdit" style="width: 5rem">{{ t("Edit") }}</ion-button>
+            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete" style="width: 5rem">{{ t("Delete") }}</ion-button>     
         </ComFooter>
     </ion-page>
 </template>
@@ -35,6 +35,7 @@ import { addOutline } from "ionicons/icons";
  const contentRef = ref(null)
  const docListRef = ref(null)
  const selectedRow = ref()
+ import { onIonViewWillEnter } from '@ionic/vue';
 const plateform = ref(app.utils.getPlateform())
 
 
@@ -50,12 +51,14 @@ const options = {
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
         {fieldname:"docstatus",header:"Status",},
+        {fieldname:"receive_by",header:"Receive By",},
+        {fieldname:"receive_by_phone_number",header:"Receive By Phone Number",},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
          
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name", "pos_profile","posting_date", "working_day","cashier_shift","vendor","payment_amount","payment_types"],
+    fields: ["name", "pos_profile","posting_date", "working_day","cashier_shift","receive_by","receive_by_phone_number","vendor","vendor_name","payment_amount","payment_types"],
     orderBy:{
       field: "modified",
       order: "desc",
@@ -95,6 +98,15 @@ async function onAddStorePayment(){
     cssClass:"store-payment-modal"
   })
 }
+
+onIonViewWillEnter(async ()=>{
+   
+
+    if(window.reloadData){
+        await docListRef.value.onReloadData();
+        window.reloadData = false;
+    }
+})
 
 async function onEdit(){
    

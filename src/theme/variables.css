@@ -313,12 +313,12 @@ ion-modal.edit-customer-modal{
 		--width: 600px;
 		--height: 75vh;
 }
-/* ion-modal.store-payment-modal{
+ion-modal.store-payment-modal{
 	width: 100vw;
 		height: 100vh;
 		--width: 600px;
-		--height: 25vh;
-} */
+		--height: 60vh;
+}
 
 
 ion-modal{

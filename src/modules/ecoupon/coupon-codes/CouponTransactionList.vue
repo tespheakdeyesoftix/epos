@@ -39,7 +39,7 @@
     </ion-content>
 
     <ComFooter>
-      <ion-button :disabled="!selectedRow" @click="goToDetail">
+      <ion-button :disabled="!selectedRow" @click="goToDetail" style="width: 5rem">
         {{ t("View Detail") }}
       </ion-button>
     </ComFooter>
