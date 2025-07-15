@@ -52,7 +52,7 @@ const options = {
         {fieldname:"payment_types",header:"Payment Type",},
         {fieldname:"docstatus",header:"Status",},
         {fieldname:"receive_by",header:"Receive By",},
-        {fieldname:"receive_by_phone_number",header:"Receive By Phone",},
+        {fieldname:"receive_by_phone_number",header:"Receive By Phone Number",},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
          
     ],
