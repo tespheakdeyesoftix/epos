@@ -3,7 +3,7 @@
     <ToolBar>
       {{ t("Store Payment Detail") }} - {{ data?.name }}
     </ToolBar>
-{{ data }}
+ 
     <ion-content>
       <div class="fix-container">
         <ion-card v-if="data" class="mt-6">
@@ -39,16 +39,31 @@
                   <ComCurrency :value="data.payment_amount" />
                 </ion-label>
                 <ion-label v-if="data.payments.find(p => p.exchange_rate !== 1)">
-                  <strong>{{ t("Exchange Rate") }}</strong>:
-                  {{ data.payments.find(p => p.exchange_rate !== 1)?.exchange_rate }}
-                </ion-label>
+  <strong>{{ t("Exchange Rate") }}</strong>:
+  {{ data.payments.find(p => p.exchange_rate !== 1)?.exchange_rate }}
+  {{ getCurrencySymbol(data.payments.find(p => p.exchange_rate !== 1)?.payment_type) }}
+</ion-label>
+
+
               </stack>
 
-              <stack row equal>
-              
-                <ion-label><strong>{{ t("Payment By") }}</strong>: <ComCurrency :value="data.payment_amount" /></ion-label>
-                <ion-label><strong>{{ t("Payment Method") }}</strong>: {{ data.payment_method }}</ion-label>
-              </stack>
+ 
+        <div v-for="(payment, index) in data.payments" :key="index" style="margin-bottom: 10px;">
+          <stack row equal>
+            <ion-label>
+              <strong>{{ t("Payment Method") }}</strong>: {{ payment.payment_type }}
+            </ion-label>
+            <ion-label>
+              <strong>{{ t("Input Amount") }}</strong>:
+              <ComCurrency
+                :value="payment.input_amount"
+                :currency="getCurrency(payment.payment_type)"
+              />
+            </ion-label>
+          </stack>
+        </div>
+ 
+
 
               <stack row equal>
                 <ion-label><strong>{{ t("Created By") }}</strong> : {{ data.owner.split("@")[0] }}</ion-label>
@@ -96,6 +111,19 @@ const docListRef = ref(null)
 function getStatusText(id) {
   return app.utils.getDocStatusText(id);
 }
+
+
+function getCurrency(paymentType) {
+  const type = (paymentType || '').toLowerCase();
+  if (type.includes('riel')) return 'KHR';
+  return 'USD';
+}
+function getCurrencySymbol(paymentType) {
+  const type = (paymentType || '').toLowerCase();
+  if (type.includes('riel')) return '៛'; // KHR
+  return '$'; // USD
+}
+
 
 async function loadData() {
   const l = await app.showLoading()
