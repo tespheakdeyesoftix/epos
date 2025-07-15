@@ -39,12 +39,10 @@
                   <ComCurrency :value="data.payment_amount" />
                 </ion-label>
                 <ion-label v-if="data.payments.find(p => p.exchange_rate !== 1)">
-  <strong>{{ t("Exchange Rate") }}</strong>:
-  {{ data.payments.find(p => p.exchange_rate !== 1)?.exchange_rate }}
-  {{ getCurrencySymbol(data.payments.find(p => p.exchange_rate !== 1)?.payment_type) }}
-</ion-label>
-
-
+                  <strong>{{ t("Exchange Rate") }}</strong>:
+                  {{ data.payments.find(p => p.exchange_rate !== 1)?.exchange_rate }}
+                  {{ getCurrencySymbol(data.payments.find(p => p.exchange_rate !== 1)?.payment_type) }}
+                </ion-label>
               </stack>
 
  

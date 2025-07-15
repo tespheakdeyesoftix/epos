@@ -1,8 +1,6 @@
 <template>
     <ion-page>
         <AppBar>{{ t("Store Payment List") }}</AppBar>
-
-        
         <ion-content ref="contentRef">
             <DocList docType="Store Payment" :options="options"
             v-model:selectedRow="selectedRow"
