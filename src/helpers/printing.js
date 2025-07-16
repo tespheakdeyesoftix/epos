@@ -32,6 +32,9 @@ export async function onPrint(options={
   }
  
   let l = null
+  try{
+
+ 
   if(options.show_loading) l = await app.showLoading()
   const res = await app.postApi("epos_restaurant_2023.api.printing.get_print_data",{
     doctype:options.doctype,
@@ -43,18 +46,27 @@ export async function onPrint(options={
   })
 
   if(res.data){
+    
     for (let i = 1; i <= (options.copy || 1); i++) {
+
         app.printService.submit({
                     'type':  options.printer_name,
                     'url': 'file.pdf',
                     'file_content': res.data,
                 });
+
         }
   }else {
     app.showWarning("Print report fail. Please try again.")
   }
+  }   catch (error) {
+    app.showWarning("Print report fail. Please try again.")
+  } finally {
+    
+      if(l)   await l.dismiss()
+  }  
 
-  if(l)   await l.dismiss()
+
   
 }
 

@@ -361,7 +361,10 @@ async function onEditSaleProductCoupon(data) {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
+    data.is_editing = true//we use this key to validate scan coupon
+
     const sp = JSON.parse(JSON.stringify(data))
+
     const result = await app.openModal({
         component: ComAddCouponCode,
         componentProps: {
@@ -369,14 +372,16 @@ async function onEditSaleProductCoupon(data) {
 
         },
         cssClass: "scan-coupon-code-modal"
-
     })
+    data.is_editing = false
 
     if (result) {
         data.coupons = result.coupons;
         data.quantity = result.coupons.length;
         updateSaleProduct(data)
     }
+
+
 
 }
 

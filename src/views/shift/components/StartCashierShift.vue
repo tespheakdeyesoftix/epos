@@ -108,13 +108,20 @@ async function onStartCashierShift() {
     doc.value.cash_float.forEach(x => {
         x.payment_method = x.payment_type
     });
-
+ 
 
     res = await app.createDoc("Cashier Shift", doc.value);
     if (res.data) {
         app.setting.cashier_shift = res.data
         isCashierShiftOpened.value = true;
-        app.ionRouter.navigate("/home", "back", "replace")
+        
+        if(app.route.query.return_url){
+           
+            app.ionRouter.navigate(app.route.query.return_url, "forward", "replace")
+        }
+        else {
+            app.ionRouter.navigate("/home", "back", "replace")
+        }
     }
 
     await l.dismiss();

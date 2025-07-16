@@ -62,7 +62,6 @@ async function loadData() {
 }
 
 async function onEdit(){
-
     const hasPermission = await app.utils.hasPermission("edit_closed_receipt","edit_closed_receipt_required_password")
     if(!hasPermission)  return;
 

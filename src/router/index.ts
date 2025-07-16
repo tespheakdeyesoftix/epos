@@ -60,7 +60,12 @@ router.beforeEach(async (to, from, next) => {
   } 
   else if(['/sale-coupon','/start-working-day',"/start-shift","/top-up","/redeem"].includes(to.path) && !station_name && to.path!="/enter-station-name"){
     next("/enter-station-name?return_url=" + to.path);
-  }else if(to.path == "/enter-station-name" && station_name){
+
+  }else if(['/sale-coupon',"/top-up","/redeem"].includes(to.path) && !app.setting?.cashier_shift?.name){
+    // next("/start-shift?return_url=" + to.path);
+      next("/message/No Shift Opened?&return_url=" + to.path)
+  }
+  else if(to.path == "/enter-station-name" && station_name){
        next(to.query.return_url?.toString() || "/home");
      
   }

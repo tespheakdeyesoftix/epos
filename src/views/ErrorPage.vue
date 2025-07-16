@@ -4,16 +4,14 @@
         <ion-content class="ion-padding" :fullscreen="true">
       <div class="error-container">
         <ion-icon :icon="error.icon || warningOutline" class="error-icon"></ion-icon>
-
         <h2 class="error-title">{{  error.page_title }}</h2>
         <p class="error-message">
           {{ error.message }}
         </p>
-
         <div class="button-group">
           <ion-button v-for="(d,index) in error.actions" :key="index" :color="d.color"  @click="openRoute(d.router_link)">
-                    {{ d.title }}
-                </ion-button>
+            {{ d.title }}
+        </ion-button>
         </div>
       </div>
     </ion-content>
@@ -22,11 +20,16 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { alertCircleOutline, warningOutline, calendarOutline,cartOutline } from 'ionicons/icons';
+import {  warningOutline, calendarOutline,cartOutline } from 'ionicons/icons';
 
 const t = window.t;
 function openRoute(url){
-    app.ionRouter.navigate(url,"back","replace")
+    if(app.route.query.return_url){
+app.ionRouter.navigate(url + "?return_url=" +  app.route.query.return_url ,"back","replace")
+    }else {
+        app.ionRouter.navigate(url,"back","replace")
+    }
+    
 }
 // error code here is static set
 

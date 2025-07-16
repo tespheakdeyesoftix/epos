@@ -149,9 +149,9 @@ async function onPrint(return_type="base64",lang="en"){
   if(return_type=="pdf"){
     app.printing.downloadPdf( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
   }else if(return_type=="html"){
-    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:cashierShiftPrinter.value})
+    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:cashierShiftPrinter.value,show_loading:true})
   }else {
-     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:cashierShiftPrinter.value, lang:lang})
+     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:cashierShiftPrinter.value, lang:lang,show_loading:true})
   }
 }
 

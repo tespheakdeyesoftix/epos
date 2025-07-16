@@ -1,7 +1,6 @@
 <template>
-   
     <template v-if="data">
-        <ion-card class="border-round-lg p-2" :color="activeIndex == index?'tertiary':''">
+        <ion-card class="border-round-lg p-2" :color="activeIndex == index ? 'tertiary' : ''">
             <div class="card-sale-product ">
                 <div>
                     <div class="flex gap-2">
@@ -61,7 +60,7 @@
                     data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
 
                 <ion-button @click.stop="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
-                <ion-button :disabled="data.name || data.append_quantity == 0" 
+                <ion-button :disabled="data.name || data.append_quantity == 0"
                     @click.stop="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
                 <ion-button @click.stop="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
                 <ion-button color="danger" @click.stop="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
@@ -73,8 +72,8 @@
                     <ion-content>
                         <ion-list>
                             <!-- Free -->
-                            <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 0" @click="onFreeProduct(data)"
-                                button>
+                            <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 0"
+                                @click="onFreeProduct(data)" button>
                                 <ion-label> {{ t("Free") }}</ion-label>
                             </ion-item>
 
