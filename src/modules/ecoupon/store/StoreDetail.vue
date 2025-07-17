@@ -3,7 +3,10 @@
         <ToolBar>{{ t("Store Detail") }} - {{ data?.name || 0}}</ToolBar>
         <ion-content>  
             <!-- {{ data }} -->
-             
+              <!-- ✅ Refresher MUST be inside ion-content -->
+      <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
 
             <div class="profile-header">
         <div
@@ -70,6 +73,11 @@ async function loadData() {
   if (res.data) data.value = res.data
 
   await l.dismiss()
+}
+
+async function onRefreshData(event) {
+  await loadData()
+  event.target.complete() // Finish the refresh animation
 }
 
 onMounted(async () => {
