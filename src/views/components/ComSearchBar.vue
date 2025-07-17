@@ -1,6 +1,7 @@
 <template>
   <div class="flex align-items-center px-2 w-full search__bar" style="background:var(--ion-color-primary);">
     <ion-searchbar
+      ref="txtSearchRef"
       class="flex-grow border-round-2xl"
       :placeholder="t('Search')"
       @click="expandModal"
@@ -16,9 +17,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { scan } from "ionicons/icons";
- 
+ const txtSearchRef = ref(null)
 const props = defineProps({
   showBarcodeScanner: Boolean,
 });
@@ -29,6 +30,7 @@ const keyword = ref(''); // 🔁 Removed <string> type annotation
 
 function onSearch() {
   emit("onSearch", keyword.value);
+   txtSearchRef.value?.$el?.setFocus()
 }
 
 async function onScanBarcode() {
@@ -37,6 +39,25 @@ async function onScanBarcode() {
   if (result) {
     keyword.value = result;
     emit("onSearch", keyword.value);
+
+      txtSearchRef.value?.$el?.setFocus()
   }
 }
+function onSetFocus(){
+ 
+   setTimeout(() => {
+     
+   txtSearchRef.value?.$el?.setFocus()
+  }, 300);
+}
+
+defineExpose({
+  onSetFocus
+})
+onMounted(()=>{
+  
+
+
+    onSetFocus()
+})
 </script>

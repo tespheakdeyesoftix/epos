@@ -6,7 +6,7 @@
     </ToolBar>
 
     <!-- {{ data }} -->
-        <ion-content>
+         <ion-content>
       <div class="fix-container">
         <ion-card v-if="data">
             <ion-card-header>
@@ -51,13 +51,14 @@
         </ion-card-content>
       </ion-card>
       </div>
-    </ion-content>
+    
+    </ion-content>  
    
   </ion-page>
 </template>
 
 <script setup>
-import { IonLabel } from '@ionic/vue';
+
 import { ref, onMounted } from 'vue'
 const t = window.t
 import dayjs from 'dayjs'

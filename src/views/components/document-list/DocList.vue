@@ -5,7 +5,7 @@
 
     <slot name="searchBar">
         <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch"
-            :showBarcodeScanner="options.showBarcodeScanner" />
+            :showBarcodeScanner="options.showBarcodeScanner"  ref="txtSearchRef"/>
     </slot>
 
     <Loading v-if="loading" />
@@ -153,7 +153,7 @@ const props = defineProps({
 const emptyRecordMessage = t("empty_record_message", {doctype: props.docType})
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
-    onSort, options,onFilter,totalRecord,meta
+    onSort, options,onFilter,totalRecord,meta,txtSearchRef
 } = useDocList(props)
 
 const selectedRow = defineModel("selectedRow")

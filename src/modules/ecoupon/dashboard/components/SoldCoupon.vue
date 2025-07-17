@@ -8,6 +8,38 @@
             @onRowDblClick="onRowDblClick"
             ref="docListRef"
             >
+             <template #price="{ item, index }">
+                  <template v-if="item.price>0">
+                      <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.price" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.coupon_value"/>
+                  </template>
+                  <span v-else>-</span>
+
+                   
+                </template>
+                <template #top_up_amount="{ item, index }">
+                  <template  v-if="item.top_up_amount>0">
+                    <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.top_up_amount" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.top_up_coupon_value"/>
+                  </template>
+                  <span v-else>-</span>
+                   
+                </template>
+                <!-- redeem -->
+                <template #use_amount="{ item, index }">
+                  <template  v-if="item.use_amount!=0">
+                    <ComCurrency v-tooltip.left="`${t('Actual Amount')}`" :value="item.use_amount" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.use_coupon_value"/>
+                  </template>
+                  <span v-else>-</span>
+                </template>
+                
+                <!-- Redeem -->
+                <template #redeem_amount="{ item, index }">
+                  <template  v-if="item.redeem_amount!=0">
+                    <ComCurrency v-tooltip.left="`${t('Price')}`" :value="Math.abs(item.redeem_amount)" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.redeem_coupon_value)"/>
+                  </template>
+                  <span v-else>-</span>
+                </template>
+
+
                 <template #coupon_status="{ item, index }">
                     <ComStatus :status="item.coupon_status"/>
                 </template>
@@ -30,8 +62,7 @@
         </ion-content>
         <ComFooter>
              <ion-button :disabled="!selectedRow" :routerLink="'/coupon-detail/' + selectedRow?.name">{{ t("View Detail") }}</ion-button>
-            <ion-button :disabled="!selectedRow" style="width: 5rem">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" :disabled="!selectedRow" style="width: 5rem">{{ t("Delete") }}</ion-button>
+           
         </ComFooter>
     </ion-page>
 </template>
@@ -54,14 +85,17 @@ const options = {
         {fieldname:"sale",header:"Sale #", url:"/sale-detail"},
         {fieldname:"sale_date",header:"Sale Date", fieldtype:"Date"},
         {fieldname:"customer_name",header:"Customer", url:"/customer-detail",id_field:"customer"},
+        
         {fieldname:"price",header:"Price",fieldtype:"Currency"},
-        {fieldname:"coupon_value",header:"Coupon Value",fieldtype:"Currency"},
+        {fieldname:"top_up_amount",header:"Top Up",fieldtype:"Currency"},
+        {fieldname:"redeem_amount",header:"Redeem",fieldtype:"Currency"},
+        {fieldname:"use_amount",header:"Used Amount",fieldtype:"Currency"},
         {fieldname:"created_by",header:"Created By",},
         {fieldname:"creation",header:"Date",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer"],
+    fields: ["name","customer","coupon_value","top_up_coupon_value","redeem_coupon_value","use_coupon_value"],
     orderBy:{
       field: "modified",
       order: "desc",

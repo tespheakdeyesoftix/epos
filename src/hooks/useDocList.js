@@ -16,6 +16,7 @@ export function useDocList(props) {
   const loadingMoreData = ref(false);
   const defaultFilters = structuredClone(props.options.filters || []);
   let options = ref(props.options);
+  const txtSearchRef  = ref(null)
   const totalRecord = ref(0)
   const orderBy = ref({
     field: "modified",
@@ -143,6 +144,8 @@ export function useDocList(props) {
       data.value = await getData();
       
       await l.dismiss();
+   
+      txtSearchRef.value.onSetFocus()
     }
   }
 
@@ -249,6 +252,7 @@ function getDefaultFilter(){
     orderBy,
     options,
     totalRecord,
+    txtSearchRef ,
     onSearch,
     getData,
     onLoadMore,

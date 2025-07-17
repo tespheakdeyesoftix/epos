@@ -39,7 +39,7 @@
     </ion-content>
 
     <ComFooter>
-      <ion-button :disabled="!selectedRow" @click="goToDetail" style="width: 5rem">
+      <ion-button :disabled="!selectedRow" @click="goToDetail">
         {{ t("View Detail") }}
       </ion-button>
     </ComFooter>
@@ -102,17 +102,12 @@ function scrollToTop() {
 }
 
 function onRowDblClick(data) {
-  app.ionRouter.navigate("/coupon-transaction-detail/" + data.name, "forward", "push", {
-    state: { data }
-  });
+    app.ionRouter.navigate("/coupon-transaction-detail/" + selectedRow.value.name, "forward", "push")
 }
 
 function goToDetail() {
-  app.ionRouter.navigate("/coupon-transaction-detail/" + selectedRow.value.name, "forward", "push", {
-    state: { data: JSON.parse(JSON.stringify(selectedRow.value)) }
-  });
+  app.ionRouter.navigate("/coupon-transaction-detail/" + selectedRow.value.name, "forward", "push")
 }
-
 onIonViewDidEnter(async () => {
   if ((window.refresh_page || 0) === 1) {
     const l = await app.showLoading()

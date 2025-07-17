@@ -8,6 +8,7 @@
              :contentRef="contentRef"
             
             >
+            
                 
                 <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
                     <ComSaleOrderCard v-for="(d,index) in item" :key="index"  :data="d"/>

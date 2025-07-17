@@ -333,7 +333,8 @@ th.p-datatable-header-cell.p-datatable-sortable-column.text-center .p-datatable-
 	justify-content: center !important;
 } 
 .p-datatable-hoverable .p-datatable-selectable-row td , .p-datatable-thead th{
-	padding: 10px 5px !important;
+	padding: 2px 5px !important;
+	
 }
 .p-datatable-hoverable .p-datatable-selectable-row td .button-native{
 	padding: 1px;

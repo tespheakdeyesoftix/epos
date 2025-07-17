@@ -97,6 +97,7 @@ const t = window.t
 const paymentTypes = app.setting.pos_config.payment_type
 
 const doc = ref({
+  business_branch: app.setting.property?.property_name,
   docstatus:0,
   working_day: app.setting.working_day.name,
   cashier_shift: app.setting.cashier_shift.name,

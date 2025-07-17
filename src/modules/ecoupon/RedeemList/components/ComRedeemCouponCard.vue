@@ -10,7 +10,7 @@
                     </ion-chip> 
                     <ion-chip class="m-0 w-full" color="danger">
                        <strong> {{ t("Used") }} <br>
-                         {{ data?.redeem_coupon_info.input_coupon_amount }}</strong>
+                         {{ data?.redeem_coupon_info.used_coupon_value }}</strong>
                     </ion-chip> 
                       <ion-chip class="m-0 w-full" color="primary">
                        <strong> {{ t("Top Up") }} <br>
