@@ -11,16 +11,11 @@
                  
                 <ComStatus :status="getStatusText(item.docstatus)"/>
             </template>
-  </DocList>
-   
-                 
-               
-            
+  </DocList>        
 </template>
 
 <script setup>
 import { ref } from 'vue'
-
 
 function getStatusText(id){
     return app.utils.getDocStatusText(id);
@@ -30,8 +25,6 @@ const props = defineProps({
 })
 
 const selectedRow = ref()
-
- 
 const options = {
   columns: [
     { fieldname: "name", header: "Sale #", url: "/store-payment-detail", id_field: "name" },

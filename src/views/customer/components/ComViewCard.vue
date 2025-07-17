@@ -14,10 +14,8 @@ import { ref, onMounted,defineComponent } from 'vue'
 const t = window.t
 const data = ref(null)
 
-
 const card = defineComponent({
   props: {
-     
     label: String,
     color: String,
     value:Number
@@ -39,7 +37,6 @@ const card = defineComponent({
 })
 
 async function getData() {
-  
     const response = await app.getApi(
       'epos_restaurant_2023.selling.doctype.customer.customer.get_customer_order_summary',
       {
@@ -54,7 +51,6 @@ async function getData() {
       data.value = {}
     }
   }  
-
 
 onMounted(() => {
   getData()

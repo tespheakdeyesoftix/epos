@@ -4,21 +4,19 @@
       <Card color="primary" label="Opening Balance" :value="data?.opening_balance || 0" />
       <Card color="warning" label="Debit" :value="data?.debit || 0" />
       <Card color="success" label="Credit" :value="data?.credit || 0" />
-      <Card color="success" label="Balance" :value="data?.balance || 0" />
+      <Card color="tertiary" label="Balance" :value="data?.balance || 0" />
     </stack>
   </div>
-  
 </template>
 
 <script setup lang="tsx">
 import { ref, onMounted, defineComponent } from 'vue'
 
-// Global translate function
 const t = window.t
 
 // Reactive data object
-const data = ref<Record<string, any>>({})
-
+// const data = ref<Record<string, any>>({})
+const data = ref(null)
 // Card component definition
 const Card = defineComponent({
   name: 'Card',
@@ -43,7 +41,6 @@ const Card = defineComponent({
   }
 })
 
-// Function to fetch data from API without try/catch or .catch()
 function getData() {
   // const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
 
@@ -58,12 +55,10 @@ function getData() {
       console.warn('No data returned:', response)
       data.value = {}
     }
-  })
-   
+  })  
 }
 
 onMounted(() => {
-  
   getData()
 })
 </script>
