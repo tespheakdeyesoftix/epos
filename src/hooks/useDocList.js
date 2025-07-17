@@ -207,8 +207,8 @@ export function useDocList(props) {
 
 function getDefaultFilter(){
   const f  = []
-  const hasDefaultFilters = options.value.filterOptions.filter(x=>x.default);
-  hasDefaultFilters.forEach(x=>{
+  const hasDefaultFilters = options.value.filterOptions?.filter(x=>x.default);
+  hasDefaultFilters?.forEach(x=>{
     if(x.fieldtype=="Date"){
       if (app.utils.getTimespanOptions().includes(x.default)){
         const dates = app.utils.getTimespanRange(x.default);
