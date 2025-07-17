@@ -74,12 +74,7 @@
             <ion-text color="medium">{{ t("Address") }}</ion-text>
           </div>
         </div>
-        <div class="flex-item">
-          <div class="field-value">{{ data?.note || '' }}</div>
-          <div class="mt-1">
-            <ion-text color="medium">{{ t("Note") }}</ion-text>
-          </div>
-        </div>
+        
         <div class="flex-item">
           <div class="field-value">
              <span v-tooltip="dayjs(data?.modified).format('ddd, DD MM YYYY HH:mm A')">
@@ -95,6 +90,12 @@
           </div>
           <div class="mt-1">
             <ion-text color="medium">{{ t("Modified By") }}</ion-text>
+          </div>
+        </div>
+        <div class="flex-item">
+          <div class="field-value">{{ data?.note || '' }}</div>
+          <div class="mt-1">
+            <ion-text color="medium">{{ t("Note") }}</ion-text>
           </div>
         </div>
 
