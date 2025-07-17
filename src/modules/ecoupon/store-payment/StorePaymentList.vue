@@ -50,10 +50,10 @@ const options = {
         {fieldname:"vendor_name",header:"Vendor"},
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
-        {fieldname:"docstatus",header:"Status",},
         {fieldname:"receive_by",header:"Receive By",},
         {fieldname:"receive_by_phone_number",header:"Receive By Phone Number",},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
+        {fieldname:"docstatus",header:"Status",},
          
     ],
     showSearchBar:true,

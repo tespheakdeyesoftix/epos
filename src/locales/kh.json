@@ -156,6 +156,7 @@
     "Last modified:": "កែប្រែដោយ",
     "Modified By": "កែប្រែដោយ",
     "Modified": "កែប្រែចុងក្រោយ",
+    "Modified Date": "ថ្ងៃកែប្រែចុងក្រោយ",
     "Last Modified":"កែប្រែចុងក្រោយ",
     "Sale Detail:": "ព័ត៌មានលក់",
     "Sale Detail": "ព័ត៌មានលក់",
@@ -343,6 +344,7 @@
     "Note on Product": "កំណត់ចំណាំអំពីផលិតផល",
     "More": "ផ្សេងទៀត",
     "Company Name":"ឈ្មោះក្រុមហ៊ុន",
+    "Company":"ក្រុមហ៊ុន",
     "Jobs":"ការងារ",
     "Contact Infromation":"ព័ត៌មានទំនាក់ទំនង",
     "Address & Note":"អាសយដ្ឋាន & កំណត់ចំណាំ",
@@ -444,6 +446,16 @@
     "Store Payment List":"បញ្ជីទូទាត់តាមហាង",
     "Vendor":"អ្នកផ្គត់ផ្គង់",
     "Vendor Name":"ឈ្មោះអ្នកផ្គត់ផ្គង់",
+    "Vendor Group":"ក្រុមអ្នកលក់",
+    "Total Credit Amount":"ចំនួនទឹកប្រាក់ឥណទានសរុប",
+    "Contact Name":"ឈ្មោះទំនាក់ទំនង",
+    "Province":"ខេត្ត",
+    "Credit":"ឥណទាន",
+    "Debit":"Debit",
+    "Opening Balance": "សមតុល្យដើមគ្រា",
+    "Store Detail": "ព័ត៌មានលម្អិតអំពីហាង",
+    "Store #": "ហាង",
+    "Store Name": "ឈ្មោះហាង",
     "There's cashier shift still opened. Please close cashier shift first":"មានវេណលក់កំពុងតែបើក។ សូមបិទវេណលក់ជាមុនសិន មុននឹងបិទថ្ងៃលក់",
     "Close Cashier Shift Now":"បិទវេនលក់ឥឡូវនេះ",
     "Store Payment":"ទូទាត់តាមហាង",
@@ -454,8 +466,8 @@
     "Payment Method":"ទូទាត់តាមរយៈ",
     "Input Amount":"ចំនួនទឹកប្រាក់បញ្ចូល",
     "Store Payment Detail":"ព័ត៌មានលម្អិតអំពីការទូទាត់តាមហាង",
+    "Store Payment History":"ប្រវត្តិនៃការបង់ប្រាក់",
+    "Stores":"ហាង",
+    "Store List":"បញ្ជីហាង",
     "Add new Store Payment":"បញ្ចូលទូទាត់តាមហាងថ្មី"
-    
-     
-
   } 
