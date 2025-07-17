@@ -7,6 +7,7 @@
       <Card color="success" label="Balance" :value="data?.balance || 0" />
     </stack>
   </div>
+  
 </template>
 
 <script setup lang="tsx">
@@ -44,11 +45,12 @@ const Card = defineComponent({
 
 // Function to fetch data from API without try/catch or .catch()
 function getData() {
-  const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
+  // const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
 
   app.getApi('epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_vendor_credit_balance', {
     vendor: app.route.params.name,
-    date: workingDay
+    date: app.setting?.working_day?.name,
+    // date: workingDay
   }).then(response => {
     if (response?.data) {
       data.value = response.data
@@ -57,7 +59,7 @@ function getData() {
       data.value = {}
     }
   })
-  // No .catch() here — errors will be unhandled
+   
 }
 
 onMounted(() => {

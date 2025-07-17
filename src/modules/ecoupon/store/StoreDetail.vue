@@ -3,6 +3,7 @@
         <ToolBar>{{ t("Store Detail") }} - {{ data?.name || 0}}</ToolBar>
         <ion-content>  
             <!-- {{ data }} -->
+             
 
             <div class="profile-header">
         <div
@@ -12,24 +13,14 @@
 
         <!-- Avatar wrapper with overlay icon -->
         <div class="avatar-wrapper">
-          <ion-avatar class="custom-avatar" @click="onAvatarClick" style="cursor: pointer">
-            <img
-              v-if="data?.photo"
-              :src="data.photo"
-              alt="avatar"
-              style="width: 100%; height: 100%; object-fit: cover;"
-            />
-            <div class="avatar-placeholder" v-else>
-              {{ getAvatarLetter(data?.vendor_name) }}
-            </div>
-          </ion-avatar>
+           
+           <ion-avatar class="custom-avatar" style="cursor: pointer">
+                    <Img v-if="data?.image" :src="data?.image" />
+                    <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.vendor_name) }}
+                    </div>
+            </ion-avatar>
          
-          <!-- <ion-icon
-            v-if="data?.photo"
-            :icon="trash"
-            @click.stop="onClearPhoto"
-            class="trash-icon"
-          ></ion-icon> -->
+         
         </div>
       </div>
   

@@ -1,6 +1,6 @@
 <template>
   <ion-button color="primary" @click="triggerFileInput('brows')">{{ t("Upload Photo") }}</ion-button> 
-  <ion-button color="primary" @click="triggerFileInput('camera')" :disabled="true">{{ t("Take Photo") }}</ion-button> 
+  <!-- <ion-button color="primary" @click="triggerFileInput('camera')" :disabled="true">{{ t("Take Photo") }}</ion-button>  -->
 
   <input type="file" ref="fileInput" style="display: none" @change="onFileChange($event, 'brows')" />
   <input type="file" ref="fileInputCamera" style="display: none" accept="image/*" capture="environment" @change="onFileChange($event, 'camera')" />
