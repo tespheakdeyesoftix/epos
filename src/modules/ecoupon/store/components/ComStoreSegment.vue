@@ -15,19 +15,19 @@
         <div class="flex-item">
           <div class="field-value">{{ data?.name || '' }}</div>
           <div class="mt-1">
-            <ion-text color="medium">{{ t("Vender") }}</ion-text>
+            <ion-text color="medium">{{ t("Vendor") }}</ion-text>
           </div>
         </div>
         <div class="flex-item">
           <div class="field-value">{{ data?.vendor_name || '' }}</div>
           <div class="mt-1">
-            <ion-text color="medium">{{ t("Vender Name") }}</ion-text>
+            <ion-text color="medium">{{ t("Vendor Name") }}</ion-text>
           </div>
         </div>
         <div class="flex-item">
           <div class="field-value">{{ data?.vendor_group || '' }}</div>
           <div class="mt-1">
-            <ion-text color="medium">{{ t("Vender Group") }}</ion-text>
+            <ion-text color="medium">{{ t("Vendor Group") }}</ion-text>
           </div>
         </div>
         <div class="flex-item">
