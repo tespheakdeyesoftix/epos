@@ -92,7 +92,18 @@
         </stack>
                  </template>
 </Column>
-  <Column field="quantity" headerClass="text-center" bodyClass="text-center" :header="t('Quantity')"></Column>
+  <Column
+  field="quantity"
+  headerClass="text-center"
+  bodyClass="text-center"
+  :header="t('Quantity')"
+>
+  <template #body="slotProps">
+        
+        <ComCurrency :value="slotProps.data.price"/>
+      </template>
+</Column>
+
   <Column field="unit" headerClass="text-center" bodyClass="text-center" :header="t('Unit')"></Column>
   <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Price')">
       <template #body="slotProps">

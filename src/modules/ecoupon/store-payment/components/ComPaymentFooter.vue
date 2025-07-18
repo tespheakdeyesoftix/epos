@@ -2,10 +2,10 @@
   <ion-footer>
     <ion-toolbar>
       <div style="display: flex; justify-content: center; gap: 10px;"> 
-        <ion-button @click="onClose" color="danger" style="width: 5rem"> {{ t('Close') }}</ion-button>
+        <ion-button @click="onClose" color="danger"> {{ t('Close') }}</ion-button>
         <!-- <ComQuickPayButton/> -->
-        <ion-button color="success" @click="onEdit" style="width: 5rem"> {{ t('Edit') }}</ion-button>
-        <ion-button color="danger" @click="onDelete" style="width: 5rem">{{ t("Delete") }}</ion-button>  
+        <ion-button color="success" @click="onEdit"> {{ t('Edit') }}</ion-button>
+        <ion-button color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>  
         
       </div>
     </ion-toolbar>

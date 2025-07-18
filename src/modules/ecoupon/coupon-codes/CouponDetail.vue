@@ -27,8 +27,8 @@
                      </div>
         </ion-content>
         <ComFooter>
-            <ion-button style="width: 5rem">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" @click="onDelete" style="width: 5rem">{{ t("Delete") }}</ion-button>
+            <ion-button >{{ t("Edit") }}</ion-button>
+            <ion-button color="danger" @click="onDelete" >{{ t("Delete") }}</ion-button>
         </ComFooter>
     </ion-page>
 </template>

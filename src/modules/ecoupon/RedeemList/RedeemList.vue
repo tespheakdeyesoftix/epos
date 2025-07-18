@@ -10,6 +10,14 @@
                 <!-- <template v-if="plateform == 'mobile'" v-slot:default="{ item }">
                     <ComTopUpCard v-for="(d,index) in item" :key="index"  :data="d"/>
                 </template> -->
+
+        <template #grand_total="{ item }">
+          <ComCurrency :value="Math.abs(item.grand_total)" />
+        </template>
+        <template #total_quantity="{ item }">
+          <ComCurrency :value="Math.abs(item.total_quantity)" />
+        </template>
+
             </DocList>
         </ion-content>
     </ion-page>
