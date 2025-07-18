@@ -1,9 +1,9 @@
 <template>
     <ComFooter>
-        <ion-button @click="onBack" shape="round" style="width: 5rem">{{ t("Home") }}</ion-button>
+        <ion-button @click="onBack" shape="round" >{{ t("Home") }}</ion-button>
         <ComQuickPayButton />
       
-          <ion-button :disabled="saleDoc?.sale_products?.length==0" shape="round" color="success" @click="onPaymentClick" style="width: 5rem"> {{ t('Payment') }}</ion-button>
+          <ion-button :disabled="saleDoc?.sale_products?.length==0" shape="round" color="success" @click="onPaymentClick"> {{ t('Payment') }}</ion-button>
     </ComFooter>
 
 </template>

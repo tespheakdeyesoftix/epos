@@ -1,6 +1,6 @@
 <template>
    
-     <ion-chip  v-if="status" :class="['small-chip',csClass]"  :color="getSeverity()" size="small">{{ t(status) }}</ion-chip>
+     <ion-chip  v-if="status" :class="['small-chip','ion-no-margin' ,csClass]"  :color="getSeverity()" size="small">{{ t(status) }}</ion-chip>
      
 </template>
 <script setup>

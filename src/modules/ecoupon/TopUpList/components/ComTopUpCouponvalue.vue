@@ -81,7 +81,7 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
         topUpSaleProduct.value.sub_total = price
         topUpSaleProduct.value.price = price
         topUpSaleProduct.value.total_amount =  price
-        topUpSaleProduct.value.coupons =  [{name:topUpCouponInfo.value.coupon_code, coupon:topUpCouponInfo.value.coupon_number,creation:dayjs()}]
+        topUpSaleProduct.value.coupons =  [{name:topUpCouponInfo.value.coupon_code, coupon:topUpCouponInfo.value.coupon_number,creation:dayjs(),balance_coupon_value:topUpCouponInfo.value.coupon_balance,balance_amount:topUpCouponInfo.value.actual_amount_balance}]
         topUpSaleProduct.value.allow_discount =  p.allow_discount  
         topUpSaleProduct.value.coupon_markup_type  =  p.coupon_markup_type
         topUpSaleProduct.value.coupon_markup_value  =  p.coupon_markup_value
