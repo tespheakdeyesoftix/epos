@@ -22,9 +22,10 @@
                 <ion-icon :icon="addOutline"></ion-icon>
             </ion-fab-button>
         </ion-fab>
-        <ComFooter>
-            <ion-button :disabled="!selectedRow" @click="onEdit" style="width: 5rem">{{ t("Edit") }}</ion-button>
-            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete" style="width: 5rem">{{ t("Delete") }}</ion-button>     
+        <ComFooter class="ion-hide-md-down">
+            <ion-button :disabled="!selectedRow" @click="onEdit" >{{ t("Edit") }}</ion-button>
+            <ion-button :disabled="!selectedRow" @click="onPrint" >{{ t("Print") }}</ion-button>
+            <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>     
         </ComFooter>
     </ion-page>
 </template>
@@ -52,6 +53,7 @@ const options = {
         {fieldname:"payment_types",header:"Payment Type",},
         {fieldname:"receive_by",header:"Receive By",},
         {fieldname:"receive_by_phone_number",header:"Receive By Phone Number",},
+        {fieldname:"modified_by",header:"By"},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
         {fieldname:"docstatus",header:"Status",},
          
@@ -77,6 +79,12 @@ const options = {
 }
 
 
+async function onPrint(){
+    const printer_name = await app.storageService.getItem("default_printer") || ""
+   app.printing.onPrint({doctype:"Store Payment",docname:selectedRow.value.name, template:"Store Payment Receipt",printer_name:printer_name,show_loading:true})
+   
+}
+
 function getStatusText(id){
     return app.utils.getDocStatusText(id);
 }
@@ -88,7 +96,13 @@ function onRowDblClick(data){
 
 async function onAddStorePayment(){
    
-      const modal = await app.openModal({
+    
+    if( !app.setting.cashier_shift?.name){
+        app.ionRouter.navigate("/message/No Shift Opened?&return_url=store-payment-list","forward","push")
+        return;
+    }
+    
+    const modal = await app.openModal({
 
     component: ComAddPayment,
     componentProps:{

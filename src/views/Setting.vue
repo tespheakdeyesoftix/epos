@@ -7,8 +7,8 @@
              <ion-text><h3>{{ t("Print Setting") }}</h3></ion-text>
              <ion-list>
     <ion-item>
-        {{ cashierShiftPrinter }}
-      <ion-select @ionChange="onChangeCashierShiftPrinter" v-model="cashierShiftPrinter" :label="t('Cashier Shift Default Printer')" :placeholder="t('Default Printer')">
+       
+      <ion-select @ionChange="onChangeDefaultPrinter" v-model="default_printer" :label="t('Default Printer')" :placeholder="t('Default Printer')">
         <ion-select-option v-for="p in printers" :value="p.type">{{ p.type }}</ion-select-option>
        
       </ion-select>
@@ -25,16 +25,15 @@ import { onMounted, ref } from 'vue';
 
 const t = window.t;
 const printers = ref()
-const cashierShiftPrinter = ref("")
-async function onChangeCashierShiftPrinter(){
-    await app.storageService.setItem("cashierShiftPrinter",cashierShiftPrinter.value)
+const default_printer = ref("")
+async function onChangeDefaultPrinter(){
+    await app.storageService.setItem("default_printer",default_printer.value)
 }
 onMounted(async ()=>{
     const p = await app.printing.getPrinterNames()
     printers.value = p
-    const shiftPrinter = await app.storageService.getItem("cashierShiftPrinter")
-    cashierShiftPrinter.value = shiftPrinter || "";
-    
+    const printer = await app.storageService.getItem("default_printer")
+    default_printer.value = printer || "";
 
 })
 

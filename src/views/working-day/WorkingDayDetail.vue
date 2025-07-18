@@ -30,7 +30,7 @@
     </ion-content>
     <ComFooter>
 
-       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift" style="width: 5rem">{{ t("Close Working Day") }}</ion-button>
+       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift" >{{ t("Close Working Day") }}</ion-button>
        <ComPopOver>
 
        <ion-button>
@@ -158,7 +158,7 @@ async function onPrint(return_type="base64",lang="en"){
 
 onMounted(async ()=>{
 await getData();
-  const printer = app.storageService.getItem("cashierShiftPrinter")
+  const printer = app.storageService.getItem("default_printer")
   printer_name.value = printer || ""
   loading.value = false;
 })
