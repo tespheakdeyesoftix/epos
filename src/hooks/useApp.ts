@@ -7,7 +7,7 @@ const isWorkingDayOpened = ref(false)
 const isCashierShiftOpened = ref(false)
 const exchange_rate = ref(1)
 const change_exchange_rate =  ref(1)
-
+const appMenus = ref([])
 
 export function useApp() {
 
@@ -89,6 +89,7 @@ export function useApp() {
    isCashierShiftOpened ,
    change_exchange_rate,
    exchange_rate,
+   appMenus,
     getMeta,
     getDoctypeDefaultFields
 };

@@ -48,11 +48,6 @@ import HomeButton from '@/views/components/public/HomeButton.vue';
 
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
-const MyDiv = defineComponent({
-  setup() {
-    return () => <div>Hello from JSX</div>
-  }
-})
 
  
  
@@ -71,9 +66,9 @@ function getDynamicComponent(component){
 }
 
 onMounted(async ()=>{
- await getAppMenu()
+ getAppMenu()
  if(app.route.params.parent_menu){
-  await getCurrentMenu(app.route.params.parent_menu)
+   getCurrentMenu(app.route.params.parent_menu)
  }
 
 

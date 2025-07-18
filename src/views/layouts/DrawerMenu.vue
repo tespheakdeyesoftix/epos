@@ -90,28 +90,10 @@ const onLogout = async () => {
   ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
 
-onMounted(async ()=>{
-  
-  setTimeout(async ()=>{
-
-  
-  const res = await app.getDocList("Mobile App Module",{
-    fields:["name","parent_mobile_app_module","is_group","title","route_url","icon","color"],
-    limit:5000,
-    filters:[["show_in_drawer_menu","=","1"],["is_active","=",1]],
-     orderBy: {
-            field: 'sort_order',
-            order: 'asc',
-        }
-  })
-
+onMounted( ()=>{
+   console.log(currentUser.value.app_menus)
+  drawerMenus.value = currentUser.value.app_menus.filter(x=>x.show_in_drawer_menu == 1)
  
-
- if (res.data){
-  drawerMenus.value =res.data
- 
- }
- },3000)
 
 })
 

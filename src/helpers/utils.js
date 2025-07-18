@@ -525,6 +525,8 @@ export async function showWarningMessage(title = "Confirm", message = "Are you s
 
 export async function getSetting() {
 
+  const loading = await app.showLoading("Loading setting...")
+
   const station_name = await app.storageService.getItem("station_name");
 
   const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings", {
@@ -551,6 +553,9 @@ export async function getSetting() {
       isCashierShiftOpened.value = res.data.cashier_shift?true:false  ;
       getPrintPrintFormat()
     }
+
+    
+    await loading.dismiss()
     await app.storageService.setItem("show_login", app.setting.allow_login_multiple_site == 1 ? 0 : 1)
 
     app.setting.station_name = app.storageService.getItem("station_name")

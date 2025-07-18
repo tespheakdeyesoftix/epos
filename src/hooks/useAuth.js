@@ -9,7 +9,7 @@ const isAuthenticated = ref(false);
 const currentUser = ref();
 
 export function useAuth() {
-  const appCtrl = useApp();
+  
 
   async function login(data) {
     const propertyInfoRes = await getPropertyInformation(data.property_code);
@@ -42,8 +42,11 @@ export function useAuth() {
         throw new Error(response.data);
       }
 
-      currentUser.value = response.data.message;
-      window.storageService.setItem("current_user", JSON.stringify(currentUser.value));
+      currentUser.value = JSON.parse(JSON.stringify(response.data.message));
+
+      delete response.data.message["app_menus"];
+      
+      window.storageService.setItem("current_user", JSON.stringify(response.data.message));
       app.currentUser = currentUser.value;
       setFrappeAppUrl(data.api_url);
       isAuthenticated.value = true;
