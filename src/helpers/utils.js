@@ -544,7 +544,7 @@ export async function getSetting() {
     if (res.data.pos_profile) {
       if (res.data.pos_profile.pos_config) {
         // we not wait here becuse we dont want to delay loading time
-        getPOSConfig(res.data.pos_profile.pos_config);
+        await getPOSConfig(res.data.pos_profile.pos_config);
       }
       // set working day open state
       isWorkingDayOpened.value = res.data.working_day?true:false ;

@@ -163,6 +163,7 @@ async function validateCouponCode(c) {
         app.showWarning("This coupon code is already selected")
         return false
     }
+    
     // if exist in sale product
     if (saleDoc.value.sale_products.filter(r=>!r.is_editing).flatMap(sp => sp.coupons).filter(x => x.coupon.toLowerCase() == c.toLowerCase()).length > 0) {
         app.showWarning("This coupon code is already selected")

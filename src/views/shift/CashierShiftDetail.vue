@@ -5,7 +5,7 @@
         </ToolBar>
     <ion-content>
  
-      <div class="fixed-container ion-padding mt-4 mb-2" v-if="!cashierShiftPrinter && !loading"> 
+      <div class="fixed-container ion-padding mt-4 mb-2" v-if="!default_printer && !loading"> 
 <Message severity="warn">{{ t("There's no default printer for shift report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
       </div>
         
@@ -105,7 +105,7 @@ const tabs = ref([
 ])
 const loading = ref(true)
 
-const cashierShiftPrinter = ref()
+const default_printer = ref()
 
 const t = window.t;
 const data = ref()
@@ -149,17 +149,17 @@ async function onPrint(return_type="base64",lang="en"){
   if(return_type=="pdf"){
     app.printing.downloadPdf( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
   }else if(return_type=="html"){
-    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:cashierShiftPrinter.value,show_loading:true})
+    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:default_printer.value,show_loading:true})
   }else {
-     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:cashierShiftPrinter.value, lang:lang,show_loading:true})
+     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:default_printer.value, lang:lang,show_loading:true})
   }
 }
 
 
 onMounted(async ()=>{
 await getData();
-  const printer = app.storageService.getItem("cashierShiftPrinter")
-  cashierShiftPrinter.value = printer || ""
+  const printer = app.storageService.getItem("default_printer")
+  default_printer.value = printer || ""
 
 
   loading.value = false;

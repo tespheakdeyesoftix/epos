@@ -1,7 +1,13 @@
 <template>
   <ion-page>
     <ToolBar>
-      {{ t("Store Payment Detail") }} - {{ data?.name }}
+      <span class="ion-hide-sm-up">
+          {{ data?.name }}
+      </span>
+      <span class="ion-hide-sm-down">
+          {{ t("Store Payment Detail") }} - {{ data?.name }}
+      </span>
+
     </ToolBar>
  
     <ion-content>
