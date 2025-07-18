@@ -2,7 +2,7 @@
   <ion-footer>
     <ion-toolbar>
       <div style="display: flex; justify-content: center; gap: 10px;"> 
-        <ion-button @click="onClose" color="danger" style="width: 5rem"> {{ t('Close') }}</ion-button>
+        <ion-button @click="onClose" color="danger"> {{ t('Close') }}</ion-button>
     
        
         <!-- <ComUploadPhoto ref="uploadRef"  

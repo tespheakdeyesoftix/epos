@@ -30,7 +30,7 @@
     </ion-content>
     <ComFooter>
 
-       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift" style="width: 5rem">{{ t("Close Working Day") }}</ion-button>
+       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift">{{ t("Close Working Day") }}</ion-button>
        <ComPopOver>
 
        <ion-button>
