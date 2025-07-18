@@ -46,21 +46,25 @@
               </stack>
 
  
-        <div v-for="(payment, index) in data.payments" :key="index" style="margin-bottom: 10px;">
-          <stack row equal>
-            <ion-label>
-              <strong>{{ t("Payment Method") }}</strong>: {{ payment.payment_type }}
-            </ion-label>
-            <ion-label>
-              <strong>{{ t("Input Amount") }}</strong>:
-              <ComCurrency
-                :value="payment.input_amount"
-                :currency="getCurrency(payment.payment_type)"
-              />
-            </ion-label>
-          </stack>
-        </div>
+        
+<ion-row class="payment-header">
+  <ion-col size="6" class="p-0">{{ t("Payment Method") }}</ion-col>
+  <ion-col size="6" class="p-0">{{ t("Input Amount") }}</ion-col>
+</ion-row>
  
+<ion-row
+  v-for="(payment, index) in data.payments"
+  :key="index"
+  class="payment-row"
+>
+  <ion-col size="6" class="p-0">{{ payment.payment_type }}</ion-col>
+  <ion-col size="6" class="p-1">
+    <ComCurrency
+      :value="payment.input_amount"
+      :currency="getCurrency(payment.payment_type)"
+    />
+  </ion-col>
+</ion-row>
 
 
               <stack row equal>
@@ -186,3 +190,17 @@ onMounted(async () => {
   await loadData()
 })
 </script>
+
+ 
+<style scoped>
+.payment-header {
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-row {
+  padding: 0;
+  margin: 0;
+}
+</style>
