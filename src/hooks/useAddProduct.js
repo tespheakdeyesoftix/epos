@@ -148,7 +148,7 @@ async function onProductCodeChange(){
 
 
 async function onDelete(){
-  const isConfirm = await app.onConfirm()
+  const isConfirm = await app.utils.onConfirmDanger()
   
   if(!isConfirm) return ;
 

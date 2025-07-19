@@ -114,7 +114,7 @@ const topUpCouponAmount = computed(()=>{
 const t = window.t;
 
 async function onDelete(){
-    const confirm = await app.onConfirm("Confirm","Are your sure you want to delete this redeem card?")
+    const confirm = await app.utils.onConfirmDanger("Confirm","Are your sure you want to delete this redeem card?")
     if(confirm){
         saleDoc.value.sale_products.splice(props.index,1);
     }
