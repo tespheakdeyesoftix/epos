@@ -24,7 +24,7 @@
         </ion-fab>
         <ComFooter class="ion-hide-md-down">
             <ion-button :disabled="!selectedRow" @click="onEdit" >{{ t("Edit") }}</ion-button>
-            <ion-button :disabled="!selectedRow" @click="onPrint" >{{ t("Print") }}</ion-button>
+            <ion-button :disabled="!selectedRow" @click="onPrint" >{{ t("Print Bill") }}</ion-button>
             <ion-button color="danger" :disabled="!selectedRow" @click="onDelete">{{ t("Delete") }}</ion-button>     
         </ComFooter>
     </ion-page>

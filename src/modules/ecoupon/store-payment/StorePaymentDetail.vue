@@ -98,7 +98,7 @@
           <ion-button @click="onClose" color="danger">{{ t('Close') }}</ion-button>
           <ion-button color="success" @click="onEdit">{{ t('Edit') }}</ion-button>
           <ion-button color="danger" @click="onDelete">{{ t('Delete') }}</ion-button>
-          <ion-button @click="onPrint">{{ t('Print') }}</ion-button>
+          <ion-button @click="onPrint">{{ t('Print Bill') }}</ion-button>
         </div>
       </ion-toolbar>
     </ion-footer>
