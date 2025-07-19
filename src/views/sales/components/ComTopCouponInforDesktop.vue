@@ -1,5 +1,5 @@
 <template>
- {{ saleProducts }}
+  {{ saleProducts }}
    <DataTable stripedRows  :value="saleProducts" tableStyle="min-width: 50rem">
   <!-- Index Column -->
   <Column header="#" headerStyle="width:3rem" headerClass="text-center" bodyClass="text-center">
@@ -12,44 +12,42 @@
    
        
 </Column>
-  <Column
-  field="quantity"
-  headerClass="text-center"
-  bodyClass="text-center"
-  :header="t('Quantity')"
->
-  <template #body="slotProps">
-        
-        {{ slotProps.data.quantity }}
-      </template>
+  <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Amount')">
+  <template #body="slotProps">    
+    {{ slotProps.data.coupons?.[0]?.balance_amount }}
+  </template>
 </Column>
 
-  <Column field="unit" headerClass="text-center" bodyClass="text-center" :header="t('Unit')"></Column>
-  <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Price')">
-      <template #body="slotProps">
-        
+<Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Value')">
+  <template #body="slotProps">    
+    {{ slotProps.data.coupons?.[0]?.balance_coupon_value}}
+  </template>
+</Column>
+
+ 
+  <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Amount')">
+      <template #body="slotProps">  
         <ComCurrency :value="slotProps.data.price"/>
       </template>
 </Column>
-  <Column field="discount" headerClass="text-center" bodyClass="text-center" :header="t('Discount')">
-      <template #body="slotProps">
-    
-        <ion-chip v-if="slotProps.data.discount_type == 'Percent' && slotProps.data.discount>0">
-            {{ slotProps.data.discount }}%
-        </ion-chip>
-     
-    
-       <ComCurrency :value="slotProps.data.discount_amount || 0"/>
-</template>
-
-    </Column>
+  <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Value')">
+      <template #body="slotProps">  
+        <ComCurrency :value="slotProps.data.price"/>
+      </template>
+</Column>
    <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Total Amount')">
       <template #body="slotProps">
         <ComCurrency :value="Math.abs(slotProps.data.amount)" />
       </template>
 </Column>
+   <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Total Value')">
+      <template #body="slotProps">
+        <ComCurrency :value="Math.abs(slotProps.data.amount)" />
+      </template>
+</Column>
+
 </DataTable>
-</template>
+</template> 
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';

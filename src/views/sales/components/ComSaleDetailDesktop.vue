@@ -100,16 +100,15 @@
         </stack>
                  </template>
 </Column>
-  <Column
+        <Column
   field="quantity"
   headerClass="text-center"
   bodyClass="text-center"
   :header="t('Quantity')"
 >
   <template #body="slotProps">
-        
-        {{ slotProps.data.quantity }}
-      </template>
+    {{ Math.abs(slotProps.data.quantity) }}
+  </template>
 </Column>
 
   <Column field="unit" headerClass="text-center" bodyClass="text-center" :header="t('Unit')"></Column>
@@ -191,10 +190,11 @@
         </strong>
         </ion-label>
     </ion-item>
+    
     <ion-item  v-for="p in doc?.payment">
         <ion-label>{{ p.payment_type }}</ion-label>
         <ion-label slot="end"><strong>
-            <ComCurrency :value="p.input_amount" :currency="p.currency"/> 
+             <ComCurrency :value="Math.abs(p.input_amount)" :currency="p.currency" />
         </strong>
         </ion-label>
     </ion-item>
