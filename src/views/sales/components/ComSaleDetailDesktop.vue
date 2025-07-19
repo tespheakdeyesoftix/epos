@@ -1,5 +1,6 @@
  
 <template>
+ 
             <ion-card>
                 <ion-card-content>
                     <stack row equal>
@@ -84,8 +85,9 @@
    <ion-text>{{slotProps.data.product_code}} - 
            {{slotProps.data.product_name}}</ion-text>
            <br/>
-          
-           <ion-chip color="medium" v-for="c in getDisplayCoupon(slotProps.data.coupons)" :routerLink="'/coupon-detail/' + c">{{ c }}</ion-chip>
+         
+ 
+           <ion-chip color="medium" v-for="c in getDisplayCoupon(slotProps.data.coupons)" :routerLink="'/coupon-detail/' + c.coupon_code">{{ c.coupon }}</ion-chip>
            <ion-chip @click="onViewAllCouponCodes(slotProps.data)" color="primary" v-if="slotProps.data.coupons.length - 3>0">{{ slotProps.data.coupons.length - 3 }} {{t("Mores")}}</ion-chip>
 
             </div>
@@ -271,7 +273,12 @@ const saleProducts = computed(() => {
 
         grouped[key].quantity += p.quantity;
         grouped[key].amount += p.amount;
-         grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>r.coupon)].flat()
+         grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>{
+            return {
+                coupon:r.coupon,
+                coupon_code:r.name
+            }
+         })].flat()
     }
 
     const result = Object.values(grouped);

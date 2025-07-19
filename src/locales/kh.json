@@ -455,7 +455,11 @@
     "Opening Balance": "សមតុល្យដើមគ្រា",
     "Store Detail": "ព័ត៌មានលម្អិតអំពីហាង",
     "Store #": "ហាង",
+    "Are you sure you want to print this document?": "តើអ្នកពិតជាចង់បោះពុម្ភឯកសារនេះមែនទេ?",
     "Store Name": "ឈ្មោះហាង",
+    "Confirm": "បញ្ជាក់",
+    "Delete Sale": "លុបវិកយប័ត្រ",
+    "Are you sure you want to delete this Sale Order": "តើអ្នកពិតជាចង់លុបវិកយប័ត្រនេះមែនទេ?",
     "There's cashier shift still opened. Please close cashier shift first":"មានវេណលក់កំពុងតែបើក។ សូមបិទវេណលក់ជាមុនសិន មុននឹងបិទថ្ងៃលក់",
     "Close Cashier Shift Now":"បិទវេនលក់ឥឡូវនេះ",
     "Store Payment":"ទូទាត់តាមហាង",
@@ -469,5 +473,7 @@
     "Store Payment History":"ប្រវត្តិនៃការបង់ប្រាក់",
     "Stores":"ហាង",
     "Store List":"បញ្ជីហាង",
+    "View All Coupon Codes":"មើលលេខគូប៉ូងទាំងអស់",
+    "Coupon Code List":"តារាងបញ្ចីលេខគូប៉ុង",
     "Add new Store Payment":"បញ្ចូលទូទាត់តាមហាងថ្មី"
   } 
