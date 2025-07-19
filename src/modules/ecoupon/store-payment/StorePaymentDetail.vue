@@ -98,6 +98,7 @@
           <ion-button @click="onClose" color="danger">{{ t('Close') }}</ion-button>
           <ion-button color="success" @click="onEdit">{{ t('Edit') }}</ion-button>
           <ion-button color="danger" @click="onDelete">{{ t('Delete') }}</ion-button>
+          <ion-button @click="onPrint">{{ t('Print') }}</ion-button>
         </div>
       </ion-toolbar>
     </ion-footer>
@@ -109,13 +110,18 @@ import { ref, onMounted } from 'vue'
 import dayjs from 'dayjs'
 
 import ComAddPayment from "@/modules/ecoupon/store-payment/ComAddPayment.vue"
-import ComPaymentFooter from '@/modules/ecoupon/store-payment/components/ComPaymentFooter.vue'
 
 const t = window.t
 
 const data = ref(null)
 const docListRef = ref(null)
 
+
+async function onPrint(){
+    const printer_name = await app.storageService.getItem("default_printer") || ""
+   app.printing.onPrint({doctype:"Store Payment",docname:data.value.name, template:"Store Payment Receipt",printer_name:printer_name,show_loading:true})
+   
+}
 function getStatusText(id) {
   return app.utils.getDocStatusText(id);
 }
