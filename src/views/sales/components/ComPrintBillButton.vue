@@ -30,9 +30,22 @@ const t = window.t
 const popoverOpen = ref(false)
 const event = ref(null)
 
-function openPopover(e) {
+async function openPopover(e) {
+
 
   printFormat.value = app.setting?.print_formats?.filter(x=>x.show_in_pos==1 && x.doc_type==="Sale");
+    if(printFormat.value.length==0){
+    app.showWarning("There is no print format available for this print document.")
+    return
+}
+
+  if(printFormat.value.length==1){
+    const confirm = await app.onConfirm("Confirm","Are you sure you want to print this document?")
+    if(!confirm) return; 
+    await onPrintBill(printFormat.value[0]) 
+    return
+  }
+
 if(printFormat.value.length>1){
     event.value = e
     popoverOpen.value = true

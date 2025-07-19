@@ -78,8 +78,7 @@ async function onPrint(format){
 }
 async function onDelete(){
   
- 
-  const confirm = await app.utils.onConfirm("Delete Sale", "Are you sure you want to delete this Sale Order?");
+  const confirm = await app.utils.onConfirmDanger("Delete Sale", "Are you sure you want to delete this Sale Order?");
   if (!confirm) return;
   const l = await app.showLoading();
   const res = await app.postApi("epos_restaurant_2023.api.api.delete_sale_coupon",{

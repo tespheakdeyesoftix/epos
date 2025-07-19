@@ -147,6 +147,10 @@ export async function openModal(props) {
   return false;
 }
 
+export async function onConfirmDanger(title = "Confirm", message = "Are you sure you want to process this action?", options = {background:"danger"}) {
+  return await onConfirm(title, message, options);
+}
+
 export async function onConfirm(title = "Confirm", message = "Are you sure you want to process this action?", options = {background:"success"}) {
   let defaultButtons = [
     {

@@ -26,7 +26,7 @@
         </ion-text>
         <ion-list>
             <ion-item button v-for="c in data.coupons" :key="c">
-                <ion-label>{{ c }}</ion-label>
+                <ion-label>{{ c.coupon }}</ion-label>
                 <ion-label slot="end"><ComCurrency :value="data.price"/></ion-label>
             </ion-item>
         </ion-list>
