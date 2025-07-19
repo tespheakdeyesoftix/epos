@@ -36,13 +36,14 @@
 import { onMounted, ref } from 'vue';
 import ComCouponDetail from "@/modules/ecoupon/coupon-codes/components/ComCouponDetail.vue"
 import { refreshOutline } from 'ionicons/icons';
+import { onIonViewWillEnter } from '@ionic/vue';
 
 
 const t = window.t;
 const showAppBar = ref(app.route.query.appbar==1)
 const data = ref()
 async function getData(){
-    const l = await app.showLoading();
+ 
     const res = await app.getApi("epos_restaurant_2023.api.coupon.get_coupon_detail",{
         coupon_code:app.route.params.name
     })
@@ -50,7 +51,6 @@ async function getData(){
         data.value= res.data
     }
 
-    await l.dismiss();
 }
 
 async function onDelete(){
@@ -83,7 +83,14 @@ async function onReloadData(){
 }
 
 onMounted(async ()=>{
-await getData();
+      await onReloadData()
+})
+
+onIonViewWillEnter(async ()=>{
+    if(window.reloadData){
+        await onReloadData()
+    }
+    window.reloadData = false
 })
 
 

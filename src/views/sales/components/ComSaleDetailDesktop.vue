@@ -63,7 +63,12 @@
                 <ion-text color="primary">
                     <h3>{{ t("Sale Product List") }}</h3>
                 </ion-text>
-          <DataTable  stripedRows  :value="saleProducts" tableStyle="min-width: 50rem">
+
+                <template v-if="doc?.sale_type=='Top Up'">
+                    <ComTopCouponInforDesktop :saleProducts="saleProducts"/>
+                </template>
+                <template v-else>
+          <DataTable stripedRows  :value="saleProducts" tableStyle="min-width: 50rem">
   <!-- Index Column -->
   <Column header="#" headerStyle="width:3rem" headerClass="text-center" bodyClass="text-center">
         <template #body="slotProps">
@@ -72,6 +77,7 @@
     </Column>
   <!-- Your Data Columns -->
   <Column field="product_code" :header="t('Description')">
+    {{   }}
       <template #body="slotProps">
         <stack row>
            
@@ -86,7 +92,7 @@
            {{slotProps.data.product_name}}</ion-text>
            <br/>
          
- 
+
            <ion-chip color="medium" v-for="c in getDisplayCoupon(slotProps.data.coupons)" :routerLink="'/coupon-detail/' + c.coupon_code">{{ c.coupon }}</ion-chip>
            <ion-chip @click="onViewAllCouponCodes(slotProps.data)" color="primary" v-if="slotProps.data.coupons.length - 3>0">{{ slotProps.data.coupons.length - 3 }} {{t("Mores")}}</ion-chip>
 
@@ -102,7 +108,7 @@
 >
   <template #body="slotProps">
         
-        <ComCurrency :value="slotProps.data.price"/>
+        {{ slotProps.data.quantity }}
       </template>
 </Column>
 
@@ -125,24 +131,24 @@
 </template>
 
     </Column>
-   <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Price')">
+   <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Total Amount')">
       <template #body="slotProps">
         <ComCurrency :value="Math.abs(slotProps.data.amount)" />
       </template>
 </Column>
 </DataTable>
-
+</template>
 <div style="float: left;margin-top:10px">
      {{ doc?.note || t("No sale note") }}
 </div>
 
 <div style="width: 300px;float: right;">
      <ion-list>
-    <ion-item v-if="doc?.total_quantity>0">
+    <ion-item v-if="doc?.total_quantity>0 && doc?.sale_type != 'Top Up'">
         <ion-label >{{ t("Total Coupon") }}</ion-label>
         <ion-label slot="end"><strong>{{ doc?.total_quantity }}</strong></ion-label>
     </ion-item>
-    <ion-item v-if="doc?.sub_total>0">
+    <ion-item v-if="doc?.sub_total>0 && doc?.sale_type != 'Top Up'">
         <ion-label>{{ t("Sub Total") }}</ion-label>
         <ion-label slot="end"><ComCurrency :value="doc?.sub_total"/> </ion-label>
     </ion-item>
@@ -223,6 +229,7 @@ import { computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import { phonePortraitOutline } from 'ionicons/icons';
 import ComViewAllCouponCodeModal from '@/views/sales/components/ComViewAllCouponCodeModal.vue';
+import ComTopCouponInforDesktop from '@/views/sales/components/ComTopCouponInforDesktop.vue';
 import dayjs from 'dayjs';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -276,7 +283,9 @@ const saleProducts = computed(() => {
          grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>{
             return {
                 coupon:r.coupon,
-                coupon_code:r.name
+                coupon_code:r.name,
+                balance_amount:r.balance_amount,
+                balance_coupon_value:r.balance_coupon_value
             }
          })].flat()
     }

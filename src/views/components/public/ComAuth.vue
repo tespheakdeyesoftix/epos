@@ -1,6 +1,6 @@
 <template>
     <BaseModal :title="t(title || 'Enter Pin Codee')" @onConfirm="onConfirm">
-            <com-input  style="font-size: 32px;  text-align: center;" type="password"  focus @keyup="onInput" v-model="numberInput"   :placeholder="title" class="my-2"/> 
+            <com-input  style="font-size: 32px;  text-align: center;" type="password"  focus @keyup="onInput" v-model="numberInput"   :placeholder="title?t(title):title" class="my-2"/> 
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">
                     <ion-col v-for="k in r" class="px-2 py-2">
@@ -65,10 +65,10 @@ async function onConfirm(){
         return;
     }
     const loading = await app.showLoading();
-    const res = app.getApi("epos_restaurant_2023.api.api.check_username",{
+    const res =await app.getApi("epos_restaurant_2023.api.api.check_username",{
         pin_code:numberInput.value.toString().trim()
     })
-    
+ 
     await loading.dismiss();
     if(res.data){
 modalController.dismiss( res.data, 'confirm');

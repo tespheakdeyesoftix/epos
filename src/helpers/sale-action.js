@@ -1,3 +1,4 @@
+
 export async function checkSaleDoc(name){
    const loading = await app.showLoading()
 
@@ -37,4 +38,30 @@ export async function onPrintBill(name,format=null) {
 
     }
 
+}
+
+
+export async function onEditBill(data) {
+    const auth = await app.utils.hasPermission("edit_closed_receipt","edit_closed_receipt_required_password")
+        if(!auth)  return;
+
+    // check if require note
+    const note = await app.utils.getOperationNote("Edit Sale", "edit_closed_receipt_required_note");
+    
+    if(!note && (typeof note) == "boolean") return
+
+    auth.note = note;
+    const loading = await app.showLoading()
+    const res = await app.postApi("epos_restaurant_2023.api.api.edit_sale_coupon",{
+        name:data.docname,
+        auth:JSON.stringify(auth)
+
+    })
+
+    if(res.data){
+        if(data.sale_type == "Sale Coupon")
+        app.ionRouter.navigate("/sale-coupon/" + data.docname,"forward","replace")
+    }
+    
+    await loading.dismiss()
 }

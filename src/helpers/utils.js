@@ -22,6 +22,11 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
 dayjs.extend(isoWeek)
 
+import { useAuth } from "@/hooks/useAuth";
+
+
+
+
 const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate,change_exchange_rate } = useApp();
 
 
@@ -606,8 +611,7 @@ export async function getPOSConfig(pos_config){
          
       },
        onPrinterList: function (printers) {
-        alert(5555)
-        console.log("Available printers:", printers);
+        
       },
        onUpdate: (msg) => console.log("Message:", msg),
 
@@ -704,11 +708,18 @@ export async function onOpenKeyboard(props={}){
 }
 
 export async function hasPermission(key,operation=""){
+  const {currentUser} = useAuth();
+  
+    let user = {full_name:currentUser.value.full_name,username:currentUser.value.name, note:""}
+    let posPermission = currentUser.value.pos_permission
     if(operation){
       if(app.setting.pos_config[operation] ==1){
           const result = await onInputPinCode()
           if(result){
-            alert(result.permission[operation])
+         
+            user.full_name = result.full_name
+            user.username = result.username;
+            posPermission = result.permission;
           }
       }
       
@@ -716,13 +727,30 @@ export async function hasPermission(key,operation=""){
 
 
 
-    if(app.currentUser.pos_permission[key]==0){
+    if(posPermission[key]==0){
       await app.showWarning("You don't have permission to perform this action.")
       return false 
     }
+    
+    // check require note
+    
+    return user
+}
 
+export async function getOperationNote(title, operation){
+  // operation is from pos config
+  if( app.setting.pos_config[operation] == 0) return ""
 
-    return true
+  const note = await onOpenKeyboard({
+    title:title,
+    storageKey:operation
+  })
+  if(note){
+    return note
+  }
+  return  false 
+  
+
 }
 export async function onViewPendingOrder() {
   const result = await app.openModal({

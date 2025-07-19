@@ -39,6 +39,8 @@ const getSeverity = () => {
             return 'danger';
         case 'Redeemed':
             return 'danger';
+        case 'Deleted':
+            return 'danger';
 
 
 

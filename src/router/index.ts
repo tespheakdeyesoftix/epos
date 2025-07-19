@@ -1,4 +1,5 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { createRouter } from '@ionic/vue-router';
+import { createWebHashHistory } from 'vue-router';
 import { getRoute } from './routes';
 
  import { useAuth } from '@/hooks/useAuth';
@@ -12,7 +13,7 @@ const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
 const routes = getRoute();
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHashHistory(import.meta.env.VITE_BASE_URL),
   routes
 })
 

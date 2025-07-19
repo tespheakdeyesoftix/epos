@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <ToolBar>{{ t("Sale Detail") }} - {{ doc?.name }}
-            <ComStatus :status="doc?.sale_status"/>
+            <ComStatus :status="doc?.docstatus==2?'Deleted':doc?.sale_status"/>
             <template #end>
                 <ComSaleDetailMobileActionMenu v-if="doc?.pos_profile"
                     :pos_profile="doc.pos_profile"
@@ -21,9 +21,9 @@
         <ion-footer>
             <ion-toolbar>
                 <div style="display: flex;justify-content: center;gap:10px">
-                <ion-button @click="onEdit" shape="round" >{{ t("Edit") }}</ion-button>
+                <ion-button @click="onEdit" shape="round" :disabled="doc?.docstatus!=1">{{ t("Edit") }}</ion-button>
                 <ComPrintBillButton  :name="doc?.name"/>
-                <ion-button shape="round" color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>
+                <ion-button :disabled="doc?.docstatus!=1"  shape="round" color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>
                             </div>
                                 
             </ion-toolbar>
@@ -61,10 +61,9 @@ async function loadData() {
 
 }
 
-async function onEdit(){
-    const hasPermission = await app.utils.hasPermission("edit_closed_receipt","edit_closed_receipt_required_password")
-    if(!hasPermission)  return;
 
+async function onEdit(){
+     await app.sale.onEditBill({docname:doc.value.name,sale_type:doc.value.sale_type})
     
 }
 async function onPrint(format){
@@ -91,12 +90,13 @@ async function onDelete(){
   });  
   if (res.data) {   
     app.showSuccess("Delete record successfully")
+    window.reloadData = true
     if(window.history.length<=1 || ["/sale-coupon-list",'/redeem-list','top-up-list'].includes(window.fromRoute)){
         app.router.back()
     }else {  
         app.ionRouter.navigate(window.fromRoute, "forward","replace")
     }
-    window.reloadData = true
+  
   }
   await l.dismiss();    
 }
