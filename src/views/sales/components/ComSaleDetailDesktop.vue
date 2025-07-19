@@ -127,7 +127,7 @@
     </Column>
    <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Price')">
       <template #body="slotProps">
-        <ComCurrency :value="slotProps.data.amount"/>
+        <ComCurrency :value="Math.abs(slotProps.data.amount)" />
       </template>
 </Column>
 </DataTable>
