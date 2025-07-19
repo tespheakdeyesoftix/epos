@@ -12,40 +12,45 @@
    
        
 </Column>
-  <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Amount')">
-  <template #body="slotProps">    
-    {{ slotProps.data.coupons?.[0]?.balance_amount }}
-  </template>
-</Column>
 
 <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Value')">
   <template #body="slotProps">    
     {{ slotProps.data.coupons?.[0]?.balance_coupon_value}}
   </template>
 </Column>
+  <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Amount')">
+  <template #body="slotProps">    
+    {{ slotProps.data.coupons?.[0]?.balance_amount }}
+  </template>
+</Column>
 
- 
-  <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Amount')">
+
+
+   <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Value')">
       <template #body="slotProps">  
         <ComCurrency :value="slotProps.data.price"/>
       </template>
 </Column>
-  <Column field="price" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Value')">
+  <Column field="amount" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Amount')">
       <template #body="slotProps">  
         <ComCurrency :value="slotProps.data.price"/>
       </template>
 </Column>
-   <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Total Amount')">
+<Column field="total_coupon_value" headerClass="text-right" bodyClass="text-right" :header="t('Total Value')">
       <template #body="slotProps">
-        <ComCurrency :value="Math.abs(slotProps.data.amount)" />
-      </template>
-</Column>
-   <Column field="total_amount" headerClass="text-right" bodyClass="text-right" :header="t('Total Value')">
-      <template #body="slotProps">
-        <ComCurrency :value="Math.abs(slotProps.data.amount)" />
+        <ComCurrency :value="Math.abs(slotProps.data.total_coupon_value)" />
       </template>
 </Column>
 
+
+  <Column headerClass="text-right" bodyClass="text-right" :header="t('Total Amount')">
+  <template #body="slotProps">
+    <ComCurrency 
+      :value="Math.abs((slotProps.data.coupons?.[0]?.balance_coupon_value || 0) + (slotProps.data.total_coupon_value || 0))" 
+    />
+  </template>
+</Column>
+   
 </DataTable>
 </template> 
 <script setup>
