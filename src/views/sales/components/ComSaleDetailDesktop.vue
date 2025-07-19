@@ -274,12 +274,14 @@ const saleProducts = computed(() => {
                 price: p.price,
                 is_free: p.is_free,
                 quantity: 0,
-                amount: 0
+                amount: 0,
+                total_coupon_value: 0
             };
         }
 
         grouped[key].quantity += p.quantity;
         grouped[key].amount += p.amount;
+        grouped[key].total_coupon_value += p.total_coupon_value;
          grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>{
             return {
                 coupon:r.coupon,

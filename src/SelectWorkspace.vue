@@ -10,6 +10,32 @@
         <div style="height:calc(-317.5px + 100vh);background: transparent;" class="border-round-top-3xl p-3 -mt-5">
           <!-- Add Workspace Button --> 
           <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
+          <ion-button size="large" expand="full" 
+          class="add-workspace" shape="round" @click="testme" >Test Me</ion-button>
+
+          <div id="receipt" style="background-color: #FFF; width: 384px;font-size:20px" >
+            <div class="header">ហាងលក់អាវយឺត</div>
+  <div class="header">វិក្កយបត្រ</div>
+  
+  <div class="item">
+    <span>កាហ្វេ</span>
+    <span>$1.50</span>
+  </div>
+  <div class="item">
+    <span>នំប៉័ង</span>
+    <span>$2.00</span>
+  </div>
+  
+  <div class="total">
+    <span>សរុប</span>
+    <span>$3.50</span>
+  </div>
+  
+  <div class="footer" style="text-align: center; margin-top: 15px;">
+    សូមអរគុណ!
+  </div>
+          </div>
+
           <!-- Workspace List --> 
           <ion-list class="workspace-list bg-transparent">
             <ion-card
@@ -74,6 +100,7 @@ import {
   onIonViewWillEnter
 } from '@ionic/vue';
 
+const EscPosPrinter = window.Capacitor.Plugins.EscPosPrinter;
 import { onMounted, ref } from 'vue';
 import { ellipsisVertical } from 'ionicons/icons';
 import { useAuth } from './hooks/useAuth';
@@ -92,6 +119,204 @@ const changeLanguage = (lang) => {
   locale.value = lang;
   window.localStorage.setItem('lang', locale.value);
 };
+
+import html2canvas from 'html2canvas';
+
+ async function printReceipt() {
+      try {
+        // 1. Convert HTML to canvas
+        const canvas = await html2canvas(document.getElementById('receipt'), {
+             scale: 3, // Triple resolution for better quality
+          width: originalWidth,
+          height: originalHeight,
+          backgroundColor: '#FFFFFF',
+          logging: false,
+          allowTaint: true,
+          letterRendering: true
+        });
+
+        // 2. Convert to 1-bit monochrome data
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const binaryPixels = [];
+        
+        for (let i = 0; i < imageData.data.length; i += 4) {
+          const r = imageData.data[i];
+          const g = imageData.data[i + 1];
+          const b = imageData.data[i + 2];
+          binaryPixels.push(r < 128 || g < 128 || b < 128 ? 1 : 0);
+        }
+
+        // 3. Generate ESC/POS raster commands
+        const width = canvas.width;
+        const widthBytes = Math.ceil(width / 8);
+        const rasterData = [];
+        
+        for (let y = 0; y < binaryPixels.length; y += width) {
+          for (let xByte = 0; xByte < widthBytes; xByte++) {
+            let byte = 0;
+            for (let bit = 0; bit < 8; bit++) {
+              const x = xByte * 8 + bit;
+              if (x < width && binaryPixels[y + x]) {
+                byte |= 1 << (7 - bit);
+              }
+            }
+            rasterData.push(byte);
+          }
+        }
+
+        const rasterHeader = [
+          0x1D, 0x76, 0x30, // GS v 0
+          0x00,             // Mode
+          widthBytes % 256, widthBytes / 256 | 0, // Width
+          canvas.height % 256, canvas.height / 256 | 0 // Height
+        ];
+
+        const fullCommand = new Uint8Array([
+          0x1B, 0x40,      // Initialize
+          ...rasterHeader,  // Image header
+          ...rasterData,    // Image data
+          0x0A, 0x0A,      // Feed lines
+          0x1D, 0x56, 0x00 // Full cut
+        ]);
+
+        // 4. Send to printer (using Capacitor TCP Socket)
+        const { client } = await TcpSocket.connect({
+          ipAddress: '192.168.10.247',
+          port: 9100
+        });
+
+        await TcpSocket.send({
+          client: client,
+          data: btoa(String.fromCharCode(...fullCommand)),
+          encoding: 'base64'
+        });
+
+        await TcpSocket.disconnect({ client });
+        alert('Receipt printed successfully!');
+      } catch (error) {
+        console.error('Print error:', error);
+        alert('Print failed: ' + error.message);
+      }
+    }
+
+ 
+
+async function testbluetoothprinter(){
+  console.log(window.Capacitor.Plugins.EscPosPrinter);
+  try {
+    const result = await EscPosPrinter.getBluetoothPrinterDevices();
+    console.log('Printers found:', result);
+    return result.devices || result; // depends on plugin return shape
+  } catch (error) {
+    console.error('Error discovering printers:', error);
+  }
+}
+
+import { TcpSocket,DataEncoding  } from 'capacitor-tcp-socket';
+
+
+async function testme(){
+  printReceipt()
+
+  //  try {
+  //   const result = await TcpSocket.connect({
+  //     ipAddress: '192.168.10.247',
+  //     port: 9100
+  //   });
+  //   console.log(`Connected with client ID: ${result.client}`);
+  //   await sendData(result.client)
+  //   return result.client;
+  // } catch (error) {
+  //   console.error('Connection failed:', error);
+  // }
+  
+}
+
+// Send data
+const sendData = async (clientId) => {
+
+  try {
+    await TcpSocket.send({
+      client: clientId,
+      data: 'Hello សួស្តី,',
+       encoding: 'utf8'
+    });
+    console.log('Data sent successfully');
+
+  // Feed 3mm (24 dots)
+await TcpSocket.send({
+  client: clientId,
+  data: '0A0A0A', // 3x Line Feed
+  encoding: 'hex'
+});
+await TcpSocket.send({
+  client: clientId,
+  data: '0A0A0A', // 3x Line Feed
+  encoding: 'hex'
+});
+await TcpSocket.send({
+  client: clientId,
+  data: '0A0A0A', // 3x Line Feed
+  encoding: 'hex'
+});
+
+
+    await TcpSocket.send({
+    client: clientId,
+    data: '1D5600',
+    encoding: 'hex'
+  });
+  
+  //  await TcpSocket.send({
+  //     client: clientId,
+  //     data: '1B401D5600', 
+  //     encoding: 'hex'      // Specify HEX encoding
+  //   });
+
+    await disconnect(clientId)
+  } catch (error) {
+    console.error('Send failed:', error);
+  } finally {
+    // disconnect(clientId)
+  }
+};
+
+const disconnect = async (clientId) => {
+  try {
+    const result = await TcpSocket.disconnect({
+      client: clientId
+    });
+    console.log(`Disconnected client: ${result.client}`);
+  } catch (error) {
+    console.error('Disconnect failed:', error);
+  }
+};
+async function sendCutCommand(clientId) {
+  // Try different cut commands
+  const cutCommands = [
+    '1B6D',      // ESC m (Full cut)
+    '1B69',      // ESC i (Partial cut)
+    '1D5600',    // GS V 0 (Full cut)
+    '1D5601',    // GS V 1 (Partial cut)
+    '1D564200',  // GS V 66 0 (Older printers)
+  ];
+
+  for (const cmd of cutCommands) {
+    try {
+      await TcpSocket.send({
+        client: clientId,
+        data: cmd,
+        encoding: DataEncoding.HEX,
+      });
+      console.log(`Sent cut command: ${cmd}`);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 sec
+    } catch (error) {
+      console.error(`Failed to send ${cmd}:`, error);
+    }
+  }
+}
+
 
 async function onLogin(p) {
   const loading = await app.showLoading("Login in...")
