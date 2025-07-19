@@ -1,5 +1,5 @@
 <template>
-  {{ saleProducts }}
+  <!-- {{ saleProducts }} -->
    <DataTable stripedRows  :value="saleProducts" tableStyle="min-width: 50rem">
   <!-- Index Column -->
   <Column header="#" headerStyle="width:3rem" headerClass="text-center" bodyClass="text-center">
@@ -12,16 +12,18 @@
    
        
 </Column>
-  <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Amount')">
-  <template #body="slotProps">    
-    {{ slotProps.data.coupons?.[0]?.balance_amount }}
+<Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Amount')">
+  <template #body="slotProps">
+    <ComCurrency :value="slotProps.data.coupons?.[0]?.balance_amount" />
   </template>
 </Column>
+
 <Column headerClass="text-center" bodyClass="text-center" :header="t('Remaining Value')">
-  <template #body="slotProps">    
-    {{ slotProps.data.coupons?.[0]?.balance_coupon_value}}
+  <template #body="slotProps">
+    <ComCurrency :value="slotProps.data.coupons?.[0]?.balance_coupon_value" />
   </template>
 </Column>
+
 
 
   <Column field="amount" headerClass="text-right" bodyClass="text-right" :header="t('Top Up Amount')">
