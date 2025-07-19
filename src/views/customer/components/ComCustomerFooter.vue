@@ -43,7 +43,7 @@ async function onEdit(){
    }
 }
 async function onDelete(){
-  const confirm = await app.utils.onConfirm("Delete Customer", "Are you sure you want to delete this customer?");
+  const confirm = await app.utils.onConfirmDanger("Delete Customer", "Are you sure you want to delete this customer?");
   if (!confirm) return;
   const l = await app.showLoading();
   const res = await app.deleteDoc("Customer", props.data.name);  

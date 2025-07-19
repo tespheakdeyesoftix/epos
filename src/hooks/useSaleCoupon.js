@@ -401,7 +401,7 @@ async function onDeleteSaleProduct(index) {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
-    const confirm = await app.onConfirm("Delete Sale Product", "Are you sure you want to delete this record");
+    const confirm = await app.utils.onConfirmDanger("Delete Sale Product", "Are you sure you want to delete this record");
     if (confirm) {
         saleDoc.value.sale_products.splice(index, 1);
     }
