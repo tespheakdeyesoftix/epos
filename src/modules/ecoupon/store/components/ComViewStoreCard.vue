@@ -42,12 +42,12 @@ const Card = defineComponent({
 })
 
 function getData() {
-  // const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
+  const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
 
   app.getApi('epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_vendor_credit_balance', {
     vendor: app.route.params.name,
-    date: app.setting?.working_day?.name,
-    // date: workingDay
+    
+    date: workingDay
   }).then(response => {
     if (response?.data) {
       data.value = response.data

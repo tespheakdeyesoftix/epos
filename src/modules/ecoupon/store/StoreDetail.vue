@@ -3,7 +3,7 @@
         <ToolBar>{{ t("Store Detail") }} - {{ data?.name || 0}}</ToolBar>
         <ion-content>  
             <!-- {{ data }} -->
-              <!-- ✅ Refresher MUST be inside ion-content -->
+              
       <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -14,7 +14,7 @@
           :style="{ backgroundImage: `url('${randomBgImage}')` }"
         ></div>
 
-        <!-- Avatar wrapper with overlay icon -->
+       
         <div class="avatar-wrapper">
            
            <ion-avatar class="custom-avatar" style="cursor: pointer">

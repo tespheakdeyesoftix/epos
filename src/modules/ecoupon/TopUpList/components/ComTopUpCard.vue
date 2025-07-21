@@ -1,7 +1,7 @@
 <template>
     
-    <ion-card class="ion-no-margin mb-3" button>
-        <ion-item lines="none">
+    <ion-card button class="ion-no-margin mb-3"  :routerLink="'/sale-detail/' + data.name">
+        <ion-item lines="none" style="--background: rgba(255, 0, 0, 0);">
              
 
             <!-- Middle Text -->
