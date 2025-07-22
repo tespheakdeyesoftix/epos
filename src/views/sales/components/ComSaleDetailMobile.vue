@@ -1,6 +1,8 @@
 <template>
  
+
             <!-- Bill info -->
+          
             <ion-list>
                 <ion-item >
                     <ion-label>{{ t("Branch") }}</ion-label>
@@ -69,7 +71,11 @@
             <ion-button fill="clear" expand="full"  @click="onShowMoreInfo">
                         {{ t((showMoreInfo?"Hide Info":"Show More")) }}
                     </ion-button>
-                
+
+ <template v-if="doc?.sale_type == 'Top Up'">
+  <ComTopCouponInforMobile :saleProducts="saleProducts" />
+</template>
+              <template v-else>   
             <template v-if="doc?.sale_products.length > 0">
        
                         
@@ -106,6 +112,9 @@
 
                 
             </template>
+            </template>
+
+
             <!-- summary -->
             <ion-list>
                 <ion-item>
@@ -242,13 +251,14 @@
                     <ion-note>{{ doc?.note }}</ion-note>
                 </ion-item>
             </ion-list>
-
+  
 </template>
 <script setup>
 
 import { timeOutline, personOutline} from 'ionicons/icons';
 import { onMounted, ref, computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
+import ComTopCouponInforMobile from "@/views/sales/components/ComTopCouponInforMobile.vue"
 import dayjs from 'dayjs';
 import Enumerable from 'linq';
 const props = defineProps({
@@ -292,13 +302,25 @@ const saleProducts = computed(() => {
                 price: p.price,
                 is_free: p.is_free,
                 quantity: 0,
-                total_amount: 0
+                total_amount: 0,
+                 amount: 0,
+                total_coupon_value: 0
             };
         }
 
         grouped[key].quantity += p.quantity;
         grouped[key].total_amount += p.total_amount;
-        grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>r.coupon)].flat()
+        grouped[key].amount += p.amount;
+        grouped[key].total_coupon_value += p.total_coupon_value;
+        // grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>r.coupon)].flat()
+        grouped[key].coupons = [...(grouped[key].coupons || []),JSON.parse(p.coupons || "[]").map(r=>{
+            return {  
+                coupon:r.coupon,
+                coupon_code:r.name,           
+                balance_amount:r.balance_amount,
+                balance_coupon_value:r.balance_coupon_value
+            } 
+        })].flat()
         
         
     }
@@ -315,7 +337,7 @@ function onShowMoreInfo(){
 
  
 onMounted(async ()=>{
-     if (props.doc.tax_rule) {
+     if (props.doc?.tax_rule) {
         res = await app.getDoc("Tax Rule", props.doc.tax_rule)
         if (res.data) {
             taxRule.value = res.data
