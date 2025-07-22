@@ -10,31 +10,7 @@
         <div style="height:calc(-317.5px + 100vh);background: transparent;" class="border-round-top-3xl p-3 -mt-5">
           <!-- Add Workspace Button --> 
           <ion-button size="large" expand="full" class="add-workspace" shape="round" router-link="/add-workspace" >{{ t("Add Workspace") }}</ion-button>
-          <ion-button size="large" expand="full" 
-          class="add-workspace" shape="round" @click="testme" >Test Me</ion-button>
-
-          <div id="receipt" style="background-color: #FFF; width: 384px;font-size:20px" >
-            <div class="header">ហាងលក់អាវយឺត</div>
-  <div class="header">វិក្កយបត្រ</div>
-  
-  <div class="item">
-    <span>កាហ្វេ</span>
-    <span>$1.50</span>
-  </div>
-  <div class="item">
-    <span>នំប៉័ង</span>
-    <span>$2.00</span>
-  </div>
-  
-  <div class="total">
-    <span>សរុប</span>
-    <span>$3.50</span>
-  </div>
-  
-  <div class="footer" style="text-align: center; margin-top: 15px;">
-    សូមអរគុណ!
-  </div>
-          </div>
+         
 
           <!-- Workspace List --> 
           <ion-list class="workspace-list bg-transparent">
@@ -120,87 +96,6 @@ const changeLanguage = (lang) => {
   window.localStorage.setItem('lang', locale.value);
 };
 
-import html2canvas from 'html2canvas';
-
- async function printReceipt() {
-      try {
-        // 1. Convert HTML to canvas
-        const canvas = await html2canvas(document.getElementById('receipt'), {
-             scale: 3, // Triple resolution for better quality
-          width: originalWidth,
-          height: originalHeight,
-          backgroundColor: '#FFFFFF',
-          logging: false,
-          allowTaint: true,
-          letterRendering: true
-        });
-
-        // 2. Convert to 1-bit monochrome data
-        const ctx = canvas.getContext('2d');
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const binaryPixels = [];
-        
-        for (let i = 0; i < imageData.data.length; i += 4) {
-          const r = imageData.data[i];
-          const g = imageData.data[i + 1];
-          const b = imageData.data[i + 2];
-          binaryPixels.push(r < 128 || g < 128 || b < 128 ? 1 : 0);
-        }
-
-        // 3. Generate ESC/POS raster commands
-        const width = canvas.width;
-        const widthBytes = Math.ceil(width / 8);
-        const rasterData = [];
-        
-        for (let y = 0; y < binaryPixels.length; y += width) {
-          for (let xByte = 0; xByte < widthBytes; xByte++) {
-            let byte = 0;
-            for (let bit = 0; bit < 8; bit++) {
-              const x = xByte * 8 + bit;
-              if (x < width && binaryPixels[y + x]) {
-                byte |= 1 << (7 - bit);
-              }
-            }
-            rasterData.push(byte);
-          }
-        }
-
-        const rasterHeader = [
-          0x1D, 0x76, 0x30, // GS v 0
-          0x00,             // Mode
-          widthBytes % 256, widthBytes / 256 | 0, // Width
-          canvas.height % 256, canvas.height / 256 | 0 // Height
-        ];
-
-        const fullCommand = new Uint8Array([
-          0x1B, 0x40,      // Initialize
-          ...rasterHeader,  // Image header
-          ...rasterData,    // Image data
-          0x0A, 0x0A,      // Feed lines
-          0x1D, 0x56, 0x00 // Full cut
-        ]);
-
-        // 4. Send to printer (using Capacitor TCP Socket)
-        const { client } = await TcpSocket.connect({
-          ipAddress: '192.168.10.247',
-          port: 9100
-        });
-
-        await TcpSocket.send({
-          client: client,
-          data: btoa(String.fromCharCode(...fullCommand)),
-          encoding: 'base64'
-        });
-
-        await TcpSocket.disconnect({ client });
-        alert('Receipt printed successfully!');
-      } catch (error) {
-        console.error('Print error:', error);
-        alert('Print failed: ' + error.message);
-      }
-    }
-
- 
 
 async function testbluetoothprinter(){
   console.log(window.Capacitor.Plugins.EscPosPrinter);

@@ -7,6 +7,9 @@
     "cleartext": true
   },
   "plugins": {
+    "SunmiPrinter": {
+      "bindOnLoad": true
+    },
     "StatusBar": {
       "overlaysWebView": true,
       "style": "DARK",

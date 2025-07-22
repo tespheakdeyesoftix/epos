@@ -2,15 +2,15 @@
     <ion-footer>
         
         <ion-toolbar  >
-            <div class="mr-3" style="display: flex; justify-content: right;gap: 10px;"> 
-            <ion-button @click="onGoHome"> {{ t('Home') }}</ion-button>
+            <div class="mr-3" style="display: flex; justify-content: center;gap: 10px;"> 
+            <ion-button shape="round" @click="onGoHome"> {{ t('Home') }} </ion-button>
             
-            <ion-button :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}
+            <ion-button shape="round" :disabled="!topUpCouponInfo" color="danger"  @click="onClearData"> {{ t('Cancel') }}
  
 
             </ion-button>
             <ComQuickPayButton/>
-            <ion-button color="success" @click="onPaymentClick"> {{ t('Payment') }}</ion-button>
+            <ion-button shape="round" color="success" @click="onPaymentClick"> {{ t('Payment') }}</ion-button>
             </div>
            
         </ion-toolbar>

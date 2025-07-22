@@ -1,5 +1,6 @@
 <template>
-    <ion-card class="ion-no-margin mb-2 mt-2 border-2">
+ 
+    <ion-card class="ion-no-margin mb-2 mt-2">
         <ion-card-content>
 
                 <div>
@@ -9,7 +10,7 @@
                         <ComCurrency :value="data?.redeem_coupon_info.input_coupon_amount" /></strong>
                     </ion-chip> 
                     <ion-chip class="m-0 w-full" color="danger">
-                       <strong> {{ t("Used") }} <br>
+                       <strong> {{ t("Used Coupon") }} <br>
                          {{ data?.redeem_coupon_info.used_coupon_value }}</strong>
                     </ion-chip> 
                       <ion-chip class="m-0 w-full" color="primary">
@@ -21,7 +22,7 @@
                         <ComCurrency :value="data?.redeem_coupon_info.coupon_balance" /></strong>
                     </ion-chip>  
                      <ion-chip class="m-0 w-full" color="success">
-                       <strong> {{ t("Redeem Amount") }} <br>
+                       <strong> {{ t("Amount to Redeem") }} <br>
                         <ComCurrency :value="data?.redeem_coupon_info.actual_amount_balance" />
                     </strong>
                     </ion-chip>    
@@ -63,20 +64,20 @@
 <ion-grid >
   <!-- Table Header -->
   <ion-row class="ion-text-center ion-no-padding" color="light">
-    <ion-col><strong>{{ t('Type') }} </strong></ion-col>
+    <ion-col><strong>{{ t('Transaction Type') }} </strong></ion-col>
     <ion-col><strong>{{ t('Markup %') }} </strong></ion-col>
-    <ion-col><strong>{{ t('Actual Amt') }} </strong></ion-col>
-    <ion-col><strong>{{ t(' Coupon Amt') }}</strong></ion-col>
+    <ion-col><strong>{{ t('Actual Amount') }} </strong></ion-col>
+    <ion-col><strong>{{ t('Coupon Value') }}</strong></ion-col>
   </ion-row>
   <ion-row
     v-for="(txn, index) in data.redeem_coupon_info.coupon_transaction"
     :key="index"
     class="ion-text-center"
   >
-    <ion-col>{{ txn.transaction_type }}</ion-col>
-    <ion-col>{{ txn.markup_percentage }}</ion-col>
-    <ion-col>{{ txn.input_actual_amount }}</ion-col>
-    <ion-col>{{ txn.coupon_amount }}</ion-col>
+    <ion-col>{{ t(txn.transaction_type) }}</ion-col>
+    <ion-col>{{ parseFloat(txn.markup_percentage).toFixed(2) }} %</ion-col>
+    <ion-col><ComCurrency :value="txn.input_actual_amount" /></ion-col>
+    <ion-col><ComCurrency :value="txn.coupon_amount" /></ion-col>
   </ion-row>
 </ion-grid>
 

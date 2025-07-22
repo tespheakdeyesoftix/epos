@@ -13,7 +13,7 @@ import { useRouter } from 'vue-router';
 import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { Capacitor } from '@capacitor/core';
-
+import {  initializeScanner } from '@/helpers/scan-barcode.js'
  
  import { StatusBar, Style } from '@capacitor/status-bar';
 const ionRouter = useIonRouter();
@@ -30,14 +30,16 @@ app.setIonRouter(ionRouter)
 app.setRoute(route)
 app.setRouter(router)
  
+
 // Watch for route changes and update the title
 watch(() => route.meta.title, (newTitle) => {
   title.value = newTitle || 'ePOS';
 
 });
-  
-onMounted(async ()=>{
- 
+
+
+
+onMounted(async ()=>{ 
   if(Capacitor.getPlatform()!=="web"){
 const toolbarColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--ion-toolbar-background')
@@ -47,7 +49,11 @@ const toolbarColor = getComputedStyle(document.documentElement)
     await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
     await StatusBar.setBackgroundColor({color: toolbarColor }); // Use white icons for dark background
 
+
+    await initializeScanner();
   }
+
+
   
 })
 </script>

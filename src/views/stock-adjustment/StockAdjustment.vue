@@ -118,6 +118,7 @@ const _app = app;
 
 const { doc, productDoc, loadData, getStockLocationProduct, onCancel, onSave } = useStockAdjustment()
 async function onScanBarcode() {
+  
   const result = await app.onScanBarcode();
   if (result) {
     doc.value.product_code = result

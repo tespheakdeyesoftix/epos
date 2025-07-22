@@ -26,7 +26,10 @@
             
             <stack row equal>
                 <ion-label><strong> {{ t("POS Station") }} </strong>: {{ data?.coupon_info.pos_station }}</ion-label>
+                <ion-label><strong> {{ t("Expired Date") }} </strong>: {{ dayjs(data?.expired_date).format('DD/MM/YYYY h:mm A') }}</ion-label>
+
             </stack>
+
             
             <stack row equal>
                 <ion-label><strong> {{ t("Price") }} </strong>: <ComCurrency :value="data?.coupon_info.price"/></ion-label>

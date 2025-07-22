@@ -14,6 +14,7 @@
     "apk": "ionic build --proc && npx cap copy && npx cap sync && npx cap open android"
   },
   "dependencies": {
+    "@capacitor-mlkit/barcode-scanning": "^7.2.1",
     "@capacitor/android": "7.2.0",
     "@capacitor/app": "7.0.0",
     "@capacitor/camera": "^7.0.0",
@@ -29,6 +30,7 @@
     "@zxing/library": "^0.21.3",
     "capacitor-esc-pos-printer": "github:andreidigori/capacitor-esc-pos-printer",
     "capacitor-plugin-safe-area": "4.0.0",
+    "capacitor-sunmi-printer-v7": "^0.5.7",
     "capacitor-tcp-socket": "^7.1.0",
     "dayjs": "^1.11.13",
     "echarts": "^5.6.0",

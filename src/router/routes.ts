@@ -280,6 +280,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Setting.vue'),
     meta: { requiresAuth: true }
   },
+  
+ 
 
 
   

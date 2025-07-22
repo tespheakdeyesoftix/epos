@@ -11,8 +11,8 @@ import ComAuth from '@/views/components/public/ComAuth.vue';
 import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
 import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
 import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
-
-import ComEditCustomer from "@/views/customer/components/ComEditCustomer.vue"; 
+import { Capacitor } from '@capacitor/core';
+import { onScanBarcodeAndroid } from '@/helpers/scan-barcode.js'
 
 import { isPlatform,getPlatforms } from '@ionic/vue';
  import WebSocketPrinter from "@/helpers/websocket-printer.js"
@@ -20,6 +20,7 @@ import { isPlatform,getPlatforms } from '@ionic/vue';
 import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
+
 dayjs.extend(isoWeek)
 
 import { useAuth } from "@/hooks/useAuth";
@@ -206,7 +207,8 @@ export async function openPopOver(props, event) {
 }
 
 export async function onScanBarcode() {
-  const result = openModal({
+  if(Capacitor.getPlatform() == "web"){
+const result = openModal({
     component: ComScanBarcode,
     componentProps: {
       title: "Scan Barcode",
@@ -214,6 +216,16 @@ export async function onScanBarcode() {
   });
 
   return result;
+  } else if (Capacitor.getPlatform()=="android"){
+    const result = await onScanBarcodeAndroid();
+    if(result?.rawValue){
+      return result.rawValue 
+    }
+    return false
+    
+
+  }
+  
 }
 
 export function getNumber(num, decimalDigits) {

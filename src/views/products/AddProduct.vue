@@ -14,6 +14,7 @@
       </template>
     </ToolBar>
     <ion-content color="light"> 
+      <div class="fixed-container">
       <ion-segment style="margin-top: 10px;">
         <ion-segment-button value="product_information" content-id="product_information">
           <ion-label>{{ t("Product Information") }}</ion-label>
@@ -30,6 +31,7 @@
           <ComProductPrice />
         </ion-segment-content>
       </ion-segment-view>
+      </div>
     </ion-content>
     <ion-footer class="ion-padding-start ion-padding-end">
       <ion-toolbar color="tranparency">
