@@ -8,7 +8,7 @@
   
   <Message v-if="doc.name && doc.docstatus == 0 && !docChanged" severity="info" class="mb-3">{{ t('Submit this document to confirm') }}</Message>
   <Message v-if="doc.pos_profile" severity="success" class="mb-3">{{ t('Current Balance:') }} <ComCurrency :value="creditBalance" /> </Message>
-  
+ 
   <stack>
       <stack row equal>
         <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('Select Store')" @onSelected="onSelectPOSProfile" />
@@ -88,13 +88,14 @@ const beepSound = new Audio(beep)
 
 const props = defineProps({
   docname: String,
-  docListRef:Object
+  docListRef:Object,
+  loadData:Function
 })
 
 const creditBalance = ref(0)
 
 const t = window.t
-const paymentTypes = app.setting.pos_config.payment_type
+const paymentTypes = app.setting?.pos_config?.payment_type
 
 const doc = ref({
   business_branch: app.setting.property?.property_name,
@@ -143,13 +144,16 @@ const totalPaymentAmount = computed(() => {
   )
 })
 
-function onSelectPOSProfile(profile){
+async function onSelectPOSProfile(profile){
+
  
-  const res = app.getApi("epos_restaurant_2023.selling.doctype.store_payment.store_payment.get_vendor_credit_balance",{
+  const res = await app.getApi("epos_restaurant_2023.selling.doctype.store_payment.store_payment.get_vendor_credit_balance",{
     pos_profile:profile.name
   });
+  
   if(res.data){
-    creditBalance.value = res.data
+     
+    creditBalance.value = res.data.balance
   }
 
 }
@@ -177,13 +181,24 @@ async function onSubmit() {
   const l =await app.showLoading();
   const saveDoc = JSON.parse(JSON.stringify(doc.value))
   saveDoc.posting_date = dayjs(saveDoc.posting_date).format('YYYY-MM-DD')
-  await app.submitDoc(saveDoc)
+  const res =  await app.submitDoc(saveDoc)
+ 
 
-       beepSound.currentTime = 0
+  if(res.data){
+   beepSound.currentTime = 0
       beepSound.play()
-    app.showSuccess("Submit successfully")  
-  props.docListRef.value.onRefresh();
-  modalController.dismiss();
+    app.showSuccess("Submit successfully")
+
+        
+  if(props.docListRef?.value){
+
+    props.docListRef.value.onRefresh();
+  }    
+    modalController.dismiss();
+
+  }
+
+
 
   await l.dismiss();
 }
@@ -201,6 +216,14 @@ async function onSave() {
         updateDocChangeStatus(result.data);
     app.showSuccess(saveDoc.name ? 'Update successfully.' : 'Added successfully.')
 
+  }
+
+  if(props.docListRef?.value){
+    props.docListRef.value.onRefresh();
+  } 
+
+  if(props.loadData){
+    props.loadData(false)
   }
   
   await loading.dismiss()
@@ -235,10 +258,13 @@ onMounted(async () => {
   if (props.docname) {
     const l = await app.showLoading()
     const res = await app.getDoc('Store Payment', props.docname)
+
     if (res.data) {
     
      updateDocChangeStatus(res.data);
     }
+    
+    onSelectPOSProfile({name:doc.value.pos_profile});
     await l.dismiss()
   } else {
      updateDocChangeStatus(doc.value);

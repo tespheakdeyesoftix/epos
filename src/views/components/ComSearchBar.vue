@@ -55,9 +55,10 @@ defineExpose({
   onSetFocus
 })
 onMounted(()=>{
-  
-
-
+ 
+  if( Capacitor.getPlatform()=="web"){
     onSetFocus()
+  }
+    
 })
 </script>

@@ -1,6 +1,6 @@
 import { ref, onMounted,nextTick } from "vue";
 import { getDocList } from "@/services/api-service";
- 
+ import { Capacitor } from '@capacitor/core';
 import { useApp } from "./useApp";
 import dayjs from "dayjs";
 
@@ -144,8 +144,11 @@ export function useDocList(props) {
       data.value = await getData();
       
       await l.dismiss();
-   
-      txtSearchRef.value.onSetFocus()
+     
+     if(Capacitor.getPlatform() =="web"){
+txtSearchRef.value.onSetFocus()
+     }
+      
     }
   }
 

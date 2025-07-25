@@ -8,6 +8,7 @@ const isCashierShiftOpened = ref(false)
 const exchange_rate = ref(1)
 const change_exchange_rate =  ref(1)
 const appMenus = ref([])
+const bluetoothPrinters = ref([])
 
 export function useApp() {
 
@@ -90,6 +91,7 @@ export function useApp() {
    change_exchange_rate,
    exchange_rate,
    appMenus,
+   bluetoothPrinters,
     getMeta,
     getDoctypeDefaultFields
 };

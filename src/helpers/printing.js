@@ -2,9 +2,8 @@ import { CapacitorHttp } from '@capacitor/core';
 import ComPrintPreview from "@/views/components/public/ComPrintPreview.vue"
 import ComSelectPrinter from '@/views/components/public/ComSelectPrinter.vue';
 import html2canvas from 'html2canvas';
-
  import { TcpSocket,DataEncoding  } from 'capacitor-tcp-socket';
-
+ 
 export async function onPrint(options={
   doctype:"",
   docname:"", 
@@ -174,7 +173,7 @@ export async function getPrintFormat(pos_profile){
   return []
 }
 
- export async function printReceipt() {
+ export async function printReceiptBase64ToNetworkPrinter() {
   try {
     // 1. Fetch base64 image from API
     const response = await app.getApi("epos_restaurant_2023.api.printing.convertimg");
@@ -301,3 +300,5 @@ export async function getPrintFormat(pos_profile){
     throw new Error('Print failed: ' + error.message);
   }
 }
+ 
+  

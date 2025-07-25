@@ -280,6 +280,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/Setting.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/print-barcode",
+    component: () => import('@/views/PrintBarcode.vue'),
+    meta: { requiresAuth: true }
+  },
   
  
 

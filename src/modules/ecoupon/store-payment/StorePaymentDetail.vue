@@ -114,7 +114,6 @@ import ComAddPayment from "@/modules/ecoupon/store-payment/ComAddPayment.vue"
 const t = window.t
 
 const data = ref(null)
-const docListRef = ref(null)
 
 
 async function onPrint(){
@@ -139,33 +138,30 @@ function getCurrencySymbol(paymentType) {
 }
 
 
-async function loadData() {
-  const l = await app.showLoading()
+async function loadData(showLoading =true) {
+  let l =null;
+  if (showLoading) l =  await app.showLoading()
 
   const res = await app.getDoc("Store Payment", app.route.params.name)
   if (res.data) data.value = res.data
 
-  await l.dismiss()
+  if (l) await l.dismiss()
 }
 
 function onClose() {
   app.router.back()
 }
 
-async function onEdit() {
-  const modal = await app.openModal({
+function onEdit() {
+  app.openModal({
     component: ComAddPayment,
     componentProps: {
       docname: data.value?.name,
-      docListRef: docListRef
+      loadData: loadData
     },
     cssClass: "store-payment-modal"
   })
-
-  
-
-  // Refresh only data, not the whole page
-  await loadData()
+ 
 }
 
 

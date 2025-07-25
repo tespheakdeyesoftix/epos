@@ -12,7 +12,8 @@
         </ion-text>
         
       </div>
-      <!-- <ion-button @click="printReceipt">Print me</ion-button> -->
+    
+<ion-button routerLink="/print-barcode">scan barcode</ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">
@@ -46,13 +47,15 @@ import {  logOutOutline } from 'ionicons/icons';
 import ComWorkingDayButton from '@/views/shift/components/ComWorkingDayButton.vue';
 import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
 import HomeButton from '@/views/components/public/HomeButton.vue';
-
+import { onBeforeRouteLeave } from 'vue-router'
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
 
+import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
+import { useApp } from "@/hooks/useApp";
+const {bluetoothPrinters} = useApp() 
+ const t = window.t;
  
-const t = window.t;
- 
-const { logout } = useAuth();
+const { logout,isAuthenticated } = useAuth();
 const setting = ref(app.setting);
  
 function getDynamicComponent(component){
@@ -64,126 +67,76 @@ function getDynamicComponent(component){
    }
 }
  
-import { SunmiPrinter,AlignmentModeEnum } from 'capacitor-sunmi-printer-v7';
- async function printReceipt() {
+import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
+ 
+async function onFindPrinter(){
+  // Optional: listen to scan results
+  CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
+    console.log('Discovered printers:', devices);
+  });
+
+  // Start scanning
+  await CapacitorThermalPrinter.startScan();
+}
+
+async function onConnectPrinter(){
+ 
+  const result = await CapacitorThermalPrinter.connect({ address:"DC:0D:30:6F:9C:B4" });
+  console.log('Connected:', result);
+ 
+
+}
+async function printReceipt() {
+  
   try {
+        const response = await app.getApi("epos_restaurant_2023.api.printing.convertimg");
+    const base64Image = response.data;
+    const printerWidthMM = (576 * 25.4) / 200; // ≈73mm for 200dpi
 
+    await CapacitorThermalPrinter.begin()
+     .dpi(200) // Set DPI to match your calculation
+  .limitWidth(printerWidthMM) // Set width in millimeters
+    .align('center')
 
-    // Initialize printer
-    await SunmiPrinter.printerInit();
-    
-    // Center align header
-    await SunmiPrinter.setAlignment({ alignment: AlignmentModeEnum.CENTER });
-    await SunmiPrinter.setBold({ enable:true });
-    await SunmiPrinter.printText({ text: 'MY RESTAURANT\n' });
-    await SunmiPrinter.setBold({ enable:false });
-    await SunmiPrinter.printText({ text: 'Tel: 012 345 678\n\n' });
-    
-    // Left align body
-    await SunmiPrinter.setAlignment({ alignment: AlignmentModeEnum.LEFT });
-    await SunmiPrinter.printText({ 
-      text: `Date: ${new Date().toLocaleDateString()}\n` +
-            `Time: ${new Date().toLocaleTimeString()}\n` +
-            `Order #: ${Math.floor(1000 + Math.random() * 9000)}\n\n`
-    });
-    
-    // Column headers (38 chars total)
-    await SunmiPrinter.printColumnsText({
-      lines: [
-        { text: 'ITEM', width: 20, align: AlignmentModeEnum.LEFT },   // Left
-        { text: 'QTY', width: 6, align: AlignmentModeEnum.CENTER },     // Center
-        { text: 'PRICE', width: 12, align: AlignmentModeEnum.LEFT }   // Right
-      ]
-    });
-    
-    // Divider line (38 chars)
-    await SunmiPrinter.printText({ text: '-'.repeat(32) + '\n' });
-    
-    // Sample items
-    const items = [
-      { name: 'Cheeseburger fried rice with suup', qty: 2, price: 8.50 },
-      { name: 'Cheeseburger', qty: 2, price: 8.50 },
-      { name: 'បាយឆាសាច់ គោ', qty: 2, price: 8.50 },
-      { name: 'French Fries', qty: 1, price: 3.00 },
-      { name: 'Soda', qty: 2, price: 2.50 }
-    ];
-    
-    // Print items (with word wrapping for long names)
-    for (const item of items) {
-         await SunmiPrinter.printColumnsText({
-          lines: [
-            { text: item.name, width: 20, align: AlignmentModeEnum.LEFT },
-            { text: item.qty.toString(), width: 6, align: AlignmentModeEnum.CENTER },
-            { text: item.price.toString(), width: 12, align: AlignmentModeEnum.LEFT }
-          ]
-        });
-      
-    }
-    
-    // Totals
-    const subtotal = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
-    const tax = subtotal * 0.08;
-    const total = subtotal + tax;
-    
-    await SunmiPrinter.printText({ text: '-'.repeat(32) + '\n' });
-    
-    await SunmiPrinter.printColumnsText({
-      lines: [
-        { text: 'SUBTOTAL', width: 25, align: AlignmentModeEnum.LEFT },
-        { text: `$${subtotal.toFixed(2)}`, width:8, align:  AlignmentModeEnum.LEFT}
-      ]
-    });
-    
-    await SunmiPrinter.printColumnsText({
-      lines: [
-        { text: 'TAX (8%)', width: 26, align: 0 },
-        { text: `$${tax.toFixed(2)}`, width: 12, align: 2 }
-      ]
-    });
-    
-    await SunmiPrinter.printText({ text: '='.repeat(32) + '\n' });
-    
-    await SunmiPrinter.printColumnsText({
-      lines: [
-        { text: 'TOTAL', width: 25, align:  AlignmentModeEnum.LEFT, bold: true },
-        { text: `$${total.toFixed(2)}`, width: 8, align: AlignmentModeEnum.LEFT, bold: true }
-      ]
-    });
-    
-    // Footer
-    await SunmiPrinter.setAlignment({ alignment: AlignmentModeEnum.CENTER });
-    await SunmiPrinter.printText({ text: '\nThank you!\n' });
-    await SunmiPrinter.printText({ text: 'Visit us again\n\n' });
-    
-    // Finish
-    await SunmiPrinter.lineWrap(3);
-    await SunmiPrinter.cutPaper();
-    
-  } catch (error) {
-    console.error('Printing error:', error);
+      .image(base64Image)
+      .cutPaper()
+      .write();
+
+    console.log('✅ Printed image successfully');
+  } catch (err) {
+    console.error('❌ Failed to print image:', err);
   }
 }
+ 
+const tsplLabel = `
+SIZE 51 mm, 25 mm
+GAP 2 mm, 0 mm
+CLS
+TEXT 20,20,"2",0,1,0.8,"Fried rice beef with"
+TEXT 20,40,"2",0,1,0.8,"port and chicken"
+BARCODE 30,60,"128",60,1,0,2,2,"SKU123456"
+TEXT 204,100,"3",0,1,1,"SKU123456xxx"
+PRINT 1
+`;
 
-// Helper to split long item names
-function splitLongText(text, maxLength) {
-  
-  const words = text.split(' ');
-  const lines = [];
-  let currentLine = '';
-  
-  words.forEach(word => {
-    if ((currentLine + word).length <= maxLength) {
-      currentLine += (currentLine ? ' ' : '') + word.trim();
-    } else {
-      lines.push(currentLine);
-      currentLine = word.trim();
+import html2canvas from 'html2canvas';
+ async function printLabel() {
+   try {
+   const encoder = new TextEncoder();
+const bytes = encoder.encode(tsplLabel);
+
+      await CapacitorThermalPrinter
+        .begin()
+        .raw(Array.from(bytes)) 
+        .write();
+      
+    } catch (error) {
+     
+      console.error(error);
     }
-  });
-  
-  if (currentLine) lines.push(currentLine);
-  return lines;
 }
 
+ 
 
 onMounted(async ()=>{
  getAppMenu()
@@ -198,6 +151,16 @@ const onLogout = async () => {
   await logout();
   app.ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
+onBeforeRouteLeave((to, from, next) => {
+  
+ if (isAuthenticated.value && to.path == "/select-workspace"){
+  next(false)
+ }else {
+  next(); 
+ }
+  
+});
+
 </script>
 <style scoped>
 .wrapper-cover {
@@ -209,5 +172,23 @@ const onLogout = async () => {
 .menu-list  {
      max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;
 }
- 
+ .label-design {
+  font-family: sans-serif;
+  background: white;
+  margin: 0 auto;
+}
+.label-design h3 {
+  margin: 0;
+  font-size: 14px;
+}
+.price {
+  text-align: right;
+  font-weight: bold;
+}
+.barcode {
+  text-align: center;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
 </style>

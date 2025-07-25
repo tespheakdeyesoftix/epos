@@ -1,6 +1,6 @@
 <template>
   <ion-app>
-    <DrawerMenu v-if="isAuthenticated"  />
+    <DrawerMenu v-if="isAuthenticated && !hideDrawerRoutes.includes(currentRoute)"  />
     <ion-router-outlet id="main-content" />
   </ion-app>
 </template>
@@ -22,6 +22,8 @@ const  {checkUserLogin,isAuthenticated} = useAuth();
 const route = useRoute();
 const title = ref(route.meta.title || 'ePOS');
 const hideTab = ref(false);
+const currentRoute =route.path
+const hideDrawerRoutes = ["/login","/select-workspace"]
 
 const router = useRouter();
 

@@ -172,6 +172,7 @@ async function onSaveWorkspace() {
 
    await app.utils.getSetting()
   // navigate to home page
+ 
   ionRouter.navigate("/home", "forward", "replace");
 }
 
