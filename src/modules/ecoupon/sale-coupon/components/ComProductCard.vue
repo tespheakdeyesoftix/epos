@@ -82,7 +82,7 @@ width: 95%;
 }
 .content-product{
   padding: 4px;
-  max-height: 170px;
+  max-height: 173px;
   border-radius: 10px;
 }
 .card-product{
