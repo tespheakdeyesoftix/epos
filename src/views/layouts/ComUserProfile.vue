@@ -72,12 +72,26 @@ import { useAuth } from "@/hooks/useAuth"
 import { personOutline, helpCircleOutline, logOutOutline,languageOutline, settingsOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { useApp } from '@/hooks/useApp';
+
+const langCodeMap: Record<string, string> = {
+  en: 'en',
+  kh: 'km', // frontend 'kh' maps to backend 'km'
+};
+
 const modal = ref();
 const isOpenChangeLanguage = ref(false);
 const {languages} = useApp()
 const { t ,locale} = useI18n();
-const onDismissModal = (lang:string) =>{
+const onDismissModal = async (lang:string) =>{
   isOpenChangeLanguage.value = false;
+
+    const backendLang = langCodeMap[lang] || lang;
+
+  let res = await app.postApi('epos_restaurant_2023.utils.change_language', {
+      user: currentUser.value.name, // or currentUser.value.id depending on backend
+      lang: backendLang
+    });
+    
   locale.value = lang;
       window.localStorage.setItem("lang",locale.value)
  
