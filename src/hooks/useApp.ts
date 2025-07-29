@@ -10,7 +10,7 @@ const exchange_rate_input = ref(1)
 const change_exchange_rate =  ref(1)
 const appMenus = ref([])
 const bluetoothPrinters = ref([])
-const userPreference = reactive({sale_ui_setting:{
+let userPreference = reactive({sale_ui_setting:{
       product_card_height:200,
       product_columns:3,
       product_container_width:65
@@ -87,7 +87,9 @@ export function useApp() {
  
     const preference = await app.storageService.getItem("userPreference");
     if(preference){
-      userPreference.value = JSON.parse(preference)
+      userPreference =
+      Object.assign(userPreference,  JSON.parse(preference))
+
     }
   }
 
