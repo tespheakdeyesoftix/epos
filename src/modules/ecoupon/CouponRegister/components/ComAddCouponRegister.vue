@@ -21,8 +21,9 @@
 <script setup>
 import { modalController } from "@ionic/vue";
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import dayjs from 'dayjs';
-
+const router = useRouter();
 const t = window.t;
 
 const props = defineProps({
@@ -50,11 +51,16 @@ async function onSave() {
 
   const result = await app.createDoc('Coupon Register', saveDoc);
 
+  
+  await loading.dismiss();
+  if (result?.data?.name) {
+    // Navigate to the new page
+    router.push(`/coupon-register/${result.data.name}`);
+  }
   modalController.dismiss(result.data, 'confirm');
 
   if (props.docListRef?.value) {
     props.docListRef.value.onRefresh();
   }
-  await loading.dismiss();
 }
 </script>
