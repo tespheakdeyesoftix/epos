@@ -5,7 +5,7 @@
   <ion-row>
     <ion-col
       size="12"
-      size-lg="4"
+      size-lg="3"
       v-for="(p, index) in products"
       :key="index"
     >

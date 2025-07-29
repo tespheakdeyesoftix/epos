@@ -88,7 +88,7 @@ const drawerMenus = computed(()=>{
 
 const onLogout = async () => {
   await logout();
-  ionRouter.navigate('/select-workspace', 'back', 'replace');
+  app.ionRouter.navigate('/select-workspace', 'back', 'replace');
 };
  
 

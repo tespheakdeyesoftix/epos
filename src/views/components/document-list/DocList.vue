@@ -10,15 +10,16 @@
 
     <Loading v-if="loading" />
     <template v-else>
+        
         <slot name="filter">
-            <ion-grid>
+            <ion-grid class="filter-grid" >
                 <ion-row>
                     <ion-col :size="12" :size-md="10" >
                         <ComFilter  :filterOptions="options.filterOptions" @onFilter="onFilter"/>
                     </ion-col>
                     <ion-col :size="2" v-if="data.length>0" class="ion-hide-sm-down">
                         <div style="display: flex; justify-content: right;">
-                            <ion-chip >
+                            <ion-chip  v-if="hideTopShowingRecord">
                                {{ t("Showing Record") }} {{ data.length  }} {{ t("of") }} {{ totalRecord }}
                             </ion-chip>
                             <ion-button @click="onReloadData" fill="clear" shape="round"  v-tooltip.left="`${t('Refresh Data')}`">
@@ -121,7 +122,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import dayjs from 'dayjs';
 
-import { useAttrs, watch } from "vue"
+import {  useAttrs, watch  } from "vue"
 
 import { useDocList } from '@/hooks/useDocList';
 import ComSearchBar from '../ComSearchBar.vue';
@@ -130,6 +131,7 @@ import ComFilter from '@/views/components/document-list/ComFilter.vue';
 import ComNoRecord from '@/views/components/document-list/ComNoRecord.vue';
 import { refreshOutline } from 'ionicons/icons';
 const plateform= app.utils.getPlateform();
+ 
 const attrs = useAttrs();
 const t = window.t;
 
@@ -143,13 +145,18 @@ const props = defineProps({
             showBarcodeScanner: false,
             fields: ["name"]
         },
-        noRecordActions:[]
+        noRecordActions:[],
+        hideTopShowingRecord:{
+            type:Boolean,
+            default:false
+        }
     },
     contentRef:Object
 
 
 })
 
+ 
 const emptyRecordMessage = t("empty_record_message", {doctype: props.docType})
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
@@ -198,7 +205,7 @@ defineExpose({
    onReloadData
 })
 
-
+ 
 
 </script>
  

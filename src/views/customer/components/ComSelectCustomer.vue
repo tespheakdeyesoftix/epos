@@ -1,6 +1,8 @@
 <template>
         
   <BaseModal :title="t('Select Customer')">
+
+ 
             <DocList docType="Customer" :options="options"> 
                 <template   v-slot:default="{ item }">
                     <ComCustomerCard v-for="(d,index) in item" :key="index"  :data="d" @click="onSelectCustomer(d)"/>
@@ -26,7 +28,7 @@ const options = {
       order: "desc",
   },
   filters:[["is_disabled","=",0]],
- 
+  hideTopShowingRecord: true
 }
 
 function onSelectCustomer(customer){

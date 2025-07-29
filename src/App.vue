@@ -14,8 +14,8 @@ import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { Capacitor } from '@capacitor/core';
 import {  initializeScanner } from '@/helpers/scan-barcode.js'
- 
- import { StatusBar, Style } from '@capacitor/status-bar';
+import { StatusBar, Style } from '@capacitor/status-bar';
+
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();
 

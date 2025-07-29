@@ -28,7 +28,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 
 
-const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate,change_exchange_rate } = useApp();
+const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate_input,exchange_rate,change_exchange_rate } = useApp();
 
 
 export function imageUrl(imageUrl, baseUrl = "") {
@@ -553,6 +553,7 @@ export async function getSetting() {
   const res = await app.postApi("epos_restaurant_2023.api.setting.get_settings", {
     station_name: station_name
   })
+  
  
 
   if (res.data) {
@@ -586,11 +587,15 @@ export async function getSetting() {
 }
 
 export async function getExchangeRate(){
+
+ 
   const res=await app.getApi("epos_restaurant_2023.api.setting.get_exchange_rate");
   if(res.data){
     app.setting.exchange_rate = res.data[0].exchange_rate;
     app.setting.change_exchange_rate = res.data[0].change_exchange_rate;
+    app.setting.exchange_rate_input = res.data[0].exchange_rate_input;
     exchange_rate.value = res.data[0].exchange_rate;
+    exchange_rate_input.value = res.data[0].exchange_rate_input;
     change_exchange_rate.value = res.data[0].change_exchange_rate;
   }
 }

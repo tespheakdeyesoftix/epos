@@ -14,7 +14,7 @@ export function useDocList(props) {
   const keyword = ref(''); // no explicit type
   const startIndex = ref(0);
   const loadingMoreData = ref(false);
-  const defaultFilters = structuredClone(props.options.filters || []);
+  const defaultFilters = JSON.parse(JSON.stringify(props.options.filters || '[]'));
   let options = ref(props.options);
   const txtSearchRef  = ref(null)
   const totalRecord = ref(0)
@@ -174,7 +174,7 @@ txtSearchRef.value.onSetFocus()
 
     canLoadMore.value = true;
     startIndex.value = 0;
-    options.value.filters = structuredClone(defaultFilters || []);
+    options.value.filters = JSON.parse(JSON.stringify(defaultFilters || '[]'));
     if (f) {
       Object.keys(f).forEach((key) => {
         const fieldType = options.value.filterOptions.find(x=>x.fieldname == key).fieldtype;

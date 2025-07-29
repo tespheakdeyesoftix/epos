@@ -2,7 +2,6 @@
   <ion-page>
     <AppBar>{{ t(currentMenu?.title || "Home") }} </AppBar>
     <ion-content :fullscreen="true">
-      
       <div class="wrapper-cover flex justify-content-end flex-column align-items-center m-3 mb-0 border-round-3xl pb-5">
         <ion-avatar style="width: 100px; height: 100px;" > 
         <Img :src="setting.app_logo"/>
@@ -10,10 +9,7 @@
         <ion-text>
             <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name || "ePOS") }}</h1>
         </ion-text>
-        
       </div>
-    
-<ion-button routerLink="/print-barcode">scan barcode</ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">
@@ -23,9 +19,7 @@
                 <!-- render dynamic component -->
                  <component :is="getDynamicComponent(m.component)" />
               </template>
-            
               <HomeButton v-else :svg="m.icon" @click="onOpenRoute(m)" :color="m.color || 'primary'" >  {{ t(m.title) }}
-               
               </HomeButton>
             </ion-col>
             <ion-col size-lg="3" size-xs="6" class="flex">

@@ -52,8 +52,8 @@ const {onSelectProduct} = useSaleCoupon()
 <style scoped>
 .img-product{
 width: 100%;
-max-height: 150px;
-min-height: 150px;
+max-height: 200px;
+min-height: 170px;
 border-radius: 10px;
 }
 .price-tag{
@@ -82,7 +82,8 @@ width: 95%;
 }
 .content-product{
   padding: 4px;
-  max-height: 157px;
+  height:180px;
+  max-height: 200px;
   border-radius: 10px;
 }
 .card-product{

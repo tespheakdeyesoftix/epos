@@ -2,14 +2,15 @@
   <div class="ion-padding">
     <stack row equal itemClass="col-6 sm:col-6 lg:col-3" gap="0px">
       <Card color="primary" label="Opening Balance" :value="data?.opening_balance || 0" />
-      <Card color="warning" label="Debit" :value="data?.debit || 0" />
       <Card color="success" label="Credit" :value="data?.credit || 0" />
+      <Card color="warning" label="Debit" :value="data?.debit || 0" />
       <Card color="tertiary" label="Balance" :value="data?.balance || 0" />
     </stack>
   </div>
 </template>
 
 <script setup lang="tsx">
+import dayjs from 'dayjs'
 import { ref, onMounted, defineComponent } from 'vue'
 
 const t = window.t
@@ -41,9 +42,9 @@ const Card = defineComponent({
   }
 })
 
-function getData() {
-  const workingDay = app.setting?.working_day?.name || new Date().toISOString().split('T')[0]
 
+function getData() {
+  const workingDay = app.setting?.working_day?.posting_date || dayjs().format("YYYY-MM-DD")
   app.getApi('epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_vendor_credit_balance', {
     vendor: app.route.params.name,
     
@@ -57,6 +58,7 @@ function getData() {
     }
   })  
 }
+
 
 onMounted(() => {
   getData()

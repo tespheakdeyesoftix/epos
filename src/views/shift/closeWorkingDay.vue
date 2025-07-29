@@ -52,7 +52,7 @@ async function onCloseWorkingDay(){
     if(!result) return 
     const loading = await app.showLoading();
     const res = await app.setValue("Working Day",app.setting.working_day.name,{
-    is_closed : 0,
+    is_closed : 1,
     close_pos_profile: app.setting.pos_profile.name,
     closed_note: doc.note,
     closed_date: dayjs().format('YYYY-MM-DD HH:mm:ss')

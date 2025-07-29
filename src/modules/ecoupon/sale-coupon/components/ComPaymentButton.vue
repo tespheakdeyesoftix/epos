@@ -8,7 +8,7 @@
                 {{ t('Payment') }} 
                 </span>
                    <ion-chip class="small-chip" color="primary">
-              <ComCurrency :value="1" :currency="mainCurrency" /> <span class="mx-2">=</span>   
+              <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
         <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
                 </ion-chip>
          </stack>
@@ -33,7 +33,14 @@ import { ref } from "vue";
 const {grandTotal, grandTotalSecondCurrency, onPayment } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
-const exchangeRate = app.setting.exchange_rate
+const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency);
+const exchangeRate = app.setting.exchange_rate_input
+
+ 
+if(second_currency.value == mainCurrency.value){
+    second_currency.value = app.setting.currency
+}
+ 
 </script>
 <style scoped>
 .big-chip{

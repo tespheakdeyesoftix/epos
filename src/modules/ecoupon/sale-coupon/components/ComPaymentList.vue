@@ -23,8 +23,8 @@
                 </div>
                <div>
                 <ion-chip>
-                   Exchange Rate: <ComCurrency :value="1" :currency="mainCurrency"/> =
-  <ComCurrency :value="exchangeRate" :currency="secondCurrency"/>     
+                   {{t("Exchange Rate")}}: <ComCurrency :value="1" :currency="mainExchangeRateCurrency"/> =
+  <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency"/>     
                 </ion-chip>
              
                </div>
@@ -100,8 +100,16 @@ const t = window.t;
 const {grandTotal,grandTotalSecondCurrency,totalPaymentAmount,paymentBalance,changeAmount, saleDoc} = useSaleCoupon()
 const secondCurrency = app.setting.second_currency;
 const mainCurrency = app.setting.currency;
+const mainExchangeRateCurrency = app.setting.exchange_rate_main_currency;
+const exchangeRateInput = app.setting.exchange_rate_input;
 const exchangeRate = app.setting.exchange_rate;
 const changeExchangeRate = app.setting.change_exchange_rate;
+
+let exchangeCurrency = app.setting.second_currency;
+if(exchangeCurrency == mainExchangeRateCurrency){
+    exchangeCurrency = app.setting.currency
+}
+
 function onDeletePayment (index){
     saleDoc.value.payment.splice(index,1)
 }

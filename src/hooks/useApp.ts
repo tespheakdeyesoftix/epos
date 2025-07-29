@@ -6,6 +6,7 @@ const isAppLoadReady = ref(false)
 const isWorkingDayOpened = ref(false)
 const isCashierShiftOpened = ref(false)
 const exchange_rate = ref(1)
+const exchange_rate_input = ref(1)
 const change_exchange_rate =  ref(1)
 const appMenus = ref([])
 const bluetoothPrinters = ref([])
@@ -89,6 +90,7 @@ export function useApp() {
    isWorkingDayOpened ,
    isCashierShiftOpened ,
    change_exchange_rate,
+   exchange_rate_input,
    exchange_rate,
    appMenus,
    bluetoothPrinters,

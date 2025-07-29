@@ -48,7 +48,7 @@ const options = {
         {fieldname:"posting_date",header:"Date",fieldtype:"Date"},
         // {fieldname:"working_day",header:"Working Day",fieldtype:"Date"},
         {fieldname:"cashier_shift",header:"Cashier Shift"},
-        {fieldname:"vendor_name",header:"Vendor"},
+        {fieldname:"vendor_name",header:"Vendor",url:"/store-detail",id_field:"vendor"},
         {fieldname:"payment_amount",header:"Payment Amount", fieldtype:"Currency"},
         {fieldname:"payment_types",header:"Payment Type",},
         {fieldname:"receive_by",header:"Receive By",},
