@@ -22,6 +22,10 @@
                             <ion-label>{{ t("Note") }}</ion-label>
                         </ion-item>
                          
+                      <ion-item button lines="full" @click="onOpenUISetting">
+                            <ion-label>{{ t("UI Setting") }}</ion-label>
+                        </ion-item>
+                         
 
                     </ion-list>
                 </ion-col>
@@ -44,15 +48,18 @@
 
 </template>
 <script setup >
+import { useApp } from '@/hooks/useApp';
 import { useSaleCoupon } from '@/hooks/useSaleCoupon';
 import ComOrderDetailModal from '@/modules/ecoupon/sale-coupon/components/ComOrderDetailModal.vue';
+import ComSaleUISetting from '@/views/components/ComSaleUISetting.vue';
 import { ref } from 'vue';
+
 const {saleDoc} = useSaleCoupon();
 
 const t = window.t;
 const popoverOpen = ref(false)
 const event = ref(null)
-
+const {getUserPreference} = useApp();
 function openPopover(e) {
  
   event.value = e
@@ -116,5 +123,23 @@ async function onDeleteOrder(){
     await l.dismiss()
  
 
+}
+
+
+async function onOpenUISetting(){
+
+    const result = await app.openModal({
+        component:ComSaleUISetting
+    })
+    alert(55)
+    console.log(result)
+    if(result){
+        //save setting 
+        await app.storageService.setItem("userPreference",JSON.stringify(result))
+    }
+     else {
+        // revert change to origninal
+        await getUserPreference()
+     }
 }
 </script>

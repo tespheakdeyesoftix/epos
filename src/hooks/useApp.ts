@@ -1,5 +1,5 @@
 
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
  
 const currentProperty = ref({property_name:""})
 const isAppLoadReady = ref(false)
@@ -10,7 +10,13 @@ const exchange_rate_input = ref(1)
 const change_exchange_rate =  ref(1)
 const appMenus = ref([])
 const bluetoothPrinters = ref([])
-
+const userPreference = reactive({sale_ui_setting:{
+      product_card_height:200,
+      product_columns:3,
+      product_container_width:65
+      }
+}
+)
 export function useApp() {
 
   const metas = ref<any[]>([])
@@ -77,9 +83,20 @@ export function useApp() {
   }
 
 
-  onMounted(()=>{
-      currentLanguage.value = window.storageService.getItem("lang") || "en";
-       
+  async function getUserPreference(){
+ 
+    const preference = await app.storageService.getItem("userPreference");
+    if(preference){
+      userPreference.value = JSON.parse(preference)
+    }
+  }
+
+  onMounted(async ()=>{
+      currentLanguage.value = window.storageService.getItem("lang") || "en";  
+
+      await getUserPreference()
+
+
   })
 
   return { 
@@ -94,6 +111,8 @@ export function useApp() {
    exchange_rate,
    appMenus,
    bluetoothPrinters,
+   userPreference,
+   getUserPreference,
     getMeta,
     getDoctypeDefaultFields
 };

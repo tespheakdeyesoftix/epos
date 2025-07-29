@@ -1,6 +1,6 @@
 <template>
 
-<ion-card button class="card-product"  @click="onSelectProduct(data)">
+<ion-card button class="card-product" :style="{height:(userPreference?.sale_ui_setting?.product_card_height || '150') + 'px'}"  @click="onSelectProduct(data)">
       <ion-card-content class="content-product" >
     <div v-if="plateform == 'mobile'" style="display: flex; align-items: center; gap: 10px;">
       <img :src="data.photo" alt="Image" style="width: 100px; height: 60px;" />
@@ -41,10 +41,11 @@ const t = window.t;
 import { onMounted, onUnmounted, ref } from "vue"
 const plateform = ref(app.utils.getPlateform())
 import ComCurrency from "@/views/components/public/ComCurrency.vue"
+import { useApp } from "@/hooks/useApp";
 const props = defineProps({
     data:Object
 })
-
+const {userPreference} =useApp()
 const {onSelectProduct} = useSaleCoupon()
  
 
@@ -82,8 +83,8 @@ width: 95%;
 }
 .content-product{
   padding: 4px;
-  height:180px;
-  max-height: 200px;
+  min-height:100px;
+  max-height: 300px;
   border-radius: 10px;
 }
 .card-product{

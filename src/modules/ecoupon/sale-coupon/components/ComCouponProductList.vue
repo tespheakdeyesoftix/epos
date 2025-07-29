@@ -5,7 +5,7 @@
   <ion-row>
     <ion-col
       size="12"
-      size-lg="3"
+      :size-lg="userPreference?.sale_ui_setting?.product_columns || 3"
       v-for="(p, index) in products"
       :key="index"
     >
@@ -20,5 +20,7 @@
     import {ref} from "vue"
     import {useProductMenu} from "@/hooks/useProductMenu"
     import ComProductCard from "@/modules/ecoupon/sale-coupon/components/ComProductCard.vue"
+import { useApp } from "@/hooks/useApp";
  const {products } = useProductMenu();
+ const {userPreference} = useApp()
         </script>

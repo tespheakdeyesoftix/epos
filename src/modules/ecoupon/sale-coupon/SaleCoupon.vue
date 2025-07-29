@@ -10,7 +10,7 @@
             </template>
         </ToolBar>
         <ion-content>
-          <ion-split-pane when="xs" content-id="main">
+          <ion-split-pane when="xs" content-id="main" :style="{'--side-width': (userPreference?.sale_ui_setting?.product_container_width || '65') + '%'}">
     <ion-menu content-id="main">
       <ion-content> 
         <ComCouponProductList />
@@ -56,15 +56,17 @@ import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSal
     import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
     import ComPaymentButton from "@/modules/ecoupon/sale-coupon/components/ComPaymentButton.vue"  
     import ComPendingOrderButton from "@/modules/ecoupon/sale-coupon/components/ComPendingOrderButton.vue"  
-  
+  import { useApp } from "@/hooks/useApp";
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
+const {userPreference} = useApp()
 const { saleDoc,initSaleDoc,getSaleDoc,saleType,pageRoute } = useSaleCoupon()
 import {
 
   IonSplitPane,
 
 } from '@ionic/vue';
+
 
 const t = window.t
  
@@ -102,8 +104,8 @@ next()
   background-color: var(--ion-color-light-tint);
 }
 ion-split-pane {
-    --side-width: 65%;
-    --side-max-width: 65%;
+    
+    --side-max-width: 75%;
     --border: 1px dashed #b3baff;
 }
 
