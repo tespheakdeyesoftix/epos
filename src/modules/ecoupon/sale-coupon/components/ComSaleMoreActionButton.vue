@@ -131,6 +131,8 @@ async function onOpenUISetting(){
     const result = await app.openModal({
         component:ComSaleUISetting
     })
+ 
+    console.log(result)
     if(result){
         //save setting 
         await app.storageService.setItem("userPreference",JSON.stringify(result))

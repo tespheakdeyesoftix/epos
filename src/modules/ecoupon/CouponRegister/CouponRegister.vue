@@ -1,0 +1,16 @@
+<template>
+      <ion-page>
+        <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
+        <ion-title> {{ t('Coupon Register') }}</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    
+   </ion-page>
+</template>
+<script setup>
+const t = window.t
+</script>

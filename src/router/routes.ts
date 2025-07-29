@@ -285,6 +285,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/PrintBarcode.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/coupon-register-list",
+    component: () => import('@/modules/ecoupon/CouponRegister/CouponRegisterList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/coupon-register/:name",
+    component: () => import('@/modules/ecoupon/CouponRegister/CouponRegister.vue'),
+    meta: { requiresAuth: true }
+  },
   
  
 
