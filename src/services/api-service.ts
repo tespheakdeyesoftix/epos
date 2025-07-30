@@ -192,7 +192,10 @@ export function submitDoc(doc: any) {
     const db = frappe.db()
 
     return db.submit(doc)
-        .then((doc) => ({ data: doc, error: null }))
+        .then((doc) => {
+            // pay beeb here
+            return { data: doc, error: null }
+        })
         .catch((error) => {
             handleErrorMessage(error);
             return { data: null, error }

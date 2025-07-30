@@ -10,6 +10,7 @@
     </ion-header>
 
     <ion-content>
+      {{ doc }}
       <div class="fix-container">
         <ion-card style="margin-top: 30px;">
           <ion-card-content>
