@@ -5,6 +5,7 @@
 
     <slot name="searchBar">
         <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch"
+        :focus="focus"
             :showBarcodeScanner="options.showBarcodeScanner"  ref="txtSearchRef"/>
     </slot>
 
@@ -75,13 +76,23 @@
                                 <ComCurrency :value="slotProps.data[col.fieldname]" />
                             </template>
                             <template v-else-if="col.url ">
-                                
-                                <router-link 
+                                    <template v-if="col.id_field">
+                                         <router-link 
+                                                v-if="slotProps.data[col.id_field]"
+                                                :to="`${col.url}/${slotProps.data[col.id_field]}`">
+                                                {{ slotProps.data[col.fieldname] }}
+                                            </router-link>
+                                            <ion-label v-else>{{ slotProps.data[col.fieldname] }}</ion-label>
+                                    </template>
+                                    <template v-else>
+<router-link 
                                     v-if="slotProps.data[col.fieldname]"
-                                    :to="`${col.url}/${slotProps.data[col.id_field] || slotProps.data[col.fieldname]}`">
+                                    :to="`${col.url}/${slotProps.data[col.fieldname]}`">
                                     {{ slotProps.data[col.fieldname] }}
-                                </router-link>
+                                    </router-link>
                                 <ion-label v-else>{{ slotProps.data[col.fieldname] }}</ion-label>
+                                    </template>
+                                    
                             </template>
                             <template v-else>
                                 <span v-if="col.fieldname == 'owner' || col.fieldname == 'modified_by'">
@@ -130,6 +141,7 @@ import ComDocCard from '@/views/components/document-list/ComDocCard.vue';
 import ComFilter from '@/views/components/document-list/ComFilter.vue';
 import ComNoRecord from '@/views/components/document-list/ComNoRecord.vue';
 import { refreshOutline } from 'ionicons/icons';
+
 const plateform= app.utils.getPlateform();
  
 const attrs = useAttrs();
@@ -151,8 +163,11 @@ const props = defineProps({
             default:false
         }
     },
-    contentRef:Object
-
+    contentRef:Object,
+    focus:{
+        type:Boolean,
+        default:true
+    }
 
 })
 
@@ -201,11 +216,22 @@ function addRecord(doc){
     data.value.unshift(doc)
 }
  
+function changeStatus(id,updatedData){
+    const row =  data.value.find(x=>x.id == id);
+    if(row){
+      Object.keys(updatedData).forEach(key => {
+        row[key] = updatedData[key]
+    });
+
+    }
+}
+ 
 
 defineExpose({
    onRefresh,
    onReloadData,
    addRecord,
+   changeStatus
 })
 
  

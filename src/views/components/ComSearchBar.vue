@@ -22,6 +22,10 @@ import { scan } from "ionicons/icons";
  const txtSearchRef = ref(null)
 const props = defineProps({
   showBarcodeScanner: Boolean,
+  focus:{
+    type:Boolean,
+    default:true
+  }
 });
 
 const emit = defineEmits();
@@ -56,7 +60,7 @@ defineExpose({
 })
 onMounted(()=>{
  
-  if( Capacitor.getPlatform()=="web"){
+  if( Capacitor.getPlatform()=="web" && props.focus){
     onSetFocus()
   }
     

@@ -42,7 +42,24 @@
             ref="docListRef"
             docType="Coupon Codes"
             :options="options"
-          />
+            :focus="false"
+          >
+        <template #coupon_status="{item}">
+        
+          <template v-if="item.coupon_status=='Saving...'">
+          <ion-spinner name="dots"></ion-spinner>
+                  {{ item.coupon_status }}
+            </template>
+          <template v-else-if ="item.coupon_status=='Done'">
+                <ion-icon :icon="checkmarkCircle" color="success" size="large"/>
+                  {{ t("Done") }}
+            </template>
+          <ComStatus :status="item.coupon_status" v-else />
+          
+<ion-label v-if="item.message" color="danger" >{{ item.message  }}</ion-label>
+          
+        </template>
+        </DocList>
         </div>
       </div>
     </ion-content>
@@ -55,8 +72,8 @@
 import { ref, onMounted } from 'vue';
 
 import dayjs from "dayjs";
-import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
-
+import { checkboxOutline, checkmarkCircle, checkmarkOutline, closeOutline } from 'ionicons/icons';
+import {handleErrorMessage} from "@/helpers/error-message.ts"
 const doc = ref(null);
 import PQueue from 'p-queue'
 
@@ -66,6 +83,7 @@ const options = {
     columns:[
         {fieldname:"coupon",header:"Coupon #",url:"/coupon-detail",id_field:"name"},
         {fieldname:"coupon_status",header:"Status",},
+     
  
     ],
     showSearchBar:true,
@@ -106,23 +124,37 @@ function onDelete(index) {
     coupon.value = "";
 }
 async function addCoupon() {
-   
-
   
 
   if (coupon.value == "") {
         app.showWarning("Plese enter or scan coupon code")
     } 
-    queue.add(() => addCouponQueue(coupon.value))
+
+      const coupon_data = {
+      id:app.utils.generateRandomString(),
+      coupon_register:doc.value.name,
+      coupon:coupon.value,
+      coupon_status:"Saving..."
+  }
+   docListRef.value.addRecord(coupon_data)
+
+    queue.add(() => addCouponQueue(JSON.parse(JSON.stringify( coupon_data))))
      coupon.value = ""
     inputRef.value.focus()
 }
-
-async function addCouponQueue(c){
- const res = await app.createDoc("Coupon Codes",{coupon: c,coupon_register:doc.value.name});
-    if(res.data){
-        docListRef.value.addRecord(res.data)
-    }
+ 
+async function addCouponQueue(coupon_data){
+  setTimeout(async () => {
+     delete coupon_data.coupon_status ;
+    const res = await app.createDoc("Coupon Codes", coupon_data);
+      if(res.data){
+            docListRef.value.changeStatus(coupon_data.id, {coupon_status:"Done",name:res.data.name})
+      }else {
+        const messages =  await handleErrorMessage(res.error)
+         docListRef.value.changeStatus(coupon_data.id,{ coupon_status:"Fail", message:(messages||[]).join(", ")})
+      }
+  }, 500);
+ 
 }
 
 
