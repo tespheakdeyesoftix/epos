@@ -208,6 +208,15 @@ function onRowDblClick(event) {
 function addRecord(doc) {
     data.value.unshift(doc)
 }
+function removeRecord(doc) {
+  const id_field = props.options?.id_field || "name";
+  const index = data.value.findIndex(item => item[id_field] === doc);
+  if (index !== -1) {
+    data.value.splice(index, 1);
+  }
+}
+
+
 
 function changeStatus(id, updatedData) {
     const row = data.value.find(x => x.id == id);
@@ -224,7 +233,8 @@ defineExpose({
     onRefresh,
     onReloadData,
     addRecord,
-    changeStatus
+    changeStatus,
+    removeRecord
 })
 
 
