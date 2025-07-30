@@ -131,7 +131,7 @@ async function onOpenUISetting(){
     const result = await app.openModal({
         component:ComSaleUISetting
     })
-    alert(55)
+ 
     console.log(result)
     if(result){
         //save setting 

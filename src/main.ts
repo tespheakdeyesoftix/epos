@@ -328,7 +328,6 @@ if (Capacitor.isNativePlatform()) {
 
   
 async function init() {
-  
   setup()
   router.isReady();
   app.mount("#app");
