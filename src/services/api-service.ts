@@ -1,7 +1,10 @@
 import { handleErrorMessage } from '@/helpers/error-message';
 import { FrappeApp } from 'frappe-js-sdk';
-
+import beep from '/assets/sound/submit.mp3'
 let frappe: FrappeApp | null = null;
+
+
+const beepSound = new Audio(beep)
 
 export function setFrappeAppUrl(url: string) {
 
@@ -194,6 +197,9 @@ export function submitDoc(doc: any) {
     return db.submit(doc)
         .then((doc) => {
             // pay beeb here
+             beepSound.currentTime = 0
+            beepSound.play()
+
             return { data: doc, error: null }
         })
         .catch((error) => {

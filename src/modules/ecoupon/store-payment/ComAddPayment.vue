@@ -197,9 +197,6 @@ async function onSubmit() {
     modalController.dismiss();
 
   }
-
-
-
   await l.dismiss();
 }
 
