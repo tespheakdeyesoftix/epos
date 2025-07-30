@@ -2,14 +2,13 @@
     <ion-page>
         <AppBar>{{ t("Store List") }}</AppBar>
         <ion-content ref="contentRef">
-            <DocList docType="Vendor" :options="options"
-            v-model:selectedRow="selectedRow"
-            @onRowDblClick="onRowDblClick"
-            :contentRef="contentRef"
-            ref="docListRef"
-            
-            >
-            </DocList>
+            {{ data }}
+                <DataTable :value="data" stripedRows tableStyle="min-width: 50rem">
+                    <Column field="code" header="Code"></Column>
+                    <Column field="name" header="Name"></Column>
+                    <Column field="category" header="Category"></Column>
+                    <Column field="quantity" header="Quantity"></Column>
+                </DataTable>
         </ion-content>
         <ComFooter class="ion-hide-sm-down">
             <ion-button :disabled="!selectedRow" :routerLink="'/store-detail/' + selectedRow?.name">{{ t("View Detail") }}</ion-button>
@@ -19,47 +18,30 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
- 
- const contentRef = ref(null)
- const docListRef = ref(null)
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+
+const data = ref([])
+
  const selectedRow = ref()
  
 const t = window.t
-const options = {
-    columns:[
-        {fieldname:"name",header:"Store #",url:"/store-detail"},
-        {fieldname:"vendor_name",header:"Store Name"},
-        {fieldname:"vendor_group",header:"Group"},
-        {fieldname:"contact_name",header:"Contact Name"},
-        {fieldname:"phone_number",header:"Phone Number"},
-        {fieldname:"store_payment_balance",header:"Total Credit Amount",fieldtype:"Currency"},
-        {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
-         
-    ],
-    showSearchBar:true,
-    showBarcodeScanner:false,
-    fields: ["name"],
-    orderBy:{
-      field: "modified",
-      order: "desc",
-  },
-  filters:[["vendor_type","=","Internal" ]],
 
-  filterOptions:[
-    
-  ],
-//     noRecordActions:[
-//    {title:t("Create New Redeem"),router_link:"/redeem","color":"primary"},
-// ]
-}
- 
 
 function onRowDblClick(data){
     app.ionRouter.navigate("/store-detail/" + data.name, "forward", "push");
 }
-  
-  onMounted(()=>{
-    // run update store credit balace
-    app.getApi("epos_restaurant_2023.purchasing.doctype.vendor.vendor.update_store_payment_balance")
+  async function getData(){
+
+    const res = await app.getApi("epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_store_revenue")
+    if(res.data){
+        data.value = res.data
+    }
+
+  }
+  onMounted(async ()=>{
+        const loading = await  app.showLoading()
+    await getData()
+        await loading.dismiss()
   })
 </script>
