@@ -58,6 +58,9 @@ import dayjs from "dayjs";
 import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
 
 const doc = ref(null);
+import PQueue from 'p-queue'
+
+const queue = new PQueue({ concurrency: 1 })
 
 const options = {
     columns:[
@@ -104,21 +107,22 @@ function onDelete(index) {
 }
 async function addCoupon() {
    
+
+  
+
   if (coupon.value == "") {
         app.showWarning("Plese enter or scan coupon code")
-    }
-const l = await app.showLoading("Saving coupon code...");
+    } 
+    queue.add(() => addCouponQueue(coupon.value))
+     coupon.value = ""
+    inputRef.value.focus()
+}
 
-    const res = await app.createDoc("Coupon Codes",{coupon: coupon.value,coupon_register:doc.value.name});
-
+async function addCouponQueue(c){
+ const res = await app.createDoc("Coupon Codes",{coupon: c,coupon_register:doc.value.name});
     if(res.data){
         docListRef.value.addRecord(res.data)
     }
-    
-    
-    await l.dismiss();
-
-    inputRef.value.focus()
 }
 
 
