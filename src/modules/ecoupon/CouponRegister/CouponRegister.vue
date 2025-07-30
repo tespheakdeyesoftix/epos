@@ -106,10 +106,6 @@ function onDelete(index) {
     coupon.value = "";
 }
 async function addCoupon() {
-   
-
-  
-
   if (coupon.value == "") {
         app.showWarning("Plese enter or scan coupon code")
     } 
@@ -124,8 +120,6 @@ async function addCouponQueue(c){
         docListRef.value.addRecord(res.data)
     }
 }
-
-
 
 function onRemoveCoupon() {
     const couponNumber = app.utils.getCouponNumber(coupon?.value);
