@@ -3,81 +3,93 @@
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ t('Coupon Register') }} - {{ doc?.name }}</ion-title>
+        <ion-chip color="success" @click="onSave" slot="end" class="mr-5">  
+          <ion-label>{{ t("Save") }}</ion-label>
+        </ion-chip>
       </ion-toolbar>
     </ion-header>
 
     <ion-content>
-    
-    <div class="fix-container">
+      <div class="fix-container">
         <ion-card style="margin-top: 30px;">
-    
-  <ion-card-content>
-    <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
-            :placeholder="t('Please scan coupon code')" label-placement="stacked" fill="outline">
-        </com-input>
-        <div style="display: flex;justify-content: center; margin-top: 10px;">
-            <ion-chip color="success" @click="onChangeScanMode('add')">
+          <ion-card-content>
+            <com-input
+              ref="inputRef"
+              focus
+              v-model="coupon"
+              @change="onScanBarCode"
+              :label="t('Coupon Code')"
+              :placeholder="t('Please enter or scan qr code')"
+              label-placement="stacked"
+              fill="outline"
+            />
+            
+            <div style="display: flex; justify-content: center; margin-top: 10px;">
+              <ion-chip color="success" @click="onChangeScanMode('add')">
                 <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
                 <ion-label>{{ t("Scan to Add") }}</ion-label>
-            </ion-chip>
-            <ion-chip color="danger" @click="onChangeScanMode('remove')">
-                <ion-icon :icon="checkmarkOutline" v-if="scanMode == 'remove'"></ion-icon>
+              </ion-chip>
+              <ion-chip color="danger" @click="onChangeScanMode('remove')">
+                <ion-icon v-if="scanMode == 'remove'" :icon="checkmarkOutline"></ion-icon>
                 <ion-label>{{ t("Scan to Remove") }}</ion-label>
-            </ion-chip>
+              </ion-chip>
+            </div>
+          </ion-card-content>
+        </ion-card>
+
+        <div class="ion-padding" v-if="doc?.name">
+          <DocList 
+            ref="docListRef"
+            docType="Coupon Codes"
+            :options="options"
+          />
         </div>
-        
-
-        
-
-  </ion-card-content>
-</ion-card>
-
-<div class="ion-padding" v-if="coupounList.length > 0">
-    <DataTable :value="coupounList" responsiveLayout="scroll" stripedRows>
-  <Column header="No" bodyStyle="width: 50px">
-    <template #body="slotProps">
-      {{ slotProps.index + 1 }}
-    </template>
-  </Column>
-  <Column></Column>
-  <Column field="coupon" header="Coupon Code"></Column>
-  
-  <Column header="Actions">
-    <template #body="slotProps">
-      <ion-button fill="clear" color="danger" @click="onDelete(slotProps.index)">
-        <ion-icon :icon="closeOutline"></ion-icon>
-      </ion-button>
-    </template>
-  </Column>
-</DataTable>
-</div>
-    </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
 
+
 <script setup>
  
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+
 import dayjs from "dayjs";
 import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
-import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
-const { saleDoc } = useSaleCoupon()
-const route = useRoute();
-const t = window.t;
+
 const doc = ref(null);
+
+const options = {
+    columns:[
+        {fieldname:"coupon",header:"Coupon #",url:"/coupon-detail",id_field:"name"},
+        {fieldname:"coupon_status",header:"Status",},
+ 
+    ],
+    showSearchBar:true,
+    showBarcodeScanner:false,
+    fields: ["name"],
+    orderBy:{
+      field: "modified",
+      order: "desc",
+  },
+
+  
+}
+
+const docListRef = ref(null)
+
+const t = window.t;
+
 
 const scanMode = ref("add")
 const inputRef = ref(null)
 const coupon = ref("")
-const coupounList = ref([])
+
 function onChangeScanMode(mode) {
     scanMode.value = mode;
     inputRef.value.focus()
 }
+
 async function onScanBarCode() {
     if (scanMode.value == "add") {
         await addCoupon()
@@ -91,26 +103,25 @@ function onDelete(index) {
     coupon.value = "";
 }
 async function addCoupon() {
-    const data = await validateCouponCode(app.utils.getCouponNumber(coupon?.value))
-    if (!data) {
-        coupon.value = ""
-        inputRef.value.focus()
-        return;
+   
+  if (coupon.value == "") {
+        app.showWarning("Plese enter or scan coupon code")
     }
-    // check 
-    // check exists
-  
-    coupounList.value.push({
-        name:data.name,
-        coupon: data.coupon,
-        creation: dayjs()
-    })
+const l = await app.showLoading("Saving coupon code...");
 
-    coupon.value = ""
+    const res = await app.createDoc("Coupon Codes",{coupon: coupon.value,coupon_register:doc.value.name});
 
+    if(res.data){
+        docListRef.value.addRecord(res.data)
+    }
+    
+    
+    await l.dismiss();
 
     inputRef.value.focus()
 }
+
+
 
 function onRemoveCoupon() {
     const couponNumber = app.utils.getCouponNumber(coupon?.value);
@@ -125,39 +136,11 @@ function onRemoveCoupon() {
 
     }
 }
-async function validateCouponCode(c) {
-
-    if (c == "") {
-        app.showWarning("Plese enter or scan coupon code")
-    }
-
-    // check if exist in list 
-    if (coupounList.value.filter(x => x.coupon.toLowerCase() == c.toLowerCase()).length > 0) {
-        app.showWarning("This coupon code is already selected")
-        return false
-    }
-    
-    // if exist in sale product
-    if (saleDoc.value.sale_products.filter(r=>!r.is_editing).flatMap(sp => sp.coupons).filter(x => x.coupon.toLowerCase() == c.toLowerCase()).length > 0) {
-        app.showWarning("This coupon code is already selected")
-        return false
-    }
-
-    // validate in existing in db
-    const l = await app.showLoading("Checking coupon code...")
-    const res = await app.getApi("epos_restaurant_2023.selling.doctype.coupon_codes.coupon_codes.check_coupon_code", { coupon: c })
-    if(res.error){
-         await l.dismiss();
-         return false
-    }
-     
-  
-    await l.dismiss();
-    return res.data
-}
+ 
 onMounted(async () => {
-  const name = route.params.name;
+  const name = app.route.params.name;
   const result = await app.getDoc('Coupon Register', name);
+  options.filters =[["coupon_register","=",result.data.name]]
   doc.value = result.data;
 });
 </script>

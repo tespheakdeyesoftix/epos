@@ -77,6 +77,7 @@ const plateform = ref(app.utils.getPlateform())
 const pageRef = ref(null)
 const selectedRow = ref()
 const t = window.t
+
 const options = {
     columns:[
         {fieldname:"coupon",header:"Coupon #",url:"/coupon-detail",id_field:"name"},

@@ -197,12 +197,15 @@ function onRowDblClick(event) {
  
 }
 
-
+function addRecord(doc){
+    data.value.unshift(doc)
+}
  
 
 defineExpose({
    onRefresh,
-   onReloadData
+   onReloadData,
+   addRecord,
 })
 
  
