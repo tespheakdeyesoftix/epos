@@ -157,8 +157,6 @@ async function addCouponQueue(coupon_data){
  
 }
 
-
-
 function onRemoveCoupon() {
     const couponNumber = app.utils.getCouponNumber(coupon?.value);
     // find coupon index in coupon list
