@@ -10,6 +10,7 @@ import debounce from '@/directives/debounce.js'
 import VueECharts from 'vue-echarts'
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { use } from 'echarts/core'
+import ToastService from 'primevue/toastservice';
 
 import {
   CanvasRenderer
@@ -199,6 +200,7 @@ use([
 
 const app = createApp(App)
 .use(IonicVue)
+.use(ToastService);
 
 
 

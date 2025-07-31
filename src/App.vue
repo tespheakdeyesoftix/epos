@@ -2,7 +2,9 @@
   <ion-app>
     <DrawerMenu v-if="isAuthenticated && !hideDrawerRoutes.includes(currentRoute)"  />
     <ion-router-outlet id="main-content" />
+    
   </ion-app>
+  <Toast />
 </template>
 
 <script setup lang="ts">
@@ -15,6 +17,10 @@ import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { Capacitor } from '@capacitor/core';
 import {  initializeScanner } from '@/helpers/scan-barcode.js'
 import { StatusBar, Style } from '@capacitor/status-bar';
+import Toast from 'primevue/toast';
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+window.toast = toast;
 
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();

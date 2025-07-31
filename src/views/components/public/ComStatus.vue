@@ -41,6 +41,10 @@ const getSeverity = () => {
             return 'danger';
         case 'Deleted':
             return 'danger';
+        case 'Deleting...':
+            return 'danger';
+        case 'Delete fail':
+            return 'danger';
         case 'Fail':
             return 'danger';
 

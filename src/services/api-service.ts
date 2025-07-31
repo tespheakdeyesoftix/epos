@@ -45,8 +45,8 @@ export function getDocList(DocType: string, param: any = null) {
     const db = frappe.db();
     return db.getDocList(DocType, param)
         .then((r: any) => ({ data: r, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+            const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -68,8 +68,8 @@ export function getApi(api_url: string, param: any = null) {
                 return { data: r.message, error: null }
             }
         })
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+            const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -81,8 +81,8 @@ export function postApi(api_url: string, param: any = null) {
     const call = frappe.call();
     return call.post(api_url, param)
         .then((r: any) => ({ data: r.message, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+           const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -95,8 +95,8 @@ export function getDoc(DocType: string, DocName: string) {
 
     return db.getDoc(DocType, DocName)
         .then((doc) => ({ data: doc, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+           const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -108,8 +108,8 @@ export function getCount(DocType: string, filters:any) {
     const db = frappe.db()
     return db.getCount(DocType,filters,true,false)
         .then((count) => ({ data: count, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+            const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -122,8 +122,8 @@ export function deleteDoc(DocType: string, DocName: string) {
 
     return db.deleteDoc(DocType, DocName)
         .then((msg) => ({ data: msg, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+           const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -137,8 +137,8 @@ export function createDoc(DocType: string, params: any) {
 
     return db.createDoc(DocType, params)
         .then((doc) => ({ data: doc, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+          const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -152,8 +152,8 @@ export function getValue(DocType: string, name: string, fields: any) {
 
     return db.getValue(DocType, fields, [["name", "=", name]])
         .then((doc) => ({ data: doc.message, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+            const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -167,17 +167,17 @@ export function setValue(DocType: string, name: string, fields: any, value: any 
     if ((typeof fields) == "string") {
         return db.setValue(DocType, name, fields, value)
             .then((doc) => ({ data: doc.message, error: null }))
-            .catch((error) => {
-                handleErrorMessage(error);
-                return { data: null, error }
+            .catch(async (err) => {
+               const error = await handleErrorMessage(err);
+            return { data: null, error }
             });
 
     } else {
         return db.setValue(DocType, name, fields)
             .then((doc) => ({ data: doc.message, error: null }))
-            .catch((error) => {
-                handleErrorMessage(error);
-                return { data: null, error }
+            .catch(async (err) => {
+              const error = await handleErrorMessage(err);
+            return { data: null, error }
             });
 
     }
@@ -194,6 +194,7 @@ export function submitDoc(doc: any) {
     }
     const db = frappe.db()
 
+
     return db.submit(doc)
         .then((doc) => {
             // pay beeb here
@@ -202,8 +203,8 @@ export function submitDoc(doc: any) {
 
             return { data: doc, error: null }
         })
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+           const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -217,8 +218,8 @@ export function updateDoc(DocType: string, name: string, params: any) {
 
     return db.updateDoc(DocType, name, params)
         .then((doc) => ({ data: doc, error: null }))
-        .catch((error) => {
-            handleErrorMessage(error);
+        .catch(async (err) => {
+           const error = await handleErrorMessage(err);
             return { data: null, error }
         });
 }
@@ -271,8 +272,8 @@ export async function uploadFile(
         })
         .catch(async (e) => {
 
-            handleErrorMessage(e);
-            return { data: null, e }
+           const err = handleErrorMessage(e);
+            return { data: null, error }
         })
 
 
@@ -298,9 +299,9 @@ export async function removeAttachment(docType: string, docname: string, file_ur
         window.showSuccess(message);
 
         return { data: response, error: null };
-    } catch (error) {
-        console.error("Error removing file:", error);
-        return { data: null, error };
+    } catch (err) {
+       const error = await handleErrorMessage(err);
+            return { data: null, error }
     }
 }
 

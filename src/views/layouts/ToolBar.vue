@@ -4,7 +4,7 @@
         <ion-buttons slot="start">
          <ion-back-button :default-href="defaultHref"></ion-back-button>
         </ion-buttons>
-        <ion-title><slot></slot> {{ defaultHref }}</ion-title>
+        <ion-title><slot></slot></ion-title>
         <ion-buttons slot="end">
           <slot name="end"></slot>
       </ion-buttons>

@@ -12,6 +12,8 @@ import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 import dayjs from 'dayjs';
 const {getMeta} = useApp()
+
+ 
  
 let ionRouter = ref();
 
@@ -154,24 +156,28 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
  
 
   globalThis.app.showSuccess = async function (message){
-    const toast = await toastController.create({
-        message: message,
-        duration: 5000,
-        position: "top",
-        swipeGesture:"vertical",
-        color: "success"
-    });
-    toast.present();
+    // const toast = await toastController.create({
+    //     message: message,
+    //     duration: 5000,
+    //     position: "top",
+    //     swipeGesture:"vertical",
+    //     color: "success"
+    // });
+    // toast.present();
+    window.toast.add({ severity: 'success', summary: '', detail: message,   life: 3000 });
+
 }
   globalThis.app.showWarning = async function (message){
-    const toast = await toastController.create({
-        message: t(message),
-        duration: 5000,
-        position: "top",
-        swipeGesture:"vertical",
-        color: "warning"
-    });
-    toast.present();
+    // const toast = await toastController.create({
+    //     message: t(message),
+    //     duration: 5000,
+    //     position: "top",
+    //     swipeGesture:"vertical",
+    //     color: "warning"
+    // });
+    // toast.present();
+
+     window.toast.add({ severity: 'warn', summary: '', detail: message,  life: 3000 });
 }
 
   

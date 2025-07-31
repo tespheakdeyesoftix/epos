@@ -2,7 +2,7 @@
     <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-
+ 
     <slot name="searchBar">
         <ComSearchBar v-if="options.showSearchBar" @onSearch="onSearch" :focus="focus"
             :showBarcodeScanner="options.showBarcodeScanner" ref="txtSearchRef" />
@@ -203,7 +203,24 @@ function onRowDblClick(event) {
 }
 
 function addRecord(doc) {
+   
+    if(doc.coupon_status == "Deleting..."){
+        const index = data.value.findIndex(x=>x.coupon == doc.coupon && x.name)
+       if(index>=0){
+        const coupon_id  = data.value[index].name
+        data.value.splice(index,1);
+        data.value.unshift(doc)
+        return coupon_id
+       } 
+       
+    } 
+        
+     
+    
     data.value.unshift(doc)
+    
+
+    return null
 }
 
 // function removeRecord(doc) {

@@ -4,7 +4,7 @@
     <ToolBar>
 {{ t('Coupon Register') }} - {{ doc?.name }}
 <template #end >
-  <ion-chip color="success" @click="onSubmit" slot="end" class="mr-5">
+  <ion-chip color="success" @click="onSubmit" slot="end" class="mr-5" v-if="doc?.docstatus == 0">
       <ion-label>{{ t("Submit") }}</ion-label>
   </ion-chip>
 </template>
@@ -14,7 +14,7 @@
       {{ doc }}
       
       <div class="fix-container">
-        <ion-card style="margin-top: 30px;">
+        <ion-card style="margin-top: 30px;" v-if="doc?.docstatus==0">
           <ion-card-content>
             <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
               :placeholder="t('Please enter or scan qr code')" label-placement="stacked" fill="outline" />
@@ -36,7 +36,7 @@
           <DocList ref="docListRef" docType="Coupon Codes" :options="options" :focus="false">
 
             <template #coupon_status="{ item }">
-              <template v-if="item.coupon_status == 'Saving...'">
+              <template v-if="item.coupon_status == 'Saving...' || item.coupon_status == 'Deleting...'">
                 <ion-chip class="no-background">
                 <ion-spinner name="dots"></ion-spinner>
                 <ion-label style="font-size: 16px; margin-left: 10px;">{{ item.coupon_status }}</ion-label>               
@@ -57,6 +57,9 @@
               <ComStatus :status="item.coupon_status" v-else />
               <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }}</ion-label>
             </template>
+            <template #name="{item}">
+             delete
+            </template>
           </DocList>
         </div>
       </div>
@@ -76,6 +79,7 @@ const options = {
   columns: [
     { fieldname: "coupon", header: "Coupon #", url: "/coupon-detail", id_field: "name" },
     { fieldname: "coupon_status", header: "Status", },
+    { fieldname: "name", header: "", },
   ],
   showSearchBar: true,
   showBarcodeScanner: false,
@@ -129,40 +133,80 @@ async function addCouponQueue(coupon_data) {
     if (res.data) {
       docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Done", name: res.data.name })
     } else {
-      const messages = await handleErrorMessage(res.error)
-      docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Fail", message: (messages || []).join(", ") })
+      
+      docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Fail", message: (res.error || []).join(", ") })
     }
   }, 2000);
 
 }
 
 async function onRemoveCoupon() {
+
   if (!coupon.value) {
     app.showWarning("Please enter or scan coupon code");
     return;
   }
-  const ress = await app.getDocList("Coupon Codes", {
-    fields: ["name", "coupon", "coupon_register", "coupon_status","customer"],
-    filters: [
-      ["coupon", "=", coupon.value],
-      ["coupon_status", "=", "Unused"],
-      ["coupon_register", "=", doc.value.name], 
-    ],
-  });
-  const deletecoupon = ress.data[0].name
-  const res = await app.deleteDoc("Coupon Codes", deletecoupon);
-if (res.data) {
-  docListRef.value.changeStatus(deletecoupon.name, {
-  coupon_status: "Delete"
-  });
-} 
-  inputRef.value.focus();
+
+
+const coupon_data = {
+    id: app.utils.generateRandomString(),
+    coupon_register: doc.value.name,
+    coupon: coupon.value,
+    coupon_status: "Deleting..."
+  }
+  const coupon_id = docListRef.value.addRecord(coupon_data)
+  queue.add(() => deleteCouponQueueJob( JSON.parse(JSON.stringify( {name:coupon_id, coupon:coupon.value,id:coupon_data.id}))))
+   coupon.value = ""
+  inputRef.value.focus()
+}
+
+function deleteCouponQueueJob(coupon_data) {
+
+  setTimeout(async () => {
+    if (!coupon_data.name){
+          const find_coupon_res = await app.getDocList("Coupon Codes", {
+            fields: ["name"],
+            filters: [
+              ["coupon", "=", coupon_data.coupon],
+              ["coupon_status", "in", ["Unused","Used"]],
+              ["coupon_register", "=", doc.value.name], 
+            ],
+          });
+       if(find_coupon_res.data && find_coupon_res.data.length>0){
+          coupon_data.name = find_coupon_res.data[0].name
+       }
+
+    }
+
+    // check dont have coupon primary key
+     if(!coupon_data.name){
+        docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Delete fail", message:"This coupon code not exist in the system" })  
+        return ;
+     }
+
+    if(coupon_data.name){
+        const res = await app.deleteDoc("Coupon Codes", coupon_data.name);
+        if(res.data){
+            docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Deleted" })  
+        }else {
+          
+          docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Delete fail",message:(res.error || []).join(", ") })  
+        }
+    }
+    
+  
+  }, 1000);
+
+
+   
+
 }
 
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
   if (!confirm) return;
-  const res = await app.submitDoc("Coupon Register", doc);
+ 
+  const res = await app.submitDoc(doc.value);
   if (res.data) {
     app.showSuccess("Document submitted successfully");
   } 

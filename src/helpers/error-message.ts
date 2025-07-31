@@ -73,12 +73,15 @@ export async function handleErrorMessage(error_data:any){
 export async  function showWarningMessage(message:string){
     if ((message ||"") =="") return;
     
-    const toast = await toastController.create({
-        message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
-        duration: 5000,
-        position: "top",
-        swipeGesture:"vertical",
-        color: "warning"
-    });
-    toast.present();
+    // const toast = await toastController.create({
+    //     message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
+    //     duration: 5000,
+    //     position: "top",
+    //     swipeGesture:"vertical",
+    //     color: "warning"
+    // });
+    // toast.present();
+
+
+    window.toast.add({ severity: 'warn', summary: '', detail: stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),  life: 3000 });
 }
