@@ -37,15 +37,25 @@
 
             <template #coupon_status="{ item }">
               <template v-if="item.coupon_status == 'Saving...'">
+                <ion-chip class="no-background">
                 <ion-spinner name="dots"></ion-spinner>
-                {{ item.coupon_status }}
+                <ion-label style="font-size: 16px; margin-left: 10px;">{{ item.coupon_status }}</ion-label>               
+                </ion-chip>
               </template>
               <template v-else-if="item.coupon_status == 'Done'">
+                <ion-chip class="no-background">
                 <ion-icon :icon="checkmarkCircle" color="success" size="large" />
-                {{ t("Done") }}
+                <ion-label style="font-size: 16px;">{{ t("Done") }}</ion-label>
+                </ion-chip>
+              </template>
+              <template v-else-if="item.coupon_status == 'Delete'">
+                <ion-chip class="no-background">
+                <ion-icon :icon="close" color="danger" size="large" />
+                <ion-label style="font-size: 16px;">{{ t("Delete") }}</ion-label>
+                </ion-chip>
               </template>
               <ComStatus :status="item.coupon_status" v-else />
-              <ion-label v-if="item.message" color="danger">{{ item.message }}</ion-label>
+              <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }}</ion-label>
             </template>
 
           </DocList>
@@ -58,7 +68,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import {  checkmarkCircle, checkmarkOutline,} from 'ionicons/icons';
+import {  checkmarkCircle, checkmarkOutline, close,} from 'ionicons/icons';
 import { handleErrorMessage } from "@/helpers/error-message.ts"
 import PQueue from 'p-queue'
 const doc = ref(null);
@@ -70,7 +80,7 @@ const options = {
   ],
   showSearchBar: true,
   showBarcodeScanner: false,
-  fields: ["name","coupon"],
+  fields: ["name"],
   orderBy: {
     field: "modified",
     order: "desc",
@@ -123,20 +133,38 @@ async function addCouponQueue(coupon_data) {
       const messages = await handleErrorMessage(res.error)
       docListRef.value.changeStatus(coupon_data.id, { coupon_status: "Fail", message: (messages || []).join(", ") })
     }
-  }, 500);
+  }, 2000);
 
 }
 
-async function onRemoveCoupon(coupon_data) {
-  const res = await app.deleteDoc("Coupon Codes", coupon_data.name);
-  if (res.data) {
-    docListRef.value.removeRecord(coupon_data);
-    app.showSuccess("Coupon removed successfully");
-  } 
+async function onRemoveCoupon() {
+  if (!coupon.value) {
+    app.showWarning("Please enter or scan coupon code");
+    return;
+  }
+  const ress = await app.getDocList("Coupon Codes", {
+    fields: ["name", "coupon", "coupon_register", "coupon_status","customer"],
+    filters: [
+      ["coupon", "=", coupon.value],
+      ["coupon_status", "=", "Unused"],
+      ["coupon_register", "=", doc.value.name], 
+    ],
+    orderBy: {
+      field: "creation",
+      order: "desc"
+    }
+  });
+  const deletecoupon = ress.data[0].name
+  const res = await app.deleteDoc("Coupon Codes", deletecoupon);
+   
+if (res.data) {
+  app.showSuccess("Coupon removed successfully");
+  docListRef.value.changeStatus(deletecoupon.name, {
+  coupon_status: "Delete"
+  });
+} 
   inputRef.value.focus();
 }
-
-
 
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
@@ -154,3 +182,12 @@ onMounted(async () => {
   doc.value = result.data;
 });
 </script>
+<style scoped>
+.no-background {
+  --background: transparent;
+  --color: inherit;
+  --box-shadow: none;
+  border: none;
+}
+
+</style>

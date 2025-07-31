@@ -205,12 +205,9 @@ function addRecord(doc) {
     data.value.unshift(doc)
 }
 
-function removeRecord(doc) {
-  const index = this.data?.findIndex(item => item.name === doc.name);
-  if (index !== -1) {
-    this.data?.splice(index, 1);
-  }
-}
+// function removeRecord(doc) {
+//   const index = data.value.find(item => item.name === doc.name);
+// }
 
 function changeStatus(id, updatedData) {
     const row = data.value.find(x => x.id == id);
@@ -228,7 +225,7 @@ defineExpose({
     onReloadData,
     addRecord,
     changeStatus,
-    removeRecord
+    
 })
 
 

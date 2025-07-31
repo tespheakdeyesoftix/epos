@@ -4,9 +4,9 @@
     <ion-segment-button value="About" content-id="About">
       <ion-label>{{ t("About") }}</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="Store Payment History" content-id="Store Payment History">
+    <!-- <ion-segment-button value="Store Payment History" content-id="Store Payment History">
       <ion-label>{{ t("Store Payment History") }}</ion-label>
-    </ion-segment-button>
+    </ion-segment-button> -->
   </ion-segment>
  
   <ion-segment-view class="segment-view">
@@ -102,9 +102,9 @@
       </div>   
     </ion-segment-content>
 
-    <ion-segment-content id="Store Payment History">
+    <!-- <ion-segment-content id="Store Payment History">
       <ComStorepaymentHistory v-if="isStorepaymentHistoryLoaded" :vendor="data.name"/>
-    </ion-segment-content>
+    </ion-segment-content> -->
   </ion-segment-view>
 
 </template>
