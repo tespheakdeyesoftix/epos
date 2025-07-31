@@ -92,7 +92,8 @@ async function onScanBarCode() {
   if (scanMode.value == "add") {
     await addCoupon()
   } else {
-    onRemoveCoupon()
+    await onRemoveCoupon(coupon.value)
+    coupon.value = ""
   }
 }
 
@@ -126,38 +127,24 @@ async function addCouponQueue(coupon_data) {
 
 }
 
- 
-async function onRemoveCoupon() {
- 
-  // Find the coupon record in the list
-  const id_field = options.columns.find(col => col.id_field)?.id_field || "name";
-  const record = docListRef.value?.$refs?.docListRef?.data?.find(item => item.coupon === coupon.value);
-  if (!record) {
-    app.showWarning("Coupon not found in the list");
-    return;
-  }
-  // Remove from backend
-  const res = await app.deleteDoc("Coupon Codes", record[id_field]);
+async function onRemoveCoupon(coupon_data) {
+  const res = await app.deleteDoc("Coupon Codes", coupon_data.name);
   if (res.data) {
-    docListRef.value.removeRecord(record[id_field]);
+    docListRef.value.removeRecord(coupon_data);
     app.showSuccess("Coupon removed successfully");
-  } else {
-    app.showError("Failed to remove coupon");
-  }
-  coupon.value = "";
+  } 
   inputRef.value.focus();
 }
+
 
 
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
   if (!confirm) return;
-  const res = await app.submitDoc("Coupon Register", doc.value.name);
+  const res = await app.submitDoc("Coupon Register", doc.value);
   if (res.data) {
     app.showSuccess("Document submitted successfully");
-  } else {
-    app.showError("Failed to submit document");
-  }
+  } 
 }
 
 onMounted(async () => {

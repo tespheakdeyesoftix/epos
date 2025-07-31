@@ -164,7 +164,6 @@ const props = defineProps({
 
 })
 
-
 const emptyRecordMessage = t("empty_record_message", { doctype: props.docType })
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
@@ -178,7 +177,6 @@ watch(() => props.options, async (newVal, oldVal) => {
     await onRefresh()
 
 }, { deep: true })
-
 
 const onRefreshData = async (event) => {
     await onRefresh(event);
@@ -196,8 +194,6 @@ const onReloadData = async () => {
 
 };
 
-
-
 function onRowDblClick(event) {
     if (event.data) {
         emit("onRowDblClick", event.data);
@@ -208,15 +204,13 @@ function onRowDblClick(event) {
 function addRecord(doc) {
     data.value.unshift(doc)
 }
+
 function removeRecord(doc) {
-  const id_field = props.options?.id_field || "name";
-  const index = data.value.findIndex(item => item[id_field] === doc);
+  const index = this.data?.findIndex(item => item.name === doc.name);
   if (index !== -1) {
-    data.value.splice(index, 1);
+    this.data?.splice(index, 1);
   }
 }
-
-
 
 function changeStatus(id, updatedData) {
     const row = data.value.find(x => x.id == id);
