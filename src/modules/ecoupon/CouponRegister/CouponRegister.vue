@@ -57,7 +57,6 @@
               <ComStatus :status="item.coupon_status" v-else />
               <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }}</ion-label>
             </template>
-
           </DocList>
         </div>
       </div>
@@ -158,7 +157,6 @@ async function onRemoveCoupon() {
   const res = await app.deleteDoc("Coupon Codes", deletecoupon);
    
 if (res.data) {
-  app.showSuccess("Coupon removed successfully");
   docListRef.value.changeStatus(deletecoupon.name, {
   coupon_status: "Delete"
   });
