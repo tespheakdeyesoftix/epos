@@ -148,14 +148,9 @@ async function onRemoveCoupon() {
       ["coupon_status", "=", "Unused"],
       ["coupon_register", "=", doc.value.name], 
     ],
-    orderBy: {
-      field: "creation",
-      order: "desc"
-    }
   });
   const deletecoupon = ress.data[0].name
   const res = await app.deleteDoc("Coupon Codes", deletecoupon);
-   
 if (res.data) {
   docListRef.value.changeStatus(deletecoupon.name, {
   coupon_status: "Delete"
@@ -167,7 +162,7 @@ if (res.data) {
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
   if (!confirm) return;
-  const res = await app.submitDoc("Coupon Register", doc.value);
+  const res = await app.submitDoc("Coupon Register", doc);
   if (res.data) {
     app.showSuccess("Document submitted successfully");
   } 

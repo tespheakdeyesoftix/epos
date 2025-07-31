@@ -96,6 +96,7 @@
                             </slot>
                         </template>
                     </Column>
+                                      
                 </DataTable>
             </template>
             <ComDocCard v-else :data="d" v-for="(d, index) in data" :key="index" :fields="options.columns"
@@ -207,6 +208,9 @@ function addRecord(doc) {
 
 // function removeRecord(doc) {
 //   const index = data.value.find(item => item.name === doc.name);
+//   if (index !== -1) {
+//     data.value.splice(index, 1);
+//   }
 // }
 
 function changeStatus(id, updatedData) {
