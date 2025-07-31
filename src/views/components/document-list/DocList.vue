@@ -96,6 +96,7 @@
                             </slot>
                         </template>
                     </Column>
+                                      
                 </DataTable>
             </template>
             <ComDocCard v-else :data="d" v-for="(d, index) in data" :key="index" :fields="options.columns"
@@ -164,7 +165,6 @@ const props = defineProps({
 
 })
 
-
 const emptyRecordMessage = t("empty_record_message", { doctype: props.docType })
 
 const { data, onRefresh, onLoadMore, onSearch, loading, getAligment,
@@ -178,7 +178,6 @@ watch(() => props.options, async (newVal, oldVal) => {
     await onRefresh()
 
 }, { deep: true })
-
 
 const onRefreshData = async (event) => {
     await onRefresh(event);
@@ -196,8 +195,6 @@ const onReloadData = async () => {
 
 };
 
-
-
 function onRowDblClick(event) {
     if (event.data) {
         emit("onRowDblClick", event.data);
@@ -208,6 +205,13 @@ function onRowDblClick(event) {
 function addRecord(doc) {
     data.value.unshift(doc)
 }
+
+// function removeRecord(doc) {
+//   const index = data.value.find(item => item.name === doc.name);
+//   if (index !== -1) {
+//     data.value.splice(index, 1);
+//   }
+// }
 
 function changeStatus(id, updatedData) {
     const row = data.value.find(x => x.id == id);
@@ -224,7 +228,8 @@ defineExpose({
     onRefresh,
     onReloadData,
     addRecord,
-    changeStatus
+    changeStatus,
+    
 })
 
 

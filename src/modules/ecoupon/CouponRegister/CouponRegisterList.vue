@@ -32,11 +32,12 @@ const options = {
         {fieldname:"name",header:"Name",url:"/coupon-register",id_field:"name" },
         {fieldname:"total_coupons",header:"Total Coupons"},   
         {fieldname:"posting_date",header:"Date",fieldtype:"Date"},
+        {fieldname:"modified_by",header:"User"},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","modified","total_coupons","posting_date"],
+    fields: ["name","modified","total_coupons","posting_date","modified_by"],
     orderBy:{
       field: "modified",
       order: "desc",
