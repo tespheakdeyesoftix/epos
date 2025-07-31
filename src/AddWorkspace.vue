@@ -86,8 +86,8 @@ const { login, checkPropertyCode } = useAuth();
 
 const formData = ref({
   property_code: "SR2021-0001",
-  username: "Administrator",
-  password: "123456",
+  username: "Pheakdey",
+  password: "112233",
 });
 
 async function onSaveWorkspace() {

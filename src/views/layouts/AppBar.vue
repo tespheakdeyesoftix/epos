@@ -8,9 +8,8 @@
           </ion-buttons>
           <ion-title><slot></slot></ion-title>
              
-           
-      <ion-searchbar
-          
+          <slot name="search">
+ <ion-searchbar
       :search-icon="qrCode"
         :placeholder="t('Check coupon code')"
         style="max-width: 300px;"
@@ -19,6 +18,8 @@
         v-model="keyword"
         
       ></ion-searchbar>
+          </slot>
+     
   
            <ion-buttons slot="end">
             <ion-button @click="onScanQRCode" shape="round" class="ion-hide-sm-up">
@@ -58,7 +59,13 @@ async function onCheckCouponCode(){
         await app.showWarning(t("No coupon code found"));
         return;
       }
-      app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1")
+      if(app.route.name && app.route.name == "CheckCoupon"){
+ 
+        app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1","forward","replace")
+      }else {
+app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1","forward","push")
+      }
+      
   }
   keyword.value = ""
 }

@@ -229,6 +229,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    name:"CheckCoupon",
     path: "/check-coupon/:name",
     component: () => import('@/modules/ecoupon/coupon-codes/CheckCoupon.vue'),
     meta: { requiresAuth: true }

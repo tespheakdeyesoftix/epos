@@ -2,8 +2,6 @@
    "appId": "com.estccouputer.app.epos",
   "appName": "ePOS",
    "server": {
-    
-    
     "cleartext": true
   },
   "plugins": {
@@ -14,14 +12,7 @@
       "overlaysWebView": true,
       "style": "DARK",
       "backgroundColor": "red"
-    },
-    "BluetoothLe": {
-      "displayStrings": {
-        "scanning": "Scanning...",
-        "cancel": "Cancel",
-        "availableDevices": "Available devices",
-        "noDeviceFound": "No device found"
-      }
     }
+    
   }
 }

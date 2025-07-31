@@ -1,10 +1,9 @@
 <template>
 
-<ion-card button class="card-product" :style="{height:(userPreference?.sale_ui_setting?.product_card_height || '150') + 'px'}"  @click="onSelectProduct(data)">
+<ion-card button class="card-product" :style="{height:(userPreference?.sale_ui_setting?.product_card_height || '150') + 'px',background:'blue'}"  @click="onSelectProduct(data)">
       <ion-card-content class="content-product" >
     <div v-if="plateform == 'mobile'" style="display: flex; align-items: center; gap: 10px;">
-      <img :src="data.photo" alt="Image" style="width: 100px; height: 60px;" />
-
+      <Img :src="data.photo" alt="Image" style="width: 100%; height: 60px;" />
       <div>
         <ion-card-subtitle>{{ data.name }}</ion-card-subtitle>
         <ion-card-subtitle>{{ data.product_name_en }}</ion-card-subtitle>
@@ -14,8 +13,8 @@
         </ion-card-subtitle>
       </div>
     </div>
-    <div v-else style="position: relative;" >
-      <img :src="data.photo" class="img-product" alt="Image"/>
+    <div v-else style="position: relative; background: red;flex: 1;height: 100%; "  >
+      <Img :src="data.photo" class="img-product" alt="Image" />
       <div class="price-tag" >
         <ion-text class="ion-text-bold">
           <ComCurrency :value="data.price" />
@@ -53,8 +52,7 @@ const {onSelectProduct} = useSaleCoupon()
 <style scoped>
 .img-product{
 width: 100%;
-max-height: 200px;
-min-height: 170px;
+
 border-radius: 10px;
 }
 .price-tag{
@@ -91,5 +89,6 @@ width: 95%;
   margin: 2px;
   border-radius: 10px;
   background-color: var(--ion-color-light-shade);
+   display: flex; flex-direction: column;
 }
 </style>

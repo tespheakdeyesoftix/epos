@@ -10,6 +10,7 @@
             <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name || "ePOS") }}</h1>
         </ion-text>
       </div>
+ 
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">

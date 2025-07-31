@@ -1,10 +1,10 @@
 <template>
   <div class="ion-padding">
-    <stack row equal itemClass="col-6 sm:col-6 lg:col-3" gap="0px">
-      <Card color="primary" label="Opening Balance" :value="data?.opening_balance || 0" />
-      <Card color="success" label="Credit" :value="data?.credit || 0" />
-      <Card color="warning" label="Debit" :value="data?.debit || 0" />
-      <Card color="tertiary" label="Balance" :value="data?.balance || 0" />
+  
+    <stack row equal itemClass="col-6 sm:col-6 lg:col-4" gap="0px">
+      <Card color="primary" label="Today Revenue" :value="data?.current_revenue || 0" />
+      <Card color="secondary" label="MTD Revenue" :value="data?.mtd_revenue || 0" />
+      <Card color="success" label="YTD Revenue" :value="data?.ytd_revenue || 0" />
     </stack>
   </div>
 </template>
@@ -43,20 +43,15 @@ const Card = defineComponent({
 })
 
 
-function getData() {
+async function getData() {
   const workingDay = app.setting?.working_day?.posting_date || dayjs().format("YYYY-MM-DD")
-  app.getApi('epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_vendor_credit_balance', {
+  const res = await app.getApi('epos_restaurant_2023.purchasing.doctype.vendor.vendor.get_store_revenue', {
     vendor: app.route.params.name,
-    
-    date: workingDay
-  }).then(response => {
-    if (response?.data) {
-      data.value = response.data
-    } else {
-      console.warn('No data returned:', response)
-      data.value = {}
-    }
-  })  
+    posting_date: workingDay
+  })
+ if(res.data){
+  data.value = res.data
+ } 
 }
 
 
