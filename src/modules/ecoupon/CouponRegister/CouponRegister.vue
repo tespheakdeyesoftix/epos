@@ -11,7 +11,7 @@
     </ToolBar>
 
     <ion-content>
-      {{ doc }}
+      <!-- {{ doc }} -->
       
       <div class="fix-container">
         <ion-card style="margin-top: 30px;" v-if="doc?.docstatus==0">
@@ -57,9 +57,12 @@
               <ComStatus :status="item.coupon_status" v-else />
               <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }}</ion-label>
             </template>
-            <template #name="{item}">
-             delete
-            </template>
+            <template #name="{ item }">
+            <div style="display: flex; justify-content: center;" >
+              <ion-icon :icon="close" color="danger" size="large" @click="onDeleteItem(item)" v-if="doc?.docstatus == 0 && item.coupon_status == 'Unused'"/>
+            </div>
+          </template>
+
           </DocList>
         </div>
       </div>
@@ -197,10 +200,23 @@ function deleteCouponQueueJob(coupon_data) {
   
   }, 1000);
 
-
-   
-
 }
+
+async function onDeleteItem(item) {
+  const confirm = await app.utils.onConfirmDanger("Delete Coupon", "Are you sure you want to delete this coupon code?");
+  if (!confirm) return;
+
+  const res = await app.deleteDoc("Coupon Codes", item.name);
+  if (res.data) {
+    docListRef.value.removeRecord(item.name); // remove from frontend list
+    app.showSuccess("Coupon deleted successfully");
+  } else {
+    app.showError("Failed to delete coupon");
+  }
+}
+
+
+
 
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
@@ -209,7 +225,9 @@ async function onSubmit() {
   const res = await app.submitDoc(doc.value);
   if (res.data) {
     app.showSuccess("Document submitted successfully");
+    window.location.reload();
   } 
+  
 }
 
 onMounted(async () => {

@@ -56,7 +56,7 @@ async function getData(){
 async function onDelete(){
     
  
-    const confirm = await app.utils.onConfirm("Delete Coupon","Are you sure you want to delete this coupon code?")
+    const confirm = await app.utils.onConfirmDanger("Delete Coupon","Are you sure you want to delete this coupon code?")
     if (!confirm) return;
     const l = await app.showLoading()
     
