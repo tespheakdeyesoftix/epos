@@ -49,8 +49,9 @@
             </div>
             
         </ion-content>
-        {{ data }}
+        <!-- {{ data }} -->
         <ComFooter>
+            <ion-button @click="onClose" color="danger">{{ t('Close') }}</ion-button>
             <ion-button color="danger" @click="onDelete" >{{ t("Delete") }}</ion-button>
         </ComFooter>
     </ion-page>
@@ -156,7 +157,9 @@ async function onDelete() {
   await l.dismiss();
 }
 
-
+function onClose() {
+  app.router.back()
+}
 
 onMounted(async () => {
 
