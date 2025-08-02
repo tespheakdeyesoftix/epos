@@ -13,7 +13,8 @@ const bluetoothPrinters = ref([])
 let userPreference = reactive({sale_ui_setting:{
       product_card_height:200,
       product_columns:3,
-      product_container_width:65
+      product_container_width:65,
+      product_font_size:14,
       }
 }
 )
