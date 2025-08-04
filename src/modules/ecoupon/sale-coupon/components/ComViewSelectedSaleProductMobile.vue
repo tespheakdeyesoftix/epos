@@ -1,8 +1,16 @@
 <template>
     <BaseModal title="Your Order">
-    your order detail hideFooter
+        <ion-content>
+            <ComCustomerCard v-if="saleDoc?.customer"/>
+            <ComSaleProductMobile />
+        </ion-content>
+    </BaseModal>
+</template>
 
+<script setup>
 
-    
-</BaseModal>
-    </template>
+import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import ComCustomerCard from "@/modules/ecoupon/sale-coupon/components/ComCustomerCard.vue"
+import ComSaleProductMobile from "@/modules/ecoupon/sale-coupon/components/ComSaleProductMobile.vue"
+const { saleDoc } = useSaleCoupon()
+</script>

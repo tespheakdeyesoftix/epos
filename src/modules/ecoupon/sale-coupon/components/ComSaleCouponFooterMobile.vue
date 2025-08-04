@@ -2,10 +2,29 @@
 <ion-footer>
     <ion-card @click="onViewSelectedSaleProduct">
         <ion-card-content>
-            {{ lastSelectedProduct }}
-Quantity:     {{ totalQuantity }}
-    {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
 
+            <ion-label>{{ lastSelectedCouponAndProduct }}</ion-label>
+            <!-- {{ lastSelectedProduct }} -->
+            <ion-grid class="ion-no-padding">
+                <ion-row>
+                    <ion-col size="11">
+                        Quantity:
+                    </ion-col>
+                    <ion-col size="1" v-if="totalQuantity>0">
+                        {{ totalQuantity }}
+                    </ion-col>
+                </ion-row>
+                <!--  -->
+                <ion-row >
+                    <ion-col size="10">
+                        {{t('Total')}} ({{ t(mainCurrency) }}) :
+                    </ion-col>
+                    <ion-col size="2" v-if="grandTotal">
+                        <ComCurrency :value="grandTotal"/>
+                    </ion-col>
+                </ion-row>
+
+            </ion-grid>      
         </ion-card-content>
     </ion-card>
     
@@ -14,7 +33,7 @@ Quantity:     {{ totalQuantity }}
 <script setup>
 const t = window.t;
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
-import { computed, ref } from "vue";
+import { computed, ref,watch } from "vue";
 import  ComViewSelectedSaleProductMobile from "@/modules/ecoupon/sale-coupon/components/ComViewSelectedSaleProductMobile.vue";
  
 const {grandTotal, totalQuantity, grandTotalSecondCurrency, saleDoc } = useSaleCoupon()
@@ -23,11 +42,25 @@ const mainCurrency = ref(app.setting.currency);
 const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency);
 const exchangeRate = app.setting.exchange_rate_input
 
-const lastSelectedProduct  = computed(()=>{
-    if(!saleDoc.value) return {}
-    return saleDoc.value.sale_products[saleDoc.value.sale_products.length-1]
+const lastSelectedCouponAndProduct = computed(() => {
+  const products = saleDoc.value?.sale_products || []
+  if (!products.length) return ''
+  const last = products[products.length - 1]
+  const coupon = last.product_code || ''
+  const productName = last.product_name || ''
+  const productQty = last.quantity ?? ''
+  return `${coupon} - ${productName} (${productQty})`.trim()
 })
- 
+
+watch(() => saleDoc.value.sale_products, (newVal) => {
+  console.log('Updated sale products:', newVal)
+}, { deep: true })
+
+// const lastSelectedProduct  = computed(()=>{
+//     if(!saleDoc.value) return {}
+//     return saleDoc.value.sale_products[saleDoc.value.sale_products.length-1]
+// })
+
 if(second_currency.value == mainCurrency.value){
     second_currency.value = app.setting.currency
 }
