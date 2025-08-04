@@ -1,6 +1,6 @@
 <template>
 
-<ion-card button class="card-product" :style="{height:(userPreference?.sale_ui_setting?.product_card_height || '150') + 'px'}"  @click="onSelectProduct(data)">
+<ion-card button class="card-product"   @click="onSelectProduct(data)">
       <ion-card-content class="content-product" >
     <div v-if="plateform == 'mobile'" style="display: flex; align-items: center; gap: 10px;">
       <img :src="data.photo" alt="Image" style="width: 100px; height: 60px;" />
@@ -14,10 +14,10 @@
         </ion-card-subtitle>
       </div>
     </div>
-    <div v-else style="position: relative;" >
-      <img :src="data.photo" class="img-product" alt="Image"/>
+    <div v-else style="position: relative;  flex: 1;height: 100%; ">
+      <Img :src="data.photo" class="img-product" alt="Image" :style="{height:(userPreference?.sale_ui_setting?.product_card_height || '150') + 'px',}"/>
       <div class="price-tag" >
-        <ion-text class="ion-text-bold">
+        <ion-text class="ion-text-bold" :style="{fontSize:(userPreference?.sale_ui_setting?.product_font_size || '14') + 'px'}">
           <ComCurrency :value="data.price" />
         </ion-text>
      
@@ -25,8 +25,9 @@
       <div style="text-align: center;">
         <ion-card-subtitle>
           <div class="name-product">
-<ion-text>
-            {{ data.name }} - {{ data.product_name_en }}</ion-text>
+            <ion-text :style="{fontSize:(userPreference?.sale_ui_setting?.product_font_size || '14') + 'px'}">
+              {{ data.name }} - {{ data.product_name_en }}.
+            </ion-text>
           </div>
           
           </ion-card-subtitle>

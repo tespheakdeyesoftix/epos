@@ -47,9 +47,15 @@
 
                 </template>
             </div>
+            
         </ion-content>
-
+        <!-- {{ data }} -->
+        <ComFooter>
+            <ion-button @click="onClose" color="danger">{{ t('Close') }}</ion-button>
+            <ion-button color="danger" @click="onDelete" >{{ t("Delete") }}</ion-button>
+        </ComFooter>
     </ion-page>
+    
 </template>
 <script setup>
 import ComCouponCodeList from "@/modules/ecoupon/coupon-codes/components/ComCouponCodeList.vue"
@@ -140,6 +146,20 @@ async function onCheckCouponCode(){
   keyword.value = ""
 }
 
+async function onDelete() {
+  const confirm = await app.utils.onConfirmDanger("Delete Coupon", "Are you sure you want to delete this coupon code?");
+  if (!confirm) return;
+  const l = await app.showLoading();
+    const res = await app.deleteDoc("Coupon Codes", data.value[0].name);
+    if (res.data) {
+      app.ionRouter.navigate("/home", "back", "replace"); 
+    } 
+  await l.dismiss();
+}
+
+function onClose() {
+  app.router.back()
+}
 
 onMounted(async () => {
 
@@ -148,7 +168,9 @@ onMounted(async () => {
     await getData()
     await l.dismiss()
 })
-</script><style scoped>
+</script>
+
+<style scoped>
 .search_bar{
   position: absolute;
 max-width: 300px;

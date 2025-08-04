@@ -8,6 +8,10 @@
                 v-model:selectedRow="selectedRow"
                 ref="docListRef"
                 >    
+                <template #docstatus="{item}">
+                 
+                <ComStatus :status="getStatusText(item.docstatus)"/>
+            </template>
             </DocList>
         </ion-content>
         <ion-fab slot="fixed" horizontal="end" vertical="bottom">
@@ -22,6 +26,9 @@
 import { ref } from 'vue';
 import { addOutline } from "ionicons/icons";
 import ComAddCouponRegister from "@/modules/ecoupon/CouponRegister/components/ComAddCouponRegister.vue"
+function getStatusText(id){
+    return app.utils.getDocStatusText(id);
+}
  const t = window.t
 const selectedRow = ref()
 const contentRef = ref(null)
@@ -34,6 +41,7 @@ const options = {
         {fieldname:"posting_date",header:"Date",fieldtype:"Date"},
         {fieldname:"modified_by",header:"User"},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},
+        {fieldname:"docstatus",header:"Status"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,

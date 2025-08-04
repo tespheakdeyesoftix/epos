@@ -214,21 +214,16 @@ function addRecord(doc) {
        } 
        
     } 
-        
-     
-    
     data.value.unshift(doc)
-    
-
     return null
 }
 
-// function removeRecord(doc) {
-//   const index = data.value.find(item => item.name === doc.name);
-//   if (index !== -1) {
-//     data.value.splice(index, 1);
-//   }
-// }
+function removeRecord(id) {
+  const index = data.value.findIndex(item => item.name === id || item.id === id);
+  if (index !== -1) {
+    data.value.splice(index, 1);
+  }
+}
 
 function changeStatus(id, updatedData) {
     const row = data.value.find(x => x.id == id);
@@ -240,15 +235,13 @@ function changeStatus(id, updatedData) {
     }
 }
 
-
 defineExpose({
     onRefresh,
     onReloadData,
     addRecord,
     changeStatus,
+    removeRecord
     
 })
-
-
 
 </script>
