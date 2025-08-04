@@ -208,7 +208,7 @@ export async function getPrintFormat(pos_profile){
 
     // 5. Connect to printer first to minimize delay
     const { client } = await TcpSocket.connect({
-      ipAddress: '192.168.10.247',
+      ipAddress: '192.168.10.229',
       port: 9100
     });
 

@@ -10,7 +10,7 @@
             <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name || "ePOS") }}</h1>
         </ion-text>
       </div>
- 
+ <ion-button routerLink="/print-barcode">print </ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">
@@ -64,6 +64,9 @@ function getDynamicComponent(component){
  
 import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
  
+function test(){
+  app.printing.printReceiptBase64ToNetworkPrinter()
+}
 async function onFindPrinter(){
   // Optional: listen to scan results
   CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
@@ -82,7 +85,7 @@ async function onConnectPrinter(){
 
 }
 async function printReceipt() {
-  
+  onConnectPrinter();
   try {
         const response = await app.getApi("epos_restaurant_2023.api.printing.convertimg");
     const base64Image = response.data;

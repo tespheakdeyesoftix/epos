@@ -97,7 +97,7 @@ export async function onScanBarcodeAndroid() {
     }
   } catch (error) {
   
-    app.showWarning("User cancell scanning")
+   
 
  
     return null;

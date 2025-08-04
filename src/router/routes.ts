@@ -94,13 +94,13 @@ const routes: Array<RouteRecordRaw> = [
   
   {
     path: "/sale-coupon",
-    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    component: () => window.matchMedia('(max-width: 640px)').matches? import('@/modules/ecoupon/sale-coupon/SaleCouponMobile.vue'):import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   },  
   {
     path: "/sale-coupon/:name",
     name:"EditSaleCoupon",
-    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    component: () => window.matchMedia('(max-width: 640px)').matches? import('@/modules/ecoupon/sale-coupon/SaleCouponMobile.vue'):import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   }, 
   {

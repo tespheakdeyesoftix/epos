@@ -4,6 +4,7 @@ import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
 import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
+import { Capacitor } from '@capacitor/core';
 import { modalController } from "@ionic/vue"
 const saleDoc = ref({
     sale_products: [],
@@ -61,6 +62,7 @@ const totalCouponValue = computed(() => {
 
 const totalQuantity = computed(() => {
     const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    console.log(total)
     return total || 0
 })
 
@@ -134,6 +136,7 @@ async function getCustomerData(name){
 
 
 async function onSelectProduct(p) {
+    
     if(saleDoc.value.sale_status =="Bill Requested"){
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
@@ -145,7 +148,7 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
-        cssClass: "scan-coupon-code-modal"
+        cssClass: app.utils.getPlateform()=="mobile"?"":"scan-coupon-code-modal"
 
     })
 

@@ -4,7 +4,7 @@
       <InputNumber inputId="on_label" :placeholder="placeholder" v-model="model" :minFractionDigits="minFractionDigits"
         fluid @focus="onSelectAll" ref="inputRef" />
       <label for="on_label">{{ label }}</label>
-        
+
 
     </FloatLabel>
 
@@ -13,45 +13,38 @@
 
     <ion-textarea @ionInput="onInput" :value="model" :label="label" label-placement="stacked" fill="outline"
       :placeholder="placeholder || label" style="min-height: 120px;">
-      <ion-button  v-if="keyboard && plateform=='desktop'" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
+        aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-textarea>
   </template>
   <template v-else-if="type == 'date'">
-<FloatLabel variant="on" >
-        <DatePicker style="height:55px" dateFormat="dd/mm/yy" size="large" v-model="model" inputId="in_label" showIcon iconDisplay="input" variant="filled" 
-        class="w-full"
-        />
-        <label for="in_label">{{ label  }}</label>
+    <FloatLabel variant="on">
+      <DatePicker style="height:55px" dateFormat="dd/mm/yy" size="large" v-model="model" inputId="in_label" showIcon
+        iconDisplay="input" variant="filled" class="w-full" />
+      <label for="in_label">{{ label }}</label>
     </FloatLabel>
 
 
   </template>
   <template v-else>
-  <ion-input v-bind="$attrs" ref="ionInputRef" 
-    :value="model"
-     @ionInput="onInput" 
-     :type="type"
+    <ion-input v-bind="$attrs" ref="ionInputRef" :value="model" @ionInput="onInput" :type="type"
       :placeholder="placeholder || label" 
-      :label="label" @ionChange="onChange"
-       :fill="fill" 
-        :clear-input="clear"
-       :label-placement="labelPlacement"
-        
-       >
-       
-      <ion-button v-if="icon"  fill="clear" slot="end"
-        aria-label="Show/hide">
+      :label="model?label:''" @ionChange="onChange" :fill="fill" :clear-input="clear"
+      :label-placement="labelPlacement">
+
+      <ion-button v-if="icon" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
-      
+
       <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanBarcode" fill="clear" slot="end"
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
-      
-      <ion-button v-if="keyboard && plateform=='desktop'" @click="onOpenKeyboard" fill="clear" slot="end" aria-label="Show/hide">
+
+      <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
+        aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
     </ion-input>
@@ -59,7 +52,7 @@
 </template>
 <script setup>
 import { IonIcon } from '@ionic/vue';
-import {  keypadOutline, scan } from 'ionicons/icons';
+import { keypadOutline, scan } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import { IonTextarea } from '@ionic/vue';
 import InputNumber from 'primevue/inputnumber';
@@ -76,7 +69,7 @@ const props = defineProps({
   placeholder: String,
   focus: Boolean,
   keyboard: Boolean,
-  icon:Object,
+  icon: Object,
   fill: {
     type: String,
     default: "outline"
@@ -93,14 +86,14 @@ const props = defineProps({
     type: String,
     default: "stacked"
   },
-  
+
   clear: {
-    type:Boolean,
+    type: Boolean,
     default: false
   },
 
- 
-  storageKey:String
+
+  storageKey: String
 })
 
 defineOptions({
@@ -133,7 +126,7 @@ function onInput($event) {
   } else {
     model.value = $event.detail.value
   }
-  
+
   emit("onInput", model.value)
 }
 
@@ -159,26 +152,26 @@ async function onScanBarcode() {
 
 }
 
-async function onOpenKeyboard(){
-  if(props.type=="number"){
-      const result = await app.utils.onOpenKeypad()
-     if(result){
+async function onOpenKeyboard() {
+  if (props.type == "number") {
+    const result = await app.utils.onOpenKeypad()
+    if (result) {
       model.value = result;
-       emit("onChange", model.value)
-     }
-  }else {
- const result = await app.utils.onOpenKeyboard({
-  title:props.placeholder || props.label,
-  defaultValue: model.value,
-  storageKey:props.storageKey 
- })
- if(result){
-    model.value = result;
-       emit("onChange", model.value)
- }
+      emit("onChange", model.value)
+    }
+  } else {
+    const result = await app.utils.onOpenKeyboard({
+      title: props.placeholder || props.label,
+      defaultValue: model.value,
+      storageKey: props.storageKey
+    })
+    if (result) {
+      model.value = result;
+      emit("onChange", model.value)
+    }
 
   }
-  
+
 
 }
 
@@ -192,8 +185,8 @@ const onSelectAll = (event) => {
 
 
 onMounted(() => {
-   
-  if (props.focus && plateform=="desktop") {
+
+  if (props.focus && plateform == "desktop") {
     setTimeout(function () {
 
       ionInputRef.value?.$el?.setFocus()
@@ -202,12 +195,12 @@ onMounted(() => {
     }, 200)
   }
 
-  if(value.value){
-   
-    if(props.type=="number"){
+  if (value.value) {
+
+    if (props.type == "number") {
       model.value = Number(value.value)
-    }else {
-      model.value =value.value
+    } else {
+      model.value = value.value
     }
   }
 

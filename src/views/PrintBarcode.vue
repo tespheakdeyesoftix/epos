@@ -1,161 +1,138 @@
 <template>
-  <ion-page>
-    
-
   <ToolBar>Print Barcode</ToolBar>
   <ion-content>
-    
-     
+    <div class="controls">
+      <label>Barcode Value:
+        <input v-model="barcodeData" />
+      </label>
+
+      <label>
+        Canvas Width (mm):
+        <input
+          type="number"
+          v-model.number="canvasWidthMM"
+          @change="updateCanvasSizeFromMM"
+          min="10"
+        />
+      </label>
+
+      <label>
+        Canvas Height (mm):
+        <input
+          type="number"
+          v-model.number="canvasHeightMM"
+          @change="updateCanvasSizeFromMM"
+          min="10"
+        />
+      </label>
+
+      <ion-button @click="drawCanvas">Refresh</ion-button>
       <ion-button @click="onFindPrinter">Find Printer</ion-button>
       <ion-button @click="onConnectPrinter">Connect Printer</ion-button>
- 
+      <ion-button @click="resetPositions">Reset Positions</ion-button>
       <ion-button @click="printLabel">Print Label</ion-button>
-  
-   
+      <ion-button @click="sendToPrinter">Print HTML</ion-button>
+    </div>
+
+    <canvas id="canvas" ></canvas>
+    <img :src="myImg"/>
   </ion-content>
-    </ion-page>
 </template>
 
 <script setup>
+import { ref, reactive, onMounted } from 'vue'
  
- import { ref } from 'vue';
-import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
-
-const printerAddress = ref('DC:0D:30:6F:9C:B4');
-const labelWidth = 30; // mm
-const labelHeight = 20; // mm
-const dpi = 203; // Common thermal printer DPI
-
-// Convert mm to pixels
-const mmToPixels = (mm) => Math.round((mm * dpi) / 25.4);
-
-// Create monochrome bitmap data from canvas
-const canvasToBitmapData = (canvas) => {
-  const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
+import { CapacitorThermalPrinter } from 'capacitor-thermal-printer'
+            
+async function onFindPrinter() {
+  CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
+    console.log('Discovered printers:', devices)
+  })
+  await CapacitorThermalPrinter.startScan()
+}
+const myImg = ref(null)
+async function onConnectPrinter() {
+  const result = await CapacitorThermalPrinter.connect({ address: "DC:0D:30:6F:9C:B4" })
+  console.log('Connected:', result)
+}
+  async function printLabel() {
+  // Printer resolution (203 DPI = 8 dots/mm)
+  const DPI = 203;
+  const MM_TO_DOTS = DPI / 25.4;
   
-  // Create image data
+  // Label size in mm (adjust to your label size)
+  const labelWidthMM = 30;
+  const labelHeightMM = 20;
+  
+  // Convert to dots
+  const width = Math.floor(labelWidthMM * MM_TO_DOTS);
+  const height = Math.floor(labelHeightMM * MM_TO_DOTS);
+
+  // Create canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+
+  // Fill white background (CRUCIAL)
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, width, height);
+
+  // Draw black text
+  ctx.fillStyle = '#000000';
+  ctx.font = 'bold 24px "Khmer OS System", Arial, sans-serif';
+  ctx.textBaseline = 'top';
+  ctx.fillText('សួស្តីពិភពលោក', 10, 10);
+
+  // Convert to 1-bit monochrome bitmap
   const imageData = ctx.getImageData(0, 0, width, height);
   const data = imageData.data;
-  
-  // Calculate bytes per row (must be divisible by 8)
   const bytesPerRow = Math.ceil(width / 8);
-  
-  // Create bitmap array
-  const bitmap = new Uint8Array(bytesPerRow * height);
-  
-  // Convert to 1-bit monochrome
+  const bitmapData = new Uint8Array(bytesPerRow * height);
+
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const idx = (y * width + x) * 4;
       const r = data[idx];
       const g = data[idx + 1];
       const b = data[idx + 2];
-      
-      // Convert to grayscale and check if pixel should be "on"
-      const grayscale = (r + g + b) / 3;
-      const isBlack = grayscale < 128; // Threshold for black/white
-      
+      const isBlack = (r + g + b) < 384; // Threshold for black (384 = 128*3)
+
       if (isBlack) {
-        const byteIndex = Math.floor(x / 8) + y * bytesPerRow;
-        const bitIndex = 7 - (x % 8);
-        bitmap[byteIndex] |= (1 << bitIndex);
+        const bytePos = Math.floor(x / 8);
+        const bitPos = 7 - (x % 8);
+        bitmapData[y * bytesPerRow + bytePos] |= (1 << bitPos);
       }
     }
   }
-  
-  return {
-    data: bitmap,
-    width,
-    height,
-    bytesPerRow
-  };
-};
 
-// Generate TSPL commands for the bitmap
-const createBitmapCommands = (bitmapData) => {
-  const commands = [
-    'SIZE 30,20',
-    'GAP 2,0',
+  // Convert to hex string
+  const hexString = Array.from(bitmapData)
+    .map(b => b.toString(16).padStart(2, '0').toUpperCase())
+    .join('');
+
+  // TSPL Commands (XPrinter compatible)
+  const tsplCommands = [
+    'SIZE 30 mm,20 mm',
+    'GAP 2 mm,0 mm',
+    'DIRECTION 1',      // Try 0 or 1 based on your printer
+    'REFERENCE 0,0',
     'CLS',
-    'DIRECTION 1',
-    
-    // BITMAP command format: BITMAP x,y,width,height,0,data...
-    `BITMAP 0,0,${bitmapData.bytesPerRow * 8},${bitmapData.height},0,${Array.from(bitmapData.data).join(',')}`,
-    
+    `BITMAP 0,0,${bytesPerRow},${height},0,${hexString}`,
     'PRINT 1'
-  ];
-  
-  return commands.join('\n');
-};
+  ].join('\n');
 
-const printLabel = async () => {
   try {
-    // 1. Create canvas
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Set canvas size in pixels
-    const width = mmToPixels(labelWidth);
-    const height = mmToPixels(labelHeight);
-    canvas.width = width;
-    canvas.height = height;
-    
-    // 2. Draw white background
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, width, height);
-    
-    // 3. Draw Khmer text at top
-    ctx.fillStyle = 'black';
-    ctx.font = 'bold 16px Arial, "Khmer OS"'; // Fallback to Arial if Khmer OS not available
-    const text1 = 'អក្សរខ្មែរ'; // Khmer text
-    const text2 = 's-m 7mm'; // English text
-    
-    // Center text horizontally
-    const text1Width = ctx.measureText(text1).width;
-    const text2Width = ctx.measureText(text2).width;
-    
-    ctx.fillText(text1, (width - text1Width) / 2, 20);
-    ctx.fillText(text2, (width - text2Width) / 2, 40);
-    
-    // 4. Draw barcode below (simulated)
-    for (let i = 0; i < 20; i++) {
-      const lineHeight = 10 + Math.random() * 10;
-      ctx.fillRect(50 + (i * 5), 60, 3, lineHeight);
-    }
-    
-    // 5. Convert canvas to bitmap data
-    const bitmapData = canvasToBitmapData(canvas);
-    
-    // 6. Generate TSPL commands
-    const tsplCommands = createBitmapCommands(bitmapData);
-    
-    // 7. Connect to printer
-    const connection = await CapacitorThermalPrinter.connect({
-      address: printerAddress.value
-    });
-    
-    if (!connection) {
-      throw new Error('Failed to connect to printer');
-    }
-    
-    // 8. Convert commands to Uint8Array
     const encoder = new TextEncoder();
-    const rawData = encoder.encode(tsplCommands);
-    
-    // 9. Send raw commands to printer
-    await CapacitorThermalPrinter.begin()
-      .raw(rawData)
-      .write();
-    
-    console.log('Label with Khmer text printed successfully');
+    const data = encoder.encode(tsplCommands);
+    await CapacitorThermalPrinter.begin().raw(data).write();
+    console.log('Printed successfully!');
   } catch (error) {
-    console.error('Printing error:', error);
-    alert(`Printing failed: ${error.message}`);
+    console.error('Print error:', error);
+    alert('Print failed: ' + error.message);
   }
-};
- 
+}
+
 </script>
 
  

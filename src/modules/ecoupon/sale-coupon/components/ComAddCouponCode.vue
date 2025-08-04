@@ -1,7 +1,7 @@
 <template>
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
- 
-        <stack row equal class="mb-4" v-if="data.is_open_product==1">
+
+        <stack row equal class="mb-4" v-if="data.is_open_product == 1">
             <com-input ref="txtPrice" :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
@@ -17,8 +17,10 @@
             <com-input v-else :label="t('Coupon Value')" v-model="doc.coupon_value" type="number" keyboard />
         </stack>
         <!-- scan barcode -->
-        <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
-            :placeholder="t('Please scan coupon code')" label-placement="stacked" fill="outline"></com-input>
+         <!-- v-if="plateform != 'mobile'"  -->
+        <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
+            :label="t('Coupon Code')" :placeholder="t('Please scan coupon code')" label-placement="stacked"
+            fill="outline"></com-input>
         <div style="display: flex;justify-content: center;">
             <ion-chip color="success" @click="onChangeScanMode('add')">
                 <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
@@ -27,7 +29,6 @@
             <ion-chip color="danger" @click="onChangeScanMode('remove')">
                 <ion-icon :icon="checkmarkOutline" v-if="scanMode == 'remove'"></ion-icon>
                 <ion-label>{{ t("Scan to Remove") }}</ion-label>
-
             </ion-chip>
         </div>
 
@@ -36,7 +37,7 @@
         <ion-list v-if="sortedCouponList.length > 0">
             <ion-item button v-for="(c, index) in sortedCouponList" :key="index">
                 <ion-label>{{ c.coupon }}</ion-label>
-                <ComCurrency :value="data.is_open_product?doc.price:data.price" slot="end" />
+                <ComCurrency :value="data.is_open_product ? doc.price : data.price" slot="end" />
                 <ion-button @click="onDelete(index)" slot="end" size="large" fill="clear" shape="round" color="danger">
                     <ion-icon :icon="closeOutline"></ion-icon>
                 </ion-button>
@@ -45,15 +46,20 @@
         <template v-else>
             <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
         </template>
+
+        <div v-if="plateform == 'mobile'">
+            <ion-button @click="onScanWithCamera">Scan Coupon Code</ion-button>
+        </div>
         <template #footer>
             <div class="ion-padding">
                 <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
                 &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
-                        <ComCurrency :value="coupounList.length * (data.is_open_product?doc.price :data.price)" />
+                        <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                     </strong></ion-label>
             </div>
 
         </template>
+
     </BaseModal>
 
 </template>
@@ -66,7 +72,7 @@ import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 const { saleDoc } = useSaleCoupon()
 const inputRef = ref(null)
 const txtPrice = ref(null)
-
+const plateform = ref(app.utils.getPlateform())
 const props = defineProps({
     data: Object,
 
@@ -112,6 +118,15 @@ async function onScanBarCode() {
     }
 }
 
+async function onScanWithCamera() {
+    const result = await app.utils.onScanBarcode();
+    if (result) {
+        coupon.value = result
+        await onScanBarCode()
+        
+    }
+
+}
 
 
 async function addCoupon() {
@@ -123,9 +138,9 @@ async function addCoupon() {
     }
     // check 
     // check exists
-  
+
     coupounList.value.push({
-        name:data.name,
+        name: data.name,
         coupon: data.coupon,
         creation: dayjs()
     })
@@ -163,9 +178,9 @@ async function validateCouponCode(c) {
         app.showWarning("This coupon code is already selected")
         return false
     }
-    
+
     // if exist in sale product
-    if (saleDoc.value.sale_products.filter(r=>!r.is_editing).flatMap(sp => sp.coupons).filter(x => x.coupon.toLowerCase() == c.toLowerCase()).length > 0) {
+    if (saleDoc.value.sale_products.filter(r => !r.is_editing).flatMap(sp => sp.coupons).filter(x => x.coupon.toLowerCase() == c.toLowerCase()).length > 0) {
         app.showWarning("This coupon code is already selected")
         return false
     }
@@ -173,12 +188,12 @@ async function validateCouponCode(c) {
     // validate in existing in db
     const l = await app.showLoading("Checking coupon code...")
     const res = await app.getApi("epos_restaurant_2023.selling.doctype.coupon_codes.coupon_codes.check_coupon_code", { coupon: c })
-    if(res.error){
-         await l.dismiss();
-         return false
+    if (res.error) {
+        await l.dismiss();
+        return false
     }
-     
-  
+
+
     await l.dismiss();
     return res.data
 }
@@ -192,21 +207,21 @@ function onDelete(index) {
 function onConfirm() {
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
-         inputRef.value.select()
+        inputRef.value.select()
         return
     }
-    if(props.data.is_open_product==1 && Number(doc.value.price == 0)){
+    if (props.data.is_open_product == 1 && Number(doc.value.price == 0)) {
         app.showWarning("Please enter price")
-         txtPrice.value.select()
+        txtPrice.value.select()
 
         return;
     }
-    if(props.data.is_open_product==1 && Number(couponValue.value == 0)){
+    if (props.data.is_open_product == 1 && Number(couponValue.value == 0)) {
         app.showWarning("Please enter coupon value")
-         
+
         return;
     }
- 
+
     const returnData = {
         product_code: props.data.name,
         product_name: props.data.product_name_en,
@@ -214,35 +229,45 @@ function onConfirm() {
         quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
-        price: props.data.is_open_product==1? doc.value.price:props.data.price,
+        price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
         amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value,
         allow_discount: props.data.allow_discount,
-        coupon_markup_type : doc.value.coupon_markup_type,
-        coupon_markup_value : doc.value.coupon_markup_value,
-        coupon_value : props.data.is_open_product==1? couponValue.value:props.data.coupon_value,
-        total_coupon_value : (props.data.is_open_product==1? couponValue.value:props.data.coupon_value) * coupounList.value.length,
-        is_open_product:props.data.is_open_product,
-        append_quantity:props.data.append_quantity,
-        allow_free:props.data.allow_free,
-        regular_price: props.data.is_open_product==1? doc.value.price:props.data.price
+        coupon_markup_type: doc.value.coupon_markup_type,
+        coupon_markup_value: doc.value.coupon_markup_value,
+        coupon_value: props.data.is_open_product == 1 ? couponValue.value : props.data.coupon_value,
+        total_coupon_value: (props.data.is_open_product == 1 ? couponValue.value : props.data.coupon_value) * coupounList.value.length,
+        is_open_product: props.data.is_open_product,
+        append_quantity: props.data.append_quantity,
+        allow_free: props.data.allow_free,
+        regular_price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
+       
     }
-    
-    returnData.coupon_markup_percentage   = ((returnData.coupon_value  - returnData.price )/ returnData.price) * 100
+
+    returnData.coupon_markup_percentage = ((returnData.coupon_value - returnData.price) / returnData.price) * 100
     modalController.dismiss(returnData, 'confirm')
-    
+
 }
 
-onMounted(() => {
+onMounted(async () => {
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
 
+    } else {
+
+        if(app.utils.getPlateform() == "mobile"){
+                await onScanWithCamera()
+        }
+        
     }
 
     doc.value.price = props.data.price
     doc.value.coupon_markup_type = props.data.coupon_markup_type
     doc.value.coupon_markup_value = props.data.coupon_markup_value
     doc.value.coupon_value = props.data.coupon_value
+
+
+
 
 
 })

@@ -19,7 +19,6 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
-  
   // add from route path to window object, in case that we want to go back to previouse router on delete operation\
   window.fromRoute = from.path;
   
@@ -68,7 +67,6 @@ router.beforeEach(async (to, from, next) => {
   }
   else if(to.path == "/enter-station-name" && station_name){
        next(to.query.return_url?.toString() || "/home");
-     
   }
   else if(to.name == "EditSaleCoupon"){
     // validate sale 
@@ -121,7 +119,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     }
   }
-
+  
   else {
       
       next();

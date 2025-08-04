@@ -493,7 +493,11 @@ export function checkArrayType(value) {
 
 export function getPlateform(){
    const screenWidth = window.innerWidth;
- 
+  if(window.matchMedia('(max-width: 640px)').matches){
+      return "mobile"
+  }
+
+
   if( screenWidth>=1024 || isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
     return "desktop"
   }
