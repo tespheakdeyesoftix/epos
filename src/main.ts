@@ -168,19 +168,12 @@ dayjs.extend(relativeTime)
 defineCustomElements(window)
 
 
-
-// attach service to window easy to call it later
-
-window.storageService = storageService;
+ 
 
 // register function to window object
 window.t = i18n.global.t;
-window.showWarning = (message: string) => showToast(message, "warning");
-window.showSuccess = (message: string) => showToast(message, "success");
-window.showError = (message: string) => showToast(message, "danger");
-window.showLoading = (message: string='Loading') => showLoading(message);
-window.openModal = ( props:object) =>openModal(props);
-
+ 
+ 
 
  
 

@@ -37,7 +37,7 @@ const options = {
    
     columns:[
         {fieldname:"name",header:"Name",url:"/coupon-register",id_field:"name" },
-        {fieldname:"total_coupons",header:"Total Coupons"},   
+        {fieldname:"total_coupons",header:"Total Coupons",fieldtype:"Int"},   
         {fieldname:"posting_date",header:"Date",fieldtype:"Date"},
         {fieldname:"modified_by",header:"User"},
         {fieldname:"modified",header:"Last Modified",fieldtype:"Datetime"},

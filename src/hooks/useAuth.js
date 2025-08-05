@@ -46,7 +46,7 @@ export function useAuth() {
 
       delete response.data.message["app_menus"];
       
-      window.storageService.setItem("current_user", JSON.stringify(response.data.message));
+      app.storageService.setItem("current_user", JSON.stringify(response.data.message));
       app.currentUser = currentUser.value;
       setFrappeAppUrl(data.api_url);
       isAuthenticated.value = true;
@@ -64,7 +64,7 @@ export function useAuth() {
     await loading.present();
 
     await logoutApi();
-    window.storageService.removeItem("current_user");
+    app.storageService.removeItem("current_user");
     isAuthenticated.value = false;
     currentUser.value = {};
     
@@ -109,10 +109,10 @@ export function useAuth() {
     
     const loading = await app.showLoading()
 
-    const strCurrentProperty = window.storageService.getItem("current_property");
+    const strCurrentProperty = app.storageService.getItem("current_property");
     if (strCurrentProperty) {
       const property = JSON.parse(strCurrentProperty);
-      const strCurrentUser = window.storageService.getItem("current_user");
+      const strCurrentUser = app.storageService.getItem("current_user");
 
       if (strCurrentUser) {
         const user = JSON.parse(strCurrentUser);
@@ -122,7 +122,7 @@ export function useAuth() {
 
         if (checkResponse.data === "Guest") {
           isAuthenticated.value = false;
-          window.storageService.removeItem("current_user");
+          app.storageService.removeItem("current_user");
         } else {
           if (checkResponse.data) {
             isAuthenticated.value = true;
@@ -131,7 +131,7 @@ export function useAuth() {
            
             setFrappeAppUrl(property.api_url);
           } else {
-            window.storageService.removeItem("current_user");
+            app.storageService.removeItem("current_user");
             isAuthenticated.value = false;
           }
         }

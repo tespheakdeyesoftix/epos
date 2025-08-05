@@ -17,7 +17,7 @@ export function setFrappeAppUrl(url: string) {
 }
 
 function getToken() {
-    const strCurrentUser = window.storageService.getItem("current_user");
+    const strCurrentUser = app.storageService.getItem("current_user");
     if (strCurrentUser) {
         const userObject = JSON.parse(strCurrentUser);
         const token = JSON.stringify(atob(userObject.token))

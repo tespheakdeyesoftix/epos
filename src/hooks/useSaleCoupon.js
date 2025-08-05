@@ -261,7 +261,7 @@ async function onQuickPay(payment_type) {
             return
         }
     }
-    const loading = await showLoading();
+    const loading = await app.showLoading();
     // add payment type
     saleDoc.value.payment = [
         {
@@ -384,7 +384,7 @@ async function onEditSaleProductCoupon(data) {
             data: { ...sp, name: sp.product_code, product_name_en: sp.product_name },
 
         },
-        cssClass: "scan-coupon-code-modal"
+        cssClass: app.utils.getPlateform()=="mobile"?"": "scan-coupon-code-modal"
     })
     data.is_editing = false
 

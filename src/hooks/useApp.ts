@@ -95,7 +95,7 @@ export function useApp() {
   }
 
   onMounted(async ()=>{
-      currentLanguage.value = window.storageService.getItem("lang") || "en";  
+      currentLanguage.value = app.storageService.getItem("lang") || "en";  
 
       await getUserPreference()
 
