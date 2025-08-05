@@ -168,6 +168,14 @@ async function onSelectProduct(p) {
 
 
     }
+
+
+    // chekc if user want payment 
+    
+    if(result.process_payment==true){
+        await onPayment()
+    }
+
     // wait user confirm then add producty to sale product 
 
 }
@@ -181,6 +189,8 @@ async function onPayment() {
         component: ComPayment,
         cssClass: "payment-modal"
     })
+
+    return result
   
 }
 
@@ -311,11 +321,11 @@ async function onCloseSale(isPrint = true) {
         await app.showSuccess("Payment successfully")
         
         app.ionRouter.navigate(pageRoute.value,"forward","replace")
-
+        modalController.dismiss(true, 'confirm')
 
     }
 
-    modalController.dismiss("", 'confirm')
+ 
     await loading.dismiss()
 
 }

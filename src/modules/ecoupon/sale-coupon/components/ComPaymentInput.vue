@@ -2,6 +2,7 @@
     
     <stack>
         <com-input @keyup="onInput" v-model="paymentInputAmount"  :label="t('Payment Amount')" :placeholder="paymentBalance.toString()" /> 
+      <template v-if="plateform!=='mobile'">
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">
                     <ion-col v-for="k in r">
@@ -47,6 +48,7 @@
     </ion-col>
   </ion-row>
 </ion-grid>
+</template>
     </stack>
 </template>
 <script setup>
@@ -57,6 +59,8 @@ const {  paymentBalance,paymentInputAmount,onAddPayment } = useSaleCoupon()
     const mainPredefine = posConfig.main_currency_predefine_payment_amount.split(",")
     const secondPredefine = posConfig.second_currency_predefine_payment_amount.split(",")
     const t = window.t;
+    const plateform = ref(app.utils.getPlateform())
+ 
     const secondCurrency = app.setting.second_currency;
     const paymentTypes = app.setting.pos_config.payment_type;
     const keypad = [

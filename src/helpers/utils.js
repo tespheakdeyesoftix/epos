@@ -492,6 +492,7 @@ export function checkArrayType(value) {
 
 
 export function getPlateform(){
+  
    const screenWidth = window.innerWidth;
   if(window.matchMedia('(max-width: 640px)').matches){
       return "mobile"

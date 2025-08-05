@@ -1,7 +1,7 @@
 <template>
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
 
-        <stack row equal class="mb-4" v-if="data.is_open_product == 1">
+        <stack row equal class="mb-4" itemClass="col-6 sm:col-6 lg:col-3 p-2 "  v-if="data.is_open_product == 1">
             <com-input ref="txtPrice" :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
@@ -56,7 +56,10 @@
                 &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
                         <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                     </strong></ion-label>
+                       <ion-button clor="sucess" @click="onConfirm(true)">{{ t("Payment") }}</ion-button>
             </div>
+
+         
 
         </template>
 
@@ -204,7 +207,7 @@ function onDelete(index) {
     coupon.value = "";
 }
 
-function onConfirm() {
+function onConfirm(process_payment = false) {
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
         inputRef.value.select()
@@ -241,6 +244,7 @@ function onConfirm() {
         append_quantity: props.data.append_quantity,
         allow_free: props.data.allow_free,
         regular_price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
+        process_payment:process_payment
        
     }
 
