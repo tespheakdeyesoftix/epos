@@ -18,8 +18,10 @@
         </stack>
         <!-- scan barcode -->
          <!-- v-if="plateform != 'mobile'"  -->
+          <div >
+          <!-- <div v-if="plateform != 'mobile'"> -->
         <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
-            :label="t('Coupon Code')" :placeholder="t('Please scan coupon code')" label-placement="stacked"
+            :label="t('Coupon Code')" :placeholder="t('Please scan coupon codes')" label-placement="stacked"
             fill="outline"></com-input>
         <div style="display: flex;justify-content: center;">
             <ion-chip color="success" @click="onChangeScanMode('add')">
@@ -31,7 +33,11 @@
                 <ion-label>{{ t("Scan to Remove") }}</ion-label>
             </ion-chip>
         </div>
+</div>
 
+<div v-if="plateform == 'mobile'" class="ion-text-center">
+            <ion-button @click="onScanWithCamera" class="w-full">{{t("Scan Coupon Code")}}</ion-button>
+        </div>
 
 
         <ion-list v-if="sortedCouponList.length > 0">
@@ -44,23 +50,35 @@
             </ion-item>
         </ion-list>
         <template v-else>
-            <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
-        </template>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%;">
+      <ion-col size="12" class="ion-text-center">
+        <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</template>
 
-        <div v-if="plateform == 'mobile'">
-            <ion-button @click="onScanWithCamera">Scan Coupon Code</ion-button>
-        </div>
+
+        
+
         <template #footer>
             <div class="ion-padding">
-                <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
+                <ion-grid class="ion-no-padding">
+                    <ion-row>
+                    <ion-col size="9">
+                        <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
                 &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
                         <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                     </strong></ion-label>
-                       <ion-button clor="sucess" @click="onConfirm(true)">{{ t("Payment") }}</ion-button>
+                </ion-col>
+                    <ion-col size="3" class="ion-no-padding">
+                        <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
+                    </ion-col>
+                    
+                    </ion-row>
+            </ion-grid>  
             </div>
-
-         
-
         </template>
 
     </BaseModal>

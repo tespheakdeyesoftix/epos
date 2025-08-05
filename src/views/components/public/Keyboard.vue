@@ -19,7 +19,7 @@
         </ion-chip>
       </div>
 
-      <div class="keyboard">
+      <div class="keyboard" v-if="plateform !== 'mobile'">
         <div v-for="(row, rowIndex) in keys" :key="rowIndex" class="keyboard-row">
           <button
             v-for="key in row"
@@ -67,7 +67,7 @@ const props = defineProps({
   defaultValue: String,
   storageKey:String
 });
-
+const plateform = ref(app.utils.getPlateform())
 // States
 const inputText = ref(props.defaultValue || "");
 const isShift = ref(false);
