@@ -25,7 +25,7 @@ const props = defineProps({
 
 
 const imgData = ref("/ecoupon/assets/placeholder.jpg");
-const strCurrentProperty = window.storageService.getItem("current_property");
+const strCurrentProperty = app.storageService.getItem("current_property");
  
 let serverUrl = props.api_url;
 if (!serverUrl){

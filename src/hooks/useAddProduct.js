@@ -57,7 +57,7 @@ async function startUpload(docname) {
 
 async function loadDoc(docname) {
  
-  const loading = await window.showLoading()
+  const loading = await app.showLoading()
   const res = await app.getDoc("Product", docname)
   doc.value = res.data;
 await loading.dismiss()
@@ -65,7 +65,7 @@ await loading.dismiss()
 }
 
 async function onSave(){
-  const loading = await window.showLoading();
+  const loading = await app.showLoading();
   let res = null
   if(doc.value.name){
      res= await app.updateDoc("Product", doc.value.name, doc.value)

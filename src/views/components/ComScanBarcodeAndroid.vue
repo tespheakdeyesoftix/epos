@@ -49,7 +49,7 @@ const startScanner = async () => {
     await scanner.stop().catch(() => {})
   }
 
-  window.storageService.setItem('selectedCameraId', selectedCameraId.value)
+  app.storageService.setItem('selectedCameraId', selectedCameraId.value)
 
   scanner = new Html5Qrcode('reader')
   scanner.start(
@@ -80,7 +80,7 @@ onMounted(async () => {
   if (devices && devices.length) {
     cameraList.value = devices
 
-    const savedCameraId = window.storageService.getItem('selectedCameraId')
+    const savedCameraId = app.storageService.getItem('selectedCameraId')
     if (savedCameraId && savedCameraId !== 'undefined') {
       selectedCameraId.value = savedCameraId.toString()
     } else {

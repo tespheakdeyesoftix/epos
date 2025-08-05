@@ -91,13 +91,13 @@ const changeLanguage = (lang: string) => {
 
 async function onLogin() {
   if (!formData.value.username) {
-    window.showWarning(t("Please enter your username"))
+    app.showWarning(t("Please enter your username"))
     txtUsername.value?.focus()
     return
   }
   
   if (!formData.value.password) {
-    window.showWarning(t("Please enter your password"))
+    app.showWarning(t("Please enter your password"))
     txtPassword.value?.focus()
     return
   }
@@ -139,11 +139,11 @@ async function onLogin() {
 }
 
 function SaveUsername(){
-  const strProperties = window.storageService.getItem("properties");
+  const strProperties = app.storageService.getItem("properties");
   if (strProperties) {
     const properties = JSON.parse(strProperties)
     properties[0].username = formData.value.username
-    window.storageService.setItem("properties", JSON.stringify(properties))
+    app.storageService.setItem("properties", JSON.stringify(properties))
   }
 }
 
@@ -153,7 +153,7 @@ onMounted(async () => {
   txtUsername.value?.focus()
  }, 100);
   
-  const strProperties = window.storageService.getItem("properties");
+  const strProperties = app.storageService.getItem("properties");
   if (strProperties) {
     const properties = JSON.parse(strProperties)
     property.value = properties[0]

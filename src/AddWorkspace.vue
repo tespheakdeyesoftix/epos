@@ -163,8 +163,8 @@ async function onSaveWorkspace() {
   updatePropertyToStorage(property);
 
   // save current property and user to local storage
-  window.storageService.setItem("current_property", JSON.stringify(property));
-  window.storageService.setItem("current_user", JSON.stringify(loginResponse.data));
+  app.storageService.setItem("current_property", JSON.stringify(property));
+  app.storageService.setItem("current_user", JSON.stringify(loginResponse.data));
   app.setting.property = property
   setFrappeAppUrl(response.data.app_url);
 
@@ -177,7 +177,7 @@ async function onSaveWorkspace() {
 }
 
 function updatePropertyToStorage(data) {
-  let properties = window.storageService.getItem("properties");
+  let properties = app.storageService.getItem("properties");
   if (properties) {
     properties = JSON.parse(properties);
     let property = properties.find((r) => r.property_code === data.property_code);
@@ -194,13 +194,13 @@ function updatePropertyToStorage(data) {
     properties = [];
     properties.push(data);
   }
-  window.storageService.setItem("properties", JSON.stringify(properties));
+  app.storageService.setItem("properties", JSON.stringify(properties));
 }
 
 onMounted(() => {
   const { property_code } = route.params;
 
-  const strProperties = window.storageService.getItem("properties");
+  const strProperties = app.storageService.getItem("properties");
   if (strProperties) {
     const properties = JSON.parse(strProperties);
     const property = properties.find((r) => r.property_code === property_code);

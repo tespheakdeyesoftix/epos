@@ -260,7 +260,7 @@ async function onOpenMenu(p) {
             properties.value = properties.value.filter(
               (r) => r.property_code !== p.property_code
             );
-            window.storageService.setItem('properties', JSON.stringify(properties.value));
+            app.storageService.setItem('properties', JSON.stringify(properties.value));
           }
         },
       },
@@ -274,7 +274,7 @@ onIonViewWillEnter(() => {
   if (isAuthenticated) {
     ionRouter.navigate('/home', 'forward', 'replace');
   }
-  const strProperties = window.storageService.getItem('properties');
+  const strProperties = app.storageService.getItem('properties');
   if (strProperties) {
     properties.value = JSON.parse(strProperties);
   }

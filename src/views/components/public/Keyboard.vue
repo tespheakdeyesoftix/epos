@@ -262,7 +262,7 @@ function onConfirm() {
     const exist = predefineNotes.value.find(x=>x.toLowerCase()==inputText.value.toLocaleLowerCase())
     if(!exist){
       predefineNotes.value.push(inputText.value)
-      window.storageService.setItem(props.storageKey, JSON.stringify(predefineNotes.value) )
+      app.storageService.setItem(props.storageKey, JSON.stringify(predefineNotes.value) )
     }
     
   }
@@ -275,14 +275,14 @@ async function onDeleteNote(index) {
   if (confirm) {
     predefineNotes.value.splice(index, 1);
     if (props.storageKey) {
-      window.storageService.setItem(props.storageKey, JSON.stringify(predefineNotes.value));
+      app.storageService.setItem(props.storageKey, JSON.stringify(predefineNotes.value));
     }
   }
 }
 
 onMounted(()=>{
   if(props.storageKey){
-    const notes = window.storageService.getItem(props.storageKey)
+    const notes = app.storageService.getItem(props.storageKey)
     if(notes){
       predefineNotes.value = JSON.parse(notes)
     }

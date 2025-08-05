@@ -25,7 +25,7 @@ const stopStream = () => {
 
 const startScanner = async (deviceId) => {
   stopStream();
-  window.storageService.setItem('selectedCameraId', deviceId)
+  app.storageService.setItem('selectedCameraId', deviceId)
 
   try {
     const constraints = {
@@ -56,7 +56,7 @@ const getCameras = async () => {
  
 
  
-  const savedCameraId = window.storageService.getItem('selectedCameraId')
+  const savedCameraId = app.storageService.getItem('selectedCameraId')
     if (savedCameraId && savedCameraId !== 'undefined') {
       selectedDeviceId.value = savedCameraId.toString()
     } else {

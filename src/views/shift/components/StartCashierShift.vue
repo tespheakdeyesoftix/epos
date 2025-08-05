@@ -1,6 +1,6 @@
 <template>
     <ion-page>
-        <AppBar>{{ t("Start Cashier Shift") }}</AppBar>
+        <ToolBar>{{ t("Start Cashier Shift") }}</ToolBar>
         <ion-content class="ion-padding">
             <div class="fix-container">
                 <stack gap="20px">

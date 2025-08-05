@@ -25,7 +25,7 @@ const selectedDate = ref(dayjs().format("YYYY-MM-DDTHH:MM:ss"))
 function onSelectDate(){
     
     if(!selectedDate.value){
-        window.showWarning("Please select date")
+        app.showWarning("Please select date")
         return
     }
     modalController.dismiss(selectedDate.value, 'confirm')
@@ -34,7 +34,7 @@ function onSelectDate(){
 function onSelect(){
    
     if(!selectedDate.value){
-        window.showWarning("Please select date")
+        app.showWarning("Please select date")
         return
     }
     modalController.dismiss(selectedDate.value, 'confirm')

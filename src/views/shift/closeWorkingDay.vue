@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <AppBar>
+        <ToolBar>
             {{ t("Close Working Day") }}
-        </AppBar>
+        </ToolBar>
         <ion-content class="ion-padding">
             <div style=" max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;">
             <stack gap="20px"> 

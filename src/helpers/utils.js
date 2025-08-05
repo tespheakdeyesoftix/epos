@@ -39,7 +39,7 @@ export function imageUrl(imageUrl, baseUrl = "") {
     return baseUrl + imageUrl;
   }
 
-  const strCurrentProperty = window.storageService.getItem("current_property");
+  const strCurrentProperty = app.storageService.getItem("current_property");
   if (strCurrentProperty) {
     const property = JSON.parse(strCurrentProperty);
     return property.api_url + imageUrl;

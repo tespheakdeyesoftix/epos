@@ -174,6 +174,13 @@ const routes: Array<RouteRecordRaw> = [
   },
   
   {
+    path: "/bold-report-viewer",
+    component: () => import('@/views/reports/BoldReportViewer.vue'),
+    meta: { requiresAuth: true }
+  },
+
+  
+  {
     path: "/report/:report_name",
     component: () => import('@/views/reports/ServerReport.vue'),
     meta: { requiresAuth: true }

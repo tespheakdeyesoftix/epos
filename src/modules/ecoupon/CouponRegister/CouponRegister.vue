@@ -74,7 +74,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import {  checkmarkCircle, checkmarkOutline, close,} from 'ionicons/icons';
-import { handleErrorMessage } from "@/helpers/error-message.ts"
+
 import PQueue from 'p-queue'
 const doc = ref(null);
 const queue = new PQueue({ concurrency: 1 })
@@ -221,20 +221,30 @@ async function onDeleteItem(item) {
 async function onSubmit() {
   const confirm = await app.onConfirm("Submit", "Are you sure you want to submit this document?");
   if (!confirm) return;
- 
+  const l = await app.showLoading()
   const res = await app.submitDoc(doc.value);
   if (res.data) {
     app.showSuccess("Document submitted successfully");
-    window.location.reload();
+   getDoc()
   } 
+  await l.dismiss();
   
+  
+
+
 }
 
-onMounted(async () => {
-  const name = app.route.params.name;
+async function getDoc(){
+const name = app.route.params.name;
   const result = await app.getDoc('Coupon Register', name);
   options.filters = [["coupon_register", "=", result.data.name]]
   doc.value = result.data;
+}
+
+onMounted(async () => {
+  const l = await app.showLoading();
+  await getDoc();
+  await l.dismiss();
 });
 </script>
 <style scoped>
