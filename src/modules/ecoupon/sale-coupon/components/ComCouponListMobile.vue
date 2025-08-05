@@ -8,9 +8,11 @@
                     </div>
                 </ion-avatar>
 
-                <ion-label class="text-sm text-left price ml-4" > 
-                    {{ p.name }} - {{ p.product_name_en }}
-                </ion-label>
+                <ion-label class="text-sm text-left price ml-4">
+                     <ion-text class="block">{{ p.product_name_en }}</ion-text>
+                    <ion-text class="block">{{ p.name }} </ion-text>
+ 
+</ion-label>
          <ion-label class="text-sm text-center price" v-if="p.price > 0" slot="end">  
             <ComCurrency :value="p.price" />
           </ion-label>
@@ -19,11 +21,11 @@
 </ion-list>
   
 </template>
-    <script setup>
+<script setup>
     import {ref} from "vue"
     import {useProductMenu} from "@/hooks/useProductMenu"
     import { getAvatarLetter } from "@/helpers/utils"
-import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
+    import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 const t = window.t;
  
 const {onSelectProduct} = useSaleCoupon()
