@@ -302,7 +302,7 @@ async function onCloseSale(isPrint = true) {
 
     const confirm = await app.onConfirm("Payment", "Are you sure to process payment and close order?")
     if (!confirm) return;
-    const loading = await showLoading();
+    const loading = await app.showLoading();
     const saveData = getSaveData();
     saveData.docstatus = 1
     saveData.closed_by = app.currentUser.full_name

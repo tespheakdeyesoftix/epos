@@ -1,6 +1,7 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <ComPaymentAmountInfo v-if="plateform=='mobile'"/>
+   
+   <ComPaymentFooter/> <ComPaymentAmountInfo v-if="plateform=='mobile'"/>
     <ion-grid class="h-full">
         <ion-row class="h-full">
             <ion-col size="12" size-md="4" >
