@@ -4,22 +4,22 @@
         <ion-card-content>
 
             <ion-label>{{ lastSelectedCouponAndProduct }}</ion-label>
-            <!-- {{ lastSelectedProduct }} -->
+        
             <ion-grid class="ion-no-padding">
                 <ion-row>
-                    <ion-col size="11">
-                        Quantity:
+                    <ion-col size="9">
+                        {{t("Quantity")}}
                     </ion-col>
-                    <ion-col size="1">
+                    <ion-col size="3">
                         {{ totalQuantity }}
                     </ion-col>
                 </ion-row>
-                <!--  -->
+               
                 <ion-row >
-                    <ion-col size="10">
-                        {{t('Total')}} ({{ t(mainCurrency) }}) :
+                    <ion-col size="9">
+                        {{t('Total')}} ({{ t(mainCurrency) }})
                     </ion-col>
-                    <ion-col size="2">
+                    <ion-col size="3">
                         <ComCurrency :value="grandTotal"/>
                     </ion-col>
                 </ion-row>
@@ -56,11 +56,7 @@ watch(() => saleDoc.value.sale_products, (newVal) => {
   console.log('Updated sale products:', newVal)
 }, { deep: true })
 
-// const lastSelectedProduct  = computed(()=>{
-//     if(!saleDoc.value) return {}
-//     return saleDoc.value.sale_products[saleDoc.value.sale_products.length-1]
-// })
-
+ 
 if(second_currency.value == mainCurrency.value){
     second_currency.value = app.setting.currency
 }
