@@ -18,8 +18,8 @@
         </stack>
         <!-- scan barcode -->
          <!-- v-if="plateform != 'mobile'"  -->
-          
-          <div v-if="plateform != 'mobile'">
+          <div>
+          <!-- <div v-if="plateform != 'mobile'"> -->
         <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
             :label="t('Coupon Code')" :placeholder="t('Please scan coupon codes')" label-placement="stacked"
             fill="outline"></com-input>
@@ -73,6 +73,35 @@
                     </strong></ion-label>
                 </ion-col>
                     <ion-col size="3" class="ion-no-padding">
+                        <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
+                    </ion-col>
+                    
+                    </ion-row>
+            </ion-grid>  
+            </div>
+        </template>
+        <template #footer v-if="plateform == 'mobile'">
+            <div class="ion-padding">
+                <ion-grid class="ion-no-padding">
+                    <ion-row>
+                   <ion-col size="9">
+                    <div>
+                        <ion-label>
+                        {{ t("Total Coupon:") }}
+                        <strong>{{ coupounList.length }}</strong>
+                        </ion-label>
+                    </div>
+                    <div>
+                        <ion-label>
+                        {{ t("Total Amount:") }}
+                        <strong>
+                            <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
+                        </strong>
+                        </ion-label>
+                    </div>
+                    </ion-col>
+
+                    <ion-col size="3" >
                         <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
                     </ion-col>
                     

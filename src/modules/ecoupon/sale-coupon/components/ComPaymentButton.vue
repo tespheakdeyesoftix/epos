@@ -26,20 +26,20 @@
     </ion-footer>
     <ion-footer v-if="plateform=='mobile'" >
                
-                <ion-card class="p-0 m-0 card-height" color="tertiary" button @click="onPayment">
+                <ion-card class="p-0 m-0 card-height"  button @click="onPayment" style="background: transparent; color: black;" >
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row>
                         <ion-col size="7">
-                            <span class="title-payment font ml-3" >
+                            <span class="title-payment font " >
                             {{ t('Payment') }} 
                             </span>
-                            <ion-chip class="small-chip" color="primary">
+                            <ion-chip class="small-chip" color="success">
                                 <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
                                 <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
                             </ion-chip>
                         </ion-col>
-                        <ion-col size="5" >
+                        <ion-col size="5" class="ion-no-padding" >
                             <div>
                                 <ion-label class="big-chip font">
                                 {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
@@ -83,9 +83,10 @@ if(second_currency.value == mainCurrency.value){
     font-size: 24px;
 }
 .small-chip{
-    font-size: 12px;
+    font-size: 11px;
 }
 .font{
-    font-size: 15px;
+    
+    font-size: 14px;
 }
 </style>

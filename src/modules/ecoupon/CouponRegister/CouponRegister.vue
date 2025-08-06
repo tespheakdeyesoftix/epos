@@ -59,7 +59,14 @@
             </template>
             <template #name="{ item }">
             <div style="display: flex; justify-content: center;" >
-              <ion-icon :icon="close" color="danger" size="large" @click="onDeleteItem(item)" v-if="doc?.docstatus == 0 && item.coupon_status == 'Unused'"/>
+             <ion-icon
+  :icon="close"
+  color="danger"
+  size="large"
+  @click="onDeleteItem(item)"
+  v-if="doc?.docstatus === 0 || item.coupon === item.name"
+/>
+
             </div>
           </template>
 
@@ -228,10 +235,6 @@ async function onSubmit() {
    getDoc()
   } 
   await l.dismiss();
-  
-  
-
-
 }
 
 async function getDoc(){
