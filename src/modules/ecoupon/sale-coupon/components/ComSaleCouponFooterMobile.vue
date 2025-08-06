@@ -52,9 +52,7 @@ const lastSelectedCouponAndProduct = computed(() => {
   return `${coupon} - ${productName} (${productQty})`.trim()
 })
 
-watch(() => saleDoc.value.sale_products, (newVal) => {
-  console.log('Updated sale products:', newVal)
-}, { deep: true })
+
 
  
 if(second_currency.value == mainCurrency.value){
