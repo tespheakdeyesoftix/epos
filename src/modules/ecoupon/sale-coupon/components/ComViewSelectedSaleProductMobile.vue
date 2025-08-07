@@ -16,6 +16,7 @@
       <ComSaleMoreActionButtonMobile />
     </ion-col>
   </ion-row>
+  
 </ion-grid>
 
                 <ComPaymentButton @onPayment="onPayment"/>

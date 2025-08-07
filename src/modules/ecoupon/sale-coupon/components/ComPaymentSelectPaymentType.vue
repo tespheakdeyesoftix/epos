@@ -12,7 +12,7 @@
         expand="block" 
         @click="onAddPayment(p)"
         color="warning"
-        style="height:20px;"
+        style="height:20px; font-size: 16px;"
       >
        {{ p.payment_type }}
       </ion-button>
