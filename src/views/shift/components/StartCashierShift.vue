@@ -9,7 +9,7 @@
                         <com-input v-model="workingDay.working_date" readonly :label="t('Working Date')"></com-input>
                     </stack>
                     <stack row equal>
-                        <com-input v-model="workingDay.pos_profile" readonly :label="t('POS Profile')"></com-input>
+                        <com-input v-model="doc.pos_profile" readonly :label="t('POS Profile')"></com-input>
                         <ComSelectInput docType="Shift Type" v-model="doc.shift_name" :label="t('Shift')"  :placeholder="t('Shift')"/>
                     </stack>
                 </stack>
@@ -63,9 +63,10 @@ const t = window.t;
 const workingDay = ref(app.setting.working_day);
 workingDay.value.working_date = dayjs(workingDay.value.posting_date).format('DD/MM/YYYY')
 
+
 const doc = ref({
     working_day: workingDay.value.name,
-    pos_profile: workingDay.value.pos_profile,
+    pos_profile: app.setting.pos_profile.name,
     posting_date: workingDay.value.posting_date,
     pos_station_opened: app.station_name
 

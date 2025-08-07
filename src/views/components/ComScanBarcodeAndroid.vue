@@ -1,23 +1,23 @@
 <template>
-  <ion-item button class="mb-2" lines="full">
-    <ion-icon slot="start" :icon="cameraOutline"/>
-    <ion-label>{{t("Select Camera")}}</ion-label>
-    <ion-select
-      @ionChange="startScanner"
-      slot="end"  
-      v-model="selectedCameraId"
-    >
-      <ion-select-option
-        v-for="(d, index) in cameraList"
-        :key="index"
-        :value="d.id"
-      >
-        {{ d.label }}
-      </ion-select-option>
-    </ion-select>
-  </ion-item>
-    <div id="reader" style="width: 100%;"></div>
- 
+<BaseModal :title="t('Scan Barcode')">
+  <template #end>
+    <ComPopOver>
+      <ion-button>
+        <ion-icon :icon="cameraOutline" slot="icon-only" />
+      </ion-button>
+      <template #content>
+        <ion-list>
+          <ion-item lines="full" v-for="(d, index) in cameraList" @click="startScanner(d)">
+              <ion-label>
+                {{ d.label }}
+              </ion-label>
+          </ion-item>
+        </ion-list>
+      </template>
+    </ComPopOver>
+  </template>
+    <div id="reader" style="width: 100%"></div>
+ </BaseModal>
 </template>
 
 <script setup>
@@ -43,7 +43,10 @@ const getCameraConfig = () => ({
   }
 })
 
-const startScanner = async () => {
+const startScanner = async (camera=null) => {
+  if(camera){
+    selectedCameraId.value = camera.id;
+  }
   // Stop previous scanner if active
   if (scanner) {
     await scanner.stop().catch(() => {})
@@ -102,5 +105,7 @@ onBeforeUnmount(() => {
 #reader{
   border-radius: 20px;
   overflow: hidden;
+  height: calc(100vh-10px);
+  
 }
 </style>

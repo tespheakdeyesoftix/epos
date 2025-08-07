@@ -5,7 +5,7 @@ const { isWorkingDayOpened, isCashierShiftOpened } = useApp();
 export async function checkWorkingDay(){
     const l = await app.showLoading();
     const res = await app.getApi("epos_restaurant_2023.api.setting.get_working_day",{
-        pos_profile:app.setting.pos_profile.name
+        business_branch:app.setting.property?.property_name
     })
     if(res.data){
         app.utils.getSetting()
@@ -23,7 +23,7 @@ export async function checkCashierShift(){
     const l = await app.showLoading();
     // check if working open or not
     const workingRes = await app.getApi("epos_restaurant_2023.api.setting.get_working_day",{
-        pos_profile:app.setting.pos_profile.name
+        business_branch:app.setting.property?.property_name
     })
     if(!workingRes.data){
         await l.dismiss()

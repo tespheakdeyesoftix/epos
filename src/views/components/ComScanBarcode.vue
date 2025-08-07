@@ -1,10 +1,10 @@
 <template>
-  <BaseModal title="Scan Barcode">
+
     <ComScanBarcodeIOS v-if="isPlatform('ios')"  @onScanBarcode="onScanBarcode"/>
     <ComScanBarcodeAndroid v-else  @onScanBarcode="onScanBarcode"/>
     
     
-  </BaseModal>
+
 </template>
 <script setup>
 import { isPlatform } from '@ionic/vue';
