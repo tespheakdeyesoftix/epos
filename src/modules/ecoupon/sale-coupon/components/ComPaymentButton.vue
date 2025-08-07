@@ -1,6 +1,6 @@
 <template>
     <ion-footer v-if="plateform=='desktop'">
-                <ion-card class="p-0 m-0 card-height" color="tertiary" button @click="onPayment">
+                <ion-card class="p-0 m-0 card-height" color="tertiary" button @click="_onPayment">
                 <ion-card-content>
                     <stack row equal >
                     <stack row>
@@ -26,7 +26,7 @@
     </ion-footer>
     <ion-footer v-if="plateform=='mobile'" >
                
-                <ion-card class="p-0 m-0 card-height"  button @click="onPayment" style="background: transparent; color: black;" >
+                <ion-card class="p-0 m-0 card-height"  button @click="_onPayment" style="background: transparent; color: black;" >
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row>
@@ -62,7 +62,7 @@ import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 const plateform = ref(app.utils.getPlateform())
 import { desktop } from "ionicons/icons";
 import { ref } from "vue";
- 
+const emit = defineEmits()
 const {grandTotal, grandTotalSecondCurrency, onPayment } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
@@ -72,6 +72,12 @@ const exchangeRate = app.setting.exchange_rate_input
  
 if(second_currency.value == mainCurrency.value){
     second_currency.value = app.setting.currency
+}
+
+async function _onPayment(){
+   
+    const result = await onPayment()
+    emit("onPayment",result)
 }
  
 </script>

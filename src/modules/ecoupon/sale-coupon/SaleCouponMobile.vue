@@ -5,6 +5,7 @@
             <ComCustomerCard v-if="saleDoc?.customer"/>
         
             <ComCouponListMobile />
+           
              
         </ion-content>
         <ComSaleCouponFooterMobile />

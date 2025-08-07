@@ -25,7 +25,7 @@ const { saleDoc } = useSaleCoupon()
   import { modalController } from '@ionic/vue';
 
 function onPayment(result){
- 
+
     if(result){
       
         setTimeout(function(){

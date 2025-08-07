@@ -10,7 +10,7 @@ import  * as printing from "@/helpers/printing.js";
 
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
-import dayjs from 'dayjs';
+import customDayjs from '@/helpers/dayjs';
 const {getMeta} = useApp()
 
  
@@ -32,6 +32,12 @@ globalThis.app.setting = {};
  
 
 globalThis.app.t =  i18n.global.t;
+
+
+globalThis.app.dayjs =  customDayjs
+
+
+
 
 globalThis.app.getDoc =  async function (DocType,DocName) {
   return await getDoc(DocType,DocName)

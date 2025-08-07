@@ -8,6 +8,11 @@ export  function getItem(key:string) {
     return localStorage.getItem(key)
 }
 
+export function removeItem(key: string, value: any): void {
+      localStorage.removeItem(key);
+}
+
+
 
 export const storageService = {
     setItem(key: string, value: any): void {

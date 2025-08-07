@@ -155,6 +155,7 @@ import Card from '@/views/components/public/Card.vue';
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+    import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/km' // import Khmer locale
 
 import { Capacitor } from '@capacitor/core';
@@ -162,6 +163,7 @@ import ComServerContent from './views/components/public/ComServerContent.vue';
 let currentLang = storageService.getItem("lang") || 'km'
 dayjs.locale(currentLang) 
 dayjs.extend(relativeTime)
+dayjs.extend(utc);
 
 
 // Define ion-icon as custom element

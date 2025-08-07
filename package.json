@@ -34,6 +34,7 @@
     "capacitor-tcp-socket": "^7.1.0",
     "capacitor-thermal-printer": "^0.2.5",
     "dayjs": "^1.11.13",
+    "dayjs-plugin-utc": "^0.1.2",
     "echarts": "^5.6.0",
     "frappe-js-sdk": "^1.9.0",
     "html2canvas": "^1.4.1",
@@ -46,11 +47,11 @@
     "p-queue": "^8.1.0",
     "primeflex": "^4.0.0",
     "primevue": "^4.3.4",
+    "tspl-printer": "file:./src/plugins/tspl-printer",
     "vue": "^3.3.0",
     "vue-echarts": "^7.0.3",
     "vue-i18n": "^10.0.5",
-    "vue-router": "^4.2.0",
-    "tspl-printer": "file:./src/plugins/tspl-printer"
+    "vue-router": "^4.2.0"
   },
   "devDependencies": {
     "@capacitor/cli": "^7.2.0",

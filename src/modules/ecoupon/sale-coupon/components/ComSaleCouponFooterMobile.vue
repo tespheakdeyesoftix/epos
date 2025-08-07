@@ -1,5 +1,6 @@
 <template>
 <ion-footer >
+  
     <ion-card @click="onViewSelectedSaleProduct" color="danger" class="ion-no-margin ion-no-padding">
         <ion-card-content>
 
@@ -35,6 +36,7 @@ const t = window.t;
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { computed, ref,watch } from "vue";
 import  ComViewSelectedSaleProductMobile from "@/modules/ecoupon/sale-coupon/components/ComViewSelectedSaleProductMobile.vue";
+import dayjs from "dayjs";
  
 const {grandTotal, totalQuantity, grandTotalSecondCurrency, saleDoc } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
@@ -43,9 +45,16 @@ const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency);
 const exchangeRate = app.setting.exchange_rate_input
 
 const lastSelectedCouponAndProduct = computed(() => {
-  const products = saleDoc.value?.sale_products || []
+  let products = saleDoc.value?.sale_products || []
   if (!products.length) return ''
-  const last = products[products.length - 1]
+
+  products = products.sort((a, b) => {
+    return dayjs(b.creation).valueOf() - dayjs(a.creation).valueOf()
+    })
+
+
+
+  const last = products[0]
   const coupon = last.product_code || ''
   const productName = last.product_name || ''
   const productQty = last.quantity ?? ''

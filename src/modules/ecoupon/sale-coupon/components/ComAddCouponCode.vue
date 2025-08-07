@@ -19,7 +19,7 @@
         <!-- scan barcode -->
          <!-- v-if="plateform != 'mobile'"  -->
           
-          <div v-if="plateform != 'mobile'">
+          <div  >
         <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
             :label="t('Coupon Code')" :placeholder="t('Please scan coupon codes')" label-placement="stacked"
             fill="outline"></com-input>
@@ -273,6 +273,7 @@ function onConfirm(process_payment = false) {
     }
 
     const returnData = {
+        creation:app.dayjs(),
         product_code: props.data.name,
         product_name: props.data.product_name_en,
         product_photo: props.data.photo,
