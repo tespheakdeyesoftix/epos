@@ -1,8 +1,12 @@
 <template>
    
  <ion-button 
- expand="full" shape="round" color="danger" id="quick_pay_button"
+ expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='desktop'"
  @click="openPopover($event)"
+ >{{ t("Quick Pay") }}</ion-button>
+ <ion-button 
+ expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='mobile'"
+ @click="openPopover($event)" style="font-size: 12px;" 
  >{{ t("Quick Pay") }}</ion-button>
   <ion-popover
     :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"
@@ -24,6 +28,10 @@
 import {  ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { cardOutline } from "ionicons/icons";
+
+const plateform = ref(app.utils.getPlateform())
+
+
  const event = ref(null)
 const { onQuickPay } = useSaleCoupon()
 const t = window.t;
