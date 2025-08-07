@@ -21,7 +21,7 @@ import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 window.toast = toast;
-alert(app.dayjs())
+ 
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();
 

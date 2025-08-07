@@ -1,7 +1,9 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-   
-   <ComPaymentFooter/> <ComPaymentAmountInfo v-if="plateform=='mobile'"/>
+    <template #end>
+        <ComSelectPOSReceiptMobile />
+    </template>
+ <ComPaymentAmountInfo v-if="plateform=='mobile'"/> 
     <ion-grid class="h-full">
         <ion-row class="h-full">
             <ion-col size="12" size-md="4" >
@@ -14,10 +16,11 @@
                 <ComPaymentList/>
             </ion-col>
         </ion-row>
-    </ion-grid>
-    <template #footer>
+    </ion-grid>   
+     <template #footer>
        <ComPaymentFooter/>
-    </template>
+        
+    </template>  
 </BaseModal>
 </template>
 <script setup>
@@ -26,6 +29,7 @@ import ComPaymentSelectPaymentType from "@/modules/ecoupon/sale-coupon/component
 import ComPaymentList from "@/modules/ecoupon/sale-coupon/components/ComPaymentList.vue"
 import ComPaymentFooter from "@/modules/ecoupon/sale-coupon/components/ComPaymentFooter.vue"
 import ComPaymentAmountInfo from "@/modules/ecoupon/sale-coupon/components/ComPaymentAmountInfo.vue"
+import ComSelectPOSReceiptMobile from "@/modules/ecoupon/sale-coupon/components/ComSelectPOSReceiptMobile.vue"
 import { ref } from "vue"
 const t = window.t;
 const plateform = ref(app.utils.getPlateform())

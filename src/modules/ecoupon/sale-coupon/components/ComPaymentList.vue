@@ -1,8 +1,7 @@
 <template>
   <div>
-
   
-    <ion-card>
+    <ion-card v-if="plateform!=='mobile'">
         <ion-card-content>
             <div class="w-full flex justify-content-center">
 <ion-text>
@@ -33,7 +32,7 @@
  
         </ion-card-content>
     </ion-card>
-    
+  
      <ion-list>
         <ion-item button v-for="(p,index) in saleDoc.payment" :key="index">
            
@@ -42,7 +41,7 @@
                 
                 <div v-if="p.exchange_rate!=1">
                     <ion-text color="medium">
-{{ t("Exchange Rate") }} : <ComCurrency :value="p.exchange_rate" :currency="p.currency"/>
+{{ t("Exchange Rate") }} <br/> <ComCurrency :value="p.exchange_rate" :currency="p.currency"/>
                     </ion-text>
                     
                 </div>
@@ -96,6 +95,7 @@
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { closeOutline } from "ionicons/icons";
+import { ref } from "vue";
 const t = window.t;
 const {grandTotal,grandTotalSecondCurrency,totalPaymentAmount,paymentBalance,changeAmount, saleDoc} = useSaleCoupon()
 const secondCurrency = app.setting.second_currency;
@@ -104,7 +104,7 @@ const mainExchangeRateCurrency = app.setting.exchange_rate_main_currency;
 const exchangeRateInput = app.setting.exchange_rate_input;
 const exchangeRate = app.setting.exchange_rate;
 const changeExchangeRate = app.setting.change_exchange_rate;
-
+const plateform = ref(app.utils.getPlateform())
 let exchangeCurrency = app.setting.second_currency;
 if(exchangeCurrency == mainExchangeRateCurrency){
     exchangeCurrency = app.setting.currency

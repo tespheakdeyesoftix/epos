@@ -1,11 +1,12 @@
 <template>
-    <BaseModal title="Your Order" :hideFooter="false">
+    <BaseModal title="Your Order" :hideFooter="false" :footerHeight="150">
        
             <ComCustomerCard v-if="saleDoc?.customer"/>
             <ComSaleProductMobile />
  
- 
+         
             <template #footer>
+                <ion-button>Print Bill</ion-button>
                 <ComPaymentButton @onPayment="onPayment"/>
             </template>
             
@@ -36,7 +37,3 @@ modalController.dismiss(true, 'confirm')
     }
 }
 </script>
-
-<style scoped>
- 
-</style>

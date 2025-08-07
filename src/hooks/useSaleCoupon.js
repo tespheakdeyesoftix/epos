@@ -157,7 +157,7 @@ async function onSelectProduct(p) {
         const exists = saleDoc.value.sale_products.find(x => x.product_code == result.product_code && x.price == result.price && x.append_quantity == 1);
         if (exists) {
             exists.creation = app.dayjs();
-            
+
             exists.coupons = [...exists.coupons, ...result.coupons];
             exists.quantity = exists.coupons.length;
             updateSaleProduct(exists)
@@ -188,7 +188,7 @@ async function onPayment() {
     }
     const result = await app.openModal({
         component: ComPayment,
-        cssClass: "payment-modal"
+        cssClass: app.utils.getPlateform() == 'mobile'?"":"payment-modal"
     })
 
     return result

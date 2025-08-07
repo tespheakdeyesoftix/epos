@@ -23,26 +23,27 @@
     <ion-content class="ion-padding" >
       <slot />
     </ion-content>
-    <ion-footer v-if="!hideFooter"> 
-  <ion-toolbar>
-   <slot name="footer">
-    
-    <ion-buttons slot="end">
-      <ion-button size="large" fill="solid" shape="round" color="primary" @click="onConfirm">
-        {{ t("Select") }}
-      </ion-button>
-    </ion-buttons>
-    
-   </slot>
-  </ion-toolbar>
-</ion-footer>
+    <ion-footer v-if="!hideFooter"  :style="{'--ion-toolbar-height': footerHeight +  'px'}"> 
+     
+      <ion-toolbar  >
+      <slot name="footer">
+        
+        <ion-buttons slot="end">
+          <ion-button size="large" fill="solid" shape="round" color="primary" @click="onConfirm">
+            {{ t("Select") }}
+          </ion-button>
+        </ion-buttons>
+        
+      </slot>
+      </ion-toolbar>
+    </ion-footer>
   </template>
   
   <script setup>
   import {getCurrentInstance,ref,onMounted} from "vue"
   import { modalController } from '@ionic/vue';
   import { closeOutline ,checkmarkOutline} from 'ionicons/icons';
-
+ 
 const props = defineProps({
   title: { type: String, default: 'Modal' },
   confirmText:{
@@ -54,7 +55,11 @@ const props = defineProps({
     type:Boolean,
     default:true
   },
-  hideConfirm:Boolean
+  hideConfirm:Boolean,
+  footerHeight:{
+    type:Number,
+    default:65
+  }
 });
 
 
