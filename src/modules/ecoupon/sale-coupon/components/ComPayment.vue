@@ -3,20 +3,50 @@
     <template #end>
         <ComSelectPOSReceiptMobile />
     </template>
- <ComPaymentAmountInfo v-if="plateform=='mobile'"/> 
-    <ion-grid class="h-full">
-        <ion-row class="h-full">
-            <ion-col size="12" size-md="4" >
-                <ComPaymentInput />
-            </ion-col>
-            <ion-col size="12" size-md="4">
-                <ComPaymentSelectPaymentType/>
-            </ion-col>
-            <ion-col size="12" size-md="4" class="h-full relative"  >
-                <ComPaymentList/>
-            </ion-col>
-        </ion-row>
-    </ion-grid>   
+ <!-- <ComPaymentAmountInfo v-if="plateform=='mobile'"/>  -->
+   <ion-grid v-if="plateform!=='mobile'">
+  <ion-row  >
+    <ion-col size="12" size-md="4"  >
+      <ComPaymentInput />
+    </ion-col>
+
+    <ion-col size="12" size-md="4" class="p-0" >
+      <ComPaymentSelectPaymentType />
+    </ion-col>
+
+    <ion-col size="12" size-md="4" class="p-0" >
+      <ComPaymentList />
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<div
+  v-else
+  class="scrollable-grid-container"
+  style="max-height: 360px; overflow-y: auto; overscroll-behavior: contain;"
+>
+<ComPaymentAmountInfo v-if="plateform=='mobile'"/> 
+  <ion-grid> 
+    <ion-row>
+      <ion-col size="12" size-md="4">
+        <ComPaymentInput />
+      </ion-col>
+      <ion-col size="12" size-md="4" class="p-0">
+        <ComPaymentSelectPaymentType />
+      </ion-col>
+      <ion-col size="12" size-md="4" class="p-0">
+        <ComPaymentList />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+
+
+    <div v-if="plateform=='mobile'" class="fixed-footer-mobile">
+        <ComFooterTotalpayment />
+    </div>
+   
      <template #footer>
        <ComPaymentFooter/>
         
@@ -30,8 +60,26 @@ import ComPaymentList from "@/modules/ecoupon/sale-coupon/components/ComPaymentL
 import ComPaymentFooter from "@/modules/ecoupon/sale-coupon/components/ComPaymentFooter.vue"
 import ComPaymentAmountInfo from "@/modules/ecoupon/sale-coupon/components/ComPaymentAmountInfo.vue"
 import ComSelectPOSReceiptMobile from "@/modules/ecoupon/sale-coupon/components/ComSelectPOSReceiptMobile.vue"
+import ComFooterTotalpayment from "@/modules/ecoupon/sale-coupon/components/ComFooterTotalpayment.vue"
 import { ref } from "vue"
 const t = window.t;
 const plateform = ref(app.utils.getPlateform())
 
 </script>
+
+<style scoped>
+.fixed-footer-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* make sure it's above other content */
+  background-color: white; /* or match your app background */
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* subtle shadow */
+  margin-bottom: 60px;
+}
+
+
+
+
+</style>
