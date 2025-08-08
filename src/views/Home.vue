@@ -12,6 +12,7 @@
 
         <ion-text v-if="!currentMenu?.title">POS Profile: {{ setting?.pos_profile?.name }} / {{ setting?.station_name }}</ion-text>
       </div>
+      <!-- {{ station_name }} -->
  <ion-button routerLink="/print-barcode">print </ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
@@ -54,7 +55,9 @@ const {bluetoothPrinters} = useApp()
  
 const { logout,isAuthenticated } = useAuth();
 const setting = ref(app.setting);
- 
+
+// const station_name = localStorage.getItem('station_name');
+
 function getDynamicComponent(component){
    if(component == "ComWokingDayButton"){
     return ComWorkingDayButton
