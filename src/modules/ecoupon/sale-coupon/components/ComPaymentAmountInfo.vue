@@ -1,28 +1,25 @@
 <template>
    
     <div v-if="plateform == 'mobile'" row equal>
+       <ion-chip class="multi-line">
+  <ion-text class="mr-2">{{ t("Exchange Rate") }}:</ion-text>
+  <div style="font-weight: 600;">
+    <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> =
+    <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency" />
+  </div>
+</ion-chip>
 
-        <ion-chip class="multi-line">
-            <ion-text class="mr-2">{{ t("Exchange Rate") }}:</ion-text>
-            <div style="font-weight: 600;">
-            <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> =
-            <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency" />
-            </div>
-        </ion-chip>
-        
         <ion-chip class="multi-line-chip">
-                <ion-text style="font-size: 15px;font-weight: 400;">
+                <ion-text style="font-size: 17px;font-weight: 400;">
                  {{t("Total Amount")}}
                  </ion-text>   
             <div class="flex gap-8 mt-2 " style="font-weight: 600;">
              <ComCurrency :value="grandTotal" />
             <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
           </div>
-           
         </ion-chip>
     </div>
     <div v-else>
-
         <ion-card>
             <ion-card-content>
                 <div class="w-full flex justify-content-center">
@@ -85,10 +82,16 @@ if (exchangeCurrency == mainExchangeRateCurrency) {
 .multi-line-chip {
   display: flex;
   flex-direction: column;
+    background-color: #ec9595;
 }
 .multi-line {
   display: flex;
-   
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 4px 8px;
+  gap: 6px;
 }
+
  
 </style>
