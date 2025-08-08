@@ -107,10 +107,10 @@ const actionSheetButtons = [
     text: t("Note"),
     handler: onChangeNote,
   },
-  {
-    text: t("UI Setting"),
-    handler: onOpenUISetting,
-  },
+  // {
+  //   text: t("UI Setting"),
+  //   handler: onOpenUISetting,
+  // },
   {
     text: t("View Order Detail"),
     handler: onViewOrderDetail,
@@ -121,9 +121,10 @@ const actionSheetButtons = [
     disabled: !saleDoc.value.name,
     handler: onDeleteOrder,
   },
+  {
+    text: t("Cancel"),
+    role: "cancel",
+  },
   
 ];
 </script>
-<style scoped>
-
-</style>
