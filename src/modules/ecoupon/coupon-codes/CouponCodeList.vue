@@ -26,9 +26,10 @@
                   <span v-else>-</span>
                    
                 </template>
-                <!-- redeem -->
+                <!-- Use -->
                 <template #use_amount="{ item, index }">
                   <template  v-if="item.use_amount!=0">
+                    
                     <ComCurrency v-tooltip.left="`${t('Actual Amount')}`" :value="item.use_amount" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.use_coupon_value"/>
                   </template>
                   <span v-else>-</span>
@@ -36,8 +37,22 @@
                 
                 <!-- Redeem -->
                 <template #redeem_amount="{ item, index }">
+                  
                   <template  v-if="item.redeem_amount!=0">
-                    <ComCurrency v-tooltip.left="`${t('Price')}`" :value="Math.abs(item.redeem_amount)" /> / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.redeem_coupon_value)"/>
+                    <template v-if="item.redeem_amount!=item.redeem_coupon_value">
+                      <ComCurrency v-tooltip.left="`${t('Price')}`" :value="Math.abs(item.redeem_amount)" /> / 
+                    </template>
+                    <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.redeem_coupon_value)"/>
+                  </template>
+                  <span v-else>-</span>
+                </template>
+                <!-- Balance -->
+                <template #balance_amount="{ item, index }">
+                  <template  v-if="item.balance_amount!=0">
+                    <template v-if="item.balance_amount != item.balance_coupon_value">
+                    <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.balance_amount" /> / 
+                    </template>
+                    <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.balance_coupon_value"/>
                   </template>
                   <span v-else>-</span>
                 </template>
@@ -89,12 +104,13 @@ const options = {
         {fieldname:"top_up_amount",header:"Top Up",fieldtype:"Currency"},
         {fieldname:"redeem_amount",header:"Redeem",fieldtype:"Currency"},
         {fieldname:"use_amount",header:"Used Amount",fieldtype:"Currency"},
+        {fieldname:"balance_amount",header:"Balance",fieldtype:"Currency"},
         {fieldname:"created_by",header:"Created By",},
         {fieldname:"creation",header:"Date",fieldtype:"Datetime"},
     ],
     showSearchBar:true,
     showBarcodeScanner:false,
-    fields: ["name","customer","coupon_value","top_up_coupon_value","redeem_coupon_value","use_coupon_value"],
+    fields: ["name","customer","coupon_value","top_up_coupon_value","redeem_coupon_value","use_coupon_value","balance_coupon_value"],
     orderBy:{
       field: "modified",
       order: "desc",

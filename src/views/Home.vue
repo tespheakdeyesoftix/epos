@@ -9,6 +9,8 @@
         <ion-text>
             <h1 class="mt-2 mb-0">{{ t(currentMenu?.title || setting.app_name || "ePOS") }}</h1>
         </ion-text>
+
+        <ion-text v-if="!currentMenu?.title">POS Profile: {{ setting?.pos_profile?.name }} / {{ setting?.station_name }}</ion-text>
       </div>
  <ion-button routerLink="/print-barcode">print </ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
@@ -44,7 +46,7 @@ import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
 import HomeButton from '@/views/components/public/HomeButton.vue';
 import { onBeforeRouteLeave } from 'vue-router'
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
-
+ 
 import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
 import { useApp } from "@/hooks/useApp";
 const {bluetoothPrinters} = useApp() 

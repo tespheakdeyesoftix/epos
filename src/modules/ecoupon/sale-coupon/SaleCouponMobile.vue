@@ -12,7 +12,7 @@
     </ion-page>
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue"
+import { onMounted, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponListMobile from "@/modules/ecoupon/sale-coupon/components/ComCouponListMobile.vue"
 import ComSaleCouponFooterMobile from "@/modules/ecoupon/sale-coupon/components/ComSaleCouponFooterMobile.vue"
@@ -24,6 +24,17 @@ import { onBeforeRouteLeave } from 'vue-router'
 const { saleDoc, initSaleDoc, getSaleDoc, saleType, pageRoute } = useSaleCoupon()
 const t = window.t;
 
+onMounted(async ()=>{
+  pageRoute.value = "/sale-coupon"
+  saleType.value = "Sale Coupon";
+  if(app.route.params.name){
+    await getSaleDoc()
+    
+    }else {
+
+      saleDoc.value.sale_type= "Sale Coupon";
+    }
+})
 
 
 onBeforeRouteLeave(async (to, from, next) => {

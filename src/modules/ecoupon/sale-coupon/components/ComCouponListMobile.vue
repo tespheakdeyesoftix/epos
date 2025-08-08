@@ -11,7 +11,7 @@
                 <ion-label class="text-sm text-left price ml-4">
                      <ion-text class="block">{{ p.product_name_en }}</ion-text>
                     <ion-text class="block">{{ p.name }} </ion-text>
- 
+ <ion-chip color="success" v-for="c in getDisplayCoupon(p.name)">{{ c }}</ion-chip>
 </ion-label>
          <ion-label class="text-sm text-center price" v-if="p.price > 0" slot="end">  
             <ComCurrency :value="p.price" />
@@ -28,10 +28,21 @@
     import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 const t = window.t;
  
-const {onSelectProduct} = useSaleCoupon()
  
+const {onSelectProduct,saleDoc} = useSaleCoupon()
+ 
+function getDisplayCoupon(product_code){
+    const sale_products = saleDoc.value.sale_products.filter(x=>x.product_code == product_code)
+    if(!sale_products) return []
+    const coupons = sale_products.flatMap(x=>x.coupons).map(y=>y.coupon)
+    if(coupons.length>3) return  [...coupons.slice(0,3),coupons.length-3 + 'More(s)']
+    return coupons
+    
+}
     
 import { useApp } from "@/hooks/useApp";
  const {products } = useProductMenu();
  
+ 
+
         </script>

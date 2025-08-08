@@ -85,6 +85,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <BaseModal title="Scan Barcode">
   <div>
      
     <ion-select
@@ -112,4 +113,5 @@ onBeforeUnmount(() => {
 
     <p>Scanned Code: {{ code }}</p>
   </div>
+  </BaseModal>
 </template>

@@ -46,7 +46,7 @@
  
 </template>
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue"
+import { onMounted, ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCouponProductList.vue"
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
