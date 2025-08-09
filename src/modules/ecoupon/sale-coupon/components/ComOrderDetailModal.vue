@@ -44,7 +44,13 @@
 
                         </div>
                     </stack>
-                    {{ saleProducts }}
+                    <ion-chip  v-for="saleProduct in saleProducts" :key="saleProduct">
+                        
+                        <ion-text style="font-size: 12px;">
+                           {{ saleProduct.product_name }}  x {{ saleProduct.quantity }}
+                        </ion-text>
+                    </ion-chip>
+                    <!-- {{ saleProducts }} -->
                 </ion-card-content>
             </ion-card>
         </div>

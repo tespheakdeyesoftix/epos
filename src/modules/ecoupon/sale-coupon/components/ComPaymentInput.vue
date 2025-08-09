@@ -1,7 +1,7 @@
 <template>
     
     <stack>
-        <com-input @keyup="onInput" v-model="paymentInputAmount"  :label="t('Payment Amount')" :placeholder="paymentBalance.toString()" /> 
+        <com-input @keyup="onInput" v-model="paymentInputAmount" :type="plateform=='mobile'? 'number':'text'" :label="t('Payment Amount')" :placeholder="paymentBalance.toString()" /> 
       <template v-if="plateform!=='mobile'">
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">

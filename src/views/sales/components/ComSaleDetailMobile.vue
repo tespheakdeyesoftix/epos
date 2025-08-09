@@ -93,7 +93,7 @@
                                         <p class="card-subtitle" style="color: black;">{{d.quantity}} x <com-currency :value="d.price"/></p>
                                         <div>
                                             <ion-chip v-for="(c,index) in (d.coupons || [])" :key="index">
-                                                {{ c }}
+                                                {{ c.coupon }}
                                             </ion-chip>
                                         </div>
                                         <p v-if="d.modifiers && !d.is_timer_product" class="card-subtitle">{{d.modifiers}} (<com-currency :value="d.modifiers_price * d.quantity"/>)</p>
