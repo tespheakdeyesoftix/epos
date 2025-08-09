@@ -62,7 +62,7 @@ const totalCouponValue = computed(() => {
 
 const totalQuantity = computed(() => {
     const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + (item.quantity || 1), 0);
-    console.log(total)
+   
     return total || 0
 })
 

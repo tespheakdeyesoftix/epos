@@ -54,6 +54,7 @@
                 </ion-card-content>
             </ion-card>
         </div>
+       {{ saleProducts }}
     </BaseModal>
 </template>
 <script setup>
@@ -62,7 +63,7 @@ import { computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import { phonePortraitOutline } from 'ionicons/icons';
 import dayjs from 'dayjs';
-const { saleDoc, customer } = useSaleCoupon();
+const { saleDoc, customer,grandTotal } = useSaleCoupon();
 const t = window.t;
 const saleProducts = computed(() => {
     const products = saleDoc.value.sale_products;
