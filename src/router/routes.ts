@@ -222,7 +222,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/top-up",
-    component: () => import('@/modules/ecoupon/TopUpList/TopUp.vue'),
+    component: () => window.matchMedia('(max-width: 640px)').matches?import('@/modules/ecoupon/TopUpList/TopUpMobile.vue'):import('@/modules/ecoupon/TopUpList/TopUp.vue'),
     meta: { requiresAuth: true }
   },
   {
