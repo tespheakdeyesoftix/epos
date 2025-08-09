@@ -42,6 +42,11 @@
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
+      <!-- scan camera -->
+      <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanWithCamera" fill="clear" slot="end"
+        aria-label="Show/hide">
+        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+      </ion-button>
 
       <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
         aria-label="Show/hide">
@@ -151,6 +156,15 @@ async function onScanBarcode() {
   }
 
 }
+async function onScanWithCamera() {
+    const result = await app.utils.onScanBarcode();
+    if (result) {
+        coupon.value = result
+        await onScanBarCode()
+        
+    }
+
+}
 
 async function onOpenKeyboard() {
   if (props.type == "number") {
@@ -184,26 +198,28 @@ const onSelectAll = (event) => {
 };
 
 
-onMounted(() => {
-
-  if (props.focus && plateform == "desktop") {
-    setTimeout(function () {
-
-      ionInputRef.value?.$el?.setFocus()
-      const nativeInput = ionInputRef.value?.$el?.querySelector('input')
-      nativeInput?.select()
-    }, 200)
-  }
-
-  if (value.value) {
-
-    if (props.type == "number") {
-      model.value = Number(value.value)
-    } else {
-      model.value = value.value
+onMounted(async () => {
+  if (props.focus && plateform === "desktop") {
+    setTimeout(() => {
+      ionInputRef.value?.$el?.setFocus();
+      const nativeInput = ionInputRef.value?.$el?.querySelector('input');
+      nativeInput?.select();
+    }, 200);
+  } 
+  else {
+    if (app.utils.getPlateform() === "mobile") {
+      await onScanWithCamera();
     }
   }
 
-})
+  if (value.value) {
+    if (props.type === "number") {
+      model.value = Number(value.value);
+    } else {
+      model.value = value.value;
+    }
+  }
+});
+
 
 </script>
