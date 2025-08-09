@@ -1,7 +1,85 @@
 <template>
-    <BaseModal :title="t('Order Detail')">
-        <div class="fix-container">
-            <ion-card>
+    <BaseModal :title="t('Order Detail')" >
+        <div class="fix-container" v-if="plateform !== 'mobile'">
+            <ion-card >
+                <ion-card-content>
+
+                    <stack row equal>
+                        <stack row>
+                            <ion-avatar>
+                                <Img v-if="customer.photo" :src="customer.photo" />
+                                <div class="avatar-placeholder" v-else>{{ getAvatarLetter(customer.customer_name_en) }}
+                                </div>
+                            </ion-avatar>
+                            <stack>
+                                <ion-text>
+                                    {{ customer.name  }} - {{ customer.customer_name_en }}
+                                </ion-text>
+                                
+                                <ion-text>
+                                    <ion-icon :icon="phonePortraitOutline" />
+                                    {{ customer.phone_number}}
+                                </ion-text>
+                                <ComStatus :status="saleDoc?.sale_type" />
+                                
+                            </stack>
+                        </stack>
+
+                        <div>
+                            
+                            <stack row equal>
+                                <ion-text>{{ t("Bill #") }}</ion-text>
+                                <ion-text color="danger"><strong>{{ saleDoc.name || "New" }}</strong></ion-text>
+                            </stack>
+                            
+                            <stack row equal v-if="saleDoc.table_no">
+                                <ion-text>{{ t("Table #") }}</ion-text>
+                                <ion-text ><strong>{{ saleDoc.table_no }}</strong></ion-text>
+                            </stack>
+                            
+                            <stack row equal>
+                                <ion-text>{{ t("Posting Date") }}</ion-text>
+                                <ion-text ><strong>{{ dayjs(saleDoc.posting_date).format("DD/MM/YYYY")}}</strong></ion-text>
+                            </stack>
+                            <stack row equal>
+                                <ion-text>{{ t("Business Branch") }}</ion-text>
+                                <ion-text ><strong>{{ saleDoc.business_branch }}</strong></ion-text>
+                            </stack>
+                            <stack row equal>
+                                <ion-text>{{ t("Working Day/Cashier Shift") }}</ion-text>
+                                 <ion-text ><strong>{{ saleDoc.working_day }} / {{ saleDoc.cashier_shift }}</strong></ion-text>
+                            </stack>
+                            <stack row equal>
+                                <ion-text>{{ t("Outlet") }}</ion-text>
+                                 <ion-text ><strong>{{ saleDoc.outlet }}</strong></ion-text>
+                            </stack>
+                            <stack row equal>
+                                <ion-text>{{ t("Pos Profile") }}</ion-text>
+                                 <ion-text ><strong>{{ saleDoc.pos_profile }}</strong></ion-text>
+                            </stack>
+                        </div>
+                    </stack>
+                    <div>
+                        <ion-text>
+                            {{ t("Sale Product List") }}
+                        </ion-text>
+                    </div>
+
+                    <ion-chip  v-for="saleProduct in saleProducts" :key="saleProduct">
+                        
+                        <ion-text style="font-size: 12px;">
+                           {{ saleProduct.product_name }}  x {{ saleProduct.quantity }}
+                        </ion-text>
+                    </ion-chip>
+                    <!-- {{ saleProducts }} -->
+                </ion-card-content>
+            </ion-card>
+             
+               {{ saleDoc }}
+        </div>
+       
+        <div class="fix-container" v-else>
+            <ion-card >
                 <ion-card-content>
 
                     <stack row equal>
@@ -53,16 +131,21 @@
                     <!-- {{ saleProducts }} -->
                 </ion-card-content>
             </ion-card>
+              {{ saleProducts }}
         </div>
-       {{ saleProducts }}
+     
     </BaseModal>
 </template>
 <script setup>
+import { ref } from 'vue';
 import { useSaleCoupon } from '@/hooks/useSaleCoupon';
 import { computed } from 'vue';
 import { getAvatarLetter } from "@/helpers/utils"
 import { phonePortraitOutline } from 'ionicons/icons';
+
 import dayjs from 'dayjs';
+
+const plateform = ref(app.utils.getPlateform())
 const { saleDoc, customer,grandTotal } = useSaleCoupon();
 const t = window.t;
 const saleProducts = computed(() => {
