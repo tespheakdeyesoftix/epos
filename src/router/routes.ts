@@ -115,7 +115,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/redeem",
-    component: () => import('@/modules/ecoupon/RedeemList/Redeem.vue'),
+    component: () => window.matchMedia('(max-width: 640px)').matches? import('@/modules/ecoupon/RedeemList/RedeemMobile.vue'): import('@/modules/ecoupon/RedeemList/Redeem.vue'),
     meta: { requiresAuth: true }
   },
    {
