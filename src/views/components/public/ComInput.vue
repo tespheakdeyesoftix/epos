@@ -34,7 +34,10 @@
       :label="model?label:''" @ionChange="onChange" :fill="fill" :clear-input="clear"
       :label-placement="labelPlacement">
 
-      <ion-button v-if="icon" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-button v-if="icon && plateform === 'desktop'" fill="clear" slot="end" aria-label="Show/hide">
+        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+      </ion-button>
+      <ion-button v-if="icon && plateform === 'mobile'" fill="clear" slot="end" aria-label="Show/hide" @click="onIconClick">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
 
@@ -42,11 +45,7 @@
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
-      <!-- scan camera -->
-      <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanWithCamera" fill="clear" slot="end"
-        aria-label="Show/hide">
-        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
-      </ion-button>
+       
 
       <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
         aria-label="Show/hide">
@@ -68,6 +67,18 @@ import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
 const inputRef = ref(null)
 const plateform = app.utils.getPlateform();
+
+async function onIconClick(){
+  const result = await app.onScanBarcode()
+ if (result) {
+    if (props.type == "number") {
+      model.value = Number(result)
+    }
+    model.value = result
+    emit("onBarcodeChange")
+     
+  }
+}
 
 const props = defineProps({
   label: String,
@@ -156,15 +167,7 @@ async function onScanBarcode() {
   }
 
 }
-async function onScanWithCamera() {
-    const result = await app.utils.onScanBarcode();
-    if (result) {
-        coupon.value = result
-        await onScanBarCode()
-        
-    }
-
-}
+ 
 
 async function onOpenKeyboard() {
   if (props.type == "number") {
@@ -206,11 +209,7 @@ onMounted(async () => {
       nativeInput?.select();
     }, 200);
   } 
-  else {
-    if (app.utils.getPlateform() === "mobile") {
-      await onScanWithCamera();
-    }
-  }
+  
 
   if (value.value) {
     if (props.type === "number") {

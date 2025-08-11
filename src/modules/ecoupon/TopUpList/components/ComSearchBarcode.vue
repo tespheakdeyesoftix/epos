@@ -12,6 +12,7 @@
         <com-input focus 
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
+    @onBarcodeChange="onScanQRCode"
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
@@ -29,6 +30,7 @@ const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 
 const t = window.t
 async function onScanQRCode(){
+    
     if(topUpCouponInfo.value){
         await app.showWarning("Please close the current top up transaction first")
         couponCode.value = ""
@@ -52,9 +54,5 @@ async function onScanQRCode(){
     await l.dismiss()
     couponCode.value = ""
     inputScanQRCode.value.focus();
-
-
-
-
 }
 </script>
