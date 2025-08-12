@@ -213,7 +213,8 @@
                         <ion-label><strong>{{ p.payment_type }}</strong></ion-label>
                         <ion-text slot="end">
                             <div class="amount">
-                                <ComCurrency :value="p.input_amount" :format="p.currency_format" />
+                                <ComCurrency :value="p.input_amount" :format="p.currency" />
+                                <!-- <ComCurrency :value="p.input_amount" :format="p.currency_format" /> -->
                             </div>
                         </ion-text>
                     </ion-item>
