@@ -15,14 +15,14 @@
       
       </ion-content>
 
-{{ exchange_rate }}
+ 
       <div>
         <ion-footer >
 <ion-card class="p-0 m-0 card-height" color="tertiary">
 <ion-grid>
   <ion-row class="ion-align-items-center">
     <!-- Left side: totals -->
-    <ion-col size="8">
+    <ion-col size="8" style="font-size: 13px;">
       {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" /> <br>
       {{ t("Grand Total") }} ({{ second_currency }}) :
       <ComCurrency
@@ -33,9 +33,10 @@
 
     <!-- Right side: exchange rate chip -->
     <ion-col size="4" class="ion-text-end">
-      <ion-chip>
+      <ion-chip  style="font-size: 13px;">
         <ComCurrency :value="1" :currency="mainCurrency" /> =
         <ComCurrency :value="exchange_rate" :currency="second_currency" />
+       
       </ion-chip>
     </ion-col>
   </ion-row>
@@ -46,11 +47,6 @@
 </ion-footer>
          <ComRedeemFooter/>
       </div>
-       
-
-        
-
-
     </ion-page>
 </template>
 <script setup>

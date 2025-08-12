@@ -11,7 +11,12 @@
          <ComSearchBarcode />
       <ComCouponInformation />
       <ComTopUpCouponvalue />
+      <div class="fix-container px-2 mt-1 mb-2">
+        <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Top Up Note')"
+          storageKey="top_up_note" />
+      </div>
     </div>
+    
   
 </ion-content>
   <div  >

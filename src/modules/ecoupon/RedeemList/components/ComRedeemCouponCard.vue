@@ -237,10 +237,19 @@ async function onDelete(){
 
 <style scoped>
 .chip-style {
-  overflow-x: scroll;  
-  overflow-y: hidden;  
+  overflow-x: scroll;
+  overflow-y: hidden;
   white-space: nowrap;
+
+  /* Hide scrollbar for WebKit browsers */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
 }
+
+.chip-style::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 .scroll-container {
   overflow-x: auto;
   overflow-y: hidden;

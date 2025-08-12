@@ -13,6 +13,7 @@
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
     @onBarcodeChange="onScanQRCode"
+     
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
@@ -29,30 +30,36 @@ import { scan } from "ionicons/icons"
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 
 const t = window.t
-async function onScanQRCode(){
-    
-    if(topUpCouponInfo.value){
+async function onScanQRCode(valueFromIcon) {
+    if (valueFromIcon) {
+        couponCode.value = valueFromIcon
+    }
+
+    if (topUpCouponInfo.value) {
         await app.showWarning("Please close the current top up transaction first")
         couponCode.value = ""
         inputScanQRCode.value.focus();
         return
     }
 
-     couponCode.value = app.utils.getCouponNumber(couponCode.value);
-    if(!couponCode.value){
+    couponCode.value = app.utils.getCouponNumber(couponCode.value);
+    if (!couponCode.value) {
         await app.showWarning("Please scan qr code")
         return 
     }
+
     const l = await app.showLoading();
-    const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code_for_top_up",{
-        coupon_code:couponCode.value
+    const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code_for_top_up", {
+        coupon_code: couponCode.value
     })
-    if(res.data){
-        topUpCouponInfo.value =res.data
-        saleDoc.value.customer= res.data.customer.name
+    if (res.data) {
+        topUpCouponInfo.value = res.data
+        saleDoc.value.customer = res.data.customer.name
     }
     await l.dismiss()
     couponCode.value = ""
     inputScanQRCode.value.focus();
 }
+
+
 </script>

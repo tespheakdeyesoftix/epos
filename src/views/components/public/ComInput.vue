@@ -68,17 +68,22 @@ const ionInputRef = ref(null)
 const inputRef = ref(null)
 const plateform = app.utils.getPlateform();
 
-async function onIconClick(){
+async function onIconClick() {
   const result = await app.onScanBarcode()
- if (result) {
-    if (props.type == "number") {
+  if (result) {
+    if (props.type === "number") {
       model.value = Number(result)
+    } else {
+      model.value = result
     }
-    model.value = result
-    emit("onBarcodeChange")
-     
+
+    // Simulate the same trigger as typing then pressing enter
+    emit("change", model.value)
+    emit("onBarcodeChange", model.value)
   }
 }
+
+
 
 const props = defineProps({
   label: String,
