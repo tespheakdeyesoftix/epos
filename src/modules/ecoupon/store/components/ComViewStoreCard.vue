@@ -12,12 +12,13 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { ref, onMounted, defineComponent } from 'vue'
+import ComCurrency from "@/views/components/public/ComCurrency.vue"
 
 const t = window.t
 
 // Reactive data object
 // const data = ref<Record<string, any>>({})
-const data = ref(null)
+const data = ref({"current_revenue":0,"mtd_revenue":0,"ytd_revenue":0})
 // Card component definition
 const Card = defineComponent({
   name: 'Card',
@@ -34,7 +35,7 @@ const Card = defineComponent({
             <ComCurrency value={props.value ?? 0} />
           </ion-card-subtitle>
           <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-            {t(props.label)}
+            {props.label}
           </ion-card-subtitle>
         </ion-card-content>
       </ion-card>

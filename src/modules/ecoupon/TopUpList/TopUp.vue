@@ -11,7 +11,7 @@
     <ion-menu content-id="main">
       <ion-content class="ion-padding">   
       <ComSearchBarcode />
-      <ComTopUpCouponvalue />
+      <ComTopUpCouponValue />
       </ion-content>
         <ComTopUpFooter />
     </ion-menu>
@@ -41,7 +41,7 @@
 import { ref, onMounted } from "vue"
 import ComSearchBarcode from "@/modules/ecoupon/TopUpList/components/ComSearchBarcode.vue";
 import ComCouponInformation from "@/modules/ecoupon/TopUpList/components/ComCouponInformation.vue";
-import ComTopUpCouponvalue from "@/modules/ecoupon/TopUpList/components/ComTopUpCouponValue.vue";
+import ComTopUpCouponValue from "@/modules/ecoupon/TopUpList/components/ComTopUpCouponValue.vue";
 import ComSummaryInfo from "@/modules/ecoupon/TopUpList/components/ComSummaryInfo.vue";
 import ComTopUpFooter from "@/modules/ecoupon/TopUpList/components/ComTopUpFooter.vue";
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"

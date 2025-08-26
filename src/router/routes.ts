@@ -252,6 +252,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
+    path: "/barcode",
+    component: () => import('@/views/Barcode.vue')
+  },
+   {
+    path: "/barcode/:product_code",
+    component: () => import('@/views/Barcode.vue')
+  },
+  {
     path: "/working-day-list",
     component: () => import('@/views/working-day/WorkingDayList.vue'),
     meta: { requiresAuth: true }

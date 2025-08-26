@@ -58,7 +58,7 @@ const setting = ref(app.setting);
 
 // const station_name = localStorage.getItem('station_name');
 
-function getDynamicComponent(component){
+function getDynamicComponent(component:string){
    if(component == "ComWokingDayButton"){
     return ComWorkingDayButton
    }
@@ -66,8 +66,6 @@ function getDynamicComponent(component){
     return ComShiftButton
    }
 }
- 
-import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
  
 function test(){
   app.printing.printReceiptBase64ToNetworkPrinter()

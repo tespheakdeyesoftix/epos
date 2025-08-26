@@ -26,10 +26,7 @@ export async function handleErrorMessage(error_data:any){
                     showWarningMessage(JSON.parse(r).message.replace("Error: ",""))
                      result.push(JSON.parse(r).message.replace("Error: ",""))
                 }
-                 
-                
 			});
-			
         }
 			
         else  if(message.httpStatus == 417){
@@ -53,35 +50,26 @@ export async function handleErrorMessage(error_data:any){
                     if(msg?.text){
                          showWarningMessage(msg.text)
                       result.push(msg.text)
-                    }
-                      
+                    }     
                 }
-                    
             }
         } 
-
-        
     }else{ 
         showWarningMessage(message.httpStatusText)
         result.push(message.httpStatusText)
     }
-
     return result
 }
 
 
 export async  function showWarningMessage(message:string){
     if ((message ||"") =="") return;
-    
-    // const toast = await toastController.create({
-    //     message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
-    //     duration: 5000,
-    //     position: "top",
-    //     swipeGesture:"vertical",
-    //     color: "warning"
-    // });
-    // toast.present();
-
-
-    window.toast.add({ severity: 'warn', summary: '', detail: stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),  life: 3000 });
+    const toast = await toastController.create({
+        message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
+        duration: 5000,
+        position: "top",
+        swipeGesture:"vertical",
+        color: "warning"
+    });
+    toast.present();
 }

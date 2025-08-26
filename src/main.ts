@@ -157,7 +157,6 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
     import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/km' // import Khmer locale
-
 import { Capacitor } from '@capacitor/core';
 import ComServerContent from './views/components/public/ComServerContent.vue';
 let currentLang = storageService.getItem("lang") || 'km'
@@ -194,12 +193,6 @@ use([
 
 
 const app = createApp(App)
-.use(IonicVue)
-.use(ToastService);
-
-
-
-
 // SafeArea setup
 if (Capacitor.isNativePlatform()) {
   SafeArea.getSafeAreaInsets().then(({ insets }) => {
@@ -237,7 +230,8 @@ if (Capacitor.isNativePlatform()) {
         preset: Aura
     }
 });
-
+  app.use(IonicVue);
+  app.use(ToastService);
   app.component('AppBar', AppBar)
   app.component('ComFooter', ComFooter)
   app.component('ToolBar', ToolBar)

@@ -27,7 +27,29 @@ globalThis.app.sale = sale;
 globalThis.app.shift = shift;
 globalThis.app.printing = printing;
 globalThis.app.storageService = storageService;
-globalThis.app.setting = {};
+globalThis.app.setting = {
+  "station_name":"",
+  "app_name":"ePOS",
+  "app_menus":[],
+  "pos_profile":{
+    "name":"",
+    "default_pos_receipt":"",
+    "default_customer":"",
+    "stock_location":"",
+    "outlet":""},
+  "property":{
+
+  },
+  "app_logo":"",
+  "allow_login_multiple_site":1,
+  "cashier_shift":{
+    "name":""
+  },
+  "working_day":{
+    "name":"",
+    "posting_date":""
+  }
+}
 
  
 

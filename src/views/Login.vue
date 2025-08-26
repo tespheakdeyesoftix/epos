@@ -66,7 +66,7 @@ const txtUsername = ref(null)
 const txtPassword = ref(null)
 
 const { locale } = useI18n();
-const property = ref({})
+const property = ref({"username":"","password":"","api_url":""})
 const t = window.t
 
 const route = useRoute();
@@ -92,13 +92,11 @@ const changeLanguage = (lang: string) => {
 async function onLogin() {
   if (!formData.value.username) {
     app.showWarning(t("Please enter your username"))
-    txtUsername.value?.focus()
     return
   }
   
   if (!formData.value.password) {
     app.showWarning(t("Please enter your password"))
-    txtPassword.value?.focus()
     return
   }
 
@@ -147,12 +145,7 @@ function SaveUsername(){
   }
 }
 
-onMounted(async () => {
- 
- setTimeout(() => {
-  txtUsername.value?.focus()
- }, 100);
-  
+onMounted(async () => {  
   const strProperties = app.storageService.getItem("properties");
   if (strProperties) {
     const properties = JSON.parse(strProperties)

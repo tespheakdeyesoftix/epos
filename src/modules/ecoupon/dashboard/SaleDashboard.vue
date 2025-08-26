@@ -36,7 +36,7 @@
                     <ion-col size="12"  size-xs="12" size-sm="12"  size-md="6"   class="pr-2">
                         <ComCouponUseByPOSStationChart :data="couponUsedSummaryByPOSStation"/>
                     </ion-col>
-                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2">  <ComPaymentBreakdown :data="paymentbreakdown"/></ion-col>
+                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2">  <ComPaymentBreakDown :data="paymentbreakdown"/></ion-col>
                 </ion-row>
                 
                     <ion-row class="mt-3">
@@ -57,7 +57,7 @@ import ComRevenueKPI from "@/modules/ecoupon/dashboard/components/ComRevenueKPI.
 import ComCouponBreakdownChart from "@/modules/ecoupon/dashboard/components/ComCouponBreakdownChart.vue"
 import ComCouponTransactionSummary from "@/modules/ecoupon/dashboard/components/ComCouponTransactionSummary.vue"
 import ComDailySaleChart from "@/modules/ecoupon/dashboard/components/ComDailySaleChart.vue"
-import ComPaymentBreakdown from "@/views/dashboard/components/ComPaymentBreakdown.vue"
+import ComPaymentBreakDown from "@/views/dashboard/components/ComPaymentBreakDown.vue"
 import ComCouponUseByPOSStationChart from "@/modules/ecoupon/dashboard/components/ComCouponUseByPOSStationChart.vue"
 import ComRecentData from "@/modules/ecoupon/dashboard/components/ComRecentData.vue"
 import { onMounted } from "vue";
