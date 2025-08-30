@@ -8,7 +8,9 @@ const barcode = ref(null);
 import JsBarcode from "jsbarcode";
 let name = ref("")
 let product = ref({})
-
+const devices = ref([])
+const selectedDevice = ref(null)
+const isScanning = ref(false)
 onMounted(async () => {
   const loading = await app.showLoading();
   if (app.route.params.product_code) {
@@ -20,6 +22,22 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   try { BluetoothSerial.disconnect() } catch (e) {}
 })
+
+async function searchDevices() {
+  isScanning.value = true
+  devices.value = []
+  try {
+    const found = await BluetoothSerial.list()
+    devices.value = found // Array of { id, address, class, name }
+  } catch (err) {
+    console.error("Scan failed:", err)
+  }
+  isScanning.value = false
+}
+
+function selectDevice(device) {
+  selectedDevice.value = device
+}
 
 function imageToTSPLBitmap(canvas, x = 30, y = 5, mode = 0) {
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -71,7 +89,7 @@ async function printLabel() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(srcCanvas, 0, 0, canvas.width, canvas.height);
   convertToBlackAndWhite(canvas, 200);
-  printTSPL("DC:0D:30:6F:9C:B4").then().catch(err => console.error("Print failed", err));
+  printTSPL(selectedDevice.value).then().catch(err => console.error("Print failed", err));
 }
 
 async function printTSPL(macAddress) {
@@ -120,18 +138,25 @@ function convertToBlackAndWhite(canvas, threshold = 128) {
       <div ref="captureArea" style="background-color: transparent; padding:-5px; width:200px; height:170px; display:flex; align-items:center; justify-content:center;flex-direction: column; gap: 0px; ">
         <div style="font-size: 20px;color: black;font-family: Khmer OS Battambang;margin-bottom: -5px;">{{ product?.product_name_en }}</div>
         <svg ref="barcode" style="width:100%; height:100%;margin: -5px;"></svg>
-       <div class="flex justify-between w-full" style="width: 100%">
-        <div class="text-left" style="font-size: 15px; color: black; font-family: Khmer OS Battambang; margin-left: 20px;width: 50%;">
-          {{ product?.product_code }}
-        </div>
-        <div class="text-right" style="font-size: 15px; color: black; font-family: Khmer OS Battambang; margin-right: 20px;width: 50%;">
-          {{ product?.price }}
+        <div class="flex justify-between w-full" style="width: 100%">
+          <div class="text-left" style="font-size: 15px; color: black; font-family: Khmer OS Battambang; margin-left: 20px;width: 50%;">
+            {{ product?.product_code }}
+          </div>
+          <div class="text-right" style="font-size: 15px; color: black; font-family: Khmer OS Battambang; margin-right: 20px;width: 50%;">
+            {{ product?.price }}
+          </div>
         </div>
       </div>
-        
-      </div>
+      <button @click="searchDevices" :disabled="isScanning">{{ isScanning ? 'Scanning...' : 'Search Printers' }}</button>
+      <ul v-if="devices.length > 0">
+        <li v-for="d in devices" :key="d.address" @click="selectDevice(d)" style="cursor:pointer; margin:4px 0;">
+          <span :style="{ fontWeight: selectedDevice?.address === d.address ? 'bold' : 'normal' }">
+            {{ d.name || 'Unknown' }} ({{ d.address }})
+          </span>
+        </li>
+      </ul>
       <button @click="printLabel">Print</button>
-      <div>
+      <div style="visibility: hidden;">
             <canvas ref="canvasEl"></canvas>
       </div>
     </div>
