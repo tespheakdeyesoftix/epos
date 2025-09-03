@@ -72,7 +72,7 @@
                         <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                     </strong></ion-label>
                 </ion-col>
-                    <ion-col size="3" class="ion-no-padding">
+                    <ion-col size="3" class="ion-no-padding" v-if="plateform == 'mobile'">
                         <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
                     </ion-col>
                     

@@ -171,7 +171,8 @@
     "Price Rule":"កម្រិតតម្លៃ",
     "Select": "ជ្រើសរើស",
     "Today Revenue": "ចំណូលថ្ងៃនេះ",
-    "Today Bill / QTY": "ចនួនវិកយប័ត្រ/ចំនួន",
+    "Today Bill / QTY": "ចំនួនវិកយប័ត្រ/ចំនួន",
+    "MTD Bill / QTY":"វិក្កយបត្រតាមខែ / ចំនួន",
     "Stock Location": "ទីតាំងស្តុក",
     "Outlet": "កន្លែងលក់",
     "Working Day":"ថ្ងៃធ្វើការ",
@@ -520,5 +521,16 @@
     "Are you sure you want to close working day?":"តើអ្នកប្រាកដថាចង់បិទថ្ងៃធ្វើការមែនទេ?",
     "Please close cashier shift first.":"សូមបិទវេណលក់ជាមុនសិនមុននឹងបិទថ្ងៃលក់។",
     "Working Day Number":"លេខថ្ងៃធ្វើការ",
-    "Gender":"ភេទ"
+    "Gender":"ភេទ",
+    "Country":"ប្រទេស",
+    "Customer Group":"ប្រភេទអតិថិជន",
+    "Create New Sale Coupon":"បង្កើតគូប៉ុងលក់ថ្មី",
+    "Create New Top Up":"បង្កើតការបញ្ចូលទឹកប្រាក់ថ្មី",
+    "Create New Redeem":"បង្កើតការប្តូរគូប៉ុងថ្មី",
+    "Product and Inventory Report":"របាយការណ៍ផលិតផល និងសារពើភណ្ឌ",
+    "Purchase Order Report":"របាយការណ៍បញ្ជាទិញ",
+    "Accountant":"គណនេយ្យករ",
+    "Please select a report to view your report.":"សូមជ្រើសរើសរបាយការណ៍ ដើម្បីមើលរបាយការណ៍របស់អ្នក។",
+    "This coupon code is already redeemed":"កូដគូប៉ុងនេះត្រូវបានប្តូររួចហើយ",
+    "This coupon number is not a used coupon number":"លេខគូប៉ុងនេះ មិនមែនជាលេខគូប៉ុងដែលបានប្រើទេ"
   } 
