@@ -13,7 +13,7 @@ const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
 const routes = getRoute();
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHashHistory("/queue-management"),
   routes
 })
 

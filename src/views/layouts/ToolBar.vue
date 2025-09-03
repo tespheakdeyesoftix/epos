@@ -15,8 +15,6 @@
 import { ref } from 'vue';
 
 const defaultHref = ref("/home")
-
-
 const history = window.history
 if (history?.state?.back){
   defaultHref.value = history?.state?.back
