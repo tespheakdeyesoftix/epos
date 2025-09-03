@@ -115,7 +115,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/redeem",
-    component: () => import('@/modules/ecoupon/RedeemList/Redeem.vue'),
+    component: () => window.matchMedia('(max-width: 640px)').matches? import('@/modules/ecoupon/RedeemList/RedeemMobile.vue'): import('@/modules/ecoupon/RedeemList/Redeem.vue'),
     meta: { requiresAuth: true }
   },
    {
@@ -250,6 +250,14 @@ const routes: Array<RouteRecordRaw> = [
     path: "/cashier-shift-list",
     component: () => import('@/views/shift/CashierShiftList.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: "/barcode",
+    component: () => import('@/views/Barcode.vue')
+  },
+   {
+    path: "/barcode/:product_code",
+    component: () => import('@/views/Barcode.vue')
   },
   {
     path: "/working-day-list",

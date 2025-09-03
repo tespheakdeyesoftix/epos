@@ -4,7 +4,7 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
@@ -15,8 +15,21 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["vite/client"]
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/hooks/useDocument.js", "src/hooks/useDocList.js", "src/hooks/useAuth.js", "src/helpers/error-message.js", "src/helpers/utils.js", "src/hooks/useHome.js", "src/modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/hooks/useDocument.js",
+    "src/hooks/useDocList.js",
+    "src/hooks/useAuth.js",
+    "src/helpers/error-message.js",
+    "src/helpers/utils.js",
+    "src/hooks/useHome.js",
+    "src/modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

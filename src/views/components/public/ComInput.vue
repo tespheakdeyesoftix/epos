@@ -34,7 +34,10 @@
       :label="model?label:''" @ionChange="onChange" :fill="fill" :clear-input="clear"
       :label-placement="labelPlacement">
 
-      <ion-button v-if="icon" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-button v-if="icon && plateform === 'desktop'" fill="clear" slot="end" aria-label="Show/hide">
+        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+      </ion-button>
+      <ion-button v-if="icon && plateform === 'mobile'" fill="clear" slot="end" aria-label="Show/hide" @click="onIconClick">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
 
@@ -42,6 +45,7 @@
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
+       
 
       <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
         aria-label="Show/hide">
@@ -63,6 +67,23 @@ import FloatLabel from 'primevue/floatlabel';
 const ionInputRef = ref(null)
 const inputRef = ref(null)
 const plateform = app.utils.getPlateform();
+
+async function onIconClick() {
+  const result = await app.onScanBarcode()
+  if (result) {
+    if (props.type === "number") {
+      model.value = Number(result)
+    } else {
+      model.value = result
+    }
+
+    // Simulate the same trigger as typing then pressing enter
+    emit("change", model.value)
+    emit("onBarcodeChange", model.value)
+  }
+}
+
+
 
 const props = defineProps({
   label: String,
@@ -151,6 +172,7 @@ async function onScanBarcode() {
   }
 
 }
+ 
 
 async function onOpenKeyboard() {
   if (props.type == "number") {
@@ -184,26 +206,24 @@ const onSelectAll = (event) => {
 };
 
 
-onMounted(() => {
-
-  if (props.focus && plateform == "desktop") {
-    setTimeout(function () {
-
-      ionInputRef.value?.$el?.setFocus()
-      const nativeInput = ionInputRef.value?.$el?.querySelector('input')
-      nativeInput?.select()
-    }, 200)
-  }
+onMounted(async () => {
+  if (props.focus && plateform === "desktop") {
+    setTimeout(() => {
+      ionInputRef.value?.$el?.setFocus();
+      const nativeInput = ionInputRef.value?.$el?.querySelector('input');
+      nativeInput?.select();
+    }, 200);
+  } 
+  
 
   if (value.value) {
-
-    if (props.type == "number") {
-      model.value = Number(value.value)
+    if (props.type === "number") {
+      model.value = Number(value.value);
     } else {
-      model.value = value.value
+      model.value = value.value;
     }
   }
+});
 
-})
 
 </script>

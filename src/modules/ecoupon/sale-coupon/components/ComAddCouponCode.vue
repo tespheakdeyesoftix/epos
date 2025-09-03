@@ -18,7 +18,7 @@
         </stack>
         <!-- scan barcode -->
          <!-- v-if="plateform != 'mobile'"  -->
-          
+         
           <div v-if="plateform != 'mobile'">
         <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
             :label="t('Coupon Code')" :placeholder="t('Please scan coupon codes')" label-placement="stacked"

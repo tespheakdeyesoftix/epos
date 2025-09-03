@@ -10,9 +10,9 @@
 
 <script setup lang="tsx">
 import { ref, onMounted,defineComponent } from 'vue'
-
+import ComCurrency from "@/views/components/public/ComCurrency.vue"
 const t = window.t
-const data = ref(null)
+const data = ref({"total_visit":0,"total_annual_order":0,"total_order":0})
 
 const card = defineComponent({
   props: {
@@ -28,7 +28,7 @@ const card = defineComponent({
           <ComCurrency value={props.value} />
         </ion-card-subtitle>
         <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-          {t(props.label)}
+          {(props.label)}
         </ion-card-subtitle>
       </ion-card-content>
     </ion-card>
@@ -48,7 +48,7 @@ async function getData() {
       data.value = response.data
     } else {
       console.warn('No data returned:', response)
-      data.value = {}
+      data.value = {"total_visit":0,"total_annual_order":0,"total_order":0}
     }
   }  
 

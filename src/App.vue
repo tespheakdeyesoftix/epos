@@ -20,7 +20,6 @@ import { StatusBar, Style } from '@capacitor/status-bar';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
-window.toast = toast;
  
 const ionRouter = useIonRouter();
 const  {checkUserLogin,isAuthenticated} = useAuth();

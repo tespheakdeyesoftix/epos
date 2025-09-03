@@ -151,7 +151,7 @@ export function getValue(DocType: string, name: string, fields: any) {
     const db = frappe.db()
 
     return db.getValue(DocType, fields, [["name", "=", name]])
-        .then((doc) => ({ data: doc.message, error: null }))
+        .then((doc) => ({ data: doc.name, error: null }))
         .catch(async (err) => {
             const error = await handleErrorMessage(err);
             return { data: null, error }
@@ -273,7 +273,7 @@ export async function uploadFile(
         .catch(async (e) => {
 
            const err = handleErrorMessage(e);
-            return { data: null, error }
+            return { data: null, error:err }
         })
 
 
@@ -296,7 +296,7 @@ export async function removeAttachment(docType: string, docname: string, file_ur
 
         // Ensure translated message is a string
         const message = window.t?.("File removed successfully") || "File removed successfully";
-        window.showSuccess(message);
+        //window.showSuccess(message);
 
         return { data: response, error: null };
     } catch (err) {

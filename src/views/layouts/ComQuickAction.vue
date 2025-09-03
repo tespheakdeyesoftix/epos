@@ -42,7 +42,7 @@ const item = defineComponent({
     return () => (
       <ion-item lines="full" routerLink={props.url}>
         <ion-icon icon={props.icon} slot="start"></ion-icon>
-        <ion-label>{t(props.label)}</ion-label>
+        <ion-label>{(props.label)}</ion-label>
       </ion-item>
     )
   }

@@ -7,7 +7,7 @@ const {currentUser} = useAuth()
 
 export function useHome() {
     const currentMenu = ref()
-const appMenu = ref([])
+const appMenu = ref([{"component":"","icon":Object,"title":"","color":""}])
 
     function onOpenRoute(m) {
       

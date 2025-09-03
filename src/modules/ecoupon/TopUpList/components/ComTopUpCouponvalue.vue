@@ -74,7 +74,7 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
 
 
   
-       topUpSaleProduct.value.product_code = p.name 
+        topUpSaleProduct.value.product_code = p.name 
         topUpSaleProduct.value.product_name= p.product_name_en,
         topUpSaleProduct.value.quantity= 1
         topUpSaleProduct.value.unit = p.unit

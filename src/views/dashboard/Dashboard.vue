@@ -50,7 +50,7 @@
                     <ComDashboardChart :data="chartData" />
                 </div>
                 <div style="margin-bottom: -5px;">
-                    <ComPaymentBreakdown :data="paymentbreakdown"/>
+                    <ComPaymentBreakDown :data="paymentbreakdown"/>
                 </div>
                 <ComRecentOrder :data="recentData" />
             </stack>
@@ -63,7 +63,7 @@
 import ComRecentOrder from "@/views/dashboard/components/ComRecentOrder.vue"
 import ComDashboardChart from "@/views/dashboard/components/ComDashboardChart.vue"
 import ComDashboardKPI from "@/views/dashboard/components/ComDashboardKPI.vue"
-import ComPaymentBreakdown from "@/views/dashboard/components/ComPaymentBreakdown.vue"
+import ComPaymentBreakDown from "@/views/dashboard/components/ComPaymentBreakDown.vue"
 import { calculatorOutline, calendarOutline, storefrontOutline } from 'ionicons/icons';
 
 import { useDashboard } from "@/hooks/useDashboard.js"

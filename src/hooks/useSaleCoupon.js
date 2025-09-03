@@ -7,6 +7,7 @@ import dayjs from "dayjs"
 import { Capacitor } from '@capacitor/core';
 import { modalController } from "@ionic/vue"
 const saleDoc = ref({
+    name:"",
     sale_products: [],
     payment: []
 })
@@ -92,6 +93,7 @@ const changeAmount = computed(() => {
 function initSaleDoc() {
 
     saleDoc.value = {
+        name:"",
         posting_date:app.setting.working_day?.posting_date,
         business_branch: app.setting.property?.property_name,
         customer: app.setting.pos_profile?.default_customer,
