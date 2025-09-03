@@ -48,7 +48,7 @@
                 </template>
                 <!-- Balance -->
                 <template #balance_amount="{ item, index }">
-                  <template  v-if="item.balance_amount!=0">
+                  <template  v-if="item.balance_amount!=0"in>
                     <template v-if="item.balance_amount != item.balance_coupon_value">
                     <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.balance_amount" /> / 
                     </template>
