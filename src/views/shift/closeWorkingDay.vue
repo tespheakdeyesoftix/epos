@@ -48,7 +48,7 @@ const doc = ref({
 async function onCloseWorkingDay(){
    
  
-    const result = await app.onConfirm("Close Working Day","Are you sure you want to close working day.")
+    const result = await app.onConfirm("Close Working Day","Are you sure you want to close working day?")
     if(!result) return 
     const loading = await app.showLoading();
     const res = await app.setValue("Working Day",app.setting.working_day.name,{
