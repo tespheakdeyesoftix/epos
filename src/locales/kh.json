@@ -602,5 +602,7 @@
     "Enter note here":"បញ្ចូលកំណត់ចំណាំនៅទីនេះ",
     "Percent":"ភាគរយ",
     "Amount":"ចំនួនទឹកប្រាក់",
-    "Sale Type":"ប្រភេទ"
-  } 
+    "Sale Type":"ប្រភេទ",
+    "Value missing for Customer: Customer Name En":"សូមបំពេញតម្លៃសម្រាប់អតិថិជន៖ ឈ្មោះអតិថិជន (ភាសាអង់គ្លេស)",
+    "Value missing for Customer: Guest Type":"សូមបំពេញតម្លៃសម្រាប់អតិថិជន៖ ប្រភេទភ្ញៀវ"
+  }   
