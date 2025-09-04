@@ -37,11 +37,7 @@
         {{ t('Sale Number') }} : {{ topUpCouponInfo?.sale }}
       </div>
     </ion-col>
-    <!-- <ion-col size="6">
-      <div class="detail-label">
-        {{ t('Posting Date') }} : {{ topUpCouponInfo?.posting_date }}
-      </div>
-    </ion-col> -->
+    
     <ion-col size="6">
   <div class="detail-label">
     {{ t('Posting Date') }} : 
