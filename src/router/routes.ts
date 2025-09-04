@@ -302,7 +302,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: { requiresAuth: true }
   },
   {
-    path: "/coupon-register-list",
+    path: "/coupon-register",
     component: () => import('@/modules/ecoupon/CouponRegister/CouponRegisterList.vue'),
     meta: { requiresAuth: true }
   },

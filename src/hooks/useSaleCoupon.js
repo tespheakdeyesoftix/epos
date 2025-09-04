@@ -327,7 +327,7 @@ async function onCloseSale(isPrint = true) {
         if (isPrint) {
             printBill(res.data.name)
         }
-        await app.showSuccess("Payment successfully")
+        await app.showSuccess(t('Payment successfully'))
         
         app.ionRouter.navigate(pageRoute.value,"forward","replace")
         modalController.dismiss(true, 'confirm')

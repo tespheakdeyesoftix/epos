@@ -543,7 +543,7 @@
     "Shift Information":"ព័ត៌មានអំពីវេណលក់",
     "Cashier Shift Detail":"ព័ត៌មានលម្អិតវេណអ្នកគិតលុយ",
     "Are you sure you want to close cashier shift?":"តើអ្នកប្រាកដថាចង់បិទវេនអ្នកគិតលុយមែនទេ?",
-    "No Item":"មិនមានទិន្ន័យ",
+    "No Item":"មិនមានទិន្នន័យ",
     "Please scan coupon codes":"សូមស្កែនកូដគូប៉ុង",
     "This coupon is not exist in the system":"គូប៉ុងនេះមិនមាននៅក្នុងប្រព័ន្ធទេ",
     "Coupon Register List":"បញ្ជីការចុះឈ្មោះគូប៉ុង",
@@ -555,6 +555,11 @@
     "Sale Receipt":"បង្កាន់ដៃលក់",
     "Quick Payment":"ទូទាត់រហ័ស",
     "UI Setting":"ការកំណត់ UI",
-    "Type here...":"សូមបញ្ចូលនៅទីនេះ"
-
+    "Type here...":"សូមបញ្ចូលនៅទីនេះ",
+    "Coupon code is already used":"គូប៉ុងកូដត្រូវបានប្រើរួចហើយ",
+    "Are you sure to process payment and close order?":"តើអ្នកប្រាកដថាចង់ដំណើរការទូទាត់ និងបិទការបញ្ជាទិញមែនទេ?",
+    "Please close the current top up transaction first":"សូមបិទប្រតិបត្តិការបន្ថែមប្រាក់បច្ចុប្បន្នជាមុនសិន",
+    "You have pending coupon to redeem. Do you want to continue?":"អ្នកមានគូប៉ុងនៅសល់ដែលត្រូវប្តូរប្រាក់។ តើអ្នកចង់បន្តដែរឬទេ?",
+    "This coupon code does not exist in the system":"គូប៉ុងកូដនេះមិនមាននៅក្នុងប្រព័ន្ធទេ",
+    "This coupon code is expired":"គូប៉ុងកូដនេះបានផុតកំណត់"
   } 

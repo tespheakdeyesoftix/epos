@@ -36,7 +36,7 @@ async function onScanQRCode(valueFromIcon) {
     }
 
     if (topUpCouponInfo.value) {
-        await app.showWarning("Please close the current top up transaction first")
+        await app.showWarning(t('Please close the current top up transaction first'))
         couponCode.value = ""
         inputScanQRCode.value.focus();
         return
