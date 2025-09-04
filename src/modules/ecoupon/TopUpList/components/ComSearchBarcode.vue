@@ -8,44 +8,36 @@
   </div>
       </ion-card-title>
     <ion-card-content class="ion-no-margin">
-       {{ couponCode }}
-        <com-input focus 
+<com-input focus 
     :placeholder="t('Scan qr code here')"
-    @change="onScanQRCode"
-    ref="inputScanQRCode"
-    v-model="inputCouponCode"
-    :icon="scan"
-    />
-        <!-- <com-input focus 
-    :placeholder="t('Scan qr code here')"
-    @change="onScanQRCode"
+    @onChange="onScanQRCode"
     @onBarcodeChange="onScanQRCode"
-     
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
-    /> -->
+/>
     </ion-card-content>
  </ion-card>
-   
- 
+    
 </template>
 <script setup>
 import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
-const inputCouponCode = ref("")
+
 const t = window.t
+
+
+ 
 async function onScanQRCode(valueFromIcon) {
-    console.log(valueFromIcon)
-    return;
-    
+
     if (valueFromIcon) {
         couponCode.value = valueFromIcon
     }
-
-    if (topUpCouponInfo.value) {
+    
+    if (topUpCouponInfo.value && couponCode.value) {
+       
         await app.showWarning("Please close the current top up transaction first")
         couponCode.value = ""
         inputScanQRCode.value.focus();

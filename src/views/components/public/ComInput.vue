@@ -158,15 +158,15 @@ function onInput($event) {
 
 function onChange($event) {
  
+
   if (props.type === "number") {
     model.value = Number($event.detail.value)
   } else {
  
     model.value = $event.detail.value
   }
-
- alert(model.value)
-  emit("onChange", model.value)
+ 
+  emit("onChange", $event.detail.value)
 }
 
 async function onScanBarcode() {
