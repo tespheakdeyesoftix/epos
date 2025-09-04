@@ -16,7 +16,7 @@
             <ion-col>
               
                 <ion-chip  @click="onSelectPrintFormat(p)" v-for="p in printFormat" :color="p.name==selected?'danger':''">
-                  {{ p.title }}
+                  {{ t(p.title) }}
                 </ion-chip>
             </ion-col>
             <ion-col></ion-col>

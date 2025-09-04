@@ -327,7 +327,7 @@ async function onCloseSale(isPrint = true) {
         if (isPrint) {
             printBill(res.data.name)
         }
-        await app.showSuccess("Payment successfully")
+        await app.showSuccess(t('Payment successfully'))
         
         app.ionRouter.navigate(pageRoute.value,"forward","replace")
         modalController.dismiss(true, 'confirm')
@@ -423,7 +423,7 @@ async function onDeleteSaleProduct(index) {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
-    const confirm = await app.utils.onConfirmDanger("Delete Sale Product", "Are you sure you want to delete this record");
+    const confirm = await app.utils.onConfirmDanger("Delete Sale Product", "Are you sure you want to delete this record?");
     if (confirm) {
         saleDoc.value.sale_products.splice(index, 1);
     }
