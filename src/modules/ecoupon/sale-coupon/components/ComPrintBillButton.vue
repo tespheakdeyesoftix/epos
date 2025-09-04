@@ -23,7 +23,8 @@
  
       <ion-list>
       <ion-item button @click="onPrintRequestBill(p)" v-for="p in printFormat" :key="p.name">
-        <ion-label>{{ p.title }}</ion-label>
+        <ion-label>{{ t(p.title) }}</ion-label>
+        <!-- <ion-label>{{ p.title }}</ion-label> -->
       </ion-item>  
       </ion-list>
     </ion-content>

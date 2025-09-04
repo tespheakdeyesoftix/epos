@@ -539,5 +539,22 @@
     "Cashier Shift Number":"លេខវេណអ្នកគិតប្រាក់",
     "View Shift Detail":"មើលព័ត៌មានលម្អិតនៃវេណលក់",
     "Closed Amount":"ចំនួនទឹកប្រាក់បានបិទ",
-    "There's no default printer for shift report.":"មិនមានម៉ាស៊ីនបោះពុម្ពលំនាំដើមសម្រាប់បោះពុម្ពរបាយការណ៍វេនលក់ទេ។"
+    "There's no default printer for shift report.":"មិនមានម៉ាស៊ីនបោះពុម្ពលំនាំដើមសម្រាប់បោះពុម្ពរបាយការណ៍វេនលក់ទេ។",
+    "Shift Information":"ព័ត៌មានអំពីវេណលក់",
+    "Cashier Shift Detail":"ព័ត៌មានលម្អិតវេណអ្នកគិតលុយ",
+    "Are you sure you want to close cashier shift?":"តើអ្នកប្រាកដថាចង់បិទវេនអ្នកគិតលុយមែនទេ?",
+    "No Item":"មិនមានទិន្ន័យ",
+    "Please scan coupon codes":"សូមស្កែនកូដគូប៉ុង",
+    "This coupon is not exist in the system":"គូប៉ុងនេះមិនមាននៅក្នុងប្រព័ន្ធទេ",
+    "Coupon Register List":"បញ្ជីការចុះឈ្មោះគូប៉ុង",
+    "Add Coupon Register":"បន្ថែមការចុះឈ្មោះគូប៉ុង",
+    "Done":"រួចរាល់",
+    "Saving...":"កំពុងរក្សាទុក",
+    "Submit":"បញ្ជូន",
+    "Are you sure you want to submit this document?":"តើអ្នកប្រាកដថាចង់បញ្ជូនឯកសារនេះមែនទេ?",
+    "Sale Receipt":"បង្កាន់ដៃលក់",
+    "Quick Payment":"ទូទាត់រហ័ស",
+    "UI Setting":"ការកំណត់ UI",
+    "Type here...":"សូមបញ្ចូលនៅទីនេះ"
+
   } 
