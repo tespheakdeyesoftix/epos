@@ -11,6 +11,7 @@
     </ion-col>
 
     <ion-col size="12" size-md="4" class="p-0" >
+      
       <ComPaymentSelectPaymentType />
     </ion-col>
 
