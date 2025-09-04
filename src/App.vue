@@ -47,6 +47,7 @@ watch(() => route.meta.title, (newTitle) => {
 
 
 onMounted(async ()=>{ 
+  window.toast = toast;
   if(Capacitor.getPlatform()!=="web"){
 const toolbarColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--ion-toolbar-background')

@@ -303,6 +303,12 @@ async function onCloseSale(isPrint = true) {
         return
     }
 
+    if(paymentBalance.value>0){
+    await app.showWarning("Please enter all payment amount")
+    return;
+    }
+    
+
     const confirm = await app.onConfirm("Payment", "Are you sure to process payment and close order?")
     if (!confirm) return;
     const loading = await app.showLoading();
