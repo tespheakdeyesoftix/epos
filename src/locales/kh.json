@@ -565,5 +565,24 @@
     "Please close the current top up transaction first":"សូមបិទប្រតិបត្តិការបន្ថែមប្រាក់បច្ចុប្បន្នជាមុនសិន",
     "You have pending coupon to redeem. Do you want to continue?":"អ្នកមានគូប៉ុងនៅសល់ដែលត្រូវប្តូរប្រាក់។ តើអ្នកចង់បន្តដែរឬទេ?",
     "This coupon code does not exist in the system":"គូប៉ុងកូដនេះមិនមាននៅក្នុងប្រព័ន្ធទេ",
-    "This coupon code is expired":"គូប៉ុងកូដនេះបានផុតកំណត់"
+    "This coupon code is expired":"គូប៉ុងកូដនេះបានផុតកំណត់",
+    "Markup %":"បង្កាន់ %",
+    "Are your sure you want to delete this redeem card?":"តើអ្នកប្រាកដថាចង់លុបកាតនេះឬ?",
+    "Product Width":"ទទឹងនៃផ្ទាំងផលិតផល",
+    "Product Height":"កម្ពស់នៃផ្ទាំងផលិតផល",
+    "Product Container Width":"ទទឹងនៃផ្ទាំងផលិតផលទាំងមូល",
+    "Font Size":"ទំហំអក្សរ",
+    "Please add product to your order":"សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នក",
+    "Delete Sale Product":"លុបផលិតផលដែលបញ្ជាទិញ",
+    "Are you sure you want to delete this record?":"តើអ្នកប្រាកដថាចង់លុបកំណត់ត្រានេះឬ?",
+    "ACLEDA Dollar":"ACLEDA ដុល្លា",
+    "ACLEDA Reils":"ACLEDA រៀល",
+    "There is no data to save.":"គ្មានទិន្នន័យដើម្បីរក្សាទុក។",
+    "Please enter coupon code":"សូមបញ្ចូលគូប៉ុងកូដ",
+    "Please enter all payment amount":"សូមបញ្ចូលចំនួនទឹកប្រាក់ទូទាត់ទាំងអស់",
+    "Quick payment successfully":"ទូទាត់រហ័សជោគជ័យ",
+    "Please add product to your order first":"សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នកមុន",
+    "There's no amount to discount. Please add product to your order first":"មិនមានចំនួនសម្រាប់បញ្ចុះតម្លៃទេ។ សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នកមុន",
+    "":""
+     
   } 

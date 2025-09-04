@@ -1,6 +1,6 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <template #end>
+    <template #end v-if="plateform=='mobile'">
         <ComSelectPOSReceiptMobile />
     </template>
  <!-- <ComPaymentAmountInfo v-if="plateform=='mobile'"/>  -->
