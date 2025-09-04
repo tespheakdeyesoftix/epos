@@ -192,7 +192,7 @@
     </ion-item>
     
     <ion-item  v-for="p in doc?.payment">
-        <ion-label>{{ p.payment_type }}</ion-label>
+        <ion-label>{{ t(p.payment_type) }}</ion-label>
         <ion-label slot="end"><strong>
              <ComCurrency :value="Math.abs(p.input_amount)" :currency="p.currency" />
         </strong>

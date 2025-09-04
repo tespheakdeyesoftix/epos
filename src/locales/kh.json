@@ -85,7 +85,7 @@
     "POS Station Name": "ម៉ាស៊ីនគិតលុយ",
     "No sale note": "គ្មានកំណត់ចំណាំ",
     "Description": "បរិយាយ",
-    "Bill #": "លេខ Bill",
+    "Bill #": "លេខ វិកយប័ត្រ",
     "Business Branch": "សាខា",
     "Sale Product List": "តារាងទំនិញ",
     "Working Day/Cashier Shift": "ថ្ងៃ និងវេណធ្វើការ",
@@ -163,7 +163,7 @@
     "Customer Detail:": "ព័ត៌មានអតិថិជន",
     "Customer Detail": "ព័ត៌មានអតិថិជន",
     "Branch": "សាខា",
-    "Bill Number": "លេខវិក័យប័ត្រ",
+    "Bill Number": "លេខវិកយប័ត្រ",
     "Posting Date": "កាលបរិច្ឆេទបញ្ចូល",
     "Table #": "លេខតុ",
     "Payment successfully": "បង់ប្រាក់បានជោគជ័យ",
@@ -435,7 +435,7 @@
     "Coupon Status": "ស្ថានភាពគូប៉ុង",
     "Please scan or enter your coupon code.": "សូមស្កេន ឬបញ្ចូលលេខគូប៉ុងរបស់អ្នក។",
     "Choose Top-Up Option": "ជ្រើសរើសជម្រើសបញ្ចូលទឹកប្រាក់",
-    "Scan qr code here": "ស្កេន code qr នៅទីនេះ",
+    "Scan qr code here": "ស្កេន Code QR នៅទីនេះ",
     "Top Up Note": "កំណត់ចំណាំបញ្ចូលទឹកប្រាក់",
     "Redeem Note": "កំណត់ចំណាំដកប្រាក់",
     "No Record Found": "មិនមានទិន្នន័យ",
@@ -583,6 +583,8 @@
     "Quick payment successfully":"ទូទាត់រហ័សជោគជ័យ",
     "Please add product to your order first":"សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នកមុន",
     "There's no amount to discount. Please add product to your order first":"មិនមានចំនួនសម្រាប់បញ្ចុះតម្លៃទេ។ សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នកមុន",
-    "":""
+    "You have pending order. Do you want to continue?":"អ្នកមានការបញ្ជាទិញនៅសល់។ តើអ្នកចង់បន្តដែរឬទេ?",
+    "There's no data.":"គ្មានទិន្នន័យទេ។",
+    "This coupon code is already selected":"គូប៉ុងកូដនេះបានជ្រើសរើសរួចហើយ"
      
   } 
