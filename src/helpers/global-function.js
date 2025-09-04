@@ -192,8 +192,8 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
     //     color: "success"
     // });
     // toast.present();
-
-    window.toast.add({ severity: 'success', summary: '', detail: message,   life: 3000 });
+    if (!message) return;
+    window.toast.add({ severity: 'success', summary: window.t('Success'), detail: window.t(message),   life: 3000 });
 
 }
   globalThis.app.showWarning = async function (message){
@@ -207,7 +207,9 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
     // toast.present();
 
     
-     window.toast.add({ severity: 'warn', summary: '', detail: message,  life: 3000 });
+    if (!message) return ;
+    
+     window.toast.add({ severity: 'warn', summary: window.t('Confirm'), detail: window.t(message),  life: 3000 });
 }
 
   

@@ -191,6 +191,19 @@ function updatePropertyToStorage(data) {
 }
 
 onMounted(() => {
+  if(import.meta.env.VITE_MODE == "development"){
+    formData.value = {
+      property_code: "SR2021-0001",
+      username: "Pheakdey",
+      password: "112233",
+    }
+  } else {
+ formData.value = {
+      property_code: "",
+      username: "",
+      password: "",
+    }
+  }
   const { property_code } = route.params;
 
   const strProperties = app.storageService.getItem("properties");

@@ -71,7 +71,7 @@ const {  paymentBalance,paymentInputAmount,onAddPayment } = useSaleCoupon()
     ]
     function onKeyPadClick(key){
 
-        if(key=="Clear"){
+        if(key==t("Clear")){
             paymentInputAmount.value = ""
 
             return;

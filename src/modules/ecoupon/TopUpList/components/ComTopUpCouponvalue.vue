@@ -22,7 +22,10 @@
       >
         <ion-card-content class="content-center ion-no-padding">
           
-          <img :src="p.photo" alt="Coupon" class="coupon-image" />
+               <ion-avatar style="height: 50px;width: 50px;">
+                <Img v-if="p.photo" :src="p.photo" />
+                <div class="avatar-placeholder" v-else>{{ getAvatarLetter(p.product_name_en) }}</div>
+            </ion-avatar>
           <ion-card :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name">
             <ion-text  >{{ p.product_name_en }}</ion-text>
           </ion-card>
@@ -49,6 +52,7 @@
     const t = window.t;
     import dayjs from "dayjs";
 import ComCurrency from "@/views/components/public/ComCurrency.vue";
+import { getAvatarLetter } from "@/helpers/utils"
     const {products} = useProductMenu();
     const {saleDoc,topUpCouponInfo,topUpSaleProduct} = useSaleCoupon();
      

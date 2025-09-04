@@ -33,20 +33,17 @@
         </ion-card-content>
     </ion-card>
   
-    <!-- platform === mobile -->
-     <!-- <ion-text 
-     style="display:block; text-align:center; margin-top: 10px; font-weight: 500;">
-     {{ t("Payment") }}
-    </ion-text> -->
+ 
      <ion-list>
         <ion-item button v-for="(p,index) in saleDoc.payment" :key="index"  v-if="saleDoc.payment.length > 0">
            
             <ion-label >
-                {{ p.payment_type }}  
-                
+                {{ t(p.payment_type) }}  
+              
                 <div v-if="p.exchange_rate!=1">
                     <ion-text color="medium">
-              {{ t("Exchange Rate") }} <br/> <ComCurrency :value="p.exchange_rate" :currency="p.currency"/>
+                      
+              {{ t("Exchange Rate:") }} <ComCurrency :value="1/p.exchange_rate" :currency="exchangeCurrency"/>
                     </ion-text>
                     
                 </div>
@@ -60,15 +57,7 @@
             </ion-button>
             
         </ion-item>
-<!--        
-        <ion-label
-  v-else
-  style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 15px;"
->
-  <ion-icon :icon="cashOutline" size="large" color="medium"></ion-icon>
-  <ion-text color="medium">{{ t("No Payment") }}</ion-text>
-</ion-label> -->
-
+ 
 
      </ion-list>
      <!--  -->
@@ -127,10 +116,12 @@ if(exchangeCurrency == mainExchangeRateCurrency){
     exchangeCurrency = app.setting.currency
 }
 
+
+
 function onDeletePayment (index){
     saleDoc.value.payment.splice(index,1)
 }
-
+console.log(app.setting)
 </script>
 <style scoped>
 .fixed-payment {

@@ -8,8 +8,15 @@
   </div>
       </ion-card-title>
     <ion-card-content class="ion-no-margin">
-       
+       {{ couponCode }}
         <com-input focus 
+    :placeholder="t('Scan qr code here')"
+    @change="onScanQRCode"
+    ref="inputScanQRCode"
+    v-model="inputCouponCode"
+    :icon="scan"
+    />
+        <!-- <com-input focus 
     :placeholder="t('Scan qr code here')"
     @change="onScanQRCode"
     @onBarcodeChange="onScanQRCode"
@@ -17,7 +24,7 @@
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
-    />
+    /> -->
     </ion-card-content>
  </ion-card>
    
@@ -28,9 +35,12 @@ import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
-
+const inputCouponCode = ref("")
 const t = window.t
 async function onScanQRCode(valueFromIcon) {
+    console.log(valueFromIcon)
+    return;
+    
     if (valueFromIcon) {
         couponCode.value = valueFromIcon
     }
