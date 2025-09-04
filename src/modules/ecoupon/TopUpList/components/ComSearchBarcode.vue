@@ -44,6 +44,10 @@ async function onScanQRCode(valueFromIcon) {
         return
     }
 
+    if(topUpCouponInfo.value){
+        return;
+    }
+
     couponCode.value = app.utils.getCouponNumber(couponCode.value);
     if (!couponCode.value) {
         await app.showWarning("Please scan qr code")

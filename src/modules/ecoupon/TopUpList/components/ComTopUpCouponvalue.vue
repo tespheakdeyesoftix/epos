@@ -21,10 +21,9 @@
         class="coupon-card ion-no-padding"
       >
         <ion-card-content class="content-center ion-no-padding">
-          
-               <ion-avatar style="height: 50px;width: 50px;">
-                <Img v-if="p.photo" :src="p.photo" />
-                <div class="avatar-placeholder" v-else>{{ getAvatarLetter(p.product_name_en) }}</div>
+               <ion-avatar class="coupon-image" style="height: 130px;" >
+                <Img v-if="p.photo" :src="p.photo" class="coupon-image coupon-fix"/>
+                <div class="avatar-placeholder coupon-image"   v-else>{{ getAvatarLetter(p.product_name_en) }}</div>
             </ion-avatar>
           <ion-card :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name">
             <ion-text  >{{ p.product_name_en }}</ion-text>
@@ -118,6 +117,10 @@ import { getAvatarLetter } from "@/helpers/utils"
 .content-center {
     position: relative;  
     
+}
+.coupon-fix{
+  object-fit: fill;
+  height: 100%;
 }
 .coupon-image {
   width: 100%;
