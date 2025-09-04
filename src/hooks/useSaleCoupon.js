@@ -184,6 +184,8 @@ async function onSelectProduct(p) {
 }
 
 async function onPayment() {
+    alert(import.meta.env.VITE_ENCRYPT_KEY)
+    return
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
