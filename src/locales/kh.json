@@ -587,6 +587,20 @@
     "There's no amount to discount. Please add product to your order first":"មិនមានចំនួនសម្រាប់បញ្ចុះតម្លៃទេ។ សូមបញ្ចូលផលិតផលទៅក្នុងការបញ្ជាទិញរបស់អ្នកមុន",
     "You have pending order. Do you want to continue?":"អ្នកមានការបញ្ជាទិញនៅសល់។ តើអ្នកចង់បន្តដែរឬទេ?",
     "There's no data.":"គ្មានទិន្នន័យទេ។",
-    "This coupon code is already selected":"គូប៉ុងកូដនេះបានជ្រើសរើសរួចហើយ"
-     
+    "This coupon code is already selected":"គូប៉ុងកូដនេះបានជ្រើសរើសរួចហើយ",
+    "Sale Number":"លេខការលក់",
+    "Transaction Date":"កាលបរិច្ឆេទប្រតិបត្តិការ",
+    "Actual Balance":"តុល្យភាពជាក់ស្តែង",
+    "Phone":"លេខទូរស័ព្ទ",
+    "Transaction":"ប្រតិបត្តការ",
+    "ID":"លេខសម្គាល់",
+    "Markup":"Markup",
+    "Please select top up amount":"សូមជ្រើសចំនួនបញ្ចូលទឹកប្រាក់",
+    "Please scan qr code":"សូមស្កេន QR កូដ",
+    "Top Up Coupon Amount":"បញ្ចូលទឹកប្រាក់គូប៉ុង",
+    "Markup Type":"Markup Type",
+    "Enter note here":"បញ្ចូលកំណត់ចំណាំនៅទីនេះ",
+    "Percent":"ភាគរយ",
+    "Amount":"ចំនួនទឹកប្រាក់",
+    "Sale Type":"ប្រភេទ"
   } 
