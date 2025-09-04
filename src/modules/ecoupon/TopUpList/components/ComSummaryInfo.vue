@@ -19,7 +19,7 @@
             <ComCurrency :value="1" :currency="mainCurrency" /> 
             <span class="mx-2"> = </span>
            
-        <ComCurrency :value="exchange_rate" :currency="second_currency" /> 
+        <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
         </ion-chip>
        </div>
    </div>
@@ -36,7 +36,8 @@
 import { useApp } from "@/hooks/useApp.ts"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { ref } from "vue";
-const {exchange_rate} = useApp()
+// const {exchange_rate} = useApp()
+const exchangeRate = app.setting.exchange_rate_input
 const t = window.t;
 const {grandTotal, grandTotalSecondCurrency } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
