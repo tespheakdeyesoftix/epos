@@ -207,7 +207,7 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
     // toast.present();
 
     
-     window.toast.add({ severity: 'warn', summary: '', detail: message,  life: 3000 });
+     window.toast.add({ severity: 'warn', summary: window.t('Confirm'), detail: message,  life: 3000 });
 }
 
   
