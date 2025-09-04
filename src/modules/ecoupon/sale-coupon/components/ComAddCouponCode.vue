@@ -218,7 +218,7 @@ function onRemoveCoupon() {
 }
 
 async function validateCouponCode(c) {
-
+ 
     if (c == "") {
         app.showWarning("Plese enter or scan coupon code")
     }

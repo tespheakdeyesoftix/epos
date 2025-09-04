@@ -192,6 +192,7 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
     //     color: "success"
     // });
     // toast.present();
+
     window.toast.add({ severity: 'success', summary: '', detail: message,   life: 3000 });
 
 }
@@ -205,6 +206,7 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
     // });
     // toast.present();
 
+    
      window.toast.add({ severity: 'warn', summary: '', detail: message,  life: 3000 });
 }
 
