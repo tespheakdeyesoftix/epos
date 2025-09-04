@@ -3,7 +3,7 @@
         <ToolBar>{{ t("Enter Station Name") }}</ToolBar>
         <ion-content class="ion-padding">
             <stack class="fix-container flex">
-                <ion-label>{{t("Please enter your station name.")}}"</ion-label>
+                <ion-label>{{t("Please enter your station name.")}}</ion-label>
                 <com-input  ref="stationInputRef"  focus v-model="station_name"  :label="t('Station name')"
                     :placeholder="t('Please enter station name')" label-placement="stacked" fill="outline"></com-input>
                     <ion-button @click="onSave" size="default" shape="round">{{ t("Save") }}</ion-button>
