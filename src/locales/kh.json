@@ -552,7 +552,7 @@
     "Cashier Shift Detail":"ព័ត៌មានលម្អិតវេណអ្នកគិតលុយ",
     "Are you sure you want to close cashier shift?":"តើអ្នកប្រាកដថាចង់បិទវេនអ្នកគិតលុយមែនទេ?",
     "No Item":"មិនមានទិន្នន័យ",
-    "Please scan coupon codes":"សូមស្កែនកូដគូប៉ុង",
+    "Please scan coupon codes":"សូមស្កេនកូដគូប៉ុង",
     "This coupon is not exist in the system":"គូប៉ុងនេះមិនមាននៅក្នុងប្រព័ន្ធទេ",
     "Coupon Register List":"បញ្ជីការចុះឈ្មោះគូប៉ុង",
     "Add Coupon Register":"បន្ថែមការចុះឈ្មោះគូប៉ុង",
@@ -597,6 +597,8 @@
     "Transaction":"ប្រតិបត្តការ",
     "ID":"លេខសម្គាល់",
     "Markup":"Markup",
+    "Female":"ស្រី",
+    "Male":"ប្រុស",
     "Please select top up amount":"សូមជ្រើសចំនួនបញ្ចូលទឹកប្រាក់",
     "Please scan qr code":"សូមស្កេន QR កូដ",
     "Top Up Coupon Amount":"បញ្ចូលទឹកប្រាក់គូប៉ុង",
@@ -606,5 +608,7 @@
     "Amount":"ចំនួនទឹកប្រាក់",
     "Sale Type":"ប្រភេទ",
     "Value missing for Customer: Customer Name En":"សូមបំពេញតម្លៃសម្រាប់អតិថិជន៖ ឈ្មោះអតិថិជន (ភាសាអង់គ្លេស)",
-    "Value missing for Customer: Guest Type":"សូមបំពេញតម្លៃសម្រាប់អតិថិជន៖ ប្រភេទភ្ញៀវ"
+    "Value missing for Customer: Guest Type":"សូមបំពេញតម្លៃសម្រាប់អតិថិជន៖ ប្រភេទភ្ញៀវ",
+    "Discout Note":"កំណត់ចំណាំបញ្ចុះតម្លៃ",
+    "":""
   }   
