@@ -189,6 +189,12 @@ async function onPayment() {
         await app.showWarning("Please add product to your order")
         return;
     }
+
+    if(saleDoc.value.sale_type == "Redeem"){
+        await app.showWarning("No amount to Redeem")
+        return
+    }
+
     const result = await app.openModal({
         component: ComPayment,
         cssClass: app.utils.getPlateform() == 'mobile'?"":"payment-modal"
@@ -262,6 +268,13 @@ async function onQuickPay(payment_type) {
         await app.showWarning("There's no data.")
         return
     }
+
+    if(saleDoc.value.sale_type == "Redeem"){
+        await app.showWarning("No amount to Redeem")
+        return
+    }
+    
+
     // if top up validate user select topup
     if(saleDoc.value.sale_type =="Top Up"){
         if(saleDoc.value.sale_products[0].product_code == ""){
@@ -303,6 +316,7 @@ async function onQuickPay(payment_type) {
 }
 
 async function onCloseSale(isPrint = true) {
+    
     if (grandTotal.value > 0 && saleDoc.value.payment.length == 0) {
         await app.showWarning("Please enter all payment amount")
         return
@@ -324,7 +338,7 @@ async function onCloseSale(isPrint = true) {
     saveData.sale_status = "Closed"
 
     const res = await saveSaleDoc(saveData);
-
+    
     if (res.data) {
 
         onClearData()

@@ -10,6 +10,7 @@
     <ion-card-content class="ion-no-margin">
 <com-input focus 
     :placeholder="t('Scan qr code here')"
+    :label="t('Scan qr code here')"
     @onChange="onScanQRCode"
     @onBarcodeChange="onScanQRCode"
     ref="inputScanQRCode"

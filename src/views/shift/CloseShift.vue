@@ -117,6 +117,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup'; 
 import Row from 'primevue/row';  
 import { useApp } from '@/hooks/useApp';
+
 const { isCashierShiftOpened } = useApp();
 
 
@@ -180,6 +181,7 @@ async function onCloseCashierShift(){
 
 
 onMounted(async ()=>{
+ 
   const loading = await app.showLoading()
   let res = await app.postApi("epos_restaurant_2023.api.api.get_close_shift_summary",{
     cashier_shift:cashierShift.value.name,
@@ -195,6 +197,7 @@ onMounted(async ()=>{
   await loading.dismiss();
 })
 
+ 
 
 async function printReport() {
        const printSettings = app.setting.pos_config.print_settings.filter(x=>x.print_type=="Cashier Shift") || []
@@ -204,6 +207,8 @@ async function printReport() {
         
 
         }
+
+
 
 
 </script>

@@ -30,9 +30,9 @@ const props = defineProps({
   docListRef: Object,
   docname: String,
 });
-
+ 
 const doc = ref({
-  posting_date: null,
+  posting_date: dayjs().toDate(),
   note: '',
 });
 

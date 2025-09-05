@@ -27,7 +27,7 @@
                         {{ t("Payment with Print") }}
                     </ion-button>
                     
-                    <ion-button expand="full" shape="round" @click="onCloseSale(true)">
+                    <ion-button expand="full" shape="round" @click="onCloseSale(false)">
                         <ion-icon  :icon="logoUsd"></ion-icon>
                         {{ t("Payment") }}
                     </ion-button>

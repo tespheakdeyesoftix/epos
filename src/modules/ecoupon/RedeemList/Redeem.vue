@@ -27,7 +27,7 @@
         </div>
         <div style="float: right;">
           <ion-chip>
-            <ComCurrency :value="1" :currency="mainCurrency" /> =  <ComCurrency :value="exchange_rate" :currency="second_currency" />
+            <ComCurrency :value="1" :currency="exchangeRateMainCurrency" /> =  <ComCurrency :value="exchangeRate" :currency="exchangeRateSecondCurrency" />
           </ion-chip>
            
         </div>
@@ -61,7 +61,20 @@ import ToolBar from "@/views/layouts/ToolBar.vue";
     const {saleDoc,grandTotal,saleType,pageRoute,onClearData ,initSaleDoc } = useSaleCoupon()
     const {exchange_rate} = useApp();
     const second_currency = ref(app.setting.second_currency);
-const mainCurrency = ref(app.setting.currency);
+    const mainCurrency = ref(app.setting.currency);
+    const exchangeRateMainCurrency = ref(app.setting.exchange_rate_main_currency);
+    const exchangeRateSecondCurrency = ref(app.setting.second_currency);
+
+
+    if(mainCurrency.value != exchangeRateMainCurrency.value){
+exchangeRateSecondCurrency.value = mainCurrency.value;
+
+    }
+     
+
+
+const exchangeRate = app.setting.exchange_rate_input
+ 
 
 onIonViewWillEnter(()=>{
   if(!app.route.params.name){
