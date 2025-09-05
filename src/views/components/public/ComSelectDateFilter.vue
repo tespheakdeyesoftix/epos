@@ -63,7 +63,6 @@ async function  onSelectDate(){
   const result = await app.openModal(option)
   if(result){
     model.value = result
-    alert(555)
     emit("onSelect",result);
   }
 }

@@ -77,7 +77,7 @@ async function onselectTimespan(timespan){
     if (timespan!='Date Range'){
      
         model.value = app.getTimespanRange(timespan)
-        alert(JSON.stringify(model.value))
+
         modalController.dismiss(  {...model.value,timespan:timespan,operator:operator.value}, 'confirm')
     }else {
         // show start  date and date picker to select 
