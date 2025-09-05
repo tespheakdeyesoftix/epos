@@ -169,7 +169,8 @@ async function onCloseCashierShift(){
     isCashierShiftOpened.value = false;
     delete app.setting.cashier_shift;
 
-    await app.showSuccess("Close shift successfully")
+  await app.showSuccess("Close shift successfully")
+    await loading.dismiss()
  await printReport();
  
     app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
