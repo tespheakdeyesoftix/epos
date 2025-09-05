@@ -11,7 +11,7 @@ import VueECharts from 'vue-echarts'
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { use } from 'echarts/core'
 import ToastService from 'primevue/toastservice';
-
+import VueCryptojs from 'vue-cryptojs'
 import {
   CanvasRenderer
 } from 'echarts/renderers'
@@ -232,6 +232,8 @@ if (Capacitor.isNativePlatform()) {
 });
   app.use(IonicVue);
   app.use(ToastService);
+  app.use(VueCryptojs);
+  
   app.component('AppBar', AppBar)
   app.component('ComFooter', ComFooter)
   app.component('ToolBar', ToolBar)

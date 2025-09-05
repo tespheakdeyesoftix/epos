@@ -8,7 +8,7 @@ const beepSound = new Audio(beep)
 
 export function setFrappeAppUrl(url: string) {
 
-    frappe = new FrappeApp(url, {
+    frappe = new FrappeApp(import.meta.env.VITE_API_URL, {
         useToken: true,
         token: getToken,
         type: "token"

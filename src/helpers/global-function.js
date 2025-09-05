@@ -7,7 +7,7 @@ import  * as storageService from '@/services/storage-service.ts';
 import  * as sale from "@/helpers/sale-action.js";
 import  * as shift from "@/helpers/shift-action.js";
 import  * as printing from "@/helpers/printing.js";
-
+import dayjs from 'dayjs';
 import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 import customDayjs from '@/helpers/dayjs';
@@ -127,7 +127,7 @@ globalThis.app.submitDoc =  async function (doc) {
 
 
  globalThis.app.onConfirm =  async function (title="Confirm", message ="Are you sure you want to process this action?",options={background:"success"}) {
-  const isConfirm = await onConfirm(title,message,options);
+  const isConfirm = await onConfirm(title,window.t(message),options);
   return isConfirm
 }
  globalThis.app.onScanBarcode =  async function () {

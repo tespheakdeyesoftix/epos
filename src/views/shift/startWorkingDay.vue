@@ -40,7 +40,7 @@ const doc = ref({
 
 
 async function onStartWorkingDay(){
-    const result = await app.onConfirm("Start Working Day","Are you sure you want to start working day.")
+    const result = await app.onConfirm("Start Working Day","Are you sure you want to start working day?")
     if(!result) return 
     const loading = await app.showLoading();
     const res = await app.createDoc("Working Day",doc.value);

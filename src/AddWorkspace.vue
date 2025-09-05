@@ -15,7 +15,8 @@
           label-placement="floating"
           fill="outline"
           :placeholder="t('Property Code')"
-          class="ion-margin-bottom"
+          class="ion-margin-bottom" 
+          :disabled="apiUrl!=''"
         ></ion-input>
 
         <ion-input
@@ -77,6 +78,8 @@ const ionRouter = useIonRouter();
 
 const { login, checkPropertyCode } = useAuth();
 
+const apiUrl = ref(import.meta.env.VITE_API_URL)
+
 const formData = ref({
   property_code: "SR2021-0001",
   username: "Pheakdey",
@@ -124,7 +127,7 @@ async function onSaveWorkspace() {
     response.data.app_url,
     formData.value.property_code
   );
-
+  
   if (checkPropertyCodeResponse?.error) {
     return;
   }
@@ -159,7 +162,9 @@ async function onSaveWorkspace() {
   app.storageService.setItem("current_property", JSON.stringify(property));
   app.storageService.setItem("current_user", JSON.stringify(loginResponse.data));
   app.setting.property = property
-  setFrappeAppUrl(response.data.app_url);
+
+  // setFrappeAppUrl(response.data.app_url);
+  
 
   await loadingLogin.dismiss();
 
@@ -193,13 +198,13 @@ function updatePropertyToStorage(data) {
 onMounted(() => {
   if(import.meta.env.VITE_MODE == "development"){
     formData.value = {
-      property_code: "SR2021-0001",
-      username: "Pheakdey",
+      property_code: import.meta.env.VITE_PROPERTY_CODE,
+      username: "pheakdey",
       password: "112233",
     }
   } else {
  formData.value = {
-      property_code: "",
+      property_code: import.meta.env.VITE_PROPERTY_CODE,
       username: "",
       password: "",
     }

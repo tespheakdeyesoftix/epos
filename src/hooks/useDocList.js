@@ -171,7 +171,7 @@ txtSearchRef.value.onSetFocus()
   }
 
   async function onFilter(f) {
-
+ 
     canLoadMore.value = true;
     startIndex.value = 0;
     options.value.filters = JSON.parse(JSON.stringify(defaultFilters || '[]'));

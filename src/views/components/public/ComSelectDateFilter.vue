@@ -49,6 +49,8 @@ const getLabel=computed(()=>{
 })
 
 async function  onSelectDate(){
+  
+
   const option = {
     component:ComSelectDateModal,
    
@@ -61,6 +63,7 @@ async function  onSelectDate(){
   const result = await app.openModal(option)
   if(result){
     model.value = result
+    alert(555)
     emit("onSelect",result);
   }
 }

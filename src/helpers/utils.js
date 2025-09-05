@@ -20,14 +20,15 @@ import { isPlatform,getPlatforms } from '@ionic/vue';
 import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
-
+import {encrypt,decrypt} from "@/helpers/encrypt.ts"
 dayjs.extend(isoWeek)
 
 import { useAuth } from "@/hooks/useAuth";
 
 
 
-
+window.encrypt = encrypt
+window.decrypt = decrypt
 const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate_input,exchange_rate,change_exchange_rate } = useApp();
 
 
@@ -517,68 +518,11 @@ export function getCouponNumber(coupon){
     return arrayCoupons[1]
 
   }
-   
-  return coupon
+   return coupon;
+  // return decrypt(coupon)
   
-
 }
-
-// Generate AES key
-async function generateKey() {
-  const x =  await crypto.subtle.generateKey(
-    {
-      name: "AES-GCM",
-      length: 256
-    },
-    true,
-    ["encrypt", "decrypt"]
-  );
-
-  alert(typeof x)
-  return x
-}
-
-// Encrypt function
-export async function encryptData(message) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-
-  const iv = crypto.getRandomValues(new Uint8Array(12)); // Random IV
-  alert(iv)
-  const encrypted = await crypto.subtle.encrypt(
-    { name: "AES-GCM", iv },
-    import.meta.env.VITE_ENCRYPT_KEY,
-    data
-  );
-
-  return { iv, encrypted };
-}
-
-// Decrypt function
-async function decryptData(encrypted, iv) {
-  const decrypted = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv },
-    import.meta.env.VITE_ENCRYPT_KEY,
-    encrypted
-  );
-
-  const decoder = new TextDecoder();
-  return decoder.decode(decrypted);
-}
-
-// Example usage
-(async () => {
-  const key = await generateKey();
-
-  const { iv, encrypted } = await encryptData("Hello World!", key);
-  console.log("Encrypted:", new Uint8Array(encrypted));
-
-  const decrypted = await decryptData(encrypted, key, iv);
-  console.log("Decrypted:", decrypted); // "Hello World!"
-})();
-
-
-
+ 
 
 export async function showWarningMessage(title = "Confirm", message = "Are you sure you want to process this action?") {
     let defaultButtons = [
@@ -670,7 +614,6 @@ export async function getPrintPrintFormat(){
  
   }
 }
-
 
 export async function getPOSConfig(pos_config){
 

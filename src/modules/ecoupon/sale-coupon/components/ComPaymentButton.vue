@@ -62,6 +62,7 @@ import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 const plateform = ref(app.utils.getPlateform())
 import { desktop } from "ionicons/icons";
 import { ref } from "vue";
+ 
 const emit = defineEmits()
 const {grandTotal, grandTotalSecondCurrency, onPayment } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);

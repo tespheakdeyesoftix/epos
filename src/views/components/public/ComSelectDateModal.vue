@@ -73,12 +73,15 @@ const operators = [
 ]
 
 async function onselectTimespan(timespan){
+  
     if (timespan!='Date Range'){
      
         model.value = app.getTimespanRange(timespan)
-    modalController.dismiss(  {...model.value,timespan:timespan,operator:operator.value}, 'confirm')
+        alert(JSON.stringify(model.value))
+        modalController.dismiss(  {...model.value,timespan:timespan,operator:operator.value}, 'confirm')
     }else {
         // show start  date and date picker to select 
+
         const modal = await modalController.getTop();
       
     if (modal) {

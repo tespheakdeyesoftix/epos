@@ -184,8 +184,7 @@ async function onSelectProduct(p) {
 }
 
 async function onPayment() {
-    alert(import.meta.env.VITE_ENCRYPT_KEY)
-    return
+   
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
@@ -195,6 +194,10 @@ async function onPayment() {
         cssClass: app.utils.getPlateform() == 'mobile'?"":"payment-modal"
     })
 
+    if(!result){
+        saleDoc.value.payment =[]
+    }
+    
     return result
   
 }
@@ -433,9 +436,17 @@ async function onDeleteSaleProduct(index) {
 }
 
 async function onAddPayment(payment_type) {
+    if(paymentBalance.value==0){
+        await app.showWarning("No balance amount for add payment")
+        return;
+    }
     let paymentAmount = Number(paymentInputAmount.value)
     if (!paymentInputAmount.value) {
-        paymentAmount = paymentBalance.value;
+
+        // use balance amount to add payment
+        paymentAmount = paymentBalance.value * (payment_type.exchange_rate || 1);
+        
+
     }
     if (paymentAmount == 0) {
         await app.showWarning("Please enter payment amount")
@@ -603,15 +614,20 @@ async function onRemoveProductDiscount(sp) {
             title: t("Cancel Discount Note"),
             storageKey: "cancel_discount_item_required_note"
         });
-    }
-
-    if (note) {
-        sp.discount_type = "Percent";
+         if (note) {
+            sp.discount_type = "Percent";
+            sp.discount = 0;
+            sp.discount_amount = 0,
+            updateSaleProduct(sp);
+        }
+    } else {
+         sp.discount_type = "Percent";
         sp.discount = 0;
         sp.discount_amount = 0,
-
-            updateSaleProduct(sp);
+        updateSaleProduct(sp);
     }
+
+   
     app.showSuccess("Remove discount successfully")
 }
 
