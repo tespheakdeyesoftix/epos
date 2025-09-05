@@ -6,7 +6,7 @@
     <card color="success" :value = "data?.total_order ?? 0" label="Total Order" />
   </stack>
   </div>
-   {{ data }}
+   <!-- {{ data }} -->
 </template>
 
 <!-- <script setup>
