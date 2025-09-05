@@ -6,9 +6,74 @@
     <card color="success" :value = "data?.total_order ?? 0" label="Total Order" />
   </stack>
   </div>
+   {{ data }}
 </template>
 
-<script setup lang="tsx">
+<!-- <script setup>
+import { ref,  } from 'vue'
+const t = window.t
+const data = ref({"total_visit":0,"total_annual_order":0,"total_order":0})
+</script> -->
+
+<script setup>
+import { ref, onMounted, defineComponent, h } from 'vue'
+import ComCurrency from "@/views/components/public/ComCurrency.vue"
+
+const t = window.t
+const data = ref({ total_visit: 0, total_annual_order: 0, total_order: 0 })
+
+// Define child component "card"
+const card = defineComponent({
+  props: {
+    label: String,
+    color: String,
+    value: Number
+  },
+  setup(props) {
+    return () =>
+      h('ion-card',
+        { button: true, color: props.color, class: 'ion-no-margin' },
+        [
+          h('ion-card-content', { class: 'text-center' }, [
+            h('ion-card-subtitle',
+              { slot: 'end', style: 'font-size: 18px;' },
+              [h(ComCurrency, { value: props.value })]
+            ),
+            h('ion-card-subtitle',
+              { class: 'mt-2', style: 'font-size: 18px;' },
+              props.label
+            )
+          ])
+        ]
+      )
+  }
+})
+
+// Fetch API
+async function getData() {
+  const response = await app.getApi(
+    'epos_restaurant_2023.selling.doctype.customer.customer.get_customer_order_summary',
+    {
+      customer: app.route.params.name
+    }
+  )
+
+  if (response?.data) {
+    data.value = response.data
+  } else {
+    console.warn('No data returned:', response)
+    data.value = { total_visit: 0, total_annual_order: 0, total_order: 0 }
+  }
+}
+
+onMounted(() => {
+  getData()
+})
+</script>
+
+
+
+<!-- <script setup lang="tsx">
 import { ref, onMounted,defineComponent } from 'vue'
 import ComCurrency from "@/views/components/public/ComCurrency.vue"
 const t = window.t
@@ -55,4 +120,4 @@ async function getData() {
 onMounted(() => {
   getData()
 })
-</script>
+</script> -->
