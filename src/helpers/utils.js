@@ -21,6 +21,10 @@ import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPe
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
 import {encrypt,decrypt} from "@/helpers/encrypt.ts"
+import submitSound from '/assets/sound/submit.mp3'
+const successSound = new Audio(submitSound)
+
+
 dayjs.extend(isoWeek)
 
 import { useAuth } from "@/hooks/useAuth";
@@ -828,4 +832,10 @@ export function getWeekStartAndEnd(dateInput) {
 export function getDocStatusText(id){
   const status = [window.t("Draft"), window.t('Submitted'), window.t("Cancelled")]
   return status[id]
+}
+
+export function playSuccessSound(){
+   successSound.currentTime = 0
+            successSound.play()
+
 }

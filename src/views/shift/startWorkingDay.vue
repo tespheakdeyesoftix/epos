@@ -48,6 +48,7 @@ async function onStartWorkingDay(){
         app.setting.working_day = res.data
         isWorkingDayOpened.value = true;
         app.ionRouter.navigate('/home', 'back', 'replace');
+        app.utils.playSuccessSound();
     }
     await loading.dismiss()
 }

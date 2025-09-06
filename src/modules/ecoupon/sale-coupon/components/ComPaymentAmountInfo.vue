@@ -13,7 +13,7 @@
                 <ion-text style="font-size: 17px;font-weight: 400;">
                  {{t("Total Amount")}}
                  </ion-text>   
-            <div class="flex gap-8 mt-2 " style="font-weight: 600;">
+            <div class="flex gap-8 mt-2 " style="font-weight: 600; font-size: xx-large;">
              <ComCurrency :value="grandTotal" />
             <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
           </div>

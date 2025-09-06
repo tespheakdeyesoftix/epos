@@ -7,7 +7,7 @@
 
             <div style=" max-width: 1024px; width: 100%;  margin: 0 auto;  padding: 0 16px;">
             
-            <Message severity="warn" v-if="pendingCouponShift" class="mb-4">
+            <Message severity="warn" v-if="pendingCouponShift && pendingCouponShift.length>0" class="mb-4">
                 <div class="my-2">{{ t("There's pending shift opened at these following devices. Please close all pending shift first.") }}</div>
                 <div v-for="d in pendingCouponShift"><strong>{{ d.station_opened }} - {{ d.name }}</strong> /
                      {{ t("Opened by:") }}  {{ d.open_by }}</div> 
@@ -27,7 +27,7 @@
         <ion-footer>
             <ion-toolbar>
                  <div style=" display: flex;justify-content: center;gap: 10px;">
-                    <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+                    <ion-button v-if="plateform != 'mobile'" @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
                
                 <ion-button :routerLink="'/working-day-detail/' + doc.name" >{{ t("View Working Day Detail") }}</ion-button>
                 <ion-button @click="onCloseWorkingDay" color="success">{{ t("Close Working Day") }}</ion-button> 
@@ -48,6 +48,7 @@ const { isWorkingDayOpened } = useApp();
 const t = window.t;
 const posting_date = ref(dayjs().format("DD/MM/YYYY"))
 const pendingCouponShift = ref([])
+const plateform = ref(app.utils.getPlateform())
 
 const doc = ref({
     name:app.setting.working_day.name,
@@ -82,6 +83,7 @@ async function onCloseWorkingDay(){
     closed_date: dayjs().format('YYYY-MM-DD HH:mm:ss')
     });
     if(res.data){
+        app.utils.playSuccessSound();
         app.setting.working_day = ""
         isWorkingDayOpened.value = false;
          // get print 

@@ -102,7 +102,7 @@
     </ion-content>
      <ComFooter>
       
-      <ion-button color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
+      <ion-button v-if="plateform!='mobile'" color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
       <ion-button  :routerLink="'/shift-detail/' + cashierShift.name">{{ t("View Shift Detail") }}</ion-button>
 
       <ion-button color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
@@ -117,6 +117,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup'; 
 import Row from 'primevue/row';  
 import { useApp } from '@/hooks/useApp';
+const plateform = ref(app.utils.getPlateform())
 
 const { isCashierShiftOpened } = useApp();
 
@@ -177,6 +178,7 @@ async function onCloseCashierShift(){
     
   }
   loading.dismiss();
+  app.utils.playSuccessSound();
 
 }
 

@@ -29,6 +29,7 @@
 
   </template>
   <template v-else>
+  
     <ion-input v-bind="$attrs" ref="ionInputRef" :value="model"  :type="type"
       :placeholder="placeholder || label" 
       :label="model?label:''" 
@@ -131,17 +132,23 @@ const t = window.t;
 const emit = defineEmits()
 defineExpose({
   focus: () => {
+    if(plateform!='mobile'){
 
-    ionInputRef.value?.$el?.setFocus()
-    const nativeInput = ionInputRef.value?.$el?.querySelector('input')
-    nativeInput?.select()
-  },
-  select: () => {
-
+    
     ionInputRef.value?.$el?.setFocus()
     const nativeInput = ionInputRef.value?.$el?.querySelector('input')
     nativeInput?.select()
   }
+  },
+  select: () => {
+ if(plateform!='mobile'){
+
+    ionInputRef.value?.$el?.setFocus()
+    const nativeInput = ionInputRef.value?.$el?.querySelector('input')
+    nativeInput?.select()
+ }
+  },
+  onScanBarcode
 })
 
 function onInput($event) {
@@ -217,7 +224,9 @@ const onSelectAll = (event) => {
 
 onMounted(async () => {
   if (props.focus && plateform === "desktop") {
+
     setTimeout(() => {
+     
       ionInputRef.value?.$el?.setFocus();
       const nativeInput = ionInputRef.value?.$el?.querySelector('input');
       nativeInput?.select();

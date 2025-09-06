@@ -8,7 +8,8 @@
   </div>
       </ion-card-title>
     <ion-card-content class="ion-no-margin">
-<com-input focus 
+        
+<com-input :focus="plateform !='mobile'" 
     :placeholder="t('Scan qr code here')"
     :label="t('Scan qr code here')"
     @onChange="onScanQRCode"
@@ -26,13 +27,14 @@ import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
+const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
 
 
  
 async function onScanQRCode(valueFromIcon) {
-
+    
     if (valueFromIcon) {
         couponCode.value = valueFromIcon
     }
@@ -68,5 +70,20 @@ async function onScanQRCode(valueFromIcon) {
     inputScanQRCode.value.focus();
 }
 
+async function onScanWithCamera() {
+    const result = await app.utils.onScanBarcode();
+    if (result) {
+         await onScanQRCode(result)
+        
+    }
+
+}
+
+onMounted(async ()=>{
+    
+    if(plateform.value == "mobile"){
+     await onScanWithCamera();
+    }
+})
 
 </script>

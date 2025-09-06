@@ -25,14 +25,16 @@
       </div>
 
       <ion-list>
-        <ion-item button lines="full" router-link="/my-profile" @click="popoverOpen = false">
-          <ion-icon slot="start" :icon="personOutline"></ion-icon>
-          <span>{{ t("My Profile") }}</span>
+        <ion-item button lines="full"  @click="onReloadApp">
+          <ion-icon slot="start" :icon="refreshCircleOutline"></ion-icon>
+          <span>{{ t("Refresh Data") }}</span>
         </ion-item>
+        
         <ion-item button lines="full" @click="onChangeLanguage" id="open-custom-dialog">
           <ion-icon slot="start" :icon="languageOutline"></ion-icon>
           <span>{{ t("Change Language") }}</span>
         </ion-item>
+
         
         <ion-item routerLink="/setting" lines="full">
           <ion-icon slot="start" :icon="settingsOutline"></ion-icon>
@@ -69,7 +71,7 @@ import { ref } from 'vue'
 import { imageUrl, getAvatarLetter } from "@/helpers/utils"
 import { useAuth } from "@/hooks/useAuth"
 
-import { personOutline, helpCircleOutline, logOutOutline,languageOutline, settingsOutline } from 'ionicons/icons';
+import { personOutline, helpCircleOutline, logOutOutline,languageOutline, settingsOutline, refreshCircle, refreshCircleOutline } from 'ionicons/icons';
 import { useI18n } from 'vue-i18n';
 import { useApp } from '@/hooks/useApp';
 
@@ -109,7 +111,9 @@ function openPopover(e: Event) {
   event.value = e;
   popoverOpen.value = true;
 }
-
+function onReloadApp(){
+  window.location.reload();
+}
 async function onChangeLanguage(){
   popoverOpen.value = false;
   isOpenChangeLanguage.value = true;

@@ -14,6 +14,7 @@ import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 const { couponCode,inputScanQRCode,saleDoc } = useSaleCoupon()
+const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
 async function onScanQRCode(){
@@ -63,4 +64,26 @@ async function onScanQRCode(){
 
 
 }
+
+
+async function onScanWithCamera() {
+    const result = await app.utils.onScanBarcode();
+    if (result) {
+        couponCode.value = result
+
+         await onScanQRCode()
+        
+    }
+
+}
+
+
+
+onMounted(async ()=>{
+    if(plateform.value == "mobile"){
+        await onScanWithCamera()
+    }
+})
+
+ 
 </script>

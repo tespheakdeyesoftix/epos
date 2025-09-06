@@ -16,7 +16,7 @@
             </ion-item>
 
             
-             <ion-item lines="full" routerLink="/sale-coupon">
+             <ion-item lines="full" routerLink="/top-up">
               <ion-icon :icon="duplicateOutline" slot="start"></ion-icon>
               <ion-label>{{ t("New Top Up") }}</ion-label>
             </ion-item>

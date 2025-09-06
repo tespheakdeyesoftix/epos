@@ -9,6 +9,7 @@
     <ion-menu content-id="main">
       <ion-content class="ion-padding">
       <ComSearchBarcode/>
+      
       <ComRedeemCouponList />  
       </ion-content>
       <ComRedeemFooter/>
@@ -75,6 +76,8 @@ exchangeRateSecondCurrency.value = mainCurrency.value;
 
 const exchangeRate = app.setting.exchange_rate_input
  
+
+
 
 onIonViewWillEnter(()=>{
   if(!app.route.params.name){

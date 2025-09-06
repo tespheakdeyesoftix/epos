@@ -1,6 +1,6 @@
 <template>
     <div class="fixed-payment" >
-<ion-list class="ion-no-border ion-no-padding">
+    <ion-list class="ion-no-border ion-no-padding">
     <ion-item v-if="totalPaymentAmount > 0" >
       <ion-label>{{ t("Total Payment") }}</ion-label>
       <ion-label slot="end"><ComCurrency :value="totalPaymentAmount" /></ion-label>
@@ -32,6 +32,7 @@
       </ion-label>
     </ion-item>
   </ion-list>
+  
 </div>
 </template>
 <script setup>

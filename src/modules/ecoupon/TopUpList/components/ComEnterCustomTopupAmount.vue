@@ -55,11 +55,13 @@ if((doc.value.price || 0)==0){
     return
 }
 
-if(doc.value.coupon_markup_type=="Percent" && (doc.value.coupon_markup_value || 0) <=0){
-    app.showWarning("Please enter coupon markup value");
+// if(doc.value.coupon_markup_type=="Percent" && (doc.value.coupon_markup_value || 0) <=0){
+//     app.showWarning("Please enter coupon markup value");
 
-    return
-}
+//     return
+// }
+
+
 if(doc.value.coupon_markup_type=="Amount" && (couponValue.value ||0)==0){
     app.showWarning("Please enter coupon value");
 

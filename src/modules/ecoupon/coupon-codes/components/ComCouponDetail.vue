@@ -1,5 +1,47 @@
 <template>
    
+<ion-grid>
+  <ion-row>
+    <ion-col size="6" size-md="3">
+      <ion-chip class="m-0 w-full" color="primary">
+        <strong>
+          {{ t("Coupon Amount") }} <br>
+          <ComCurrency :value="(data?.coupon_info.price || 0) + (topUp.price || 0)" />
+        </strong>
+      </ion-chip>
+    </ion-col>
+
+    <ion-col size="6" size-md="3">
+      <ion-chip class="m-0 w-full" color="warning">
+        <strong>
+          {{ t("Used Amount") }} <br>
+          <ComCurrency :value="usedAmount.price" />
+        </strong>
+      </ion-chip>
+    </ion-col>
+
+    <ion-col size="6" size-md="3">
+      <ion-chip class="m-0 w-full" color="danger">
+        <strong>
+          {{ t("Redeem Amount") }} <br>
+          <ComCurrency :value="redeemAmount.price" />
+        </strong>
+      </ion-chip>
+    </ion-col>
+
+    <ion-col size="6" size-md="3">
+      <ion-chip class="m-0 w-full" color="success">
+        <strong>
+          {{ t("Balance") }} <br>
+          <ComCurrency :value="totalAmount.price" />
+        </strong>
+      </ion-chip>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+
     <ion-card>
         <ion-card-header>
             <ion-item class="ion-no-padding" lines="none">
@@ -49,7 +91,6 @@
             </ion-item> 
             </ion-card-title>
         </ion-card-header>
-
         <ion-card-content>
             <ion-grid>
                 <ion-row>
@@ -68,7 +109,8 @@
                     <ion-col class="text-right"><ComCurrency :value="topUp.coupon_value"/></ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col>{{ t("Use Amount") }}</ion-col>
+                    <ion-col>{{ t("Use Amount") }}
+                    </ion-col>
                     <ion-col class="text-right"><ComCurrency :value="usedAmount.price"/></ion-col>
                     <ion-col class="text-right"><ComCurrency :value="usedAmount.coupon_value"/></ion-col>
                 </ion-row>
@@ -107,10 +149,11 @@
                 </ion-item>
                 <ion-item v-for="(item, index) in data?.coupon_transaction" :key="index" lines="full">
                     <ion-label>
+                        
                         <ion-text :color="getColor(item.transaction_type)"><h2>{{ t(item.transaction_type) }}</h2></ion-text>
                         <p>
                             <ion-text v-if="item.sale"><strong>{{ t("Invoice #") }}:</strong> <router-link :to="'/sale-detail/' + item.sale"> {{ item.sale }}</router-link><br></ion-text>
-                            <ion-text><strong>{{ t("Actual Amount") }}:</strong> <ComCurrency :value="item.input_actual_amount"/><br></ion-text>
+                            <ion-text><strong>{{ t("Actual Amount") }}:</strong> <ComCurrency :value="item.input_actual_amount" :currency="item.currency"/><br></ion-text>
                             <ion-text><strong>{{ t("POS Profile") }}:</strong> {{ item.pos_profile }}/{{ item.pos_station }}<br></ion-text>
                             
                         </p>
@@ -126,7 +169,7 @@
             </ion-list>
         </ion-card-content>
     </ion-card>
-    <ion-note>
+    <ion-note class="ion-padding">
        
         {{ t("This coupon is register by:") }} {{ data?.coupon_info.owner.split("@")[0] }} {{ t("on_date_time") }} <ion-text v-tooltip.top="`${creationDate}`">{{ dayjs(data?.coupon_info.creation).fromNow() }}</ion-text>
     </ion-note>
@@ -144,7 +187,7 @@ const t = window.t;
 const creationDate = ref(dayjs(props.data?.coupon_info.creation))
 function getColor(transaction_type){
     if(transaction_type == "Sale Coupon" || transaction_type == "Top Up") return "success"
-    if(transaction_type == "Use") return "warning"
+    if(transaction_type == "Used") return "warning"
     if(transaction_type == "Redeem" || transaction_type == "Redeemed") return "danger"
 
 }
@@ -158,10 +201,10 @@ const topUp = computed(()=>{
     }
 })
 const usedAmount = computed(()=>{
-    const transaction = props.data?.coupon_transaction?.filter(x=>x.transaction_type == "Use")
+    const transaction = props.data?.coupon_transaction?.filter(x=>x.transaction_type == "Used")
 
     return {       
-        price: transaction?.reduce((sum, item) => sum + (item?.input_actual_amount ||0), 0),
+        price: transaction?.reduce((sum, item) => sum + (item?.input_actual_amount ||0) / (item.exchange_rate || 1), 0),
         coupon_value : transaction?.reduce((sum, item) => sum + (item?.coupon_amount ||0), 0),
     }
 })
@@ -178,7 +221,7 @@ const totalAmount = computed(()=>{
     const transaction = props.data?.coupon_transaction;
 
     return {       
-        price: transaction?.reduce((sum, item) => sum + (item?.input_actual_amount ||0), 0),
+        price: transaction?.reduce((sum, item) => sum + (item?.input_actual_amount ||0) /  (item.exchange_rate || 1), 0),
         coupon_value : transaction?.reduce((sum, item) => sum + (item?.coupon_amount ||0), 0),
     }
 })

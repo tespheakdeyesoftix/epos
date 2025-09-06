@@ -1,12 +1,12 @@
 <template>
     <ion-page>
         <ToolBar>
-            {{ t("Working Day Detail") }} - {{ name }}
+            <span v-if="plateform!='mobile'">{{ t("Working Day Detail") }} - </span>{{ name }}
         </ToolBar>
     <ion-content>
  
       <div class="fixed-container ion-padding mt-4 mb-2" v-if="!printer_name && !loading"> 
-<Message severity="warn">{{ t("There's no default printer for printing report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
+<Message severity="warn">{{ t("There's no default printer for printing report.") }} <br/> <ion-button routerLink="/setting?modal=1">{{ t("Setup Now") }}</ion-button></Message>
       </div>
         
           <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
@@ -30,7 +30,7 @@
     </ion-content>
     <ComFooter>
 
-       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift" >{{ t("Close Working Day") }}</ion-button>
+       <ion-button :disabled="data?.doc.is_closed == 1" @click="onOpenCloseShift" v-if="plateform!='mobile'" >{{ t("Close Working Day") }}</ion-button>
        <ComPopOver>
 
        <ion-button>
@@ -89,6 +89,7 @@ import ComServerContent from "@/views/components/public/ComServerContent.vue"
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
 import Message from 'primevue/message';
 import { useApp } from '@/hooks/useApp';
+const plateform = ref(app.utils.getPlateform())
 const {languages} = useApp()
 const selected  = ref({ label: "Working Information", print_template:"Coupon Working Day Summary" })
 const name = ref(app.route.params.name)

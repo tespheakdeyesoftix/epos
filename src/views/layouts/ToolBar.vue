@@ -16,7 +16,16 @@ import { ref } from 'vue';
 
 const defaultHref = ref("/home")
 const history = window.history
+
+const currentRoute = app.route.path;
+
+
 if (history?.state?.back){
-  defaultHref.value = history?.state?.back
+  if(history?.state?.back!=currentRoute){
+defaultHref.value = history?.state?.back
+  }else {
+    defaultHref.value = "/home";
+  }
+  
 }
 </script>

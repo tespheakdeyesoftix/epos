@@ -6,6 +6,9 @@ import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDisc
 import dayjs from "dayjs"
 import { Capacitor } from '@capacitor/core';
 import { modalController } from "@ionic/vue"
+import beep from '/assets/sound/submit.mp3'
+const beepSound = new Audio(beep)
+
 const saleDoc = ref({
     name:"",
     sale_products: [],
@@ -308,6 +311,9 @@ async function onQuickPay(payment_type) {
 
         onClearData();
         await app.showSuccess("Quick payment successfully")
+         beepSound.currentTime = 0
+            beepSound.play()
+
         // print bill
         selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
@@ -320,7 +326,6 @@ async function onQuickPay(payment_type) {
 }
 
 async function onCloseSale(isPrint = true) {
-    
     if (grandTotal.value > 0 && saleDoc.value.payment.length == 0) {
         await app.showWarning("Please enter all payment amount")
         return
@@ -351,6 +356,10 @@ async function onCloseSale(isPrint = true) {
             printBill(res.data.name)
         }
         await app.showSuccess(t('Payment successfully'))
+         
+        beepSound.currentTime = 0
+         beepSound.play()
+
         
         app.ionRouter.navigate(pageRoute.value,"forward","replace")
         modalController.dismiss(true, 'confirm')
@@ -454,11 +463,14 @@ async function onDeleteSaleProduct(index) {
 }
 
 async function onAddPayment(payment_type) {
+   
     if(paymentBalance.value==0){
         await app.showWarning("No balance amount for add payment")
         return;
     }
     let paymentAmount = Number(paymentInputAmount.value)
+    
+
     if (!paymentInputAmount.value) {
 
         // use balance amount to add payment
@@ -466,7 +478,9 @@ async function onAddPayment(payment_type) {
         
 
     }
-    if (paymentAmount == 0) {
+
+    if (!paymentAmount) {
+        paymentInputAmount.value = "";
         await app.showWarning("Please enter payment amount")
         return
     }
@@ -480,7 +494,7 @@ async function onAddPayment(payment_type) {
             exchange_rate: payment_type.exchange_rate
         }
     )
-    paymentInputAmount.value = "";
+    paymentInputAmount.value = NaN
 
 }
 

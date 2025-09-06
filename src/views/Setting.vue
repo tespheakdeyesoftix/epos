@@ -1,5 +1,9 @@
 <template><ion-page>
-    <AppBar>
+    <ToolBar v-if="isModal==1">
+        {{t("Setting")}}
+    
+    </ToolBar>    
+    <AppBar v-else>
         {{t("Setting")}}
     </AppBar>
     <ion-content>
@@ -26,9 +30,12 @@ import { onMounted, ref } from 'vue';
 const t = window.t;
 const printers = ref()
 const default_printer = ref("")
+const isModal = ref(app.route.query.modal)
+
 async function onChangeDefaultPrinter(){
     await app.storageService.setItem("default_printer",default_printer.value)
 }
+
 onMounted(async ()=>{
     const p = await app.printing.getPrinterNames()
     printers.value = p
