@@ -15,15 +15,17 @@
          <div class="fix-container">
             <ComSaleDetailMobile v-if="plateform =='mobile'" :doc="doc"/>
                 <ComSaleDetailDesktop v-else :doc="doc"/>
-                
+ 
             </div>
         </ion-content>
         <ion-footer>
             <ion-toolbar>
                 <div style="display: flex;justify-content: center;gap:10px">
-                <ion-button @click="onEdit" shape="round" :disabled="doc?.docstatus!=1">{{ t("Edit") }}</ion-button>
+                <ion-button @click="onEdit" shape="round" v-if="doc?.sale_type=='Sale Coupon'" :disabled="doc?.docstatus!=1">{{ t("Edit") }}</ion-button>
                 <ComPrintBillButton  :name="doc?.name"/>
-                <ion-button :disabled="doc?.docstatus!=1"  shape="round" color="danger" @click="onDelete">{{ t("Delete") }}</ion-button>
+
+                <ion-button :disabled="doc?.docstatus!=1" v-if="doc?.sale_type!='Top Up'"  shape="round" color="danger" @click="onDelete" >{{ t("Delete") }}</ion-button>
+                
                             </div>
                                 
             </ion-toolbar>
@@ -76,7 +78,14 @@ async function onPrint(format){
     })
 }
 async function onDelete(){
-  
+
+    
+  if(doc.sale_type=="Top Up"){
+    await app.utils.onConfirmDanger("Delete Top Up", "Top Up is not allow to delete. Please process transaction redeem?");
+    return
+
+  }
+
   const confirm = await app.utils.onConfirmDanger("Delete Sale", "Are you sure you want to delete this Sale Order?");
   if (!confirm) return;
   const l = await app.showLoading();

@@ -9,44 +9,41 @@
     <ion-content class="ion-padding">
         <ion-text><strong>{{ t("Quick Action") }}</strong></ion-text>
         <ion-list>
-            <item :icon="giftOutline" label="New Sale Coupon" url="/sale-coupon"/>
-            <item :icon="duplicateOutline" label="New Top Up" url="/top-up"/>
-            <item :icon="cashOutline" label="New Redeem" url="/redeem"/>
-        </ion-list>
+            
+             <ion-item lines="full" routerLink="/sale-coupon">
+              <ion-icon :icon="giftOutline" slot="start"></ion-icon>
+              <ion-label>{{ t("New Sale Coupon") }}</ion-label>
+            </ion-item>
+
+            
+             <ion-item lines="full" routerLink="/sale-coupon">
+              <ion-icon :icon="duplicateOutline" slot="start"></ion-icon>
+              <ion-label>{{ t("New Top Up") }}</ion-label>
+            </ion-item>
+            
+            <ion-item lines="full" routerLink="/redeem">
+              <ion-icon :icon="cashOutline" slot="start"></ion-icon>
+              <ion-label>{{ t("New Redeem") }}</ion-label>
+            </ion-item>
+
+
+        
+          </ion-list>
     </ion-content>
   </ion-popover>
 </template>
-<script setup lang="tsx">
-import { addOutline,cashOutline,duplicateOutline,giftOutline,scanOutline } from 'ionicons/icons';
-import { defineComponent, ref } from 'vue';
-const t = window.t;
 
-const popoverOpen = ref(false);
-const event = ref<null | Event>(null);
+<script setup lang="js">
+import { addOutline, cashOutline, duplicateOutline, giftOutline, scanOutline } from 'ionicons/icons'
+import { ref } from 'vue'
 
-function openPopover(e: Event) {
-  event.value = e;
-  popoverOpen.value = true;
+const t = window.t
+
+const popoverOpen = ref(false)
+const event = ref(null)
+
+function openPopover(e) {
+  event.value = e
+  popoverOpen.value = true
 }
-
-const item = defineComponent({
-  props: {
-    icon: {
-      type: [Object, String],
-      required: true
-    },
-    label: String,
-    url: String
-  },
-  setup(props) {
-    return () => (
-      <ion-item lines="full" routerLink={props.url}>
-        <ion-icon icon={props.icon} slot="start"></ion-icon>
-        <ion-label>{(props.label)}</ion-label>
-      </ion-item>
-    )
-  }
-})
-
-
 </script>

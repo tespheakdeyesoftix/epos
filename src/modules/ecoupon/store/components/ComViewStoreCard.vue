@@ -1,47 +1,67 @@
 <template>
   <div class="ion-padding">
   
-    <stack row equal itemClass="col-6 sm:col-6 lg:col-4" gap="0px">
-      <Card color="primary" label="Today Revenue" :value="data?.current_revenue || 0" />
-      <Card color="secondary" label="MTD Revenue" :value="data?.mtd_revenue || 0" />
-      <Card color="success" label="YTD Revenue" :value="data?.ytd_revenue || 0" />
-    </stack>
+    <ion-grid>
+      <ion-row>
+      <ion-col>
+
+ 
+      <!-- today revenue -->
+       <ion-card button color="primary" class="ion-no-margin">
+        <ion-card-content class="text-center">
+          <ion-card-subtitle style="font-size: 18px;">
+            <ComCurrency :value= "data?.current_revenue || 0" />
+          </ion-card-subtitle>
+          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
+            {{ t("Today Revenue") }}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+
+      </ion-col>
+      <!-- MTD Revenue -->
+<ion-col>
+       <ion-card button color="secondary" class="ion-no-margin">
+        <ion-card-content class="text-center">
+          <ion-card-subtitle style="font-size: 18px;">
+            <ComCurrency :value= "data?.mtd_revenue || 0" />
+          </ion-card-subtitle>
+          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
+            {{ t("MTD Revenue") }}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+      </ion-col>
+      <ion-col>
+       <ion-card button color="success" class="ion-no-margin">
+        <ion-card-content class="text-center">
+          <ion-card-subtitle style="font-size: 18px;">
+            <ComCurrency :value= "data?.ytd_revenue || 0" />
+          </ion-card-subtitle>
+          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
+            {{ t("YTD Revenue") }}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
+      
+     </ion-col>
+    </ion-row>
+    </ion-grid>
+
+    
   </div>
 </template>
 
-<script setup lang="tsx">
+<script setup>
 import dayjs from 'dayjs'
-import { ref, onMounted, defineComponent } from 'vue'
-import ComCurrency from "@/views/components/public/ComCurrency.vue"
+import { ref, onMounted } from 'vue'
 
-const t = window.t
+const t = window.t;
 
 // Reactive data object
 // const data = ref<Record<string, any>>({})
 const data = ref({"current_revenue":0,"mtd_revenue":0,"ytd_revenue":0})
-// Card component definition
-const Card = defineComponent({
-  name: 'Card',
-  props: {
-    label: String,
-    color: String,
-    value: Number
-  },
-  setup(props) {
-    return () => (
-      <ion-card button color={props.color} class="ion-no-margin">
-        <ion-card-content class="text-center">
-          <ion-card-subtitle style="font-size: 18px;">
-            <ComCurrency value={props.value ?? 0} />
-          </ion-card-subtitle>
-          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-            {props.label}
-          </ion-card-subtitle>
-        </ion-card-content>
-      </ion-card>
-    )
-  }
-})
+ 
 
 
 async function getData() {
