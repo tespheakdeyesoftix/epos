@@ -589,6 +589,8 @@ export async function getSetting() {
     // get exchange rate
     getExchangeRate()
   }
+  
+  await loading.dismiss();
 }
 
 export async function getExchangeRate(){
