@@ -191,8 +191,12 @@ async function onPayment() {
     }
 
     if(saleDoc.value.sale_type == "Redeem"){
-        await app.showWarning("No amount to Redeem")
+        if (Math.abs(paymentBalance.value<=0)){
+await app.showWarning("No amount to Redeem")
         return
+        }
+
+        
     }
 
     const result = await app.openModal({
