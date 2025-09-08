@@ -30,7 +30,7 @@
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row>
-                        <ion-col size="6">
+                        <ion-col size="7">
                             <span class="title-payment font " >
                             {{ t('Payment') }} 
                             </span>
@@ -39,7 +39,7 @@
                                 <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
                             </ion-chip>
                         </ion-col>
-                        <ion-col size="6" class="ion-no-padding">
+                        <ion-col size="5" class="ion-no-padding">
                             <div>
                                 <ion-label class="big-chip font">
                                 {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 

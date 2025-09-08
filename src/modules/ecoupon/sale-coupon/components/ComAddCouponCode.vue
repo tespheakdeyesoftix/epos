@@ -105,7 +105,7 @@
                         </ion-col>
 
                         <ion-col size="3">
-                            <ion-button color="success" @click="onConfirm(true)" class="w-full h-full">{{ t("Payment")
+                            <ion-button color="success" @click="onConfirm(true)" class="w-full">{{ t("Payment")
                                 }}</ion-button>
                         </ion-col>
 
