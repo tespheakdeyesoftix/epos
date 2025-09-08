@@ -10,12 +10,12 @@
 </ion-chip>
 
         <ion-chip class="multi-line-chip">
-                <ion-text style="font-size: 17px;font-weight: 400;">
+                <ion-text style="font-size: 17px;font-weight: 400;" color="dark">
                  {{t("Total Amount")}}
                  </ion-text>   
             <div class="flex gap-8 mt-2 " style="font-weight: 600; font-size: x-large;">
-             <ComCurrency :value="grandTotal" />
-            <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
+                <ComCurrency :value="grandTotal" />
+                <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
           </div>
         </ion-chip>
     </div>
@@ -82,7 +82,7 @@ if (exchangeCurrency == mainExchangeRateCurrency) {
 .multi-line-chip {
   display: flex;
   flex-direction: column;
-    background-color: #ec9595;
+  background-color: #98b9ff;
 }
 .multi-line {
   display: flex;
