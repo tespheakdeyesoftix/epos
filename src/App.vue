@@ -67,9 +67,9 @@ const toolbarColor = getComputedStyle(document.documentElement)
 </script>
 
 <style>
-
-@media (min-width: 640px) {
+@media (max-width: 640px) {
   .p-toast{width:  90vw!important;}
+  
 }
 
 </style>
