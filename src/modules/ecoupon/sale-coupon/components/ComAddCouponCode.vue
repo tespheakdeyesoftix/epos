@@ -60,7 +60,14 @@
         </template>
 
         <!-- keypad for enter amount on mobile only -->
-        <ComKeyPadInput v-model="doc.price" v-if="plateform=='mobile'"/>
+         <template v-if="plateform=='mobile' && data.is_open_product == 1">
+            <div style=" display: flex;justify-content: center;gap: 10px;">
+     <ion-chip :color="selectedCurrency=='KHR'?'primary':''" @click="onChangeInputCurrency('KHR')">{{ t("KHR") }}</ion-chip>
+        <ion-chip :color="selectedCurrency=='USD'?'primary':''" @click="onChangeInputCurrency('USD')">{{ t("USD") }}</ion-chip>
+        </div>
+        <ComKeyPadInput  v-model="doc.price" />
+         </template>
+   
 
         <template #footer>
             <div class="ion-padding">
@@ -98,7 +105,7 @@
                                     {{ t("Total Amount:") }}
                                     <strong>
                                         <ComCurrency
-                                            :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
+                                            :value="totalAmount" />
                                     </strong>
                                 </ion-label>
                             </div>
@@ -130,13 +137,14 @@ const txtPrice = ref(null)
 const plateform = ref(app.utils.getPlateform())
 const props = defineProps({
     data: Object,
-
 })
 const t = window.t;
 const coupon = ref("")
 const coupounList = ref([])
 const keyword = ref("")
 const scanMode = ref("add")
+const selectedCurrency = ref("KHR")
+const exchange_rate = ref(app.setting.exchange_rate);
 const doc = ref({
     price: 0,
     coupon_value: 0,
@@ -144,12 +152,26 @@ const doc = ref({
     coupon_markup_value: 0
 })
 
+const minAmountKHR = ref(500)
+const maxAmountKHR = ref(100000)
+const minAmountUSD = ref(1)
+const maxAmountUSD = ref(100)
+
+
 const couponValue = computed(() => {
     if (doc.value.coupon_markup_type == 'Percent') {
         return (doc.value.price ?? 0) + ((doc.value.price ?? 0) * ((doc.value.coupon_markup_value ?? 0) / 100))
     } else {
         return doc.value.coupon_value;
     }
+})
+
+const totalAmount = computed(()=>{
+    let price = coupounList.value.length * ( props.data.is_open_product ? doc.value.price : props.data.price);
+     if(app.setting.currency != selectedCurrency.value){
+        price = price / exchange_rate.value;
+    }
+    return price
 })
 
 const sortedCouponList = computed(() => {
@@ -247,8 +269,6 @@ async function validateCouponCode(c) {
         await l.dismiss();
         return false
     }
-
-
     await l.dismiss();
     return res.data
 }
@@ -259,7 +279,13 @@ function onDelete(index) {
     coupon.value = "";
 }
 
+function onChangeInputCurrency(currency){
+    selectedCurrency.value = currency;
+    
+}
+
 function onConfirm(process_payment = false) {
+    
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
         inputRef.value.select()
@@ -273,9 +299,44 @@ function onConfirm(process_payment = false) {
     }
     if (props.data.is_open_product == 1 && Number(couponValue.value == 0)) {
         app.showWarning("Please enter coupon value")
-
         return;
     }
+
+    let price =  props.data.is_open_product == 1 ? doc.value.price : props.data.price;
+    
+    // validate max and min input amount to prevent wrong posting data
+    if (props.data.is_open_product == 1){
+       if(selectedCurrency.value =="KHR"){
+            if(price<minAmountKHR.value){
+                app.showWarning("Coupon amount must be greater than" + " " + minAmountKHR.value )
+                return;
+            }
+            
+            if(price>maxAmountKHR.value){
+                app.showWarning("Coupon amount must be less than" + " " + maxAmountKHR.value )
+                return;
+            }
+
+       } else {
+        // USD
+        if(price<minAmountUSD.value){
+                app.showWarning("Coupon amount must be greater than" + " " + minAmountUSD.value )
+                return;
+            }
+            
+            if(price>maxAmountUSD.value){
+                app.showWarning("Coupon amount must be less than" + " " + maxAmountUSD.value )
+                return;
+            }
+            
+       }
+    }
+
+    if(app.setting.currency != selectedCurrency.value){
+        price = price / exchange_rate.value;
+    }
+
+
 
     const returnData = {
         creation: app.dayjs(),
@@ -285,7 +346,7 @@ function onConfirm(process_payment = false) {
         quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
-        price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
+        price:price,
         amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value,
         allow_discount: props.data.allow_discount,
@@ -309,22 +370,20 @@ function onConfirm(process_payment = false) {
 onMounted(async () => {
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
-
     } else {
-
         if (app.utils.getPlateform() == "mobile") {
             await onScanWithCamera()
         }
-
     }
-
     doc.value.price = props.data.price
     doc.value.coupon_markup_type = props.data.coupon_markup_type
     doc.value.coupon_markup_value = props.data.coupon_markup_value
     doc.value.coupon_value = props.data.coupon_value
-
-
-
+    // get min max setting
+    minAmountKHR.value = app.storageService.getItem("min_amount_khr") || 500;
+    maxAmountKHR.value = app.storageService.getItem("max_amount_khr") || 100000;
+    minAmountUSD.value = app.storageService.getItem("min_amount_usd") || 1;
+    maxAmountUSD.value = app.storageService.getItem("max_amount_usd") || 100;
 
 
 })

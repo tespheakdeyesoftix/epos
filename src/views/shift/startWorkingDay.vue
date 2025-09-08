@@ -17,8 +17,9 @@
         <ion-footer>
             <ion-toolbar>
                 <div style=" display: flex;justify-content: center;gap: 10px;">
+                     <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
                     <ion-button @click="onStartWorkingDay">{{ t("Start Working Day") }}</ion-button>
-                    <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+                   
                 </div>
             </ion-toolbar>
         </ion-footer>

@@ -567,6 +567,7 @@ export async function getSetting() {
 
   if (res.data) {
     app.setting = { ...app.setting, ...res.data }
+    
     if (!app.setting.property) {
       let currentProperty = await app.storageService.getItem("current_property");
       if (currentProperty) {

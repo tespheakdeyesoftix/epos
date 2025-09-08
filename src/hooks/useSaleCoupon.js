@@ -94,18 +94,18 @@ const changeAmount = computed(() => {
 
 
 function initSaleDoc() {
-
+    
     saleDoc.value = {
         name:"",
-        posting_date:app.setting.working_day?.posting_date,
-        business_branch: app.setting.property?.property_name,
-        customer: app.setting.pos_profile?.default_customer,
-        stock_location: app.setting.pos_profile?.stock_location,
-        outlet: app.setting.pos_profile?.outlet,
-        pos_profile: app.setting.pos_profile?.name,
-        pos_station_name: app.setting.station_name,
-        working_day: app.setting.working_day?.name,
-        cashier_shift: app.setting.cashier_shift?.name,
+        posting_date:app.setting?.working_day?.posting_date,
+        business_branch: app.setting?.property?.property_name,
+        customer: app.setting?.pos_profile?.default_customer,
+        stock_location: app.setting?.pos_profile?.stock_location,
+        outlet: app.setting?.pos_profile?.outlet,
+        pos_profile: app.setting?.pos_profile?.name,
+        pos_station_name: app.setting?.station_name,
+        working_day: app.setting?.working_day?.name,
+        cashier_shift: app.setting?.cashier_shift?.name,
         sale_status:"New",
         sale_products: [],
         payment: []
