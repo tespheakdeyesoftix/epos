@@ -94,7 +94,7 @@ const option = computed(() => {
                 formatter: function (name) {
                     const item = props.data.find(r => r.payment_type === name);
                     if (!item) return name;
-                    return `${name}\n$${item.base_amount.toLocaleString('th-TH', { minimumFractionDigits: 2 })}`;
+                    return `${name}\n${item.base_amount.toLocaleString()}`;
                 }
             },
             series: [
@@ -167,7 +167,7 @@ return {
             show: true,
             position: 'top', // or 'inside', 'bottom', etc.
             formatter: function (params) {
-                return app.currencyFormat(params.value)
+                return params.value
             }
             }
       },

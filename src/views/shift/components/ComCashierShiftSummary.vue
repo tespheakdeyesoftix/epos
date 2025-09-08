@@ -34,6 +34,7 @@
                         <ion-label>
                             
                             <ComCurrency :value="1"/> = <ComCurrency :value="data?.exchange_rate" :currency="secondCurrency" />
+                            
                         </ion-label>
                     </stack>
 

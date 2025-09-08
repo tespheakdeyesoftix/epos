@@ -9,7 +9,7 @@
                             </span>
                             <ion-chip class="small-chip" color="primary">
                         <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
-                    <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
+                    <ComExchangeRate />
                             </ion-chip>
                     </stack>
                                 <stack>
@@ -36,7 +36,7 @@
                             </span>
                             <ion-chip class="small-chip" color="success">
                                 <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
-                                <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
+                                <ComExchangeRate />
                             </ion-chip>
                         </ion-col>
                         <ion-col size="5" class="ion-no-padding">

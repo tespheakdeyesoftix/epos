@@ -3,7 +3,7 @@
   
     <ion-grid>
       <ion-row>
-      <ion-col>
+      <ion-col size="4" size-xs="6">
 
  
       <!-- today revenue -->
@@ -20,7 +20,7 @@
 
       </ion-col>
       <!-- MTD Revenue -->
-<ion-col>
+<ion-col size="4" size-xs="6">
        <ion-card button color="secondary" class="ion-no-margin">
         <ion-card-content class="text-center">
           <ion-card-subtitle style="font-size: 18px;">
@@ -32,7 +32,7 @@
         </ion-card-content>
       </ion-card>
       </ion-col>
-      <ion-col>
+      <ion-col size="4" size-xs="6">
        <ion-card button color="success" class="ion-no-margin">
         <ion-card-content class="text-center">
           <ion-card-subtitle style="font-size: 18px;">

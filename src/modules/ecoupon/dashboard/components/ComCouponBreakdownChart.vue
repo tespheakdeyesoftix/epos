@@ -106,7 +106,8 @@ const option = computed(() => {
       formatter: (params) => `${params.seriesName}<br/>${params.name}: ${params.value}`
     },
     legend: {
-      data: [t("Total Amount"), t("Quantity"), t("Coupon Value")]
+      data: [t("Total Amount"), t("Quantity")]
+      // data: [t("Total Amount"), t("Quantity"), t("Coupon Value")]
     },
     grid: {
       top: 25,
@@ -147,16 +148,16 @@ const option = computed(() => {
           formatter: '{c}'
         }
       },
-      {
-        name: t("Coupon Value"),
-        type: chartType.value,
-        data: couponValues,
-        label: {
-          show: true,
-          position: 'top',
-          formatter: params => app.currencyFormat(params.value)
-        }
-      }
+      // {
+      //   name: t("Coupon Value"),
+      //   type: chartType.value,
+      //   data: couponValues,
+      //   label: {
+      //     show: true,
+      //     position: 'top',
+      //     formatter: params => app.currencyFormat(params.value)
+      //   }
+      // }
     ]
   }
 })

@@ -140,6 +140,7 @@ import ComPopOver from '@/views/components/public/ComPopOver.vue';
 import ComNumber from '@/views/components/public/ComNumber.vue';
 import ComStatus from '@/views/components/public/ComStatus.vue';
 import BaseModal from '@/views/components/BaseModal.vue';
+import ComExchangeRate from '@/views/components/public/ComExchangeRate.vue';
 import i18n from '../i18n'; // Import i18n config
 import { showToast,showLoading, openModal } from '@/helpers/utils';
 import longPress from '@/directives/long-press';
@@ -237,6 +238,7 @@ if (Capacitor.isNativePlatform()) {
   app.component('AppBar', AppBar)
   app.component('ComFooter', ComFooter)
   app.component('ToolBar', ToolBar)
+  app.component('ComExchangeRate', ComExchangeRate)
   app.component('ComSelect', ComSelect)
   app.component('ion-footer', IonFooter)
   app.component('Loading', Loading)
