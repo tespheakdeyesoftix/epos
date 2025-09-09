@@ -494,7 +494,15 @@ async function onAddPayment(payment_type) {
             exchange_rate: payment_type.exchange_rate
         }
     )
-    paymentInputAmount.value = NaN
+    if(app.utils.getPlateform() == "mobile"){
+        // payment input type is = number
+paymentInputAmount.value = NaN
+    }else {
+        // payment input is = text
+        paymentInputAmount.value = "";
+    }
+    
+
 
 }
 

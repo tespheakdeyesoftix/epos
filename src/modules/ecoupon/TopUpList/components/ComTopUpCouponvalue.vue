@@ -67,7 +67,7 @@ import { getAvatarLetter } from "@/helpers/utils"
                 componentProps:{
                     data:p
                 },
-                cssClass:"top-up-coupon-amount"
+                cssClass:app.utils.getPlateform() == "mobile"?"":"top-up-coupon-amount"
             })
             if(!result) return
 

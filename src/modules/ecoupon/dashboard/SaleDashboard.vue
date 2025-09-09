@@ -36,7 +36,8 @@
                     <ion-col size="12"  size-xs="12" size-sm="12"  size-md="6"   class="pr-2">
                         <ComCouponUseByPOSStationChart :data="couponUsedSummaryByPOSStation"/>
                     </ion-col>
-                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2">  <ComPaymentBreakDown :data="paymentbreakdown"/></ion-col>
+                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2"> 
+                         <ComPaymentBreakDown :data="paymentbreakdown"/></ion-col>
                 </ion-row>
                 
                     <ion-row class="mt-3">

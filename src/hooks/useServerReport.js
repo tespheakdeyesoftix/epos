@@ -26,7 +26,7 @@ export function useServerReport() {
         return filters;
     }
     async function getReportData(fitler=null) {
-        
+      
         const res = await app.getApi("frappe.desk.query_report.run", {
             report_name: app.route.params.report_name,
             filters:getFilters(fitler)
@@ -46,15 +46,11 @@ export function useServerReport() {
     async function onRefresh(){
     await getReportData(reportFilters.value);
 }
-    // onMounted(async () => {
-    //     const l =await app.showLoading()
-    //     await getReportData();
 
-    //     await l.dismiss();
-    // })
     return {
         onPreviewReport,
         onRefresh,
-        reportData
+        reportData,
+        getReportData
     }
 }

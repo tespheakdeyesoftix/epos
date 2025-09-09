@@ -33,8 +33,8 @@
                         <ion-label><strong>{{ t("Exchange Rate") }}:</strong></ion-label>
                         <ion-label>
                             
-                            <ComCurrency :value="1"/> = <ComCurrency :value="data?.exchange_rate" :currency="secondCurrency" />
-                            
+                            <ComCurrency :value="1" :currency="mainExchangeRateCurrency"/> = <ComExchangeRate/>
+
                         </ion-label>
                     </stack>
 
@@ -136,9 +136,11 @@ import ComCashFloatTable from "@/views/shift/components/ComCashFloatTable.vue"
 import ComSaleSumamry from "@/views/shift/components/ComSaleSumamry.vue"
 import ComPaymentBreakdown from "@/views/shift/components/ComPaymentBreakdown.vue"
  import ComCashInOut from "@/views/shift/components/ComCashInOut.vue"
+import ComExchangeRate from '@/views/components/public/ComExchangeRate.vue';
 const props = defineProps({
     data:Object
 })
 const t = window.t;
 const secondCurrency = ref(app.setting.second_currency)
+const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency)
 </script>

@@ -60,14 +60,16 @@
         </template>
 
         <!-- keypad for enter amount on mobile only -->
-         <template v-if="plateform=='mobile' && data.is_open_product == 1">
+        <template v-if="plateform == 'mobile' && data.is_open_product == 1">
             <div style=" display: flex;justify-content: center;gap: 10px;">
-     <ion-chip :color="selectedCurrency=='KHR'?'primary':''" @click="onChangeInputCurrency('KHR')">{{ t("KHR") }}</ion-chip>
-        <ion-chip :color="selectedCurrency=='USD'?'primary':''" @click="onChangeInputCurrency('USD')">{{ t("USD") }}</ion-chip>
-        </div>
-        <ComKeyPadInput  v-model="doc.price" />
-         </template>
-   
+                <ion-chip :color="selectedCurrency == 'KHR' ? 'primary' : ''" @click="onChangeInputCurrency('KHR')">{{
+                    t("KHR") }}</ion-chip>
+                <ion-chip :color="selectedCurrency == 'USD' ? 'primary' : ''" @click="onChangeInputCurrency('USD')">{{
+                    t("USD") }}</ion-chip>
+            </div>
+            <ComKeyPadInput v-model="doc.price" />
+        </template>
+
 
         <template #footer>
             <div class="ion-padding">
@@ -104,8 +106,7 @@
                                 <ion-label>
                                     {{ t("Total Amount:") }}
                                     <strong>
-                                        <ComCurrency
-                                            :value="totalAmount" />
+                                        <ComCurrency :value="totalAmount" />
                                     </strong>
                                 </ion-label>
                             </div>
