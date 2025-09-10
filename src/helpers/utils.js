@@ -502,13 +502,29 @@ export function getPlateform(){
   if(window.matchMedia('(max-width: 640px)').matches){
       return "mobile"
   }
-
-
-  if( screenWidth>=1024 || isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop") || isPlatform("tablate")){
+  if(isPlatform("tablet")){
+    return "tablet"
+  }
+  if( screenWidth>=1024 || isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop")){
     return "desktop"
   }
   return "mobile"
 
+}
+
+export function isMobile(){
+  
+   const screenWidth = window.innerWidth;
+  if(window.matchMedia('(max-width: 640px)').matches){
+      return true
+  }
+  if(isPlatform("tablet")){
+    return true
+  }
+  if( screenWidth>=1024 || isPlatform("ipad") || isPlatform("electron") || isPlatform("desktop")){
+    return false
+  }
+  return true
 
 }
 

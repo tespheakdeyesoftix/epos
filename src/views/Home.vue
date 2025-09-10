@@ -47,9 +47,16 @@ import ComShiftButton from '@/views/shift/components/ComShiftButton.vue';
 import HomeButton from '@/views/components/public/HomeButton.vue';
 import { onBeforeRouteLeave } from 'vue-router'
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
- 
+ import { Capacitor } from '@capacitor/core';
+
 import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
 import { useApp } from "@/hooks/useApp";
+
+import { isPlatform } from '@ionic/vue';
+
+
+
+
 const {bluetoothPrinters} = useApp() 
  const t = window.t;
  

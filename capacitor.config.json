@@ -14,5 +14,5 @@
       "backgroundColor": "red"
     }
   },
-  "webDir": "public"
+  "webDir": "dist"
 }

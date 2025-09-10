@@ -24,7 +24,7 @@
                 </ion-card-content>
             </ion-card>
     </ion-footer>
-    <ion-footer v-if="plateform=='mobile'" >
+    <ion-footer v-if="plateform=='mobile' || plateform=='tablet'" >
                
                 <ion-card class="p-0 m-0 card-height"  button @click="_onPayment" style="background: transparent; color: black;" >
                 <ion-card-content class="ion-no-padding" >

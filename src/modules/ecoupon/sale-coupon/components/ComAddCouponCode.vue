@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div v-if="plateform == 'mobile'" class="ion-text-center">
+        <div v-if="isMobile" class="ion-text-center">
             <ion-button @click="onScanWithCamera" class="w-full">{{ t("Scan Coupon Code") }}</ion-button>
         </div>
 
@@ -136,6 +136,7 @@ const { saleDoc } = useSaleCoupon()
 const inputRef = ref(null)
 const txtPrice = ref(null)
 const plateform = ref(app.utils.getPlateform())
+const isMobile = ref(app.utils.isMobile())
 const props = defineProps({
     data: Object,
 })

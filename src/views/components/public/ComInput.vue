@@ -42,7 +42,7 @@
       <ion-button v-if="icon && plateform === 'desktop'" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
-      <ion-button v-if="icon && plateform === 'mobile'" fill="clear" slot="end" aria-label="Show/hide" @click="onIconClick">
+      <ion-button v-if="icon && (plateform === 'mobile' || plateform === 'tablet') " fill="clear" slot="end" aria-label="Show/hide" @click="onIconClick">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
 

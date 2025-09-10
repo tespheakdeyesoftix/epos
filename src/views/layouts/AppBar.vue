@@ -22,7 +22,7 @@
      
   
            <ion-buttons slot="end">
-            <ion-button @click="onScanQRCode" shape="round" class="ion-hide-sm-up">
+            <ion-button @click="onScanQRCode" shape="round" v-if="isMobile">
                     <ion-icon :icon="scanOutline" slot="icon-only" />
                 </ion-button>
             <ComQuickAction   /> 
@@ -45,6 +45,8 @@
 import { qrCode, scanOutline } from 'ionicons/icons';
 import { ref } from 'vue';
     const {isAuthenticated} = useAuth();
+
+    const isMobile = ref(app.utils.isMobile())
 
 const t = window.t;
 const keyword = ref("")

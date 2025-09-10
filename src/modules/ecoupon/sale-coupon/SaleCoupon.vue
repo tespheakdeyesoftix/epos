@@ -35,6 +35,7 @@
    
       </ion-content>
     <ComSaleSummary/>
+    
      <ComPaymentButton />
     
     </div>
