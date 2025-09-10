@@ -121,12 +121,10 @@
   <Column field="discount" headerClass="text-center" bodyClass="text-center" :header="t('Discount')">
       <template #body="slotProps">
     
-        <ion-chip v-if="slotProps.data.discount_type == 'Percent' && slotProps.data.discount>0">
+        <ion-chip v-if="slotProps.data.discount_type == 'Percent' && slotProps.data.discount > 0">
             {{ slotProps.data.discount }}%
         </ion-chip>
-     
-    
-       <ComCurrency :value="slotProps.data.discount_amount || 0"/>
+       <ComCurrency v-else :value="slotProps.data.discount_amount || 0"/>
 </template>
 
     </Column>

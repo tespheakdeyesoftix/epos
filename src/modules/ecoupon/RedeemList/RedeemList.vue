@@ -15,7 +15,7 @@
           <ComCurrency :value="Math.abs(item.grand_total)" />
         </template>
         <template #total_quantity="{ item }">
-          <ComCurrency :value="Math.abs(item.total_quantity)" />
+          <span>{{ Math.abs(item.total_quantity) }}</span>
         </template>
 
             </DocList>
