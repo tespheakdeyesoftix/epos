@@ -66,6 +66,9 @@ function onFilterReport() {
 
 function getReportDefaultFilter() {
   const defaultFilter = {}
+  if (!options.value) return {}
+
+  
   options.value.filter(x => x.default).forEach(f => {
     if (f.ft == 'Date') {
       const dateRange = app.getTimespanRange(f.default);

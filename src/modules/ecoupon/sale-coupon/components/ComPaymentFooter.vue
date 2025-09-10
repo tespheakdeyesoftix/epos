@@ -3,10 +3,10 @@
     <stack row equal v-if="plateform=='mobile'">
         <ion-button @click="onCloseSale(true)" expand="full" shape="round" color="success"  >
                         <ion-icon  :icon="printOutline"></ion-icon>
-                        {{ t("Payment with Print") }}
+                        {{ t("Payment & Print") }}
                     </ion-button>
                     
-                    <ion-button expand="full" shape="round" @click="onCloseSale(true)">
+                    <ion-button expand="full" shape="round" @click="onCloseSale(false)">
                         <ion-icon  :icon="logoUsd"></ion-icon>
                         {{ t("Payment") }}
                     </ion-button>
@@ -16,7 +16,7 @@
             <ion-col>
               
                 <ion-chip  @click="onSelectPrintFormat(p)" v-for="p in printFormat" :color="p.name==selected?'danger':''">
-                  {{ p.title }}
+                  {{ t(p.title) }}
                 </ion-chip>
             </ion-col>
             <ion-col></ion-col>
@@ -24,10 +24,10 @@
                 <stack row equal>
                     <ion-button @click="onCloseSale(true)" expand="full" shape="round" color="success" >
                         <ion-icon  :icon="printOutline"></ion-icon>
-                        {{ t("Payment with Print") }}
+                        {{ t("Payment & Print") }}
                     </ion-button>
                     
-                    <ion-button expand="full" shape="round" @click="onCloseSale(true)">
+                    <ion-button expand="full" shape="round" @click="onCloseSale(false)">
                         <ion-icon  :icon="logoUsd"></ion-icon>
                         {{ t("Payment") }}
                     </ion-button>

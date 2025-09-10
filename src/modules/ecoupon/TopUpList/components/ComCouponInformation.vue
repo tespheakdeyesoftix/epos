@@ -24,8 +24,8 @@
             <h2>{{ topUpCouponInfo?.customer?.customer_name }}</h2>  <ion-chip class=" text-small" color="primary" outline>
                {{ topUpCouponInfo?.customer?.customer_group }}
               </ion-chip></div>
-            <p>ID: {{ topUpCouponInfo?.customer?.name }}</p>
-            <p>Phone: {{ topUpCouponInfo?.customer?.phone_number }}</p>
+            <p>{{t("ID")}}: {{ topUpCouponInfo?.customer?.name }}</p>
+            <p>{{t("Phone")}}: {{ topUpCouponInfo?.customer?.phone_number }}</p>
           </ion-label>        
             </ion-card-content>
 
@@ -37,11 +37,7 @@
         {{ t('Sale Number') }} : {{ topUpCouponInfo?.sale }}
       </div>
     </ion-col>
-    <!-- <ion-col size="6">
-      <div class="detail-label">
-        {{ t('Posting Date') }} : {{ topUpCouponInfo?.posting_date }}
-      </div>
-    </ion-col> -->
+    
     <ion-col size="6">
   <div class="detail-label">
     {{ t('Posting Date') }} : 
@@ -74,7 +70,7 @@
   fill="clear"
   @click="isOpen = !isOpen"
 >
-  Transaction
+  {{t("Transaction")}}
   <ion-icon
     :icon="isOpen ? chevronUpOutline : chevronDownOutline"
     slot="end"
@@ -91,7 +87,7 @@
   </ion-row>
 
   <ion-row v-for="(tx, index) in topUpCouponInfo?.coupon_transaction" :key="index" class="data-row">
-    <ion-col size="3">{{ tx.transaction_type }}</ion-col>
+    <ion-col size="3">{{ t(tx.transaction_type) }}</ion-col>
     <ion-col size="3">
       <ComCurrency :value="tx.input_actual_amount" />
     </ion-col>

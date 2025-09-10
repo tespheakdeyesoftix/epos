@@ -20,6 +20,10 @@ import { isPlatform,getPlatforms } from '@ionic/vue';
 import ComPendingOrderModal from '@/modules/ecoupon/sale-coupon/components/ComPendingOrderModal.vue';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek' // for ISO week support (if needed)
+import {encrypt,decrypt} from "@/helpers/encrypt.ts"
+import submitSound from '/assets/sound/submit.mp3'
+const successSound = new Audio(submitSound)
+
 
 dayjs.extend(isoWeek)
 
@@ -27,7 +31,8 @@ import { useAuth } from "@/hooks/useAuth";
 
 
 
-
+window.encrypt = encrypt
+window.decrypt = decrypt
 const { isWorkingDayOpened,isCashierShiftOpened,exchange_rate_input,exchange_rate,change_exchange_rate } = useApp();
 
 
@@ -517,12 +522,11 @@ export function getCouponNumber(coupon){
     return arrayCoupons[1]
 
   }
-   
-  return coupon
+   return coupon;
+  // return decrypt(coupon)
   
-
 }
-
+ 
 
 export async function showWarningMessage(title = "Confirm", message = "Are you sure you want to process this action?") {
     let defaultButtons = [
@@ -563,6 +567,7 @@ export async function getSetting() {
 
   if (res.data) {
     app.setting = { ...app.setting, ...res.data }
+    // console.log(app.setting)
     if (!app.setting.property) {
       let currentProperty = await app.storageService.getItem("current_property");
       if (currentProperty) {
@@ -589,6 +594,8 @@ export async function getSetting() {
     // get exchange rate
     getExchangeRate()
   }
+  
+  await loading.dismiss();
 }
 
 export async function getExchangeRate(){
@@ -614,7 +621,6 @@ export async function getPrintPrintFormat(){
  
   }
 }
-
 
 export async function getPOSConfig(pos_config){
 
@@ -827,4 +833,10 @@ export function getWeekStartAndEnd(dateInput) {
 export function getDocStatusText(id){
   const status = [window.t("Draft"), window.t('Submitted'), window.t("Cancelled")]
   return status[id]
+}
+
+export function playSuccessSound(){
+   successSound.currentTime = 0
+            successSound.play()
+
 }

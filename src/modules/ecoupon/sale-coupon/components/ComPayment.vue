@@ -1,9 +1,10 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <template #end>
+    <template #end v-if="plateform=='mobile'">
         <ComSelectPOSReceiptMobile />
     </template>
  <!-- <ComPaymentAmountInfo v-if="plateform=='mobile'"/>  -->
+  
    <ion-grid v-if="plateform!=='mobile'">
   <ion-row  >
     <ion-col size="12" size-md="4"  >
@@ -11,6 +12,7 @@
     </ion-col>
 
     <ion-col size="12" size-md="4" class="p-0" >
+      
       <ComPaymentSelectPaymentType />
     </ion-col>
 
@@ -20,12 +22,10 @@
   </ion-row>
 </ion-grid>
 
-<div
-  v-else
-  class="scrollable-grid-container"
-  style="max-height: 360px; overflow-y: auto; overscroll-behavior: contain;"
->
+<div v-else>
+  <!-- this payment ui on mobile screen -->
 <ComPaymentAmountInfo v-if="plateform=='mobile'"/> 
+
   <ion-grid> 
     <ion-row>
       <ion-col size="12" size-md="4">
@@ -35,6 +35,7 @@
         <ComPaymentSelectPaymentType />
       </ion-col>
       <ion-col size="12" size-md="4" class="p-0">
+       
         <ComPaymentList />
       </ion-col>
     </ion-row>
@@ -43,11 +44,13 @@
 
 
 
-    <div v-if="plateform=='mobile'" class="fixed-footer-mobile">
+    <!-- <div v-if="plateform=='mobile'" class="fixed-footer-mobile">
         <ComFooterTotalpayment />
-    </div>
-   
+    </div> -->
+   <ComFooterTotalpayment  v-if="plateform=='mobile'"/>
+
      <template #footer>
+
        <ComPaymentFooter/>
         
     </template>  

@@ -6,6 +6,9 @@ import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDisc
 import dayjs from "dayjs"
 import { Capacitor } from '@capacitor/core';
 import { modalController } from "@ionic/vue"
+import beep from '/assets/sound/submit.mp3'
+const beepSound = new Audio(beep)
+
 const saleDoc = ref({
     name:"",
     sale_products: [],
@@ -91,18 +94,18 @@ const changeAmount = computed(() => {
 
 
 function initSaleDoc() {
-
+    
     saleDoc.value = {
         name:"",
-        posting_date:app.setting.working_day?.posting_date,
-        business_branch: app.setting.property?.property_name,
-        customer: app.setting.pos_profile?.default_customer,
-        stock_location: app.setting.pos_profile?.stock_location,
-        outlet: app.setting.pos_profile?.outlet,
-        pos_profile: app.setting.pos_profile?.name,
-        pos_station_name: app.setting.station_name,
-        working_day: app.setting.working_day?.name,
-        cashier_shift: app.setting.cashier_shift?.name,
+        posting_date:app.setting?.working_day?.posting_date,
+        business_branch: app.setting?.property?.property_name,
+        customer: app.setting?.pos_profile?.default_customer,
+        stock_location: app.setting?.pos_profile?.stock_location,
+        outlet: app.setting?.pos_profile?.outlet,
+        pos_profile: app.setting?.pos_profile?.name,
+        pos_station_name: app.setting?.station_name,
+        working_day: app.setting?.working_day?.name,
+        cashier_shift: app.setting?.cashier_shift?.name,
         sale_status:"New",
         sale_products: [],
         payment: []
@@ -184,15 +187,30 @@ async function onSelectProduct(p) {
 }
 
 async function onPayment() {
+   
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
     }
+
+    if(saleDoc.value.sale_type == "Redeem"){
+        if (Math.abs(paymentBalance.value<=0)){
+await app.showWarning("No amount to Redeem")
+        return
+        }
+
+        
+    }
+
     const result = await app.openModal({
         component: ComPayment,
         cssClass: app.utils.getPlateform() == 'mobile'?"":"payment-modal"
     })
 
+    if(!result){
+        saleDoc.value.payment =[]
+    }
+    
     return result
   
 }
@@ -257,6 +275,13 @@ async function onQuickPay(payment_type) {
         await app.showWarning("There's no data.")
         return
     }
+
+    if(saleDoc.value.sale_type == "Redeem"){
+        await app.showWarning("No amount to Redeem")
+        return
+    }
+    
+
     // if top up validate user select topup
     if(saleDoc.value.sale_type =="Top Up"){
         if(saleDoc.value.sale_products[0].product_code == ""){
@@ -286,6 +311,9 @@ async function onQuickPay(payment_type) {
 
         onClearData();
         await app.showSuccess("Quick payment successfully")
+         beepSound.currentTime = 0
+            beepSound.play()
+
         // print bill
         selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
@@ -303,6 +331,12 @@ async function onCloseSale(isPrint = true) {
         return
     }
 
+    if(paymentBalance.value>0){
+    await app.showWarning("Please enter all payment amount")
+    return;
+    }
+    
+
     const confirm = await app.onConfirm("Payment", "Are you sure to process payment and close order?")
     if (!confirm) return;
     const loading = await app.showLoading();
@@ -313,7 +347,7 @@ async function onCloseSale(isPrint = true) {
     saveData.sale_status = "Closed"
 
     const res = await saveSaleDoc(saveData);
-
+    
     if (res.data) {
 
         onClearData()
@@ -321,7 +355,11 @@ async function onCloseSale(isPrint = true) {
         if (isPrint) {
             printBill(res.data.name)
         }
-        await app.showSuccess("Payment successfully")
+        await app.showSuccess(t('Payment successfully'))
+         
+        beepSound.currentTime = 0
+         beepSound.play()
+
         
         app.ionRouter.navigate(pageRoute.value,"forward","replace")
         modalController.dismiss(true, 'confirm')
@@ -417,7 +455,7 @@ async function onDeleteSaleProduct(index) {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
-    const confirm = await app.utils.onConfirmDanger("Delete Sale Product", "Are you sure you want to delete this record");
+    const confirm = await app.utils.onConfirmDanger("Delete Sale Product", "Are you sure you want to delete this record?");
     if (confirm) {
         saleDoc.value.sale_products.splice(index, 1);
     }
@@ -425,11 +463,24 @@ async function onDeleteSaleProduct(index) {
 }
 
 async function onAddPayment(payment_type) {
-    let paymentAmount = Number(paymentInputAmount.value)
-    if (!paymentInputAmount.value) {
-        paymentAmount = paymentBalance.value;
+   
+    if(paymentBalance.value==0){
+        await app.showWarning("No balance amount for add payment")
+        return;
     }
-    if (paymentAmount == 0) {
+    let paymentAmount = Number(paymentInputAmount.value)
+    
+
+    if (!paymentInputAmount.value) {
+
+        // use balance amount to add payment
+        paymentAmount = paymentBalance.value * (payment_type.exchange_rate || 1);
+        
+
+    }
+
+    if (!paymentAmount) {
+        paymentInputAmount.value = "";
         await app.showWarning("Please enter payment amount")
         return
     }
@@ -443,7 +494,15 @@ async function onAddPayment(payment_type) {
             exchange_rate: payment_type.exchange_rate
         }
     )
-    paymentInputAmount.value = "";
+    if(app.utils.getPlateform() == "mobile"){
+        // payment input type is = number
+paymentInputAmount.value = NaN
+    }else {
+        // payment input is = text
+        paymentInputAmount.value = "";
+    }
+    
+
 
 }
 
@@ -595,15 +654,20 @@ async function onRemoveProductDiscount(sp) {
             title: t("Cancel Discount Note"),
             storageKey: "cancel_discount_item_required_note"
         });
-    }
-
-    if (note) {
-        sp.discount_type = "Percent";
+         if (note) {
+            sp.discount_type = "Percent";
+            sp.discount = 0;
+            sp.discount_amount = 0,
+            updateSaleProduct(sp);
+        }
+    } else {
+         sp.discount_type = "Percent";
         sp.discount = 0;
         sp.discount_amount = 0,
-
-            updateSaleProduct(sp);
+        updateSaleProduct(sp);
     }
+
+   
     app.showSuccess("Remove discount successfully")
 }
 

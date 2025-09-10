@@ -21,6 +21,8 @@ const props = defineProps({
 const emit = defineEmits()
 const filter = ref({})
 function onSelected(selectedData){
+
+ 
    
     const cleaned = Object.fromEntries(
   Object.entries(filter.value).filter(([_, value]) => value !== null)

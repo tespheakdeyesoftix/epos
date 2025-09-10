@@ -30,19 +30,21 @@ const props = defineProps({
   docListRef: Object,
   docname: String,
 });
-
+ 
 const doc = ref({
-  posting_date: null,
+  posting_date: dayjs().toDate(),
   note: '',
 });
 
 async function onSave() {
+  if (!doc.value.posting_date) {
+    await app.showWarning(t('Posting Date is required!'));
+    return;
+  }
+
   const loading = await app.showLoading();
 
-  let posting_date = null;
-  if (doc.value.posting_date) {
-    posting_date = dayjs(doc.value.posting_date).format('YYYY-MM-DD');
-  }
+  const posting_date = dayjs(doc.value.posting_date).format('YYYY-MM-DD');
 
   const saveDoc = {
     posting_date,
@@ -51,12 +53,12 @@ async function onSave() {
 
   const result = await app.createDoc('Coupon Register', saveDoc);
 
-  
   await loading.dismiss();
+  
   if (result?.data?.name) {
-    // Navigate to the new page
     router.push(`/coupon-register/${result.data.name}`);
   }
+
   modalController.dismiss(result.data, 'confirm');
 
   if (props.docListRef?.value) {
@@ -64,3 +66,4 @@ async function onSave() {
   }
 }
 </script>
+

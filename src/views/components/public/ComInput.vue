@@ -29,9 +29,14 @@
 
   </template>
   <template v-else>
-    <ion-input v-bind="$attrs" ref="ionInputRef" :value="model" @ionInput="onInput" :type="type"
+  
+    <ion-input v-bind="$attrs" ref="ionInputRef" :value="model"  :type="type"
       :placeholder="placeholder || label" 
-      :label="model?label:''" @ionChange="onChange" :fill="fill" :clear-input="clear"
+      :label="model?label:''" 
+      @ionInput="onInput"
+      @ionChange="onChange" 
+      :fill="fill" 
+      :clear-input="clear"
       :label-placement="labelPlacement">
 
       <ion-button v-if="icon && plateform === 'desktop'" fill="clear" slot="end" aria-label="Show/hide">
@@ -76,7 +81,7 @@ async function onIconClick() {
     } else {
       model.value = result
     }
-
+    
     // Simulate the same trigger as typing then pressing enter
     emit("change", model.value)
     emit("onBarcodeChange", model.value)
@@ -127,17 +132,23 @@ const t = window.t;
 const emit = defineEmits()
 defineExpose({
   focus: () => {
+    if(plateform!='mobile'){
 
-    ionInputRef.value?.$el?.setFocus()
-    const nativeInput = ionInputRef.value?.$el?.querySelector('input')
-    nativeInput?.select()
-  },
-  select: () => {
-
+    
     ionInputRef.value?.$el?.setFocus()
     const nativeInput = ionInputRef.value?.$el?.querySelector('input')
     nativeInput?.select()
   }
+  },
+  select: () => {
+ if(plateform!='mobile'){
+
+    ionInputRef.value?.$el?.setFocus()
+    const nativeInput = ionInputRef.value?.$el?.querySelector('input')
+    nativeInput?.select()
+ }
+  },
+  onScanBarcode
 })
 
 function onInput($event) {
@@ -147,21 +158,26 @@ function onInput($event) {
   } else {
     model.value = $event.detail.value
   }
-
+ 
   emit("onInput", model.value)
 }
 
 
 function onChange($event) {
+ 
+
   if (props.type === "number") {
     model.value = Number($event.detail.value)
   } else {
+ 
     model.value = $event.detail.value
   }
-  emit("onChange", model.value)
+ 
+  emit("onChange", $event.detail.value)
 }
 
 async function onScanBarcode() {
+ 
   const result = await app.onScanBarcode();
   if (result) {
     if (props.type == "number") {
@@ -208,7 +224,9 @@ const onSelectAll = (event) => {
 
 onMounted(async () => {
   if (props.focus && plateform === "desktop") {
+
     setTimeout(() => {
+     
       ionInputRef.value?.$el?.setFocus();
       const nativeInput = ionInputRef.value?.$el?.querySelector('input');
       nativeInput?.select();

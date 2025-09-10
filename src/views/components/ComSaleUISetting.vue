@@ -1,6 +1,6 @@
 <template>
 <BaseModal :title="t('Setting')" @onConfirm="onConfirm">
-    {{ userPreference }}  
+    <!-- {{ userPreference }}   -->
     <ion-label>{{t("Product Width")}}</ion-label>
     <ion-range
     

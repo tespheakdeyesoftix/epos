@@ -7,7 +7,7 @@
 
                          
                         <div>
-                        <ion-avatar class="border-2 avatar-container">
+                        <ion-avatar class="border-1 avatar-container">
                             <Img v-if="data?.product_photo" :src="data?.product_photo" />
                             <div class="avatar-placeholder" v-else>{{ getAvatarLetter(data?.product_name) }}
                             </div>
@@ -27,18 +27,19 @@
                                     <ComCurrency :value="data.price" />
                                 </h6>
                             </ion-text>
-
-                            <ion-label color="danger" v-if="data.total_coupon_value">
+                            
+                            <ion-label color="danger" v-if="data.total_coupon_value" style="font-size:  0.8rem;">
 
                                 {{ t("Coupon Value") }}
                                 <ComCurrency :value="data.total_coupon_value" />
 
                             </ion-label>
-
+                            <br>
                             <ion-text v-if="data.discount_amount">
                                 {{ t("Discount") }}:
                                 <ComCurrency :value="data.discount_amount" />
                             </ion-text>
+                            
                             <ion-text v-if="data.note">
                                 <div>
                                     {{ data.note }}
@@ -53,11 +54,12 @@
                 <div>
                     <ion-chip v-if="data.is_free == 1" color="success">{{ t("Free") }}</ion-chip>
                     
-                    <ion-chip color="danger" class="p-2" style="font-size: 15px;">
-                        <ion-label class="m-0 ">
+                    <ion-chip v-else color="danger" class="px-2 flex items-center" style="font-size: 15px;white-space: nowrap;">
+                        <ion-label class="m-0  ">
                             <ComCurrency :value="data?.amount" />
                         </ion-label>
                     </ion-chip>
+                    
                 </div>
             </div>
 

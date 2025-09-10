@@ -21,8 +21,10 @@
         class="coupon-card ion-no-padding"
       >
         <ion-card-content class="content-center ion-no-padding">
-          
-          <img :src="p.photo" alt="Coupon" class="coupon-image" />
+               <ion-avatar class="coupon-image" style="height: 130px;" >
+                <Img v-if="p.photo" :src="p.photo" class="coupon-image coupon-fix"/>
+                <div class="avatar-placeholder coupon-image"   v-else>{{ getAvatarLetter(p.product_name_en) }}</div>
+            </ion-avatar>
           <ion-card :color="p.name === topUpSaleProduct?.product_code ? 'success' : 'light'" class="top-up-product-name">
             <ion-text  >{{ p.product_name_en }}</ion-text>
           </ion-card>
@@ -49,6 +51,7 @@
     const t = window.t;
     import dayjs from "dayjs";
 import ComCurrency from "@/views/components/public/ComCurrency.vue";
+import { getAvatarLetter } from "@/helpers/utils"
     const {products} = useProductMenu();
     const {saleDoc,topUpCouponInfo,topUpSaleProduct} = useSaleCoupon();
      
@@ -64,7 +67,7 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
                 componentProps:{
                     data:p
                 },
-                cssClass:"top-up-coupon-amount"
+                cssClass:app.utils.getPlateform() == "mobile"?"":"top-up-coupon-amount"
             })
             if(!result) return
 
@@ -114,6 +117,10 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
 .content-center {
     position: relative;  
     
+}
+.coupon-fix{
+  object-fit: fill;
+  height: 100%;
 }
 .coupon-image {
   width: 100%;

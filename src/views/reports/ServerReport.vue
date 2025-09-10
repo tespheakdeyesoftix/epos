@@ -22,6 +22,7 @@
       </template>
     </ToolBar>
     <ion-content class="ion-padding">
+   
       <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
         <ion-refresher-content></ion-refresher-content>
       </ion-refresher>
@@ -50,8 +51,8 @@ import ComReportFilter from "@/views/reports/components/ComReportFilter.vue"
 import ComReportSummary from "@/views/reports/components/ComReportSummary.vue"
 import ComReportData from "@/views/reports/components/ComReportData.vue"
 import {  settingsOutline, documentOutline } from "ionicons/icons"
-import { ref } from "vue"
-const {reportData,onPreviewReport,onRefresh}  = useServerReport();
+import { onMounted, ref } from "vue"
+const {reportData,onPreviewReport,onRefresh,getReportData}  = useServerReport();
 const t = window.t;
 const query = app.route.query;
 const showSummary = ref(true)
@@ -72,6 +73,15 @@ const handleRefresh = async (event) => {
   event.target.complete();
 };
 
+
+
+    // onMounted(async () => {
+ 
+    //     const l =await app.showLoading()
+    //     await getReportData();
+
+    //     await l.dismiss();
+    // })
 
 
 </script>

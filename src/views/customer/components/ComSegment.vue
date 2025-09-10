@@ -31,7 +31,7 @@
         </div>
 
         <div class="flex-item">
-          <div class="field-value">{{ data?.gender || '' }}</div>
+          <div class="field-value">{{ t(data?.gender || '') }}</div>
           <div class="mt-1">
             <ion-text color="medium">{{ t("Gender") }}</ion-text>
           </div>

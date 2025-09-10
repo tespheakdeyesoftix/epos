@@ -8,38 +8,47 @@
   </div>
       </ion-card-title>
     <ion-card-content class="ion-no-margin">
-       
-        <com-input focus 
+        
+<com-input :focus="plateform !='mobile'" 
     :placeholder="t('Scan qr code here')"
-    @change="onScanQRCode"
+    :label="t('Scan qr code here')"
+    @onChange="onScanQRCode"
     @onBarcodeChange="onScanQRCode"
-     
     ref="inputScanQRCode"
     v-model="couponCode"
     :icon="scan"
-    />
+/>
     </ion-card-content>
  </ion-card>
-   
- 
+    
 </template>
 <script setup>
 import {ref, onMounted}  from "vue"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
+const plateform = ref(app.utils.getPlateform())
 
 const t = window.t
+
+
+ 
 async function onScanQRCode(valueFromIcon) {
+    
     if (valueFromIcon) {
         couponCode.value = valueFromIcon
     }
-
-    if (topUpCouponInfo.value) {
+    
+    if (topUpCouponInfo.value && couponCode.value) {
+       
         await app.showWarning("Please close the current top up transaction first")
         couponCode.value = ""
         inputScanQRCode.value.focus();
         return
+    }
+
+    if(topUpCouponInfo.value){
+        return;
     }
 
     couponCode.value = app.utils.getCouponNumber(couponCode.value);
@@ -61,5 +70,20 @@ async function onScanQRCode(valueFromIcon) {
     inputScanQRCode.value.focus();
 }
 
+async function onScanWithCamera() {
+    const result = await app.utils.onScanBarcode();
+    if (result) {
+         await onScanQRCode(result)
+        
+    }
+
+}
+
+onMounted(async ()=>{
+    
+    if(plateform.value == "mobile"){
+     await onScanWithCamera();
+    }
+})
 
 </script>

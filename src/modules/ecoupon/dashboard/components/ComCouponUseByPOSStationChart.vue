@@ -1,9 +1,10 @@
 <template>
-    <ion-card class="ion-no-margin">
+ 
+   <ion-card class="ion-no-margin">
         <ion-card-header>
             <ion-item lines="none">
                 <ion-label>
-                    <h1> {{ t("Revenue vs Coupon Used by Station") }}</h1>
+                    <h1> {{ t("Revenue POS Station") }}</h1>
                 </ion-label>
 
                 <template v-if="platform !== 'mobile'">
@@ -94,7 +95,8 @@ const option = computed(() => {
       }
     },
     legend: {
-      data: [t("Total Revenue"),t("Coupon Value")]
+      data: [t("Total Revenue")]
+      // data: [t("Total Revenue"),t("Coupon Value")]
     },
      grid: {
     top: 25,
@@ -127,18 +129,18 @@ const option = computed(() => {
             }
             }
       },
-      {
-        name: t("Coupon Value"),
-        type: chartType.value,
-        data: couponValues,
-         label: {
-            show: true,
-            position: 'top', // or 'inside', 'bottom', etc.
-            formatter: function (params) {
-                return app.currencyFormat(params.value)
-            }
-            }
-      },
+      // {
+      //   name: t("Coupon Value"),
+      //   type: chartType.value,
+      //   data: couponValues,
+      //    label: {
+      //       show: true,
+      //       position: 'top', // or 'inside', 'bottom', etc.
+      //       formatter: function (params) {
+      //           return app.currencyFormat(params.value)
+      //       }
+      //       }
+      // },
       
     ]
   }

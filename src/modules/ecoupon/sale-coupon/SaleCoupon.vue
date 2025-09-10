@@ -46,7 +46,7 @@
  
 </template>
 <script setup>
-import { onMounted, ref } from "vue"
+import { onMounted, ref,watch } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComCouponProductList from "@/modules/ecoupon/sale-coupon/components/ComCouponProductList.vue"
 import ComSaleProductCoupon from "@/modules/ecoupon/sale-coupon/components/ComSaleProductCoupon.vue"
@@ -60,12 +60,14 @@ import ComSaleCouponFooter from "@/modules/ecoupon/sale-coupon/components/ComSal
 import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
 const {userPreference} = useApp()
-const { saleDoc,initSaleDoc,getSaleDoc,saleType,pageRoute } = useSaleCoupon()
+const { saleDoc,initSaleDoc,getSaleDoc,saleType,pageRoute, } = useSaleCoupon()
 import {
 
   IonSplitPane,
 
 } from '@ionic/vue';
+
+
 
 
 const t = window.t

@@ -17,8 +17,9 @@
         <ion-footer>
             <ion-toolbar>
                 <div style=" display: flex;justify-content: center;gap: 10px;">
+                     <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
                     <ion-button @click="onStartWorkingDay">{{ t("Start Working Day") }}</ion-button>
-                    <ion-button @click="onCancel" color="danger">{{ t("Cancel") }}</ion-button>
+                   
                 </div>
             </ion-toolbar>
         </ion-footer>
@@ -40,7 +41,7 @@ const doc = ref({
 
 
 async function onStartWorkingDay(){
-    const result = await app.onConfirm("Start Working Day","Are you sure you want to start working day.")
+    const result = await app.onConfirm("Start Working Day","Are you sure you want to start working day?")
     if(!result) return 
     const loading = await app.showLoading();
     const res = await app.createDoc("Working Day",doc.value);
@@ -48,6 +49,7 @@ async function onStartWorkingDay(){
         app.setting.working_day = res.data
         isWorkingDayOpened.value = true;
         app.ionRouter.navigate('/home', 'back', 'replace');
+        app.utils.playSuccessSound();
     }
     await loading.dismiss()
 }

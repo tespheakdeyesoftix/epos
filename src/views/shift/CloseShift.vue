@@ -102,7 +102,7 @@
     </ion-content>
      <ComFooter>
       
-      <ion-button color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
+      <ion-button v-if="plateform!='mobile'" color="danger" @click="onCancel">{{ t("Cancel") }}</ion-button>
       <ion-button  :routerLink="'/shift-detail/' + cashierShift.name">{{ t("View Shift Detail") }}</ion-button>
 
       <ion-button color="success" @click="onCloseCashierShift">{{ t("Close Cashier Shift") }}</ion-button>
@@ -117,6 +117,8 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup'; 
 import Row from 'primevue/row';  
 import { useApp } from '@/hooks/useApp';
+const plateform = ref(app.utils.getPlateform())
+
 const { isCashierShiftOpened } = useApp();
 
 
@@ -168,18 +170,21 @@ async function onCloseCashierShift(){
     isCashierShiftOpened.value = false;
     delete app.setting.cashier_shift;
 
-    await app.showSuccess("Close shift successfully")
+  await app.showSuccess("Close shift successfully")
+    await loading.dismiss()
  await printReport();
  
     app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
     
   }
   loading.dismiss();
+  app.utils.playSuccessSound();
 
 }
 
 
 onMounted(async ()=>{
+ 
   const loading = await app.showLoading()
   let res = await app.postApi("epos_restaurant_2023.api.api.get_close_shift_summary",{
     cashier_shift:cashierShift.value.name,
@@ -195,6 +200,7 @@ onMounted(async ()=>{
   await loading.dismiss();
 })
 
+ 
 
 async function printReport() {
        const printSettings = app.setting.pos_config.print_settings.filter(x=>x.print_type=="Cashier Shift") || []
@@ -204,6 +210,8 @@ async function printReport() {
         
 
         }
+
+
 
 
 </script>

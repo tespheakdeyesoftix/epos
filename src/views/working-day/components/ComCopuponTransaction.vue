@@ -87,7 +87,7 @@ async function getData(){
         working_day:props.working_day
     })
     if(res.data){
-        ["Sale Coupon","Top Up", "Use","Redeem"].forEach(d => {
+        ["Sale Coupon","Top Up", "Used","Redeem"].forEach(d => {
             
             if(res.data.find(x=>x.transaction_type == d)){
             data.value.push(res.data.find(x=>x.transaction_type == d))    

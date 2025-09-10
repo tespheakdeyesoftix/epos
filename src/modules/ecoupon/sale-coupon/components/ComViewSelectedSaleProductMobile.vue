@@ -1,24 +1,22 @@
 <template>
-    <BaseModal title="Your Order" :hideFooter="false" :footerHeight="120">
+    <BaseModal title="Your Order" :hideFooter="false" :footerHeight="110">
        
             <ComCustomerCard v-if="saleDoc?.customer"/>
             <ComSaleProductMobile />     
             <template #footer>         
-                 <ion-grid class="h-full m-0 p-0">
-  <ion-row>
-    <ion-col class="flex flex-col gap-12">
-      <ion-button shape="round" expand="block" @click="onSaveAsDraft">
-        <ion-label>{{ t("Save") }}</ion-label>
-      </ion-button>
-
-      <ComQuickPayButton />
-      <ComPrintBillButtonMobile />
-      <ComSaleMoreActionButtonMobile />
-    </ion-col>
-  </ion-row>
-  
-</ion-grid>
-
+                <ion-grid class="h-full m-0 p-0">
+                  <ion-row > 
+                    <ion-col class="flex gap-15 m-0" size="12">
+                      <ion-button shape="round" expand="block" @click="onSaveAsDraft" class="ml-0">
+                        <ion-label>{{ t("Save") }}</ion-label>
+                      </ion-button>
+                      <ComQuickPayButton />
+                      <ComPrintBillButtonMobile />
+                      <ComSaleMoreActionButtonMobile />
+                      
+                    </ion-col>
+                  </ion-row>   
+              </ion-grid>
                 <ComPaymentButton @onPayment="onPayment"/>
             </template>
     </BaseModal>
@@ -45,3 +43,10 @@ modalController.dismiss(true, 'confirm')
     }
 }
 </script>
+
+<style scoped>
+
+ion-col {
+  --ion-grid-column-padding: 2px;
+}
+</style>

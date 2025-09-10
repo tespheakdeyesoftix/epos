@@ -12,6 +12,11 @@
         @onRowDblClick="onRowDblClick"
         ref="docListRef"
       >
+      
+         <template v-slot:default="{ item }" v-if="plateform=='mobile'"> 
+          <ComCouponTransactionCard v-for="d in item" :data="d"/>
+         </template>
+      
         <template #transaction_type="{ item }">
           <ComStatus :status="item.transaction_type" />
         </template>
@@ -27,6 +32,8 @@
         <template #coupon_amount="{ item }">
           <ComCurrency :value="Math.abs(item.coupon_amount)" />
         </template>
+
+
       </DocList>
 
       <transition name="fade">
@@ -51,6 +58,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { arrowUpOutline } from 'ionicons/icons'
 import { onIonViewDidEnter } from '@ionic/vue'
+import ComCouponTransactionCard from '@/modules/ecoupon/coupon-codes/components/ComCouponTransactionCard.vue'
 
 const docListRef = ref()
 const pageRef = ref(null)

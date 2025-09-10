@@ -2,6 +2,7 @@
     <ion-page>
         <ToolBar>{{ t("Start Cashier Shift") }}</ToolBar>
         <ion-content class="ion-padding">
+            
             <div class="fix-container">
                 <stack gap="20px">
                     <stack row equal>
@@ -54,7 +55,7 @@
 </template>
 <script setup>
 import dayjs from 'dayjs';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 const { isCashierShiftOpened } = useApp();
 
@@ -127,5 +128,17 @@ async function onStartCashierShift() {
 
     await l.dismiss();
 
+    app.utils.playSuccessSound()
+
 }
+
+onMounted(async ()=>{
+    const l = await app.showLoading();
+    const res= await app.getDocList("Shift Type");
+    if(res.data){
+        doc.value.shift_name = res.data[0].name;
+    }
+    await l.dismiss()
+})
+
 </script>

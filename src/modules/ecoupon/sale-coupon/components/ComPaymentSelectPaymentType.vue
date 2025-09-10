@@ -14,7 +14,7 @@
         color="warning"
         style="height:20px; font-size: 16px;"
       >
-       {{ p.payment_type }}
+       {{ t(p.payment_type) }}
       </ion-button>
     </ion-col>
   </ion-row>

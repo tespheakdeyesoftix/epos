@@ -17,7 +17,7 @@
 
                         <div class="flex flex-column align-items-center gap-5" v-if="!selectedReport">
                             <img :src="reportpng" width="100" />
-                            Please select a report to view your report.
+                            {{t("Please select a report to view your report.")}}
                         </div>
                     </div>
                 </ion-content>

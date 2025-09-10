@@ -1,6 +1,9 @@
 <template>
   <ion-page> 
     <ion-content :fullscreen="true" class="ion-padding login-wrapper-page">
+          <ion-refresher slot="fixed" @ionRefresh="onRefresh">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
       <div class="custom-flex-login fixed-container">
         <div class="form-container ion-padding">
           <ion-grid class="cutom-gap h-100">
@@ -49,7 +52,7 @@
 import { ref, onMounted,nextTick } from "vue"
 
 import {
-  useIonRouter, IonBackButton, IonButton, IonText
+  useIonRouter, IonButton, IonText
 } from '@ionic/vue';
 
 
@@ -144,6 +147,14 @@ function SaveUsername(){
     app.storageService.setItem("properties", JSON.stringify(properties))
   }
 }
+
+
+
+const onRefresh = async (event) => {
+        event.target.complete();
+
+};
+
 
 onMounted(async () => {  
   const strProperties = app.storageService.getItem("properties");

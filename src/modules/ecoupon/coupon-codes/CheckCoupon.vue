@@ -1,7 +1,12 @@
 <template>
     <ion-page>
         <AppBar v-if="showAppBar">
-            {{ t("Check Coupon Code") }}
+            <template v-if="plateform!='mobile'">{{ t("Check Coupon Code") }} - </template> {{ coupon_code }}
+
+            <template v-if="couponDetail?.coupon_info">
+                <ComStatus :status="couponDetail?.coupon_info?.coupon_status" />
+            </template>
+
             <template #end>
                 <ion-button @click="onReloadData" shape="round" class="ion-hide-sm-down">
                     <ion-icon :icon="refreshOutline" slot="icon-only" />
@@ -22,7 +27,10 @@
 
         </AppBar>
         <ToolBar v-else>
-            {{ t("Coupon Detail") }}
+              <template v-if="plateform!='mobile'">{{ t("Coupon Detail") }} - </template> {{ coupon_code }}
+               <template v-if="couponDetail?.coupon_info">
+                <ComStatus :status="couponDetail?.coupon_info?.coupon_status" />
+            </template>
             <template #end>
                 <ion-button @click="onReloadData" shape="round" class="ion-hide-sm-down">
                     <ion-icon :icon="refreshOutline" slot="icon-only" />
@@ -62,6 +70,8 @@ import ComCouponCodeList from "@/modules/ecoupon/coupon-codes/components/ComCoup
 import ComCouponDetail from "@/modules/ecoupon/coupon-codes/components/ComCouponDetail.vue"
 import { qrCode, refreshOutline } from "ionicons/icons";
 import { onMounted, ref } from 'vue';
+const plateform = ref(app.utils.getPlateform())
+
 const isLoading = ref(true)
 const t = window.t;
 const showAppBar = ref(app.route.query.appbar == 1)

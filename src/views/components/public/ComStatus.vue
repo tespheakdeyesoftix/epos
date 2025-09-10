@@ -45,6 +45,9 @@ const getSeverity = () => {
             return 'danger';
         case 'Delete fail':
             return 'danger';
+            
+        case 'Expired':
+            return 'danger';
         case 'Fail':
             return 'danger';
 

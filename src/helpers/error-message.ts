@@ -64,12 +64,20 @@ export async function handleErrorMessage(error_data:any){
 
 export async  function showWarningMessage(message:string){
     if ((message ||"") =="") return;
-    const toast = await toastController.create({
-        message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
-        duration: 5000,
-        position: "top",
-        swipeGesture:"vertical",
-        color: "warning"
-    });
-    toast.present();
+     
+    // const toast = await toastController.create({
+    //     message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
+    //     duration: 5000,
+    //     position: "top",
+    //     swipeGesture:"vertical",
+    //     color: "warning"
+    // });
+    // toast.present();
+
+    const str_message = stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message);
+
+    if (!str_message) return;
+
+    window.toast.add({ severity: 'warn', summary: window.t('Confirm'), detail: str_message,   life: 3000 });
+
 }

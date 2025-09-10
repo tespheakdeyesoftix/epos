@@ -1,7 +1,8 @@
 <template>
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
 
-        <stack row equal class="mb-4" itemClass="col-6 sm:col-6 lg:col-3 p-2 "  v-if="data.is_open_product == 1">
+        <stack row equal class="mb-4" itemClass="col-6 sm:col-6 lg:col-3 p-2 "
+            v-if="data.is_open_product == 1 && plateform != 'mobile'">
             <com-input ref="txtPrice" :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
@@ -17,26 +18,25 @@
             <com-input v-else :label="t('Coupon Value')" v-model="doc.coupon_value" type="number" keyboard />
         </stack>
         <!-- scan barcode -->
-         <!-- v-if="plateform != 'mobile'"  -->
-         
-          <div v-if="plateform != 'mobile'">
-        <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode"
-            :label="t('Coupon Code')" :placeholder="t('Please scan coupon codes')" label-placement="stacked"
-            fill="outline"></com-input>
-        <div style="display: flex;justify-content: center;">
-            <ion-chip color="success" @click="onChangeScanMode('add')">
-                <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
-                <ion-label>{{ t("Scan to Add") }}</ion-label>
-            </ion-chip>
-            <ion-chip color="danger" @click="onChangeScanMode('remove')">
-                <ion-icon :icon="checkmarkOutline" v-if="scanMode == 'remove'"></ion-icon>
-                <ion-label>{{ t("Scan to Remove") }}</ion-label>
-            </ion-chip>
-        </div>
-</div>
+        <!-- v-if="plateform != 'mobile'"  -->
 
-<div v-if="plateform == 'mobile'" class="ion-text-center">
-            <ion-button @click="onScanWithCamera" class="w-full">{{t("Scan Coupon Code")}}</ion-button>
+        <div v-if="plateform != 'mobile'">
+            <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
+                :placeholder="t('Please scan coupon codes')" label-placement="stacked" fill="outline"></com-input>
+            <div style="display: flex;justify-content: center;">
+                <ion-chip color="success" @click="onChangeScanMode('add')">
+                    <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
+                    <ion-label>{{ t("Scan to Add") }}</ion-label>
+                </ion-chip>
+                <ion-chip color="danger" @click="onChangeScanMode('remove')">
+                    <ion-icon :icon="checkmarkOutline" v-if="scanMode == 'remove'"></ion-icon>
+                    <ion-label>{{ t("Scan to Remove") }}</ion-label>
+                </ion-chip>
+            </div>
+        </div>
+
+        <div v-if="plateform == 'mobile'" class="ion-text-center">
+            <ion-button @click="onScanWithCamera" class="w-full">{{ t("Scan Coupon Code") }}</ion-button>
         </div>
 
 
@@ -50,63 +50,75 @@
             </ion-item>
         </ion-list>
         <template v-else>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%;">
-      <ion-col size="12" class="ion-text-center">
-        <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</template>
+            <ion-grid>
+                <ion-row class="ion-justify-content-center ion-align-items-center" style="height: 100%;">
+                    <ion-col size="12" class="ion-text-center">
+                        <ion-text>{{ t("Please enter or scan qr code") }}</ion-text>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </template>
 
+        <!-- keypad for enter amount on mobile only -->
+        <template v-if="plateform == 'mobile' && data.is_open_product == 1">
+            <div style=" display: flex;justify-content: center;gap: 10px;">
+                <ion-chip :color="selectedCurrency == 'KHR' ? 'primary' : ''" @click="onChangeInputCurrency('KHR')">{{
+                    t("KHR") }}</ion-chip>
+                <ion-chip :color="selectedCurrency == 'USD' ? 'primary' : ''" @click="onChangeInputCurrency('USD')">{{
+                    t("USD") }}</ion-chip>
+            </div>
+            <ComKeyPadInput v-model="doc.price" />
+        </template>
 
-        
 
         <template #footer>
             <div class="ion-padding">
                 <ion-grid class="ion-no-padding">
                     <ion-row>
-                    <ion-col size="9">
-                        <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
-                &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
-                        <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
-                    </strong></ion-label>
-                </ion-col>
-                    <ion-col size="3" class="ion-no-padding">
-                        <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
-                    </ion-col>
-                    
+                        <ion-col size="9">
+                            <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
+                            &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
+                                    <ComCurrency
+                                        :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
+                                </strong></ion-label>
+                        </ion-col>
+                        <ion-col size="3" class="ion-no-padding" v-if="plateform == 'mobile'">
+                            <ion-button color="success" @click="onConfirm(true)" class="w-full h-full">{{ t("Payment")
+                                }}</ion-button>
+                        </ion-col>
+
                     </ion-row>
-            </ion-grid>  
+                </ion-grid>
             </div>
         </template>
         <template #footer v-if="plateform == 'mobile'">
             <div class="ion-padding">
                 <ion-grid class="ion-no-padding">
                     <ion-row>
-                   <ion-col size="9">
-                    <div>
-                        <ion-label>
-                        {{ t("Total Coupon:") }}
-                        <strong>{{ coupounList.length }}</strong>
-                        </ion-label>
-                    </div>
-                    <div>
-                        <ion-label>
-                        {{ t("Total Amount:") }}
-                        <strong>
-                            <ComCurrency :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
-                        </strong>
-                        </ion-label>
-                    </div>
-                    </ion-col>
+                        <ion-col size="9">
+                            <div>
+                                <ion-label>
+                                    {{ t("Total Coupon:") }}
+                                    <strong>{{ coupounList.length }}</strong>
+                                </ion-label>
+                            </div>
+                            <div>
+                                <ion-label>
+                                    {{ t("Total Amount:") }}
+                                    <strong>
+                                        <ComCurrency :value="totalAmount" />
+                                    </strong>
+                                </ion-label>
+                            </div>
+                        </ion-col>
 
-                    <ion-col size="3" >
-                        <ion-button clor="sucess" @click="onConfirm(true)"  class="w-full h-full">{{ t("Payment") }}</ion-button>
-                    </ion-col>
-                    
+                        <ion-col size="3">
+                            <ion-button color="success" @click="onConfirm(true)" class="w-full">{{ t("Payment")
+                                }}</ion-button>
+                        </ion-col>
+
                     </ion-row>
-            </ion-grid>  
+                </ion-grid>
             </div>
         </template>
 
@@ -119,19 +131,21 @@ import dayjs from "dayjs";
 import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
 import { computed, onMounted, ref } from 'vue';
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import ComKeyPadInput from "@/views/components/public/ComKeyPadInput.vue"
 const { saleDoc } = useSaleCoupon()
 const inputRef = ref(null)
 const txtPrice = ref(null)
 const plateform = ref(app.utils.getPlateform())
 const props = defineProps({
     data: Object,
-
 })
 const t = window.t;
 const coupon = ref("")
 const coupounList = ref([])
 const keyword = ref("")
 const scanMode = ref("add")
+const selectedCurrency = ref("KHR")
+const exchange_rate = ref(app.setting.exchange_rate);
 const doc = ref({
     price: 0,
     coupon_value: 0,
@@ -139,12 +153,26 @@ const doc = ref({
     coupon_markup_value: 0
 })
 
+const minAmountKHR = ref(500)
+const maxAmountKHR = ref(100000)
+const minAmountUSD = ref(1)
+const maxAmountUSD = ref(100)
+
+
 const couponValue = computed(() => {
     if (doc.value.coupon_markup_type == 'Percent') {
         return (doc.value.price ?? 0) + ((doc.value.price ?? 0) * ((doc.value.coupon_markup_value ?? 0) / 100))
     } else {
         return doc.value.coupon_value;
     }
+})
+
+const totalAmount = computed(()=>{
+    let price = coupounList.value.length * ( props.data.is_open_product ? doc.value.price : props.data.price);
+     if(app.setting.currency != selectedCurrency.value){
+        price = price / exchange_rate.value;
+    }
+    return price
 })
 
 const sortedCouponList = computed(() => {
@@ -173,7 +201,7 @@ async function onScanWithCamera() {
     if (result) {
         coupon.value = result
         await onScanBarCode()
-        
+
     }
 
 }
@@ -242,8 +270,6 @@ async function validateCouponCode(c) {
         await l.dismiss();
         return false
     }
-
-
     await l.dismiss();
     return res.data
 }
@@ -254,7 +280,13 @@ function onDelete(index) {
     coupon.value = "";
 }
 
+function onChangeInputCurrency(currency){
+    selectedCurrency.value = currency;
+    
+}
+
 function onConfirm(process_payment = false) {
+    
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
         inputRef.value.select()
@@ -268,19 +300,54 @@ function onConfirm(process_payment = false) {
     }
     if (props.data.is_open_product == 1 && Number(couponValue.value == 0)) {
         app.showWarning("Please enter coupon value")
-
         return;
     }
 
+    let price =  props.data.is_open_product == 1 ? doc.value.price : props.data.price;
+    
+    // validate max and min input amount to prevent wrong posting data
+    if (props.data.is_open_product == 1){
+       if(selectedCurrency.value =="KHR"){
+            if(price<minAmountKHR.value){
+                app.showWarning("Coupon amount must be greater than" + " " + minAmountKHR.value )
+                return;
+            }
+            
+            if(price>maxAmountKHR.value){
+                app.showWarning("Coupon amount must be less than" + " " + maxAmountKHR.value )
+                return;
+            }
+
+       } else {
+        // USD
+        if(price<minAmountUSD.value){
+                app.showWarning("Coupon amount must be greater than" + " " + minAmountUSD.value )
+                return;
+            }
+            
+            if(price>maxAmountUSD.value){
+                app.showWarning("Coupon amount must be less than" + " " + maxAmountUSD.value )
+                return;
+            }
+            
+       }
+    }
+
+    if(app.setting.currency != selectedCurrency.value){
+        price = price / exchange_rate.value;
+    }
+
+
+
     const returnData = {
-        creation:app.dayjs(),
+        creation: app.dayjs(),
         product_code: props.data.name,
         product_name: props.data.product_name_en,
         product_photo: props.data.photo,
         quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
-        price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
+        price:price,
         amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value,
         allow_discount: props.data.allow_discount,
@@ -292,8 +359,8 @@ function onConfirm(process_payment = false) {
         append_quantity: props.data.append_quantity,
         allow_free: props.data.allow_free,
         regular_price: props.data.is_open_product == 1 ? doc.value.price : props.data.price,
-        process_payment:process_payment
-       
+        process_payment: process_payment
+
     }
 
     returnData.coupon_markup_percentage = ((returnData.coupon_value - returnData.price) / returnData.price) * 100
@@ -304,22 +371,20 @@ function onConfirm(process_payment = false) {
 onMounted(async () => {
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
-
     } else {
-
-        if(app.utils.getPlateform() == "mobile"){
-                await onScanWithCamera()
+        if (app.utils.getPlateform() == "mobile") {
+            await onScanWithCamera()
         }
-        
     }
-
     doc.value.price = props.data.price
     doc.value.coupon_markup_type = props.data.coupon_markup_type
     doc.value.coupon_markup_value = props.data.coupon_markup_value
     doc.value.coupon_value = props.data.coupon_value
-
-
-
+    // get min max setting
+    minAmountKHR.value = app.storageService.getItem("min_amount_khr") || 500;
+    maxAmountKHR.value = app.storageService.getItem("max_amount_khr") || 100000;
+    minAmountUSD.value = app.storageService.getItem("min_amount_usd") || 1;
+    maxAmountUSD.value = app.storageService.getItem("max_amount_usd") || 100;
 
 
 })
