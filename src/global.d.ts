@@ -2,7 +2,6 @@ declare global {
     interface Window {
       t(key: string): string | null;
       fromRoute?: string;
-
     }
     interface GlobalThis {
       app: AppNamespace;
