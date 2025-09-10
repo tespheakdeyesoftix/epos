@@ -13,7 +13,6 @@
         <ion-text v-if="!currentMenu?.title">POS Profile: {{ setting?.pos_profile?.name }} / {{ setting?.station_name }}</ion-text>
       </div>
       <!-- {{ station_name }} -->
- <ion-button routerLink="/print-barcode">print </ion-button>
       <div class="menu-list justify-content-center border-round-top-3xl">
         <div class="pt-3">
         <ion-grid class="border-round-2xl p-0">

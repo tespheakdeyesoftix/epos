@@ -44,23 +44,15 @@ watch(() => route.meta.title, (newTitle) => {
 
 });
 
-
-
 onMounted(async ()=>{ 
   if(Capacitor.getPlatform()!=="web"){
 const toolbarColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--ion-toolbar-background')
       .trim();
-
     await StatusBar.setOverlaysWebView({ overlay: false }); // Optional: ensures webview doesn't go under status bar
     await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
     await StatusBar.setBackgroundColor({color: toolbarColor }); // Use white icons for dark background
-
-
     await initializeScanner();
-  }
-
-
-  
+  }  
 })
 </script>

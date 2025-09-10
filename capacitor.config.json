@@ -1,9 +1,6 @@
 {
   "appId": "com.estccouputer.app.epos",
   "appName": "ePOS",
-  "server": {
-    "cleartext": true
-  },
   "plugins": {
     "SunmiPrinter": {
       "bindOnLoad": true
@@ -14,5 +11,12 @@
       "backgroundColor": "red"
     }
   },
-  "webDir": "public"
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true
+  },
+  "android": {
+   "allowMixedContent": true 
+  }
 }

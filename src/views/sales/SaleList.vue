@@ -11,12 +11,7 @@
     </ion-page>
 </template>
 <script setup>
-import { ref } from 'vue';
-import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue';
-
-const isMobile = ref(getPlatforms().includes("mobile"))
-
- 
+import ComSaleOrderCard from '@/views/sales/components/ComSaleOrderCard.vue'; 
 const t = window.t
 const options = {
     showSearchBar:true,
