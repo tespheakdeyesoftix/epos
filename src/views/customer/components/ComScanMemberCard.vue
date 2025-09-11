@@ -1,6 +1,9 @@
 <template>
   <BaseModal :title="t('Scan Member Card')">
-    <ion-text>
+    <ion-text v-if="plateform == 'mobile'">
+      <h2 style="text-align: center; margin-top: 0">{{ t("Please scan member card") }}</h2>
+    </ion-text>
+    <ion-text v-else>
       <h1 style="margin-left: 20px; margin-top: 0">{{ t("Please scan member card") }}</h1>
     </ion-text>
 
@@ -14,6 +17,7 @@
       ></com-input>
       <ion-icon :icon="qrCodeOutline" style="margin-left:-40px"></ion-icon>
     </ion-item>
+    
   </BaseModal>
 </template>
 
@@ -21,8 +25,8 @@
 import { ref } from "vue";
 import { IonIcon, modalController } from "@ionic/vue";
 import { qrCodeOutline } from "ionicons/icons";
- const txtMemberCard  = ref(null)
-
+const txtMemberCard  = ref(null)
+const plateform = ref(app.utils.getPlateform());
 const t = window.t;
 const customer = ref();
 
@@ -33,7 +37,6 @@ async function onScanMemberCard(customer) {
 }
     const res = await app.getDocList("Customer", { filters: [["name", "=", customer],["is_disabled", "=", 0]] });
     
-
     if (res.data.length > 0) {
       modalController.dismiss(customer, "confirm");
     } else {
@@ -41,9 +44,6 @@ async function onScanMemberCard(customer) {
         txtMemberCard.value.focus();
         
     }
-
-
-  
 }
 </script>
  

@@ -16,7 +16,7 @@
   shape="round" expand="full" 
   @click="openPopover($event)">
     <ion-icon slot="start" :icon="printOutline" />
-    {{ t("Print Bill") }}</ion-button>
+    {{ t("Print") }}</ion-button>
   <ion-popover :dismiss-on-select="true"
    :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false">
     <ion-content class="ion-padding">

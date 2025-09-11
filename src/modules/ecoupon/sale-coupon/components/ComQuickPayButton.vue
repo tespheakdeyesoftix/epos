@@ -1,7 +1,7 @@
 <template>
    
  <ion-button 
- expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='desktop'"
+ expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='desktop' || plateform=='tablet'"
  @click="openPopover($event)"
  >{{ t("Quick Pay") }}</ion-button>
  <ion-button 
