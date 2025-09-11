@@ -42,7 +42,7 @@
 
                     </div>
                 </div>
-                <div style="background-color: greenyellow;">
+                <div>
                     <ion-chip v-if="data.is_free == 1" color="success">{{ t("Free") }}</ion-chip>
                     <ion-chip v-else color="danger" class="m-0">
                         <h5 style="font-size: 13px;" >
