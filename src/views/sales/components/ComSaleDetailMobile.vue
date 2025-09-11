@@ -120,7 +120,7 @@
                 <ion-item>
                     <ion-label>{{ t("Total Quantity") }}</ion-label>
                     <ion-label slot="end">
-                        <ComNumber :value="doc?.total_quantity" />
+                        <ComNumber :value="Math.abs(doc?.total_quantity ?? 0)" />
                     </ion-label>
                 </ion-item>
                 <ion-item v-if="doc?.sale_discount > 0 && doc?.product_discount > 0">
@@ -202,7 +202,7 @@
                     </ion-label>
                     <ion-text slot="end">
                          <div class="amount">
-                            <ComCurrency :value="doc?.grand_total" />
+                            <ComCurrency :value="Math.abs(doc?.grand_total ?? 0)" />
                        </div>
                     </ion-text>
                 </ion-item>
@@ -213,7 +213,7 @@
                         <ion-label><strong>{{ p.payment_type }}</strong></ion-label>
                         <ion-text slot="end">
                             <div class="amount">
-                                <ComCurrency :value="p.input_amount" :format="p.currency" />
+                                <ComCurrency :value="Math.abs(p?.input_amount ?? 0)" :format="p.currency" />
                                 <!-- <ComCurrency :value="p.input_amount" :format="p.currency_format" /> -->
                             </div>
                         </ion-text>
