@@ -3,21 +3,34 @@
   <ion-card button @click="onSelectCustomer">
     <ion-card-content>
       <stack row equal >
-       <stack v-if="customer?.name" row>
+       <stack v-if="customer?.name" row >
   <ion-avatar>
   <Img v-if="customer?.photo" :src="customer?.photo"/>
   <div class="avatar-placeholder" v-else>{{ getAvatarLetter(customer?.customer_name_en) }}</div>
-</ion-avatar> 
-<div>
-  {{ customer?.name}} {{ customer?.customer_name_en }}
-
-  
-  <div>
-  {{ customer?.phone_number }}
+</ion-avatar>
+<!-- plateform == mobile -->
+<div v-if="plateform == 'mobile'">
+  <div class="customerName">
+    <div style="width: 100px;">
+     {{ customer?.name}} {{ customer?.customer_name_en }} 
+    </div>
+    <div>
+      {{ customer?.phone_number }}
+    </div>
+    <div>
+      {{   customer?.customer_group   }}
+    </div>
+  </div>
 </div>
-<div>
-     {{   customer?.customer_group   }}
-</div>
+<!-- plateform != mobile -->
+<div v-else>
+      {{ customer?.name}} {{ customer?.customer_name_en }}
+    <div>
+      {{ customer?.phone_number }}
+    </div>
+    <div>
+      {{   customer?.customer_group   }}
+    </div>
 </div>
 </stack>
 <div class="select-customer" v-else>
@@ -46,6 +59,7 @@ import { addOutline, closeOutline, qrCodeOutline } from "ionicons/icons";
 import { onMounted,ref } from "vue";
 import ComAddCustomer from "@/views/customer/components/ComAddCustomer.vue"
 const t = window.t;
+const plateform = ref(app.utils.getPlateform());
 const { saleDoc,customer } = useSaleCoupon()
 const default_customer=  ref(app.setting.pos_profile.default_customer)
 
@@ -89,4 +103,3 @@ onMounted(()=>{
 getCustomer(saleDoc.value.customer);
 });
 </script>
-
