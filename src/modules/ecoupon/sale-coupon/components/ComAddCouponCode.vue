@@ -21,14 +21,12 @@
         <!-- v-if="plateform != 'mobile'"  -->
 
         <div v-if="plateform != 'mobile'">
+            
             <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
              
                 :placeholder="t('Please scan coupon codes')" label-placement="stacked" fill="outline" >
-            
-      
-
-
-            </com-input>
+            </com-input> 
+           
             <div style="display: flex;justify-content: center;">
                 <ion-chip color="success" @click="onChangeScanMode('add')">
                     <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
@@ -88,7 +86,7 @@
                                         :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                                 </strong></ion-label>
                         </ion-col>
-                        <ion-col size="3" class="ion-no-padding" v-if="plateform == 'mobile'">
+                        <ion-col size="3" class="ion-no-padding">
                             <ion-button color="success" @click="onConfirm(true)" class="w-full h-full">{{ t("Payment")
                                 }}</ion-button>
                         </ion-col>
@@ -153,6 +151,7 @@ const keyword = ref("")
 const scanMode = ref("add")
 const selectedCurrency = ref("KHR")
 const exchange_rate = ref(app.setting.exchange_rate);
+let disableTextboxInput = false;
 const doc = ref({
     price: 0,
     coupon_value: 0,
@@ -201,6 +200,7 @@ function onChangeScanMode(mode) {
 }
 
 async function onScanBarCode() {
+    if (disableTextboxInput) return;
     if (scanMode.value == "add") {
         await addCoupon()
     } else {
@@ -243,6 +243,8 @@ async function addCoupon() {
     
     inputRef.value.focus()
     }
+
+    disableTextboxInput = false;
 }
 
 function onRemoveCoupon() {
@@ -258,7 +260,7 @@ function onRemoveCoupon() {
 
     }
 
-
+disableTextboxInput = false;
 }
 
 async function validateCouponCode(c) {
@@ -385,7 +387,7 @@ function onConfirm(process_payment = false) {
 }
 
 // keyboard listener to hadle scan 
-function onHandleScan(e) {
+async function onHandleScan(e) {
  
   const now = Date.now();
 
@@ -403,7 +405,12 @@ function onHandleScan(e) {
       if (buffer.value.length > 3) { // prevent noise
         lastScanned.value = buffer.value;
          coupon.value = buffer.value;
-         addCoupon();
+            disableTextboxInput = true;
+         if (scanMode.value == "add") {
+                await addCoupon()
+            } else {
+                onRemoveCoupon()
+            }
       }
       buffer.value = "";
     } else {
@@ -411,7 +418,7 @@ function onHandleScan(e) {
     }
   }
 }
--
+
 
 onMounted(async () => {
     window.disable_scan_check_coupon = true;

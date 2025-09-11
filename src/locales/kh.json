@@ -125,6 +125,7 @@
     "View Detail":"មើលលម្អិត",
     "Station":"កន្លែងលក់",
     "Check Coupon Code":"ត្រួតពិនិត្យលេខគូប៉ុងកូដ",
+    "Check Coupon":"ត្រួតពិនិត្យលេខគូប៉ុងកូដ",
     "Sale Product Dis.":"សរុបបញ្ចុះតម្លៃលើទំនិញ",
     "Check coupon code":"ត្រួតពិនិត្យលេខគូប៉ុងកូដ",
     "Coupon Transaction Summary":"សង្ខេបប្រតិបត្តការគូប៉ុង",
@@ -641,5 +642,6 @@
     "Cannot get printer list":"មិនអាចយកបញ្ជីម៉ាស៊ីនបោះពុម្ពបាន",
     "Add Store Payment":"បញ្ចូលការបង់ប្រាក់តាមហាង",
     "Edit Store Payment":"កែប្រែការបង់ប្រាក់តាមហាង",
+    "This coupon code has been selected.":"លេខគូប៉ុងនេះបានជ្រើសរើសរួចហើយ",
     "":""
   }   

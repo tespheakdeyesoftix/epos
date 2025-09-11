@@ -12,10 +12,9 @@ import { ref } from 'vue';
 import { useApp } from '@/hooks/useApp';
 import customDayjs from '@/helpers/dayjs';
 const {getMeta} = useApp()
-
- 
  
 let ionRouter = ref();
+
 
 // Ensure the namespace exists
 globalThis.app = globalThis.app || {};
@@ -117,7 +116,6 @@ globalThis.app.renameDoc =  async function (DocType,oldName,newName) {
 globalThis.app.submitDoc =  async function (doc) {
   return await submitDoc(doc)
 }
-
 
 // global variable
  

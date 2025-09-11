@@ -83,6 +83,7 @@ import { ref, onMounted } from 'vue';
 import {  checkmarkCircle, checkmarkOutline, close,} from 'ionicons/icons';
 
 import PQueue from 'p-queue'
+import { onIonViewDidLeave } from '@ionic/vue';
 const doc = ref(null);
 const queue = new PQueue({ concurrency: 1 })
 const options = {
@@ -245,10 +246,14 @@ const name = app.route.params.name;
 }
 
 onMounted(async () => {
+  window.disable_scan_check_coupon = true;
   const l = await app.showLoading();
   await getDoc();
   await l.dismiss();
 });
+onIonViewDidLeave(()=>{
+  window.disable_scan_check_coupon = false;
+})
 </script>
 <style scoped>
 .no-background {

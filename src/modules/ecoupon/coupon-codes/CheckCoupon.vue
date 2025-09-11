@@ -24,7 +24,6 @@
         
       ></ion-searchbar>
             </template>
-
         </AppBar>
         <ToolBar v-else>
               <template v-if="plateform!='mobile'">{{ t("Coupon Detail") }} - </template> {{ coupon_code }}

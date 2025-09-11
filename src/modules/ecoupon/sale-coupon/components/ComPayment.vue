@@ -64,9 +64,27 @@ import ComPaymentFooter from "@/modules/ecoupon/sale-coupon/components/ComPaymen
 import ComPaymentAmountInfo from "@/modules/ecoupon/sale-coupon/components/ComPaymentAmountInfo.vue"
 import ComSelectPOSReceiptMobile from "@/modules/ecoupon/sale-coupon/components/ComSelectPOSReceiptMobile.vue"
 import ComFooterTotalpayment from "@/modules/ecoupon/sale-coupon/components/ComFooterTotalpayment.vue"
-import { ref } from "vue"
+import { onMounted, onUnmounted, ref } from "vue"
 const t = window.t;
 const plateform = ref(app.utils.getPlateform())
+
+onMounted(()=>{
+  // disable widnow listender scanner on top up screen
+  window.disable_scan_top_up = true;
+  
+  // disable widnow listender scanner on   redeem scren
+  window.disable_scan_redeem = true;
+
+})
+
+onUnmounted(()=>{
+  //enable widnow listender scanner on top up screen
+  window.disable_scan_top_up = false;
+  
+  //enable widnow listender scanner on   redeem scren
+  window.disable_scan_redeem = false;
+
+})
 
 </script>
 
@@ -81,6 +99,7 @@ const plateform = ref(app.utils.getPlateform())
   box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* subtle shadow */
   margin-bottom: 60px;
 }
+
 
 
 

@@ -69,6 +69,8 @@ onIonViewWillEnter(()=>{
   }
   
 
+
+ 
 })
 
 
@@ -90,6 +92,9 @@ onBeforeRouteLeave(async (to, from, next) => {
       topUpSaleProduct.value = null
     next()
   }
+
+  
+
 })
 
 

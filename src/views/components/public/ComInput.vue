@@ -243,7 +243,7 @@ const onSelectAll = (event) => {
 
 
 onMounted(async () => {
-  if (props.focus && plateform === "desktop") {
+  if (props.focus) {
 
     setTimeout(() => {
      
