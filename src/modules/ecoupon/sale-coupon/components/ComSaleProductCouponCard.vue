@@ -42,9 +42,9 @@
 
                     </div>
                 </div>
-                <div>
+                <div >
                     <ion-chip v-if="data.is_free == 1" color="success">{{ t("Free") }}</ion-chip>
-                    <ion-chip v-else color="danger" class="m-0">
+                    <ion-chip v-if="plateform !='tablet' && data.is_free == 0" color="danger" class="m-0">
                         <h5 style="font-size: 13px;" >
                             <ComCurrency :value="data?.amount" />
                         </h5>

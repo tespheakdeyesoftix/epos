@@ -4,21 +4,15 @@
     <ion-card-content>
       <stack row equal >
        <stack v-if="customer?.name" row >
-  <ion-avatar>
+  <ion-avatar style="width: 50px;height:50px">
   <Img v-if="customer?.photo" :src="customer?.photo"/>
   <div class="avatar-placeholder" v-else>{{ getAvatarLetter(customer?.customer_name_en) }}</div>
 </ion-avatar>
 <!-- plateform == mobile -->
-<div v-if="plateform == 'mobile'">
+<div v-if="plateform == 'mobile' || plateform=='tablet'">
   <div class="customerName">
     <div style="width: 100px;">
      {{ customer?.name}} {{ customer?.customer_name_en }} 
-    </div>
-    <div>
-      {{ customer?.phone_number }}
-    </div>
-    <div>
-      {{   customer?.customer_group   }}
     </div>
   </div>
 </div>

@@ -1,11 +1,11 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <template #end v-if="plateform=='mobile'">
+    <template #end v-if="plateform=='mobile' || plateform=='tablet'">
         <ComSelectPOSReceiptMobile />
     </template>
  <!-- <ComPaymentAmountInfo v-if="plateform=='mobile'"/>  -->
   
-   <ion-grid v-if="plateform!=='mobile'">
+   <ion-grid v-if="plateform!=='mobile' && plateform !='tablet'">
   <ion-row  >
     <ion-col size="12" size-md="4"  >
       <ComPaymentInput />
@@ -24,7 +24,7 @@
 
 <div v-else>
   <!-- this payment ui on mobile screen -->
-<ComPaymentAmountInfo v-if="plateform=='mobile'"/> 
+<ComPaymentAmountInfo v-if="plateform=='mobile' || plateform=='tablet'"/> 
 
   <ion-grid> 
     <ion-row>
@@ -47,7 +47,7 @@
     <!-- <div v-if="plateform=='mobile'" class="fixed-footer-mobile">
         <ComFooterTotalpayment />
     </div> -->
-   <ComFooterTotalpayment  v-if="plateform=='mobile'"/>
+   <ComFooterTotalpayment  v-if="plateform=='mobile' || plateform=='tablet' "/>
 
      <template #footer>
 

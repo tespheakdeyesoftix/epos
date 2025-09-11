@@ -24,7 +24,7 @@
                 </ion-card-content>
             </ion-card>
     </ion-footer>
-    <ion-footer v-if="plateform=='mobile' || plateform=='tablet'" >
+    <ion-footer v-if="plateform=='mobile'" >
                
                 <ion-card class="p-0 m-0 card-height"  button @click="_onPayment" style="background: transparent; color: black;" >
                 <ion-card-content class="ion-no-padding" >
@@ -48,6 +48,50 @@
                             <ion-label class="big-chip font">
                                 {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
                             </ion-label>
+                        </ion-col>
+                        
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>
+    </ion-footer>
+     <ion-footer v-if="plateform=='tablet'" >
+               
+                <ion-card class="p-0 m-0 card-height"   button @click="_onPayment" color="tertiary" >
+                <ion-card-content class="ion-no-padding" >
+                    <ion-grid>
+                        <ion-row >
+                        <ion-col size="5">
+                        <div >
+                            <div>
+                                  <ion-label class="big-chip font">
+                                {{ t('Payment') }} 
+                            </ion-label>
+                            </div>
+                          
+                                
+                             <ion-label Color="danger" class="big-chip font">
+                                 <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
+                                <ComExchangeRate />
+                            </ion-label>
+                               
+                      
+                         
+                        </div>
+                        
+                        </ion-col>
+                        <ion-col size="7" >
+                            <div style="text-align: right;">
+  <div>
+                                <ion-label class="big-chip font">
+                                {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
+                            </ion-label>
+                            </div>
+                            <ion-label class="big-chip font">
+                                {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
+                            </ion-label>
+                            </div>
+                          
                         </ion-col>
                         
                         </ion-row>
