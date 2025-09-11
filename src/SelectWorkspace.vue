@@ -2,7 +2,9 @@
   <ion-page>
     <ion-content fullscreen="true" class="home-content">
       <!-- Branding Section -->
+      
       <div class="addws-page">
+        <div class="fixed-container">
         <div class="branding">
           <ion-img src="assets/ePOS-logo.png" alt="App Logo" class="app-logo"></ion-img>
           <ion-text class="app-name">ePOS</ion-text>
@@ -43,6 +45,7 @@
           </ion-list>
         </div>
       </div>
+     </div>
     </ion-content> 
     <!-- Footer -->
     <ion-footer class="footer surface-ground"> 

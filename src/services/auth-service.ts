@@ -1,6 +1,4 @@
-
 import supabase  from "@/services/supabase-client";
-
 
 export async function getPropertyInformation(propertyCode:string) {
     if(import.meta.env.VITE_API_URL && import.meta.env.VITE_PROPERTY_CODE){
@@ -17,7 +15,6 @@ export async function getPropertyInformation(propertyCode:string) {
         .single();
 
     if (error) {
-        
         return { data: null, error };
     }
 

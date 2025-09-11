@@ -62,8 +62,9 @@ import { onBeforeRouteLeave } from 'vue-router'
 const plateform = ref(app.utils.getPlateform())
 const {userPreference} = useApp()
 const { saleDoc,initSaleDoc,getSaleDoc,saleType,pageRoute, } = useSaleCoupon()
-import {
 
+import {
+onIonViewWillEnter,
   IonSplitPane,
 
 } from '@ionic/vue';
@@ -75,6 +76,7 @@ const t = window.t
  
 
 onMounted(async ()=>{
+  
   pageRoute.value = "/sale-coupon"
   saleType.value = "Sale Coupon";
   if(app.route.params.name){
@@ -84,6 +86,11 @@ onMounted(async ()=>{
 
       saleDoc.value.sale_type= "Sale Coupon";
     }
+})
+
+onIonViewWillEnter(()=>{
+   window.disable_scan_check_coupon = true;
+
 })
 
 onBeforeRouteLeave(async (to, from, next) => {
@@ -100,6 +107,9 @@ next()
     initSaleDoc()
     next()
   }
+
+  window.disable_scan_check_coupon = false;
+
 })
 </script>
 <style scoped>

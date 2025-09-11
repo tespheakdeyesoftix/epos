@@ -143,15 +143,19 @@ export async function openModal(props) {
     props.title = "Select";
   }
 
-  if (!props.cssClass) {
+  if (!props.cssClass ) {
     props.cssClass = "desktop-modal";
   }
+  if(props.cssClass=="full"){
+props.cssClass = "";
+  }
+ 
+ 
 
-  const modal = await modalController.create({ ...props });
+  const modal = await modalController.create({backdropDismiss: false,  ...props });
 
   modal.present();
   const { data, role } = await modal.onWillDismiss();
-
   if (role === 'confirm') {
     return data;
   }
@@ -530,16 +534,19 @@ export function isMobile(){
 
 export function getCouponNumber(coupon){
   if(coupon.toLowerCase().startsWith("http")){
-    const arrayCoupons =  coupon.split("=");
+   
+    const arrayCoupons =  coupon.split("?coupon=");
     
+ 
     if(arrayCoupons.length<2){
       return ""
     }
-    return arrayCoupons[1]
+    return decrypt(arrayCoupons[1])
 
   }
-   return coupon;
+ 
   // return decrypt(coupon)
+  return coupon
   
 }
  

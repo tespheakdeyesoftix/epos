@@ -153,7 +153,7 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
-        cssClass: app.utils.getPlateform()=="mobile"?"":"scan-coupon-code-modal"
+         cssClass: app.utils.isMobile()?"full": "scan-coupon-code-modal"
 
     })
 
@@ -425,7 +425,7 @@ async function onEditSaleProductCoupon(data) {
             data: { ...sp, name: sp.product_code, product_name_en: sp.product_name },
 
         },
-        cssClass: app.utils.getPlateform()=="mobile"?"": "scan-coupon-code-modal"
+        cssClass: app.utils.isMobile()?"full": "scan-coupon-code-modal"
     })
     data.is_editing = false
 

@@ -94,7 +94,7 @@ const option = computed(() => {
                 formatter: function (name) {
                     const item = props.data.find(r => r.payment_type === name);
                     if (!item) return name;
-                    return `${name}\n${item.base_amount.toLocaleString()}`;
+                        return `${name}\n${item.input_amount.toLocaleString()}`;
                 }
             },
             series: [

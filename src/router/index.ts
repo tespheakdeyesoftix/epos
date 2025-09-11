@@ -13,7 +13,7 @@ const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
 const routes = getRoute();
 
 const router = createRouter({
-  history: createWebHashHistory("/"),
+  history: createWebHashHistory("/ecoupon/"),
   routes
 })
 
@@ -43,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
   const showLogin = await app.storageService.getItem("show_login")
   const currentProperty = await app.storageService.getItem("current_property")
   
-
+ 
 
   if(!currentProperty && to.path !="/select-workspace" && to.path !='/add-workspace' ){
     next("/select-workspace");
@@ -51,7 +51,19 @@ router.beforeEach(async (to, from, next) => {
      
     next("/select-workspace");
 
-  }else  if (!isAuthenticated.value && to.path!="/login" && showLogin=="1" && currentProperty!=null) {
+  }
+  else if (to.path == "/home"){
+    // redirect user home page by rote
+    if(app.currentUser.home_page){
+     
+      next(app.currentUser.home_page);
+    }else {
+      next()
+    }
+    
+    
+  }
+  else  if (!isAuthenticated.value && to.path!="/login" && showLogin=="1" && currentProperty!=null) {
     next("/login");
    
   }else  if (to.path =="/login" && !currentProperty) {

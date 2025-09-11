@@ -3,8 +3,8 @@
  
     <ion-avatar class="small-avatar">
 
-      <Img v-if="currentUser.photo" :src="currentUser.photo"/>
-      <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
+      <Img v-if="currentUser?.photo" :src="currentUser?.photo"/>
+      <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser?.full_name) }}</div>
 
     </ion-avatar>
   </ion-buttons>
@@ -13,13 +13,13 @@
     <ion-content class="ion-padding">
       <div class="user-info">
         <ion-avatar>
-          <Img v-if="currentUser.photo" :src="currentUser.photo"  />
-          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser.full_name) }}</div>
+          <Img v-if="currentUser?.photo" :src="currentUser?.photo"  />
+          <div class="avatar-placeholder" v-else>{{ getAvatarLetter(currentUser?.full_name) }}</div>
 
         </ion-avatar>
         <div class="username-position">
-          <strong>{{ currentUser.full_name }}</strong><br />
-          <span>{{ currentUser.position }}</span>
+          <strong>{{ currentUser?.full_name }}</strong><br />
+          <span>{{ currentUser?.position }}</span>
           
         </div>
       </div>
@@ -90,7 +90,7 @@ const onDismissModal = async (lang:string) =>{
     const backendLang = langCodeMap[lang] || lang;
 
   let res = await app.postApi('epos_restaurant_2023.utils.change_language', {
-      user: currentUser.value.name, // or currentUser.value.id depending on backend
+      user: currentUser?.value.name,
       lang: backendLang
     });
     

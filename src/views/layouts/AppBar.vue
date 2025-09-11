@@ -50,33 +50,13 @@ import { ref } from 'vue';
 
 const t = window.t;
 const keyword = ref("")
-
-async function onCheckCouponCode(){
-  if(keyword.value){
-      const res = await app.getDocList("Coupon Codes", {
-        filters: [["coupon", "=", app.utils.getCouponNumber(keyword.value)]],
-        limit: 1
-      });
-      if(res.data.length == 0){
-        await app.showWarning(t("No coupon code found"));
-        return;
-      }
-      if(app.route.name && app.route.name == "CheckCoupon"){
- 
-        app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1","forward","replace")
-      }else {
-app.ionRouter.navigate("/check-coupon/" + app.utils.getCouponNumber(keyword.value) + "?appbar=1","forward","push")
-      }
-      
-  }
-  keyword.value = ""
-}
+import {onCheckCouponCode} from "@/services/scanner-service.js"
 
 async function onScanQRCode(){
   const result = await app.onScanBarcode();
   if (result) {
     keyword.value = result
-    onCheckCouponCode();
+    onCheckCouponCode(keyword.value);
   }
 }
   </script>

@@ -30,6 +30,7 @@
   </template>
   <template v-else>
   
+   
     <ion-input v-bind="$attrs" ref="ionInputRef" :value="model"  :type="type"
       :placeholder="placeholder || label" 
       :label="model?label:''" 
@@ -37,13 +38,17 @@
       @ionChange="onChange" 
       :fill="fill" 
       :clear-input="clear"
-      :label-placement="labelPlacement">
+      :label-placement="labelPlacement"
+      @click="onTextClick"
+      @ionBlur="onTextBlur"
+      :inputmode = "inputmode"
+      >
 
       <ion-button v-if="icon && plateform === 'desktop'" fill="clear" slot="end" aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
       </ion-button>
       <ion-button v-if="icon && (plateform === 'mobile' || plateform === 'tablet') " fill="clear" slot="end" aria-label="Show/hide" @click="onIconClick">
-        <ion-icon slot="icon-only" :icon="scan" aria-hidden="true"></ion-icon>
+        <ion-icon slot="icon-only" :icon="icon" aria-hidden="true"></ion-icon>
       </ion-button>
 
       <ion-button v-if="type == 'BarcodeScanerInput'" @click="onScanBarcode" fill="clear" slot="end"
@@ -52,10 +57,14 @@
       </ion-button>
        
 
-      <ion-button v-if="keyboard && plateform == 'desktop'" @click="onOpenKeyboard" fill="clear" slot="end"
+      <ion-button v-if="keyboard && plateform == 'desktop' " @click="onOpenKeyboard" fill="clear" slot="end"
         aria-label="Show/hide">
         <ion-icon slot="icon-only" :icon="keypadOutline" aria-hidden="true"></ion-icon>
       </ion-button>
+
+      <slot name="right"></slot>
+   
+
     </ion-input>
   </template>
 </template>
@@ -65,10 +74,9 @@ import { keypadOutline, scan } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import { IonTextarea } from '@ionic/vue';
 import InputNumber from 'primevue/inputnumber';
-
 import DatePicker from 'primevue/datepicker';
-
 import FloatLabel from 'primevue/floatlabel';
+const inputmode = ref("none")
 const ionInputRef = ref(null)
 const inputRef = ref(null)
 const plateform = app.utils.getPlateform();
@@ -150,6 +158,18 @@ defineExpose({
   },
   onScanBarcode
 })
+
+
+function onTextClick(){
+  
+  inputmode.value = "text"
+}
+
+function onTextBlur(){
+  inputmode.value = "none"
+  
+  
+}
 
 function onInput($event) {
 

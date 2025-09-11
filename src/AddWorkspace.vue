@@ -4,6 +4,7 @@
    <ToolBar>{{ t("Add Workspace") }}</ToolBar>
 
     <ion-content :fullscreen="true" class="ion-padding">
+      <div class="fixed-container">
       <div class="form-container">
         <ion-text color="primary" style="margin: 20px;">
           <p>{{ t("Please enter your property code, username and password") }}</p>
@@ -41,6 +42,7 @@
         <ion-button shape="round" size="large" expand="full" @click="onSaveWorkspace" class="save-button">
           {{ t("Save Workspace") }}
         </ion-button>
+      </div>
       </div>
     </ion-content>
   </ion-page>

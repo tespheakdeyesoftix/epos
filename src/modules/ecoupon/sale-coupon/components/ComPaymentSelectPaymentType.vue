@@ -23,7 +23,7 @@
 <script setup>
 
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
-const {  onAddPayment } = useSaleCoupon()
+const { saleDoc, onAddPayment } = useSaleCoupon()
 const t = window.t;
-const payment_type = app.setting.pos_config.payment_type;
+const payment_type = app.setting.pos_config.payment_type.filter(x=>!x.sale_type || x.sale_type == saleDoc.value.sale_type);
 </script>
