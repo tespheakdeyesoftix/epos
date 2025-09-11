@@ -1,6 +1,6 @@
 <template>
     <ion-footer>
-        <ion-toolbar>
+        <ion-toolbar v-if="plateform == 'desktop'">
         
                         <stack row equal gap="5px" class="ion-padding-horizontal">
                             <ion-button shape="round" @click="onBack" expand="full" >
@@ -21,6 +21,28 @@
                             <ComSaleMoreActionButton />
                         </stack>
                 
+        </ion-toolbar>
+        <ion-toolbar v-if="plateform == 'tablet'">
+        
+                        <stack row equal gap="1px" class="ion-padding-horizontal">
+                            <ion-button shape="round" @click="onBack" expand="full" class="font-size">
+                                  <ion-icon slot="start" :icon="homeOutline" />
+                                {{ t("Home")
+                                }}</ion-button>
+                            <ion-button shape="round" expand="full"  @click="onSaveAsDraft">
+                                <ion-icon slot="start" :icon="saveOutline" />
+                                <ion-label>  {{ t("Save")}}</ion-label>
+                              
+                                </ion-button>
+                            <ComPrintBillButton/>
+                            <ion-button id="discount" expand="full"  shape="round"  >
+                                <ion-icon slot="start" :icon="pricetagOutline" />
+                                <ion-label>{{ t("Discount") }}</ion-label>
+                                </ion-button>
+                            <ComQuickPayButton />
+                            <ComSaleMoreActionButton />
+                        </stack>
+                        
         </ion-toolbar>
     </ion-footer>
     <!-- discount pop over -->
@@ -69,9 +91,6 @@
         </ion-list>
     </ion-content>
   </ion-popover>
-
-
-
 </template>
 <script setup>
 import { computed, ref } from "vue"
@@ -85,6 +104,8 @@ import ComSaleMoreActionButton from "@/modules/ecoupon/sale-coupon/components/Co
 const { saleDoc, onSaveAsDraft,onSaleDiscountPercent,onSaleDiscountAmount,totalSaleDiscountAmount } = useSaleCoupon()
 const printFormat = app.setting?.print_formats?.filter(x=>x.show_in_pos==1 && x.doc_type==="Sale");
 const t = window.t
+
+const plateform = ref(app.utils.getPlateform())
 
 const canDiscount = computed(()=>{
     if(saleDoc.value.discount_type == "Percent") {
@@ -126,3 +147,5 @@ function onBack(){
 }
 
 </script>
+
+<style></style>

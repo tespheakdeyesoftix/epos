@@ -1,6 +1,124 @@
 <template>
     <template v-if="data">
-        <ion-card class="border-round-lg p-2" :color="activeIndex == index ? 'tertiary' : ''">
+        <ion-card v-if="plateform == 'tablet'" class="border-round-lg p-2" :color="activeIndex == index ? 'tertiary' : ''">
+            <div class="card-sale-product ">
+                <div>
+                    <div class="flex gap-2">
+                        <Img class="border-round-xl img-sale-coupon" :src="data?.product_photo" />
+                        <div>
+                            <div>
+                                <ion-text>
+                                    <h5 class="m-0 p-0" style="font-size: 15px;">
+                                        {{ data.product_code }} - {{ data.product_name }}
+                                    </h5>
+                                </ion-text>
+                            </div>
+                            <ion-text>
+                                <h5 class="m-0" style="font-size: 15px;">
+                                    {{ data.quantity }} x
+                                    <ComCurrency :value="data.price" />
+                                </h5>
+                            </ion-text>
+
+                            <ion-label color="danger" v-if="data.total_coupon_value">
+
+                                {{ t("Coupon Value") }}
+                                <ComCurrency :value="data.total_coupon_value" />
+
+                            </ion-label>
+
+                            <ion-text v-if="data.discount_amount">
+                                {{ t("Discount") }}:
+                                <ComCurrency :value="data.discount_amount" />
+                            </ion-text>
+                            <ion-text v-if="data.note">
+                                <div>
+                                    {{ data.note }}
+                                </div>
+                            </ion-text>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div style="background-color: greenyellow;">
+                    <ion-chip v-if="data.is_free == 1" color="success">{{ t("Free") }}</ion-chip>
+                    <ion-chip v-else color="danger" class="m-0">
+                        <h5 style="font-size: 13px;" >
+                            <ComCurrency :value="data?.amount" />
+                        </h5>
+                    </ion-chip>
+                </div>
+            </div>
+
+            <div>
+                <ion-chip v-for="(c, index) in displayCoupons" :key="index">{{ c }}</ion-chip>
+            </div>
+            <div v-if="activeIndex == index">
+                <ion-chip @click.stop="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
+                    data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
+
+                <ion-button @click.stop="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
+                <ion-button :disabled="data.name || data.append_quantity == 0"
+                    @click.stop="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
+                <ion-button @click.stop="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
+                <ion-button color="danger" @click.stop="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
+
+
+                <ion-button :id="popOverID" @click="handleButtonClick">{{ t("More") }}</ion-button>
+
+                <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
+                    <ion-content>
+                        <ion-list>
+                            <!-- Free -->
+                            <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 0"
+                                @click="onFreeProduct(data)" button>
+                                <ion-label> {{ t("Free") }}</ion-label>
+                            </ion-item>
+
+                            <!--Remove Free -->
+                            <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 1"
+                                @click="onRemoveFreeProduct(data)" button>
+                                <ion-label> {{ t("Remove Free") }}</ion-label>
+                            </ion-item>
+
+                            <!-- discount percent -->
+                            <ion-item v-if="(data.discount_amount ?? 0) == 0" @click="onProductDiscountPercent(data)"
+                                button>
+                                <ion-label> {{ t("Discount Percent") }}</ion-label>
+                            </ion-item>
+
+
+                            <!-- discolunt amount -->
+                            <ion-item v-if="(data.discount_amount ?? 0) == 0" @click="onProductDiscountAmount(data)"
+                                button>
+                                <ion-label> {{ t("Discount Amount") }}</ion-label>
+                            </ion-item>
+                            <!-- remove discount -->
+                            <ion-item v-if="(data.discount_amount ?? 0) > 0" @click="onRemoveProductDiscount(data)"
+                                button>
+
+                                <ion-label color="danger"> {{ t("Remove Discount") }}</ion-label>
+                            </ion-item>
+
+                            <!-- addnote -->
+                            <ion-item v-if="!data.note" @click="onAddNote" button>
+                                <ion-icon :icon="documentOutline" />
+                                <ion-label> {{ t("Note") }}</ion-label>
+                            </ion-item>
+                            <!-- remove note -->
+                            <ion-item v-if="data.note" @click="onDeleteNote" button>
+                                <ion-label color="danger"> {{ t("Delete Note") }}</ion-label>
+                            </ion-item>
+                        </ion-list>
+                    </ion-content>
+                </ion-popover>
+            </div>
+
+        </ion-card>
+        <!-- check plateform != tablet -->
+        <ion-card v-else class="border-round-lg p-2" :color="activeIndex == index ? 'tertiary' : ''">
             <div class="card-sale-product ">
                 <div>
                     <div class="flex gap-2">
@@ -122,10 +240,12 @@
 
 </template>
 <script setup>
-import { computed } from 'vue';
+import { computed,ref } from 'vue';
 
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { documentOutline } from 'ionicons/icons';
+
+const plateform = ref(app.utils.getPlateform())
 function handleButtonClick(e) {
     e.stopPropagation()
 }
