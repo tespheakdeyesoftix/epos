@@ -140,19 +140,17 @@ export async function selectDate(props = null) {
 
 export async function openModal(props) {
   if (!props.title) {
-    props.title = "Select";
+  props.title = "Select";
   }
 
   if (!props.cssClass ) {
     props.cssClass = "desktop-modal";
   }
-  if(props.cssClass=="full"){
-props.cssClass = "";
-  }
+   
  
  
 
-  const modal = await modalController.create({backdropDismiss: false,  ...props });
+  const modal = await modalController.create({  ...props });
 
   modal.present();
   const { data, role } = await modal.onWillDismiss();

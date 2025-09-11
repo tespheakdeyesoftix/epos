@@ -1,5 +1,5 @@
 import { ref } from "vue";
-
+import ComCheckCoupon from "@/modules/ecoupon/coupon-codes/ComCheckCoupon.vue";
 
 const buffer = ref("");
 const lastScanned = ref("");
@@ -23,7 +23,8 @@ export function onScanCheckOupon(e) {
     if (e.key === "Enter") {
       if (buffer.value.length > 3) { // prevent noise
         lastScanned.value = buffer.value;
-        onCheckCouponCode(buffer.value);
+        checkCouponCodeModal(buffer.value);
+
       }
       buffer.value = "";
     } else {
@@ -31,6 +32,42 @@ export function onScanCheckOupon(e) {
     }
   }
 }
+
+
+export async function checkCouponCodeModal(barcode){
+  if(barcode){
+    const res = await app.getDocList("Coupon Codes", {
+         fields:["name","coupon"],
+        filters: [["coupon", "=", app.utils.getCouponNumber(barcode)]],
+         orderBy: {
+          field: 'creation',
+          order: 'desc',
+        },
+        limit: 1
+      });
+      if(res.data.length == 0){
+        await app.showWarning(t("No coupon code found"));
+        return;
+      }
+      
+      window.disable_scan_check_coupon = true;
+      await app.openModal({
+        component:ComCheckCoupon,
+        componentProps:{
+          coupon_code:res.data[0].coupon,
+          coupon_id: res.data[0].name
+        },
+        cssClass:"full"
+      })
+
+      window.disable_scan_check_coupon = false;
+
+      
+  }
+  
+}
+
+
 
 export async function onCheckCouponCode(barcode){
   if(barcode){
