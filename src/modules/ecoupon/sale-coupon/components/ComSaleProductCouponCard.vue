@@ -59,17 +59,17 @@
                 <ion-chip @click.stop="onEditSaleProductCoupon(data)" v-if="data.coupons.length > 3" color="primary">{{
                     data.coupons.length - 3 }} {{ t("More(s)") }}</ion-chip>
 
-                <ion-button @click.stop="onChangeSaleProductPrice(data)">{{ t("Price") }}</ion-button>
+                <ion-button @click.stop="onChangeSaleProductPrice(data)" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }" >{{ t("Price") }}</ion-button>
                 <ion-button :disabled="data.name || data.append_quantity == 0"
-                    @click.stop="onChangeSaleProductQuantity(data)">{{ t("QTY") }}</ion-button>
-                <ion-button @click.stop="onEditSaleProductCoupon(data)">{{ t("Edit") }}</ion-button>
-                <ion-button color="danger" @click.stop="onDeleteSaleProduct(index)">{{ t("Delete") }}</ion-button>
+                    @click.stop="onChangeSaleProductQuantity(data)" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }" >{{ t("QTY") }}</ion-button>
+                <ion-button @click.stop="onEditSaleProductCoupon(data)" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }" >{{ t("Edit") }}</ion-button>
+                <ion-button color="danger" @click.stop="onDeleteSaleProduct(index)" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }" >{{ t("Delete") }}</ion-button>
 
 
-                <ion-button :id="popOverID" @click="handleButtonClick">{{ t("More") }}</ion-button>
+                <ion-button :id="popOverID" @click="handleButtonClick" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }" >{{ t("More") }}</ion-button>
 
                 <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
-                    <ion-content class="button-text-tablet">
+                    <ion-content>
                         <ion-list>
                             <!-- Free -->
                             <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 0"
@@ -241,7 +241,8 @@
 </template>
 <script setup>
 import { computed,ref } from 'vue';
-
+import { useApp } from '@/hooks/useApp';
+const {userPreference} = useApp()
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { documentOutline } from 'ionicons/icons';
 

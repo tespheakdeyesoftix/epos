@@ -25,17 +25,18 @@
         <ion-toolbar v-if="plateform == 'tablet'">
         
                         <stack row equal gap="1px" class="ion-padding-horizontal">
-                            <ion-button shape="round" @click="onBack" expand="full" class="font-size">
-                                  <ion-icon slot="start" :icon="homeOutline" />
-                                {{ t("Home")
-                                }}</ion-button>
-                            <ion-button shape="round" expand="full"  @click="onSaveAsDraft">
+                            <ion-button :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+ shape="round" @click="onBack" expand="full" class="font-size">
+                                  <ion-icon slot="start" :icon="homeOutline"   />
+                                {{ t("Home") }}</ion-button>
+                            <ion-button :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+ shape="round" expand="full"  @click="onSaveAsDraft">
                                 <ion-icon slot="start" :icon="saveOutline" />
                                 <ion-label>  {{ t("Save")}}</ion-label>
-                              
                                 </ion-button>
                             <ComPrintBillButton/>
-                            <ion-button id="discount" expand="full"  shape="round"  >
+                            <ion-button :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+ id="discount" expand="full"  shape="round"  >
                                 <ion-icon slot="start" :icon="pricetagOutline" />
                                 <ion-label>{{ t("Discount") }}</ion-label>
                                 </ion-button>
@@ -100,7 +101,8 @@ import ComQuickPayButton from "@/modules/ecoupon/sale-coupon/components/ComQuick
 import ComPrintBillButton from "@/modules/ecoupon/sale-coupon/components/ComPrintBillButton.vue"
 import { closeOutline, homeOutline, logoUsd, pricetagOutline, saveOutline } from "ionicons/icons"
 import ComSaleMoreActionButton from "@/modules/ecoupon/sale-coupon/components/ComSaleMoreActionButton.vue"
-
+import { useApp } from '@/hooks/useApp';
+const {userPreference} = useApp()
 const { saleDoc, onSaveAsDraft,onSaleDiscountPercent,onSaleDiscountAmount,totalSaleDiscountAmount } = useSaleCoupon()
 const printFormat = app.setting?.print_formats?.filter(x=>x.show_in_pos==1 && x.doc_type==="Sale");
 const t = window.t

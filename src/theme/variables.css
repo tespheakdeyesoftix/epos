@@ -417,6 +417,14 @@ a.link{
 		--width: 100vw;
 		--height: 100vh;
 }
+
+
+}
+@media screen and (max-width: 1200px) {
+
+	ion-item {
+  --min-height: 0 !important; 
+}
 }
 
 

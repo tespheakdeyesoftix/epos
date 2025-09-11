@@ -3,10 +3,13 @@
  <ion-button 
  expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='desktop' || plateform=='tablet'"
  @click="openPopover($event)"
+ :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+
  >{{ t("Quick Pay") }}</ion-button>
  <ion-button 
  expand="full" shape="round" color="danger" id="quick_pay_button" v-if="plateform=='mobile'"
- @click="openPopover($event)" style="font-size: 12px;" 
+ @click="openPopover($event)" 
+ :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
  >{{ t("Quick Pay") }}</ion-button>
   <ion-popover
     :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"
@@ -28,7 +31,8 @@
 import {  ref } from "vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { cardOutline } from "ionicons/icons";
-
+import { useApp } from '@/hooks/useApp';
+const {userPreference} = useApp()
 const plateform = ref(app.utils.getPlateform())
 
 

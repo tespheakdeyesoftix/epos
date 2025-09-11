@@ -82,7 +82,7 @@
                 <ion-grid class="ion-no-padding">
                     <ion-row>
                         <ion-col size="9">
-                            <ion-label>{{ t("Total Coupon:") }} <strong>{{ coupounList.length }}</strong></ion-label> /
+                            <ion-label>{{ t("Total Coupon:") }}<strong>{{ coupounList.length }}</strong></ion-label> /
                             &nbsp;<ion-label>{{ t("Total Amount:") }} <strong>
                                     <ComCurrency
                                         :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
