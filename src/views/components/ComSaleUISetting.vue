@@ -25,7 +25,7 @@
   
   ></ion-range>
 
-    <ion-label>{{t("Product Container Width")}}</ion-label>
+    <ion-label>{{t("Product Container Width")}} - {{ userPreference.sale_ui_setting.product_container_width }}</ion-label>
   <ion-range
     aria-label="Custom range"
     :min="30"
@@ -37,13 +37,24 @@
     :snaps="true"
  
   ></ion-range>
-  <ion-label>{{t("Font Size")}}</ion-label>
+  <ion-label>{{t("Product Font Size")}} - {{ userPreference.sale_ui_setting.product_font_size }} px </ion-label>
   <ion-range
     aria-label="Custom range"
-    :min="14"
+    :min="5"
     :max="75"
     :value="userPreference.sale_ui_setting.product_font_size"
     v-model="userPreference.sale_ui_setting.product_font_size"
+    :ticks="true"
+    :snaps="true"
+ 
+  ></ion-range>
+   <ion-label>{{t("Button Font Size")}} - {{ userPreference.sale_ui_setting.button_font_size }} px </ion-label>
+  <ion-range
+    aria-label="Custom range"
+    :min="5"
+    :max="75"
+    :value="userPreference.sale_ui_setting.button_font_size"
+    v-model="userPreference.sale_ui_setting.button_font_size"
     :ticks="true"
     :snaps="true"
  

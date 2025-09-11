@@ -153,7 +153,7 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
-        cssClass: app.utils.getPlateform()=="mobile"?"":"scan-coupon-code-modal"
+        cssClass: app.utils.getPlateform()=="mobile" || 'tablet' ?"":"scan-coupon-code-modal"
 
     })
 

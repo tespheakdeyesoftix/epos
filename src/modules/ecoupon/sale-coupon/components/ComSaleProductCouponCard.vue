@@ -69,7 +69,7 @@
                 <ion-button :id="popOverID" @click="handleButtonClick">{{ t("More") }}</ion-button>
 
                 <ion-popover :trigger="popOverID" trigger-action="click" :dismiss-on-select="true">
-                    <ion-content>
+                    <ion-content class="button-text-tablet">
                         <ion-list>
                             <!-- Free -->
                             <ion-item v-if="data.allow_free == 1 && (data.is_free || 0) == 0"
