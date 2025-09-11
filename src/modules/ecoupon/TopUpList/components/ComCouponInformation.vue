@@ -16,12 +16,15 @@
     <ion-card-content>
         <ion-card class="ion-no-padding ion-no-margin">
             <ion-card-content class="flex gap-3 align-item-center">
-                  <ion-avatar class="border-1" slot="start">
-            <Img :src="topUpCouponInfo?.customer?.photo" alt="Customer" />
+          <ion-avatar class="border-1" slot="start">
+            <Img v-if="topUpCouponInfo?.customer?.photo" :src="topUpCouponInfo?.customer?.photo" alt="Customer" />
+            <div class="avatar-placeholder" v-else >{{ getAvatarLetter(topUpCouponInfo?.customer?.customer_name) }}</div>
+           
           </ion-avatar>
           <ion-label>
             <div class="flex align-item-center">
-            <h2>{{ topUpCouponInfo?.customer?.customer_name }}</h2>  <ion-chip class=" text-small" color="primary" outline>
+            <h2>{{ topUpCouponInfo?.customer?.customer_name }}</h2>  
+            <ion-chip class=" text-small" color="primary" outline>
                {{ topUpCouponInfo?.customer?.customer_group }}
               </ion-chip></div>
             <p>{{t("ID")}}: {{ topUpCouponInfo?.customer?.name }}</p>
@@ -107,6 +110,7 @@
 </template>
 <script setup>
 import {ref, onMounted}  from "vue"
+import { getAvatarLetter } from "@/helpers/utils"
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
 import { chevronDownOutline, chevronUpOutline } from 'ionicons/icons';
 const { topUpCouponInfo} = useSaleCoupon()

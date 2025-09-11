@@ -27,7 +27,7 @@
          <ion-icon :icon="alertCircleOutline"  v-tooltip.top+="saleDoc.discount_note"></ion-icon>
         <ion-label slot="end"><ComCurrency :value="totalSaleDiscountAmount"/></ion-label>
     </ion-item>
-    <ion-item v-if="totalCouponValue>0">
+    <ion-item v-if="totalCouponValue>0" >
         <ion-label>{{ t("Total Coupon Value") }}</ion-label>
         <ion-label slot="end"><ComCurrency :value="totalCouponValue"/></ion-label>
     </ion-item>
@@ -53,4 +53,5 @@ const t = window.t;
     padding: 2px;
     margin: 0;
 }
+
 </style>

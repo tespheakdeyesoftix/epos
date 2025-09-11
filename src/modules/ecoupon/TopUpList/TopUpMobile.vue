@@ -30,7 +30,7 @@
 import { ref } from "vue";
 import { onBeforeRouteLeave } from 'vue-router'
 import ComSearchBarcode from "@/modules/ecoupon/TopUpList/components/ComSearchBarcode.vue";
-import ComTopUpCouponvalue from "@/modules/ecoupon/TopUpList/components/ComTopUpCouponValue.vue";
+import ComTopUpCouponvalue from "@/modules/ecoupon/TopUpList/components/ComTopUpCouponvalue.vue";
 import ComCouponInformation from "@/modules/ecoupon/TopUpList/components/ComCouponInformation.vue";
 import ComTopUpFooter from "@/modules/ecoupon/TopUpList/components/ComTopUpFooter.vue";
 import ComSummaryInfo from "@/modules/ecoupon/TopUpList/components/ComSummaryInfo.vue";

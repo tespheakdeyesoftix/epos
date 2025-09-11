@@ -6,6 +6,8 @@
   shape="round"
   expand="full"
   v-if="saleDoc.sale_status == 'Bill Requested'"
+  :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+
 >
   <ion-icon slot="start" :icon="printOutline" />
   <ion-label> {{ t("Cancel Print Bill") }}</ion-label>
@@ -14,7 +16,8 @@
 
   <ion-button v-if="saleDoc.sale_status!='Bill Requested'"  
   shape="round" expand="full" 
-  @click="openPopover($event)">
+  @click="openPopover($event)" :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+>
     <ion-icon slot="start" :icon="printOutline" />
     {{ t("Print") }}</ion-button>
   <ion-popover :dismiss-on-select="true"
@@ -33,9 +36,10 @@
 
 <script setup>
 import { ref } from 'vue'
- import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
+import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { printOutline } from 'ionicons/icons';
- 
+import { useApp } from '@/hooks/useApp';
+const {userPreference} = useApp()
 
 const { saleDoc,onPrintRequestBill} = useSaleCoupon()
 const printFormat = ref([]);

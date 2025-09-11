@@ -1,6 +1,8 @@
 <template>
     <ion-button shape="round" expand="full" 
     @click="openPopover($event)" 
+    :style="{ fontSize: userPreference.sale_ui_setting.button_font_size + 'px' }"
+
     >{{ t("Mores") }}</ion-button>
     
  <ion-popover 
@@ -53,7 +55,7 @@ import { useSaleCoupon } from '@/hooks/useSaleCoupon';
 import ComOrderDetailModal from '@/modules/ecoupon/sale-coupon/components/ComOrderDetailModal.vue';
 import ComSaleUISetting from '@/views/components/ComSaleUISetting.vue';
 import { ref } from 'vue';
-
+const {userPreference} = useApp()
 const {saleDoc} = useSaleCoupon();
 
 const t = window.t;
