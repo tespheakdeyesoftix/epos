@@ -8,8 +8,44 @@
                 </ion-button>
             </template>
         </AppBar>
-        <ion-content class="ion-padding">
-<ion-refresher slot="fixed" @ionRefresh="handleRefresh">
+
+        <!-- check plateform == mobile -->
+        <ion-content class="ion-padding" v-if="plateform =='mobile'">
+            <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
+                <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
+            <ComRevenueKPI :data = "kpiData"/>
+            <ion-grid  class="ion-no-margin ion-no-padding">
+                <ion-row   >
+                    <ion-col  size="12"  size-xs="12"   size-md="8"   class="ion-no-padding">
+                             <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
+                    </ion-col>
+                    <ion-col  size="12" size-xs="12"  size-md="4" class="mt-3 ion-no-padding" >                       
+                            <ComCouponTransactionSummary :data="couponTransactionSummary"/>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                       <ComDailySaleChart :data="chartData"/>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="mt-3">
+                    <ion-col size="12"  size-xs="12" size-sm="12"  size-md="6"   >
+                        <ComCouponUseByPOSStationChart :data="couponUsedSummaryByPOSStation"/>
+                    </ion-col>
+                    <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="mt-3"> 
+                         <ComPaymentBreakDown :data="paymentbreakdown"/></ion-col>
+                </ion-row>
+                    <ion-row class="mt-3">
+            <ion-col>
+                <ComRecentData />
+            </ion-col>
+                    </ion-row>
+            </ion-grid>
+        </ion-content>
+        <!-- plate form != mobile -->
+        <ion-content class="ion-padding" v-if="plateform != 'mobile'">
+            <ion-refresher slot="fixed" @ionRefresh="handleRefresh">
                 <ion-refresher-content></ion-refresher-content>
             </ion-refresher>
             <ComRevenueKPI :data = "kpiData"/>
@@ -18,13 +54,8 @@
                     <ion-col  size="12"  size-xs="12"   size-md="8"   class="ion-no-padding pr-2">
                              <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
                     </ion-col>
-                    <ion-col  size="12" size-xs="12"  size-md="4" >
-                        
+                    <ion-col  size="12" size-xs="12"  size-md="4" >                       
                             <ComCouponTransactionSummary :data="couponTransactionSummary"/>
-                      
-                        
-                        
-
                     </ion-col>
                 </ion-row>
                 <ion-row>
@@ -39,16 +70,14 @@
                     <ion-col size="12"  size-xs="12" size-sm="12"   size-md="6"    class="pl-2"> 
                          <ComPaymentBreakDown :data="paymentbreakdown"/></ion-col>
                 </ion-row>
-                
                     <ion-row class="mt-3">
-<ion-col>
-    <ComRecentData />
-</ion-col>
+            <ion-col>
+                <ComRecentData />
+            </ion-col>
                     </ion-row>
-            
             </ion-grid>
- 
         </ion-content>
+
     </ion-page>
 </template>
 <script setup>
@@ -63,6 +92,10 @@ import ComCouponUseByPOSStationChart from "@/modules/ecoupon/dashboard/component
 import ComRecentData from "@/modules/ecoupon/dashboard/components/ComRecentData.vue"
 import { onMounted } from "vue";
 import { refreshOutline } from "ionicons/icons";
+import { ref } from 'vue';
+
+const plateform = ref(app.utils.getPlateform())
+
 const {
         kpiData,
         saleCouponBreakdown,

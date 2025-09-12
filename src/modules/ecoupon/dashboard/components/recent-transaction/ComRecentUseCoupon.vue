@@ -8,7 +8,6 @@
 </template>
 
 <script setup>
-import ComSaleOrderCard from "@/views/sales/components/ComSaleOrderCard.vue"
 import ComRecentUseCouponTable from "@/modules/ecoupon/dashboard/components/recent-transaction/ComRecentUseCouponTable.vue"
 import ComRecentUseCouponMobile from "@/modules/ecoupon/dashboard/components/recent-transaction/ComRecentUseCouponMobile.vue"
 import { onMounted, ref } from "vue"
