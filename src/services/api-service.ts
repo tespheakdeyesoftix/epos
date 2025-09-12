@@ -59,6 +59,7 @@ export function getApi(api_url: string, param: any = null) {
         return { data: null, error: "Frappe is not defined" };
     }
     const call = frappe.call();
+    
     return call.get(api_url, param)
         .then((r: any) => {
             if (r.message) {

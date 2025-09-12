@@ -1,13 +1,13 @@
 <template>
 <BaseModal :title="t('Payment')" :hideFooter="false">
-    <template #end v-if="plateform=='mobile' || plateform=='tablet'">
+    <template #end v-if="plateform=='mobile'">
         <ComSelectPOSReceiptMobile />
     </template>
- <!-- <ComPaymentAmountInfo v-if="plateform=='mobile'"/>  -->
+ <ComPaymentAmountInfo class="ion-hide-md-up"/> 
   
-   <ion-grid v-if="plateform!=='mobile' && plateform !='tablet'">
+   <ion-grid v-if="plateform!=='mobile'">
   <ion-row  >
-    <ion-col size="12" size-md="4"  >
+    <ion-col size="12" size-md="4"   >
       <ComPaymentInput />
     </ion-col>
 
@@ -24,8 +24,6 @@
 
 <div v-else>
   <!-- this payment ui on mobile screen -->
-<ComPaymentAmountInfo v-if="plateform=='mobile' || plateform=='tablet'"/> 
-
   <ion-grid> 
     <ion-row>
       <ion-col size="12" size-md="4">
@@ -43,12 +41,8 @@
 </div>
 
 
-
-    <!-- <div v-if="plateform=='mobile'" class="fixed-footer-mobile">
-        <ComFooterTotalpayment />
-    </div> -->
-   <ComFooterTotalpayment  v-if="plateform=='mobile' || plateform=='tablet' "/>
-
+ 
+ 
      <template #footer>
 
        <ComPaymentFooter/>
@@ -75,6 +69,9 @@ onMounted(()=>{
   // disable widnow listender scanner on   redeem scren
   window.disable_scan_redeem = true;
 
+  window.disable_scan_check_coupon = true;
+
+
 })
 
 onUnmounted(()=>{
@@ -83,6 +80,7 @@ onUnmounted(()=>{
   
   //enable widnow listender scanner on   redeem scren
   window.disable_scan_redeem = false;
+  window.disable_scan_check_coupon = false;
 
 })
 

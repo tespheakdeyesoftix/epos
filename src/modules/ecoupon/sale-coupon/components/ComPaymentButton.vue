@@ -1,6 +1,6 @@
 <template>
-    <ion-footer v-if="plateform=='desktop'">
-                <ion-card class="p-0 m-0 card-height" color="tertiary" button @click="_onPayment">
+    <ion-footer v-if="plateform=='desktop'" >
+                <ion-card class="p-0 m-0 card-height" color="success" button @click="_onPayment">
                 <ion-card-content>
                     <stack row equal >
                     <stack row>
@@ -26,7 +26,7 @@
     </ion-footer>
     <ion-footer v-if="plateform=='mobile'" >
                
-                <ion-card class="p-0 m-0 card-height"  button @click="_onPayment" style="background: transparent; color: black;" >
+                <ion-card class="p-0 m-0 card-height"   button @click="_onPayment" style="color: black;" >
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row>
@@ -57,14 +57,14 @@
     </ion-footer>
      <ion-footer v-if="plateform=='tablet'" >
                
-                <ion-card class="p-0 m-0 card-height"   button @click="_onPayment" color="tertiary" >
+                <ion-card class="p-0 m-0" style="height: 85px;"   button @click="_onPayment" color="success" >
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row >
                         <ion-col size="5">
                         <div >
                             <div>
-                                  <ion-label class="big-chip font">
+                                  <ion-label class="big-chip font text-2xl" >
                                 {{ t('Payment') }} 
                             </ion-label>
                             </div>
@@ -83,8 +83,8 @@
                         <ion-col size="7" >
                             <div style="text-align: right;">
   <div>
-                                <ion-label class="big-chip font">
-                                {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
+                                <ion-label class="big-chip font text-3xl">
+                                {{t('Total')}}  :  <ComCurrency :value="grandTotal"/> 
                             </ion-label>
                             </div>
                             <ion-label class="big-chip font">

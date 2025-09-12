@@ -1,8 +1,10 @@
 <template>
     
     <stack>
-        <com-input @keyup="onInput" v-model="paymentInputAmount" :type="plateform=='mobile'? 'number':'text'" :label="t('Payment Amount')" :placeholder="paymentBalance.toString()" /> 
-      <template v-if="plateform!=='mobile'">
+ 
+        <com-input @keyup="onInput" v-model="paymentInputAmount" :type="(plateform=='mobile' || plateform=='tablet')? 'number':'text'" :label="t('Payment Amount')" :placeholder="paymentBalance.toString()" /> 
+        
+      <div v-if="plateform!=='mobile'" class="ion-hide-md-down">
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">
                     <ion-col v-for="k in r">
@@ -40,15 +42,16 @@
         expand="block" 
         fill="outline"
         size="large"
-        style="height:20px;"
+        style="height:20px; padding: 0px;"
         @click="onSelectSecondPredefine(d)"
+        
       >
-        <ComCurrency :value="d" :currency="secondCurrency"/>
+        <ComCurrency  :value="d" :currency="secondCurrency"/>
       </ion-button>
     </ion-col>
   </ion-row>
 </ion-grid>
-</template>
+</div>
     </stack>
 </template>
 <script setup>
@@ -63,6 +66,8 @@ const {  paymentBalance,paymentInputAmount,onAddPayment } = useSaleCoupon()
  
     const secondCurrency = app.setting.second_currency;
     const paymentTypes = app.setting.pos_config.payment_type;
+
+ 
     const keypad = [
         [1,2,3],
         [4,5,6],

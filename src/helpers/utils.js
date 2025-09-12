@@ -533,7 +533,7 @@ export function isMobile(){
 export function getCouponNumber(coupon){
   if(coupon.toLowerCase().startsWith("http")){
    
-    const arrayCoupons =  coupon.split("?coupon=");
+    const arrayCoupons =  coupon.split("?c=");
     
  
     if(arrayCoupons.length<2){
@@ -543,8 +543,7 @@ export function getCouponNumber(coupon){
 
   }
  
-  // return decrypt(coupon)
-  return coupon
+  return decrypt(coupon)
   
 }
  
@@ -826,6 +825,7 @@ export function bankersRound(number, decimals = null) {
     decimals = app.setting.currency_precision;
     
   }
+
   const factor = Math.pow(10, decimals);
   const n = number * factor;
   const integer = Math.floor(n);
@@ -836,6 +836,7 @@ export function bankersRound(number, decimals = null) {
 
   // fraction == 0.5, round to even
   return (integer % 2 === 0 ? integer : integer + 1) / factor;
+  
 }
 
 
