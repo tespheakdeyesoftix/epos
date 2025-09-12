@@ -29,9 +29,9 @@ import { scan } from "ionicons/icons"
 
 const { saleDoc,couponCode,inputScanQRCode,topUpCouponInfo } = useSaleCoupon()
 const plateform = ref(app.utils.getPlateform())
-let disableTextboxInput = false;
-const t = window.t
 
+const t = window.t
+let disableTextboxInput = false;
 const buffer = ref("");
 let lastTime = 0;
 

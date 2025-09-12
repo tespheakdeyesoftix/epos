@@ -2,7 +2,7 @@
     <BaseModal :title="data?.name + '-' + data.product_name_en" :hideFooter="false" @onConfirm="onConfirm">
 
         <stack row equal class="mb-4" itemClass="col-6 sm:col-6 lg:col-3 p-2 "
-            v-if="data.is_open_product == 1 && plateform != 'mobile'">
+            v-if="data.is_open_product == 1 && plateform == 'desktop'">
             <com-input ref="txtPrice" :label="t('Price')" v-model="doc.price" type="number" keyboard />
             <ion-select v-model="doc.coupon_markup_type" label-placement="floating" fill="outline"
                 aria-label="Markup Type" interface="popover" :placeholder="t('Markup Type')">
@@ -20,10 +20,19 @@
         <!-- scan barcode -->
         <!-- v-if="plateform != 'mobile'"  -->
 
-        <div v-if="plateform != 'mobile'">
-            <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
+        <div>
+            <com-input ref="inputRef" type="BarcodeScanerInput" v-model="coupon" @change="onScanBarCode"
+            @onBarcodeChange="onScanBarCode"
+            :label="t('Coupon Code')"
                 :placeholder="t('Please scan coupon codes')" label-placement="stacked" fill="outline"></com-input>
-            <div style="display: flex;justify-content: center;">
+            
+        </div>
+
+    
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12" :size-md="data.is_open_product == 1?6:12">
+                    <div style="display: flex;justify-content: center;">
                 <ion-chip color="success" @click="onChangeScanMode('add')">
                     <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
                     <ion-label>{{ t("Scan to Add") }}</ion-label>
@@ -33,12 +42,6 @@
                     <ion-label>{{ t("Scan to Remove") }}</ion-label>
                 </ion-chip>
             </div>
-        </div>
-
-        <div v-if="isMobile" class="ion-text-center">
-            <ion-button @click="onScanWithCamera" class="w-full">{{ t("Scan Coupon Code") }}</ion-button>
-        </div>
-
 
         <ion-list v-if="sortedCouponList.length > 0">
             <ion-item button v-for="(c, index) in sortedCouponList" :key="index">
@@ -58,9 +61,12 @@
                 </ion-row>
             </ion-grid>
         </template>
+                </ion-col>
+                
+                <ion-col size="12" size-md="6" v-if="data.is_open_product == 1">
 
         <!-- keypad for enter amount on mobile only -->
-        <template v-if="plateform == 'mobile' && data.is_open_product == 1">
+        <template v-if="(plateform == 'mobile' || plateform == 'tablet') && data.is_open_product == 1">
             <div style=" display: flex;justify-content: center;gap: 10px;">
                 <ion-chip :color="selectedCurrency == 'KHR' ? 'primary' : ''" @click="onChangeInputCurrency('KHR')">{{
                     t("KHR") }}</ion-chip>
@@ -69,6 +75,12 @@
             </div>
             <ComKeyPadInput v-model="doc.price" />
         </template>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+
+
 
 
         <template #footer>
@@ -82,7 +94,7 @@
                                         :value="coupounList.length * (data.is_open_product ? doc.price : data.price)" />
                                 </strong></ion-label>
                         </ion-col>
-                        <ion-col size="3" class="ion-no-padding" v-if="plateform == 'mobile'">
+                        <ion-col size="3" class="ion-no-padding">
                             <ion-button color="success" @click="onConfirm(true)" class="w-full h-full">{{ t("Payment")
                                 }}</ion-button>
                         </ion-col>
@@ -129,7 +141,7 @@
 import { modalController } from "@ionic/vue"
 import dayjs from "dayjs";
 import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComKeyPadInput from "@/views/components/public/ComKeyPadInput.vue"
 const { saleDoc } = useSaleCoupon()
@@ -159,6 +171,11 @@ const maxAmountKHR = ref(100000)
 const minAmountUSD = ref(1)
 const maxAmountUSD = ref(100)
 
+let disableTextboxInput = false;
+const buffer = ref("");
+let lastTime = 0;
+
+
 
 const couponValue = computed(() => {
     if (doc.value.coupon_markup_type == 'Percent') {
@@ -186,10 +203,11 @@ const sortedCouponList = computed(() => {
 
 function onChangeScanMode(mode) {
     scanMode.value = mode;
-    inputRef.value.focus()
+ 
 }
 
 async function onScanBarCode() {
+    
     if (scanMode.value == "add") {
         await addCoupon()
     } else {
@@ -197,6 +215,7 @@ async function onScanBarCode() {
     }
 }
 
+ 
 async function onScanWithCamera() {
     const result = await app.utils.onScanBarcode();
     if (result) {
@@ -209,10 +228,11 @@ async function onScanWithCamera() {
 
 
 async function addCoupon() {
+    
     const data = await validateCouponCode(app.utils.getCouponNumber(coupon.value))
     if (!data) {
         coupon.value = ""
-        inputRef.value.focus()
+        
         return;
     }
     // check 
@@ -227,7 +247,7 @@ async function addCoupon() {
     coupon.value = ""
 
 
-    inputRef.value.focus()
+ 
 }
 
 function onRemoveCoupon() {
@@ -369,7 +389,45 @@ function onConfirm(process_payment = false) {
 
 }
 
+
+
+// keyboard listener to hadle scan 
+async function onHandleScan(e) {
+
+  const now = Date.now();
+
+  // Only track printable keys or Enter
+  if (e.key.length === 1 || e.key === "Enter") {
+    const timeDiff = now - lastTime;
+    lastTime = now;
+
+    // If typing is too slow (>50ms), reset buffer (likely human typing)
+    if (timeDiff > 50) {
+      buffer.value = "";
+    }
+
+    if (e.key === "Enter") {
+      if (buffer.value.length > 3) { // prevent noise
+        coupon.value = buffer.value;
+      
+        if (scanMode.value == "add") {
+                await addCoupon()
+            } else {
+                onRemoveCoupon()
+            }
+        disableTextboxInput = true;
+      }
+      buffer.value = "";
+    } else {
+      buffer.value += e.key;
+    }
+  }
+}
+
+
 onMounted(async () => {
+     window.disable_scan_check_coupon = true;
+    window.addEventListener("keydown", onHandleScan);
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
     } else {
@@ -389,4 +447,11 @@ onMounted(async () => {
 
 
 })
+
+onUnmounted(()=>{
+   
+     window.disable_scan_check_coupon = false;
+    window.removeEventListener("keydown", onHandleScan);
+})
+
 </script>

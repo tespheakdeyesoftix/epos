@@ -91,12 +91,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/sale-coupon/SaleCouponList.vue'),
     meta: { requiresAuth: true }
   },
-  
   {
     path: "/sale-coupon",
-    component: () => window.matchMedia('(max-width: 900px)').matches? import('@/modules/ecoupon/sale-coupon/SaleCouponMobile.vue'):import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    component: () =>  import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   },  
+  
+  {
+    path: "/sale-coupon-mobile",
+    component: () =>  import('@/modules/ecoupon/sale-coupon/SaleCouponMobile.vue'),
+    meta: { requiresAuth: true }
+  },  
+
   {
     path: "/sale-coupon/:name",
     name:"EditSaleCoupon",

@@ -13,7 +13,7 @@ const {isAppLoadReady,isCashierShiftOpened,isWorkingDayOpened} = useApp()
 const routes = getRoute();
 
 const router = createRouter({
-  history: createWebHashHistory("/ecoupon/"),
+  history: createWebHashHistory("/"),
   routes
 })
 

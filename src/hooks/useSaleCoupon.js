@@ -75,10 +75,11 @@ const totalPaymentAmount = computed(() => {
 })
 const paymentBalance = computed(() => {
     let balance =(grandTotal.value - totalPaymentAmount.value) || 0
+
     if (balance < 0) {
         balance = 0
     }
-
+    
     return app.utils.bankersRound(balance)
 })
 
@@ -494,13 +495,17 @@ async function onAddPayment(payment_type) {
             exchange_rate: payment_type.exchange_rate
         }
     )
-    if(app.utils.getPlateform() == "mobile"){
+    if(app.utils.isMobile()){
         // payment input type is = number
+        
 paymentInputAmount.value = NaN
+
     }else {
         // payment input is = text
         paymentInputAmount.value = "";
     }
+    
+
     
 
 

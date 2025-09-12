@@ -1,22 +1,22 @@
 <template>
-   
+
     <div v-if="plateform == 'mobile'" row equal>
-       <ion-chip class="multi-line">
-  <ion-text class="mr-2">{{ t("Exchange Rate") }}:</ion-text>
-  <div style="font-weight: 600;">
-    <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> =
-    <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency" />
-  </div>
-</ion-chip>
+        <ion-chip class="multi-line">
+            <ion-text class="mr-2">{{ t("Exchange Rate") }}:</ion-text>
+            <div style="font-weight: 600;">
+                <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> =
+                <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency" />
+            </div>
+        </ion-chip>
 
         <ion-chip class="multi-line-chip">
-                <ion-text style="font-size: 17px;font-weight: 400;" color="dark">
-                 {{t("Total Amount")}}
-                 </ion-text>   
+            <ion-text style="font-size: 17px;font-weight: 400;" color="dark">
+                {{ t("Total Amount") }}
+            </ion-text>
             <div class="flex gap-8 mt-2 " style="font-weight: 600; font-size: x-large;">
                 <ComCurrency :value="grandTotal" />
                 <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
-          </div>
+            </div>
         </ion-chip>
     </div>
     <div v-else>
@@ -29,25 +29,28 @@
 
                 </div>
 
-                <div class="w-full flex justify-content-between">
-                    <div>
-                        <ion-chip>
-                            <ComCurrency :value="grandTotal" />
-                            <span class="mx-2"> | </span>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button expand="full" size="large" shape="round" fill="outline" color="primary">
+                                <ComCurrency :value="grandTotal" />
 
-                            <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
-                        </ion-chip>
 
-                    </div>
-                    <div>
-                        <ion-chip>
-                            {{ t("Exchange Rate") }}:
-                            <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> =
-                            <ComCurrency :value="exchangeRateInput" :currency="exchangeCurrency" />
-                        </ion-chip>
+                            </ion-button>
+                        </ion-col>
 
-                    </div>
-                </div>
+                        <ion-col>
+                            <ion-button expand="full" size="large" shape="round" fill="outline" color="primary">
+                                <ComCurrency :value="grandTotalSecondCurrency" :currency="secondCurrency" />
+                            </ion-button>
+                        </ion-col>
+
+                    </ion-row>
+                </ion-grid>
+
+
+
+
             </ion-card-content>
         </ion-card>
 
@@ -79,19 +82,19 @@ if (exchangeCurrency == mainExchangeRateCurrency) {
     bottom: -20px;
     width: 100%;
 }
+
 .multi-line-chip {
-  display: flex;
-  flex-direction: column;
-  background-color: #98b9ff;
-}
-.multi-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  padding: 4px 8px;
-  gap: 6px;
+    display: flex;
+    flex-direction: column;
+    background-color: #98b9ff;
 }
 
- 
+.multi-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 4px 8px;
+    gap: 6px;
+}
 </style>
