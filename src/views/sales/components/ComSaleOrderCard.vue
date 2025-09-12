@@ -9,7 +9,7 @@
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
                         <span>
-                            {{t("Create By")}}: {{ data.closed_by.split('@')[0]}}
+                            {{t("Create By")}}: {{ data.closed_by?.split('@')[0]}}
                         </span>
                         <div>
                             {{dayjs(data?.closed_date).format('DD/MM/YYYY hh:mm A')}}
