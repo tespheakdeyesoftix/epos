@@ -16,9 +16,25 @@
       <div class="fix-container">
         <ion-card style="margin-top: 30px;" v-if="doc?.docstatus==0">
           <ion-card-content>
-            <com-input ref="inputRef" focus v-model="coupon" @change="onScanBarCode" :label="t('Coupon Code')"
-              :placeholder="t('Please enter or scan qr code')" label-placement="stacked" fill="outline" />
-
+            <com-input v-if="plateform == 'mobile'"
+            ref="inputRef" 
+            focus v-model="coupon"  
+            @change="onScanBarCode"
+            :label="t('Coupon Code')"
+            :placeholder="t('Please enter or scan qr code')" 
+            label-placement="stacked" fill="outline"
+            :icon="scan"
+            />
+            
+            <!-- plateform != 'mobile' -->
+            <com-input v-else ref="inputRef" 
+            focus v-model="coupon"
+            @change="onScanBarCode"
+            :label="t('Coupon Code')"
+            :placeholder="t('Please enter or scan qr code')" 
+            label-placement="stacked" fill="outline"
+            />
+          
             <div style="display: flex; justify-content: center; margin-top: 10px;">
               <ion-chip color="success" @click="onChangeScanMode('add')">
                 <ion-icon v-if="scanMode == 'add'" :icon="checkmarkOutline"></ion-icon>
@@ -80,10 +96,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import {  checkmarkCircle, checkmarkOutline, close,} from 'ionicons/icons';
+import {  checkmarkCircle, checkmarkOutline, close,scan} from 'ionicons/icons';
 
 import PQueue from 'p-queue'
 import { onIonViewDidLeave } from '@ionic/vue';
+const plateform = ref(app.utils.getPlateform())
 const doc = ref(null);
 const queue = new PQueue({ concurrency: 1 })
 const options = {
