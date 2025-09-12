@@ -1,8 +1,8 @@
 <template>
   <ComRecentUseCouponTable v-if="plateform === 'desktop'" :data="data" />
-  <template v-else>
-    <ComSaleOrderCard v-for="(d, index) in data" :key="index" :data="d" />
-  </template>
+   
+    <ComSaleOrderCard v-else v-for="(d, index) in data" :key="index" :data="d" />
+ 
   <ion-button expand="full" fill="clear" routerLink="/coupon-transaction-list">
     {{ t("View all Coupon Transactions") }}
   </ion-button>
