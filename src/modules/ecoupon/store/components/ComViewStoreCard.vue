@@ -3,22 +3,7 @@
   
     <ion-grid>
       <ion-row>
-      <ion-col size="4" size-xs="6">
-
- 
-      <!-- today revenue -->
-       <ion-card button color="primary" class="ion-no-margin">
-        <ion-card-content class="text-center">
-          <ion-card-subtitle style="font-size: 18px;">
-            <ComCurrency :value= "data?.current_revenue || 0" />
-          </ion-card-subtitle>
-          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
-            {{ t("Today Revenue") }}
-          </ion-card-subtitle>
-        </ion-card-content>
-      </ion-card>
-
-      </ion-col>
+      
       <!-- MTD Revenue -->
 <ion-col size="4" size-xs="6">
        <ion-card button color="secondary" class="ion-no-margin">
@@ -45,10 +30,22 @@
       </ion-card>
       
      </ion-col>
-    </ion-row>
-    </ion-grid>
+     <ion-col size="4" size-xs="6">
+      <!-- today revenue -->
+       <ion-card button color="primary" class="ion-no-margin">
+        <ion-card-content class="text-center">
+          <ion-card-subtitle style="font-size: 18px;">
+            <ComCurrency :value= "data?.current_revenue || 0" />
+          </ion-card-subtitle>
+          <ion-card-subtitle class="mt-2" style="font-size: 18px;">
+            {{ t("Today Revenue") }}
+          </ion-card-subtitle>
+        </ion-card-content>
+      </ion-card>
 
-    
+      </ion-col>
+    </ion-row>
+    </ion-grid> 
   </div>
 </template>
 
