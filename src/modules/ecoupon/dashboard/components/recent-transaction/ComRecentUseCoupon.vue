@@ -1,16 +1,15 @@
 <template>
   <ComRecentUseCouponTable v-if="plateform === 'desktop'" :data="data" />
-  <template v-else>
-    <ComSaleOrderCard v-for="(d, index) in data" :key="index" :data="d" />
-  </template>
+  <ComRecentUseCouponMobile v-else v-for="(d, index) in data" :key="index" :data="d" />
+ 
   <ion-button expand="full" fill="clear" routerLink="/coupon-transaction-list">
     {{ t("View all Coupon Transactions") }}
   </ion-button>
 </template>
 
 <script setup>
-import ComSaleOrderCard from "@/views/sales/components/ComSaleOrderCard.vue"
 import ComRecentUseCouponTable from "@/modules/ecoupon/dashboard/components/recent-transaction/ComRecentUseCouponTable.vue"
+import ComRecentUseCouponMobile from "@/modules/ecoupon/dashboard/components/recent-transaction/ComRecentUseCouponMobile.vue"
 import { onMounted, ref } from "vue"
 
 const t = window.t

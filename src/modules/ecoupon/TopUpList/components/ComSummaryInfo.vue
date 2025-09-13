@@ -14,19 +14,18 @@
             {{ t('Total') }} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency" :currency="second_currency"/> 
         </ion-label>
         </div>
-       <div>
-  <ion-chip style="float: right;">
+       <div> 
+        <ion-chip style="float: right;">
+            <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
+           <ComExchangeRate />
+        </ion-chip>
+        <!-- <ion-chip style="float: right;">
             <ComCurrency :value="1" :currency="mainCurrency" /> 
             <span class="mx-2"> = </span>
-           
-        <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
-        </ion-chip>
+            <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
+        </ion-chip> -->
        </div>
    </div>
-       
-      
-        
-
     </ion-card-content>
 </ion-card>
 
@@ -42,4 +41,9 @@ const t = window.t;
 const {grandTotal, grandTotalSecondCurrency } = useSaleCoupon()
 const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
+const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency);
+
+if(second_currency.value == mainCurrency.value){
+    second_currency.value = app.setting.currency
+}
 </script>

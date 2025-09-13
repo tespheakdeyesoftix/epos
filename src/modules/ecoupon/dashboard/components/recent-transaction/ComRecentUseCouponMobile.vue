@@ -1,12 +1,16 @@
 <template>
+   
     <ion-card button class="ion-no-margin ion-no-padding mb-3" :routerLink="'/sale-detail/' + data.name" >
         <ion-item lines="none" style="--background: rgba(255, 0, 0, 0);">   
 
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data?.custom_bill_number || data?.name }}</h2>
+                <h2 class="card-title">{{ data?.sale || data?.name }}</h2>
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
+                        <div>
+                            {{t("Coupon code")}}: {{ data.coupon_number }}
+                        </div>
                         <span>
                             {{t("Create By")}}: {{ data.owner?.split('@')[0]}}
                         </span>
@@ -19,7 +23,7 @@
                 
             </ion-label>
             <div slot="end" style="font-size: 20px;font-weight: bold;">
-                <ion-label color="primary"><com-currency :value="data?.grand_total" /></ion-label>
+                <ion-label color="primary"><com-currency :value="Math.abs(data?.coupon_amount)" /></ion-label>
             </div>
         </ion-item>
     </ion-card>

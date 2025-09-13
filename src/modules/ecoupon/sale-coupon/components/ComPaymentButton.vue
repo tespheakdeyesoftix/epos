@@ -8,8 +8,8 @@
                             {{ t('Payment') }} 
                             </span>
                             <ion-chip class="small-chip" color="primary">
-                        <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
-                    <ComExchangeRate />
+                                <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
+                                <ComExchangeRate />
                             </ion-chip>
                     </stack>
                                 <stack>

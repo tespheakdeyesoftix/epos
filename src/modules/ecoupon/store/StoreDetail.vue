@@ -27,12 +27,9 @@
         </div>
       </div>
   
-     
       <div class="profile-name">
         {{ data?.name }} - {{ data?.vendor_name }}
       </div>
-
-      
       <div class="fix-container">
         <ComViewStoreCard />
         <ComStoreSegment :data="data" />

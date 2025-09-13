@@ -12,9 +12,9 @@
             <ion-text color="danger"><strong>({{ data?.filter(x=>x.sale_type == tran).length }})</strong></ion-text>
         </ion-label>
       </ion-item>
-      <div class="ion-padding" slot="content">
+      <div class="ion-no-padding" slot="content">
          
-<DataTable :value="data?.filter(x=>x.sale_type == tran)"
+<DataTable v-if="plateform != 'mobile'" :value="data?.filter(x=>x.sale_type == tran)"
     stripedRows 
     >
                 <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center" style="width: 60px">
@@ -68,12 +68,84 @@
                         <span v-tooltip.left="`${dayjs(slotProps.data.modified)}`">{{ dayjs(slotProps.data.modified).fromNow() }}</span>    
                     </template>
                 </column> 
-
-
-
-                
             </DataTable>
 
+<!-- plateform == mobile -->
+
+<div v-if="plateform == 'mobile'">
+<ion-card v-for="(tran, index) in data?.filter(x=>x.sale_type == tran)" :key="index">
+    <ion-card-content>
+       <router-link :to="'/sale-detail/' + tran.name" class="no-underline">
+            <stack row equal>
+                <stack>
+                    {{ t("Sale #") }}: 
+                </stack>
+                <stack>
+                    {{ tran.name }}
+                </stack>
+            </stack>
+        </router-link>
+
+        <router-link :to="'/customer-detail/' + tran.customer" class="no-underline">
+            <stack row equal>
+                <stack>
+                  {{ t("Customer") }}:  
+                </stack>
+                <stack>
+                    {{ tran.customer_name }}
+                </stack>
+            </stack>
+        </router-link>
+
+            <stack row equal>
+                <stack>
+                   {{t("Quantity")}}: 
+                </stack>
+                <stack>
+                    {{ tran.total_quantity }}
+                </stack> 
+            </stack>
+            <stack row equal>
+            <stack>
+                {{ t("Sub Total") }}:
+            </stack>
+            <stack>
+                <ComCurrency :value="tran.sub_total"/>
+            </stack>
+            </stack>
+
+            <stack row equal v-if="tran.total_discount">
+            <stack>
+                {{ t("Discount") }}:
+            </stack>
+            <stack>
+                <ComCurrency :value="tran.total_discount"/>
+            </stack>
+            </stack>
+
+            <stack row equal>
+            <stack>
+                {{ t("Grand Total") }}:
+            </stack>
+            <stack>
+                <ComCurrency :value="tran.grand_total"/>
+            </stack>
+            </stack>
+
+            <stack row equal>
+            <stack>
+                {{ t("Coupon Value") }}:
+            </stack>
+            <stack>
+                <ComCurrency :value="tran.total_coupon_value"/>
+            </stack>
+            </stack>
+            <div>
+                <label class="text-sm text-red-500">{{ t("By") }}:  {{ tran.closed_by.split("@")[0] }} <span v-tooltip.left="`${dayjs(tran.modified)}`">{{ dayjs(tran.modified).fromNow() }}</span>  </label>
+            </div>
+    </ion-card-content>
+  </ion-card>
+</div>
       </div>
     </ion-accordion>
     </ion-accordion-group>
@@ -87,13 +159,16 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';                   // optional
 import dayjs from 'dayjs';
+import ComCurrency from '@/views/components/public/ComCurrency.vue';
+import Stack from '@/views/components/public/Stack.vue';
 const props = defineProps({
     cashier_shift: String,
 working_day: String,
 });
 
-const transactionType = ["Sale Coupon","Top Up","Redeem"]
 
+const transactionType = ["Sale Coupon","Top Up","Redeem"]
+const plateform = ref(app.utils.getPlateform())
 const loading = ref(true)
 const t = window.t;
 const data = ref();

@@ -9,17 +9,16 @@
             <ion-segment @ionChange="onSelected" >
                 <ion-segment-button v-for="(d,index) in transactionType" :key="index" :value="d.label" :content-id="'recent_' + index">
                     <ion-label>{{ t(d.label) }}</ion-label>
-                </ion-segment-button>
-                
+                </ion-segment-button> 
             </ion-segment>
+
             <ion-segment-view>
                 <ion-segment-content v-for="(d,index) in transactionType" :key="index"  :id="'recent_' + index">
-                    <div class="ion-padding">
-<component :is="d.component"  v-if="d.is_loaded==true"/>
-                    </div>
-                    
-                </ion-segment-content>
-                 
+                    <!-- <div class="ion-padding"> -->
+                    <div class="mt-3">
+                        <component :is="d.component"  v-if="d.is_loaded==true"/>
+                    </div> 
+                </ion-segment-content>     
             </ion-segment-view>
         </ion-card-content>
     </ion-card>
