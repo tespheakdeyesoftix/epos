@@ -6,7 +6,7 @@
     <ion-content>
  
       <div class="fixed-container ion-padding mt-4 mb-2" v-if="!default_printer && !loading"> 
-<Message severity="warn">{{ t("There's no default printer for shift report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
+        <Message severity="warn">{{ t("There's no default printer for shift report.") }} <br/> <ion-button routerLink="/setting">{{ t("Setup Now") }}</ion-button></Message>
       </div>
         
           <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
@@ -28,11 +28,88 @@
     
   </ion-segment-view>
     </ion-content>
-    <ComFooter>
 
+    <ComFooter v-if="plateform == 'mobile'">
+  <ion-grid>
+    <ion-row class="ion-justify-content-around ion-align-items-center">
+      
+      <!-- Close Shift -->
+      <ion-col size="3" class="ion-no-padding">
+        <ion-button 
+          
+          expand="block" 
+          :disabled="data?.shift_doc.is_closed == 1" 
+          @click="onOpenCloseShift">
+          <ion-label style="font-size: 15px;">{{ t("Close Shift") }}</ion-label>
+          
+        </ion-button>
+      </ion-col>
+
+      <!-- Print Preview -->
+      <ion-col size="3" class="ion-no-padding">
+        <ComPopOver>
+          <ion-button expand="block">
+            <!-- <ion-icon :icon="eyeOutline" slot="start"></ion-icon> -->
+            <ion-text>{{ t("Print Preview") }}</ion-text>
+            
+          </ion-button>
+          <template #content>
+            <ion-list>
+              <ion-item v-for="l in languages" :key="l.server_lang" lines="full" @click="onPrint('html',l.server_lang)">
+                <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+                <ion-label>{{ l.label }}</ion-label>  
+              </ion-item>
+            </ion-list>
+          </template>
+        </ComPopOver>
+      </ion-col>
+
+      <!-- Print -->
+      <ion-col size="2" class="ion-no-padding">
+        <ComPopOver>
+          <ion-button expand="block" style="height: 45px;">
+            <!-- <ion-icon :icon="printOutline" slot="start"></ion-icon> -->
+             <ion-text>{{ t("Print") }}</ion-text>
+            
+          </ion-button>
+          <template #content>
+            <ion-list>
+              <ion-item v-for="l in languages" :key="l.server_lang" lines="full" @click="onPrint('base64',l.server_lang)">
+                <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+                <ion-label>{{ l.label }}</ion-label>  
+              </ion-item>
+            </ion-list>
+          </template>
+        </ComPopOver>
+      </ion-col>
+
+      <!-- Download PDF -->
+      <ion-col size="4" class="ion-no-padding">
+        <ComPopOver>
+          <ion-button expand="block">
+            <!-- <ion-icon :icon="cloudDownloadOutline" slot="start"></ion-icon> -->
+            {{ t("Download PDF") }}
+          </ion-button>
+          <template #content>
+            <ion-list>
+              <ion-item v-for="l in languages" :key="l.server_lang" lines="full" @click="onPrint('pdf',l.server_lang)">
+                <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+                <ion-label>{{ l.label }}</ion-label>  
+              </ion-item>
+            </ion-list>
+          </template>
+        </ComPopOver>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ComFooter>
+
+
+    <!-- plateform != 'mobile' -->
+    <ComFooter v-if="plateform != 'mobile'">
        <ion-button :disabled="data?.shift_doc.is_closed == 1" @click="onOpenCloseShift">{{ t("Close Shift") }}</ion-button>
        <ComPopOver>
-
        <ion-button>
         <ion-icon :icon="eyeOutline" slot="start"></ion-icon>
         {{ t("Print Preview") }}
@@ -60,7 +137,6 @@
           </ion-list>
         </template>
        </ComPopOver>
-       
        <ComPopOver>
        <ion-button>
         <ion-icon :icon="cloudDownloadOutline" slot="start"></ion-icon>
@@ -75,8 +151,6 @@
           </ion-list>
         </template>
        </ComPopOver>
-       
-       
     </ComFooter>
     </ion-page>
 
@@ -103,6 +177,7 @@ const tabs = ref([
     } },
  
 ])
+const plateform = ref(app.utils.getPlateform())
 const loading = ref(true)
 
 const default_printer = ref()
