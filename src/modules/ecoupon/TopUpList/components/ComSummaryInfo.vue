@@ -14,19 +14,14 @@
             {{ t('Total') }} ({{ second_currency }}) : <ComCurrency :value="grandTotalSecondCurrency" :currency="second_currency"/> 
         </ion-label>
         </div>
-       <div>
-  <ion-chip style="float: right;">
+       <div> 
+        <ion-chip style="float: right;">
             <ComCurrency :value="1" :currency="mainCurrency" /> 
             <span class="mx-2"> = </span>
-           
-        <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
+            <ComCurrency :value="exchangeRate" :currency="second_currency" /> 
         </ion-chip>
        </div>
    </div>
-       
-      
-        
-
     </ion-card-content>
 </ion-card>
 
