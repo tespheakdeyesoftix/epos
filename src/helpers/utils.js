@@ -11,6 +11,8 @@ import ComAuth from '@/views/components/public/ComAuth.vue';
 import ComViewTotalVisit from "@/views/customer/components/ComViewTotalVisit.vue"; 
 import ComViewTotalAnnalOrder from "@/views/customer/components/ComViewTotalAnnalOrder.vue"; 
 import ComViewTotalOrder from "@/views/customer/components/ComViewTotalOrder.vue"; 
+import ComCheckCoupon from "@/modules/ecoupon/coupon-codes/ComCheckCoupon.vue"; 
+
 import { Capacitor } from '@capacitor/core';
 import { onScanBarcodeAndroid } from '@/helpers/scan-barcode.js'
 
@@ -531,11 +533,12 @@ export function isMobile(){
 }
 
 export function getCouponNumber(coupon){
+  coupon = (coupon || "").replaceAll("Shift","");
   if(coupon.toLowerCase().startsWith("http")){
    
     const arrayCoupons =  coupon.split("?c=");
-    
  
+   
     if(arrayCoupons.length<2){
       return ""
     }
@@ -861,4 +864,39 @@ export function playSuccessSound(){
    successSound.currentTime = 0
             successSound.play()
 
+}
+
+
+
+export async function checkCouponCodeModal(barcode){
+  if(barcode){
+    const res = await app.getDocList("Coupon Codes", {
+         fields:["name","coupon"],
+        filters: [["coupon", "=", app.utils.getCouponNumber(barcode)]],
+         orderBy: {
+          field: 'creation',
+          order: 'desc',
+        },
+        limit: 1
+      });
+      if(res.data.length == 0){
+        await app.showWarning(t("No coupon code found"));
+        return;
+      }
+      
+      window.disable_scan_check_coupon = true;
+      await app.openModal({
+        component:ComCheckCoupon,
+        componentProps:{
+          coupon_code:res.data[0].coupon,
+          coupon_id: res.data[0].name
+        },
+        cssClass:"full"
+      })
+
+      window.disable_scan_check_coupon = false;
+
+      
+  }
+  
 }

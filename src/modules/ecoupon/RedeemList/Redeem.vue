@@ -4,7 +4,8 @@
       {{ t("Redeem") }}
     </ToolBar>
     <ion-content class="ion-padding">
-      <div class="fix-container">
+      <!-- =============Desktop UI ================== -->
+      <div class="fix-container" v-if="!isMobileUI">
         <ion-split-pane when="xs" content-id="main">
           <ion-menu content-id="main">
             <ion-content class="ion-padding">
@@ -19,32 +20,26 @@
               <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
                 storageKey="redeem_note" />
             </ion-content>
-            <ion-footer>
-              <ion-card class="p-3 m-0 card-height" color="tertiary">
-                <stack row equal>
-                  <div>
-                    {{ t("Total Redeem Amount") }} :
-                    <ComCurrency :value="grandTotal" /> <br>
-                    {{ t("Grand Total") }}({{ second_currency }}) :
-                    <ComCurrency :value="grandTotal * exchange_rate" :currency="second_currency" />
-                  </div>
-                  <div style="float: right;">
-                    <ion-chip>
-                      <ComCurrency :value="1" :currency="exchangeRateMainCurrency" /> =
-                      <ComCurrency :value="exchangeRate" :currency="exchangeRateSecondCurrency" />
-                    </ion-chip>
-
-                  </div>
-
-                </stack>
-
-              </ion-card>
-            </ion-footer>
+          <ComPaymentButton/>
 
           </div>
         </ion-split-pane>
       </div>
+      <!-- =================Mobile UI============================ -->
+      <template v-else>
+
+         <ComSearchBarcode/>
+      <ComRedeemCouponList />  
+
+      <div style="margin-top: 10px;">
+        <com-input v-model="saleDoc.note" type="text-area" :label="t('Note')" :placeholder="t('Redeem Note')"
+          storageKey="redeem_note" />
+      </div>
+      
+      </template>
     </ion-content>
+
+    <ComRedeemFooterMobile v-if="isMobileUI" />
   </ion-page>
 
 </template>
@@ -53,6 +48,7 @@
 import ComSearchBarcode from "@/modules/ecoupon/RedeemList/components/ComSearchBarcode.vue"
 import ComRedeemCouponList from "@/modules/ecoupon/RedeemList/components/ComRedeemCouponList.vue"
 import ComRedeemFooter from "@/modules/ecoupon/RedeemList/components/ComRedeemFooter.vue"
+import ComRedeemFooterMobile from "@/modules/ecoupon/RedeemList/components/ComRedeemFooterMobile.vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon";
 import { useApp } from "@/hooks/useApp";
 import { ref } from "vue";
@@ -60,7 +56,9 @@ import {
   onIonViewWillEnter
 } from '@ionic/vue';
 import { onBeforeRouteLeave } from 'vue-router'
-import ToolBar from "@/views/layouts/ToolBar.vue";
+import ComPaymentButton from "../sale-coupon/components/ComPaymentButton.vue";
+const isMobileUI = ref(window.innerWidth <= 900)
+
 const t = window.t;
 const { saleDoc, grandTotal, saleType, pageRoute, onClearData, initSaleDoc } = useSaleCoupon()
 const { exchange_rate } = useApp();
@@ -68,13 +66,17 @@ const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
 const exchangeRateMainCurrency = ref(app.setting.exchange_rate_main_currency);
 const exchangeRateSecondCurrency = ref(app.setting.second_currency);
- 
+
 if (mainCurrency.value != exchangeRateMainCurrency.value) {
   exchangeRateSecondCurrency.value = mainCurrency.value;
 }
 const exchangeRate = app.setting.exchange_rate_input
- 
+function handleUpdateScreenMode() {
+  isMobileUI.value = (window.innerWidth <= 900);
+}
+
 onIonViewWillEnter(() => {
+  window.addEventListener("resize", handleUpdateScreenMode);
   if (!app.route.params.name) {
     saleType.value = "Redeem"
     pageRoute.value = "redeem"
@@ -87,6 +89,7 @@ onIonViewWillEnter(() => {
 
 
 onBeforeRouteLeave(async (to, from, next) => {
+  window.removeEventListener("resize", handleUpdateScreenMode);
   if (saleDoc.value.sale_products.length > 0) {
     const confirm = await app.onConfirm("Confirm", "You have pending coupon to redeem. Do you want to continue?")
     if (!confirm) {

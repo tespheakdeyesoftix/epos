@@ -16,7 +16,7 @@
             <ion-grid  class="ion-no-margin ion-no-padding">
                 <ion-row   >
                     <ion-col  size="12"  size-xs="12"   size-md="8"   class="ion-no-padding pr-2">
-                             <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
+                             <ComStoreRevenueChart :data="storeRevenueSummaryData"/>
                     </ion-col>
                     <ion-col  size="12" size-xs="12"  size-md="4" >
                         
@@ -55,7 +55,7 @@
 const t = window.t ;
 import { useDashboard } from "@/hooks/useDashboard";
 import ComRevenueKPI from "@/modules/ecoupon/dashboard/components/ComRevenueKPI.vue"
-import ComCouponBreakdownChart from "@/modules/ecoupon/dashboard/components/ComCouponBreakdownChart.vue"
+import ComStoreRevenueChart from "@/modules/ecoupon/dashboard/components/ComStoreRevenueChart.vue"
 import ComCouponTransactionSummary from "@/modules/ecoupon/dashboard/components/ComCouponTransactionSummary.vue"
 import ComDailySaleChart from "@/modules/ecoupon/dashboard/components/ComDailySaleChart.vue"
 import ComPaymentBreakDown from "@/views/dashboard/components/ComPaymentBreakDown.vue"
@@ -65,7 +65,7 @@ import { onMounted } from "vue";
 import { refreshOutline } from "ionicons/icons";
 const {
         kpiData,
-        saleCouponBreakdown,
+        storeRevenueSummaryData,
         paymentbreakdown,
         couponTransactionSummary,
         chartData,
@@ -75,15 +75,16 @@ const {
         getCouponTransactionSummary,
         getChartData,
         getPaymentBreakDown,
-        getCouponUseSummaryByPOSStation
+        getCouponUseSummaryByPOSStation,
+        getRevenueSummaryByStore
     } = useDashboard()
 
 
 async function getData(){
   await getKpiData();
-  await getSaleCouponBreakdown();
+  await getRevenueSummaryByStore();
   await getCouponTransactionSummary();
-  await getChartData();
+  getChartData();
 //   to disable loading 
   getPaymentBreakDown();
   getCouponUseSummaryByPOSStation();

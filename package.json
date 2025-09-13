@@ -27,6 +27,7 @@
     "@ionic/vue": "^8.4.2",
     "@ionic/vue-router": "^8.4.2",
     "@primeuix/themes": "^1.1.1",
+    "@programic/vue-barcode-detector": "^1.0.0",
     "@supabase/supabase-js": "^2.49.4",
     "@vueuse/core": "^13.9.0",
     "@zxing/browser": "^0.1.5",

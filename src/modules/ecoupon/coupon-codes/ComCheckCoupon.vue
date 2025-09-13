@@ -1,5 +1,9 @@
 <template>
     <BaseModal :title="t('Check Coupon') + '-' + coupon_code">
+   
+            <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
         <div class="fixed-container"> 
 <ComCouponDetail :data="couponDetail" />
         </div>
@@ -11,20 +15,24 @@
 
 import { ref, onMounted, onUnmounted } from 'vue';
 import ComCouponDetail from "@/modules/ecoupon/coupon-codes/components/ComCouponDetail.vue"
+import useBarcodeDetector from '@programic/vue-barcode-detector';
+const couponID = ref()
 const props = defineProps({
     coupon_code: String,
     coupon_id: String
 })
 const t = window.t;
-const buffer = ref("");
-let lastTime = 0;
+ 
+const barcodeDetector = useBarcodeDetector();
+
+
 const couponDetail = ref()
 
 
-async function getCouponDetail(coupon_code) {
+async function getCouponDetail() {
     const l = await app.showLoading();
     const res = await app.getApi("epos_restaurant_2023.api.coupon.get_coupon_detail", {
-        coupon_code: coupon_code
+        coupon_code: couponID.value
     })
     if (res.data) {
         couponDetail.value = res.data;
@@ -32,27 +40,18 @@ async function getCouponDetail(coupon_code) {
     await l.dismiss();
 }
 
+const onRefreshData = async (event) => {
+    await getCouponDetail()
+    event.target.complete();
+};
 
-  async function onHandleScan(e) {
- 
-    const now = Date.now();
-
-    // Only track printable keys or Enter
-    if (e.key.length === 1 || e.key === "Enter") {
-        const timeDiff = now - lastTime;
-        lastTime = now;
-
-        // If typing is too slow (>50ms), reset buffer (likely human typing)
-        if (timeDiff > 50) {
-            buffer.value = "";
-        }
-
-        if (e.key === "Enter") {
-            if (buffer.value.length > 3) { // prevent noise
-                
-                const res = await app.getDocList("Coupon Codes", {
+function onCheckCouponCode(){
+        barcodeDetector.listen(async (barcodeData) => {
+    if (barcodeData.value ) {
+        
+        const res = await app.getDocList("Coupon Codes", {
                     fields: ["name", "coupon"],
-                    filters: [["coupon", "=", app.utils.getCouponNumber(buffer.value)]],
+                    filters: [["coupon", "=", app.utils.getCouponNumber(barcodeData.value)]],
                     orderBy: {
                         field: 'creation',
                         order: 'desc',
@@ -63,26 +62,26 @@ async function getCouponDetail(coupon_code) {
                     await app.showWarning(t("No coupon code found"));
                     return;
                 }
-                  getCouponDetail(res.data[0].name)
-            }
-          
-            buffer.value = "";
-        } else {
-            buffer.value += e.key;
-        }
-    }
-}
 
+                couponID.value = res.data[0].name;
+                 await getCouponDetail();
+
+    }
+    });
+}
+ 
 
 onMounted(async () => {
     window.disable_scan_check_coupon = true;
-    window.addEventListener("keydown", onHandleScan);
-    await getCouponDetail(props.coupon_id);
+onCheckCouponCode();
+    couponID.value = props.coupon_id;
+    await getCouponDetail();
 })
 
 onUnmounted(() => {
     window.disable_scan_check_coupon = false;
-    window.removeEventListener("keydown", onHandleScan);
+    
+barcodeDetector.stopListening();
 })
 
 </script>

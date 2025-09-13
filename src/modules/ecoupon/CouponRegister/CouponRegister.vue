@@ -16,7 +16,7 @@
       <div class="fix-container">
         <ion-card style="margin-top: 30px;" v-if="doc?.docstatus==0">
           <ion-card-content>
-            <com-input v-if="plateform == 'mobile'"
+            <com-input v-if="plateform == 'mobile' || plateform == 'tablet'"
             ref="inputRef" 
             focus v-model="coupon"  
             @change="onScanBarCode"
@@ -50,8 +50,8 @@
 
         <div class="ion-padding" v-if="doc?.name">
           <DocList ref="docListRef" docType="Coupon Codes" :options="options" :focus="false">
-
             <template #coupon_status="{ item }">
+           
               <template v-if="item.coupon_status == 'Saving...' || item.coupon_status == 'Deleting...'">
                 <ion-chip class="no-background">
                 <ion-spinner name="dots"></ion-spinner>
@@ -61,7 +61,7 @@
               <template v-else-if="item.coupon_status == 'Done'">
                 <ion-chip class="no-background">
                 <ion-icon :icon="checkmarkCircle" color="success" size="large" />
-                <ion-label style="font-size: 16px;">{{ t("Done") }}</ion-label>
+                <ion-label style="font-size: 16px;">{{ t("Done") }} </ion-label>
                 </ion-chip>
               </template>
               <template v-else-if="item.coupon_status == 'Delete'">
@@ -71,7 +71,7 @@
                 </ion-chip>
               </template>
               <ComStatus :status="item.coupon_status" v-else />
-              <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }}</ion-label>
+              <ion-label v-if="item.message" color="danger" class="ml-2">{{ item.message }} </ion-label>
             </template>
             <template #name="{ item }">
             <div style="display: flex; justify-content: center;" >
@@ -139,13 +139,23 @@ async function onScanBarCode() {
 }
 
 async function addCoupon() {
+
   if (coupon.value == "") {
     app.showWarning("Plese enter or scan coupon code")
+    return;
   }
+
+  coupon.value = app.utils.getCouponNumber(coupon.value)
+  if (coupon.value == "") {
+    app.showWarning("Invalid coupon code.")
+    return;
+  }
+   
   const coupon_data = {
     id: app.utils.generateRandomString(),
     coupon_register: doc.value.name,
     coupon: coupon.value,
+    coupon_url: coupon.value.split("?c=")[0] ,
     coupon_status: "Saving..."
   }
   docListRef.value.addRecord(coupon_data)

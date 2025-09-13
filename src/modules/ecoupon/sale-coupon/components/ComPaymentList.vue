@@ -64,7 +64,7 @@
 
     </ion-list>
     <!--  -->
-    <div class="fixed-payment" v-if="plateform !== 'mobile'">
+    <div class="fixed-payment" >
       <ion-list class="ion-no-border">
         <ion-item v-if="totalPaymentAmount > 0">
           <ion-label>{{ t("Total Payment") }}</ion-label>
@@ -113,6 +113,7 @@
     </div>
 
   </div>
+  
 </template>
 <script setup>
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"

@@ -10,7 +10,7 @@ import beep from '/assets/sound/submit.mp3'
 const beepSound = new Audio(beep)
 
 const saleDoc = ref({
-    name:"",
+    name: "",
     sale_products: [],
     payment: []
 })
@@ -20,25 +20,25 @@ const selectedPrintFormat = ref()
 const totalPendingOrder = ref(5)
 const couponCode = ref("")
 const topUpCouponInfo = ref()
-const topUpSaleProduct = ref({product_code:""})
+const topUpSaleProduct = ref({ product_code: "" })
 const saleType = ref("Sale Coupon")
 const pageRoute = ref("/sale-coupon")
 const inputScanQRCode = ref(null)
 
- 
+
 initSaleDoc();
 
 const subTotal = computed(() => {
-    return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.sub_total ||0), 0);
+    return saleDoc.value.sale_products.reduce((sum, item) => sum + (item?.sub_total || 0), 0);
 })
 
- 
+
 
 const saleDiscoutableAmount = computed(() => {
 
     return saleDoc.value.sale_products.
         filter(x => x.allow_discount == 1 && (x.discount_amount || 0) == 0).
-        reduce((sum, item) => sum + (item.sub_total ||0), 0) ?? 0;
+        reduce((sum, item) => sum + (item.sub_total || 0), 0) ?? 0;
 })
 const totalSaleDiscountAmount = computed(() => {
     if (saleDoc.value.discount_type == "Percent") {
@@ -55,7 +55,7 @@ const totalSaleProductDiscount = computed(() => {
 })
 
 const grandTotal = computed(() => {
-    const total =  (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
+    const total = (subTotal.value ?? 0) - (totalSaleProductDiscount.value ?? 0) - (totalSaleDiscountAmount.value ?? 0)
     return total || 0
 })
 
@@ -65,8 +65,8 @@ const totalCouponValue = computed(() => {
 })
 
 const totalQuantity = computed(() => {
-    const total =  saleDoc.value.sale_products.reduce((sum, item) => sum + (item.quantity || 1), 0);
-   
+    const total = saleDoc.value.sale_products.reduce((sum, item) => sum + (item.quantity || 1), 0);
+
     return total || 0
 })
 
@@ -74,18 +74,18 @@ const totalPaymentAmount = computed(() => {
     return saleDoc.value.payment.reduce((sum, item) => sum + (item.amount || 0), 0);
 })
 const paymentBalance = computed(() => {
-    let balance =(grandTotal.value - totalPaymentAmount.value) || 0
+    let balance = (grandTotal.value - totalPaymentAmount.value) || 0
 
     if (balance < 0) {
         balance = 0
     }
-    
+
     return app.utils.bankersRound(balance)
 })
 
 
 const grandTotalSecondCurrency = computed(() => {
-    const total =  grandTotal.value * (app.setting.exchange_rate || 1); 
+    const total = grandTotal.value * (app.setting.exchange_rate || 1);
     return total || 0
 })
 
@@ -95,10 +95,10 @@ const changeAmount = computed(() => {
 
 
 function initSaleDoc() {
-    
+
     saleDoc.value = {
-        name:"",
-        posting_date:app.setting?.working_day?.posting_date,
+        name: "",
+        posting_date: app.setting?.working_day?.posting_date,
         business_branch: app.setting?.property?.property_name,
         customer: app.setting?.pos_profile?.default_customer,
         stock_location: app.setting?.pos_profile?.stock_location,
@@ -107,22 +107,22 @@ function initSaleDoc() {
         pos_station_name: app.setting?.station_name,
         working_day: app.setting?.working_day?.name,
         cashier_shift: app.setting?.cashier_shift?.name,
-        sale_status:"New",
+        sale_status: "New",
         sale_products: [],
         payment: []
     }
 
-   getTotalPendingOrder()
+    getTotalPendingOrder()
 }
 
 async function getSaleDoc() {
     const loading = await app.showLoading();
     const result = await app.getDoc("Sale", app.route.params.name);
-    
+
     if (result.data) {
 
         result.data.sale_products.forEach(x => {
-            x.coupons =  JSON.parse(x.coupons ?? "[]")
+            x.coupons = JSON.parse(x.coupons ?? "[]")
         })
         saleDoc.value = result.data;
 
@@ -132,9 +132,9 @@ async function getSaleDoc() {
     await loading.dismiss();
 }
 
-async function getCustomerData(name){
-    const res = await app.getDoc("Customer",name)
-    if(res.data){
+async function getCustomerData(name) {
+    const res = await app.getDoc("Customer", name)
+    if (res.data) {
         customer.value = res.data
     }
 }
@@ -142,8 +142,8 @@ async function getCustomerData(name){
 
 
 async function onSelectProduct(p) {
-    
-    if(saleDoc.value.sale_status =="Bill Requested"){
+
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -154,7 +154,7 @@ async function onSelectProduct(p) {
         componentProps: {
             data: p,
         },
-         cssClass: app.utils.isMobile()?"full": "scan-coupon-code-modal"
+        cssClass: app.utils.isMobile() ? "full" : "scan-coupon-code-modal"
 
     })
 
@@ -178,8 +178,8 @@ async function onSelectProduct(p) {
 
 
     // chekc if user want payment 
-    
-    if(result.process_payment==true){
+
+    if (result.process_payment == true) {
         await onPayment()
     }
 
@@ -188,42 +188,52 @@ async function onSelectProduct(p) {
 }
 
 async function onPayment() {
-   
+
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
     }
 
-    if(saleDoc.value.sale_type == "Redeem"){
-        if (Math.abs(paymentBalance.value<=0)){
-await app.showWarning("No amount to Redeem")
-        return
+    if (saleDoc.value.sale_type == "Redeem") {
+        if (Math.abs(paymentBalance.value <= 0)) {
+            await app.showWarning("No amount to Redeem")
+            return
         }
 
-        
+
     }
+
+    if (saleDoc.value.sale_type == "Top Up") {
+        if (saleDoc.value.sale_products[0].product_code == "") {
+            await app.showWarning("Please select top up amount")
+            return
+        }
+
+    }
+
+
 
     const result = await app.openModal({
         component: ComPayment,
-        cssClass: app.utils.getPlateform() == 'mobile'?"":"payment-modal"
+        cssClass: app.utils.getPlateform() == 'mobile' ? "" : "payment-modal"
     })
 
-    if(!result){
-        saleDoc.value.payment =[]
+    if (!result) {
+        saleDoc.value.payment = []
     }
-    
+
     return result
-  
+
 }
 
 function getSaveData() {
     const saveData = JSON.parse(JSON.stringify(saleDoc.value));
     saveData.pos_station_name = app.setting.station_name;
-    if(!saveData.sale_type) saveData.sale_type = saleType.value;
-        saveData.sale_products.forEach(sp => {
+    if (!saveData.sale_type) saveData.sale_type = saleType.value;
+    saveData.sale_products.forEach(sp => {
         delete sp.selling_price;
-        sp.quantity = sp.quantity * (saleType.value=="Redeem"?-1:1)
-        sp.coupon_value = sp.coupon_value * (saleType.value=="Redeem"?-1:1)
+        sp.quantity = sp.quantity * (saleType.value == "Redeem" ? -1 : 1)
+        sp.coupon_value = sp.coupon_value * (saleType.value == "Redeem" ? -1 : 1)
         sp.redeem_coupon_inform
         sp.creation = dayjs(sp.creation).format("YYYY-MM-DD HH:mm:ss")
         if (sp.coupons) {
@@ -231,22 +241,22 @@ function getSaveData() {
         }
 
     });
-    
-    if(saleType.value == "Redeem"){
-saveData.payment.forEach(p=>{
-        
-        p.input_amount = p.input_amount  * -1
-    })
-    }
-    
 
-    
+    if (saleType.value == "Redeem") {
+        saveData.payment.forEach(p => {
+
+            p.input_amount = p.input_amount * -1
+        })
+    }
+
+
+
     return saveData;
 
 }
 
 async function onSaveAsDraft() {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -263,8 +273,8 @@ async function onSaveAsDraft() {
     if (res.data) {
         await app.showSuccess("Save sale to draft successfully.")
         onClearData()
-        if(app.route.params.name){
-            app.ionRouter.navigate(pageRoute.value,"forward","replace")
+        if (app.route.params.name) {
+            app.ionRouter.navigate(pageRoute.value, "forward", "replace")
         }
     }
     await l.dismiss();
@@ -277,15 +287,15 @@ async function onQuickPay(payment_type) {
         return
     }
 
-    if(saleDoc.value.sale_type == "Redeem"){
+    if (saleDoc.value.sale_type == "Redeem") {
         await app.showWarning("No amount to Redeem")
         return
     }
-    
+
 
     // if top up validate user select topup
-    if(saleDoc.value.sale_type =="Top Up"){
-        if(saleDoc.value.sale_products[0].product_code == ""){
+    if (saleDoc.value.sale_type == "Top Up") {
+        if (saleDoc.value.sale_products[0].product_code == "") {
             await app.showWarning("Please select top up amount")
             return
         }
@@ -305,20 +315,20 @@ async function onQuickPay(payment_type) {
     saveData.closed_by = app.currentUser.full_name
     saveData.closed_date = dayjs().format("YYYY-MM-DD HH:mm:ss")
     saveData.sale_status = "Closed";
-     
+
     const res = await saveSaleDoc(saveData);
 
     if (res.data) {
 
         onClearData();
         await app.showSuccess("Quick payment successfully")
-         beepSound.currentTime = 0
-            beepSound.play()
+        beepSound.currentTime = 0
+        beepSound.play()
 
         // print bill
         selectedPrintFormat.value = app.setting.print_formats.find(x => x.name == app.setting.pos_profile.default_pos_receipt)
         printBill(res.data.name)
-        app.ionRouter.navigate(pageRoute.value,"forward","replace")
+        app.ionRouter.navigate(pageRoute.value, "forward", "replace")
     }
 
 
@@ -332,11 +342,11 @@ async function onCloseSale(isPrint = true) {
         return
     }
 
-    if(paymentBalance.value>0){
-    await app.showWarning("Please enter all payment amount")
-    return;
+    if (paymentBalance.value > 0) {
+        await app.showWarning("Please enter all payment amount")
+        return;
     }
-    
+
 
     const confirm = await app.onConfirm("Payment", "Are you sure to process payment and close order?")
     if (!confirm) return;
@@ -348,7 +358,7 @@ async function onCloseSale(isPrint = true) {
     saveData.sale_status = "Closed"
 
     const res = await saveSaleDoc(saveData);
-    
+
     if (res.data) {
 
         onClearData()
@@ -357,26 +367,26 @@ async function onCloseSale(isPrint = true) {
             printBill(res.data.name)
         }
         await app.showSuccess(t('Payment successfully'))
-         
-        beepSound.currentTime = 0
-         beepSound.play()
 
-        
-        app.ionRouter.navigate(pageRoute.value,"forward","replace")
+        beepSound.currentTime = 0
+        beepSound.play()
+
+
+        app.ionRouter.navigate(pageRoute.value, "forward", "replace")
         modalController.dismiss(true, 'confirm')
 
     }
 
- 
+
     await loading.dismiss()
 
 }
 
 async function printBill(doc_name) {
-    if(!selectedPrintFormat.value) return;
-    if(selectedPrintFormat.value.print_receipt_copies<=0) return;
+    if (!selectedPrintFormat.value) return;
+    if (selectedPrintFormat.value.print_receipt_copies <= 0) return;
 
-    
+
     const result = await app.postApi("epos_restaurant_2023.api.printing.get_print_bill_pdf", {
         pdf: 0,
         station: app.setting.station_name,
@@ -385,7 +395,7 @@ async function printBill(doc_name) {
         template: selectedPrintFormat.value.pos_receipt_template
     })
 
- 
+
 
     if (result.data) {
         for (let i = 0; i < selectedPrintFormat.value.print_receipt_copies; i++) {
@@ -404,7 +414,7 @@ async function printBill(doc_name) {
 async function saveSaleDoc(saveData) {
     let res = null
     if (saveData.name) {
-        res = await app.updateDoc("Sale",saveData.name, saveData);
+        res = await app.updateDoc("Sale", saveData.name, saveData);
     } else {
         res = await app.createDoc("Sale", saveData);
     }
@@ -412,7 +422,7 @@ async function saveSaleDoc(saveData) {
 }
 
 async function onEditSaleProductCoupon(data) {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -426,7 +436,7 @@ async function onEditSaleProductCoupon(data) {
             data: { ...sp, name: sp.product_code, product_name_en: sp.product_name },
 
         },
-        cssClass: app.utils.isMobile()?"full": "scan-coupon-code-modal"
+        cssClass: app.utils.isMobile() ? "full" : "scan-coupon-code-modal"
     })
     data.is_editing = false
 
@@ -452,7 +462,7 @@ function updateSaleProduct(sp) {
 
 
 async function onDeleteSaleProduct(index) {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -464,19 +474,19 @@ async function onDeleteSaleProduct(index) {
 }
 
 async function onAddPayment(payment_type) {
-   
-    if(paymentBalance.value==0){
+
+    if (paymentBalance.value == 0) {
         await app.showWarning("No balance amount for add payment")
         return;
     }
     let paymentAmount = Number(paymentInputAmount.value)
-    
+
 
     if (!paymentInputAmount.value) {
 
         // use balance amount to add payment
         paymentAmount = paymentBalance.value * (payment_type.exchange_rate || 1);
-        
+
 
     }
 
@@ -495,18 +505,18 @@ async function onAddPayment(payment_type) {
             exchange_rate: payment_type.exchange_rate
         }
     )
-    if(app.utils.isMobile()){
+    if (app.utils.isMobile()) {
         // payment input type is = number
-        
-paymentInputAmount.value = NaN
 
-    }else {
+        paymentInputAmount.value = NaN
+
+    } else {
         // payment input is = text
         paymentInputAmount.value = "";
     }
-    
 
-    
+
+
 
 
 }
@@ -515,7 +525,7 @@ paymentInputAmount.value = NaN
 
 async function onSaleDiscountPercent() {
 
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -544,7 +554,7 @@ async function onSaleDiscountPercent() {
 
 
 async function onSaleDiscountAmount() {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -578,7 +588,7 @@ async function onSaleDiscountAmount() {
 
 
 async function onProductDiscountPercent(sp) {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -612,7 +622,7 @@ async function onProductDiscountPercent(sp) {
 
 
 async function onProductDiscountAmount(sp) {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -645,7 +655,7 @@ async function onProductDiscountAmount(sp) {
 
 
 async function onRemoveProductDiscount(sp) {
-    if(saleDoc.value.sale_status =="Bill Requested"){
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -659,20 +669,20 @@ async function onRemoveProductDiscount(sp) {
             title: t("Cancel Discount Note"),
             storageKey: "cancel_discount_item_required_note"
         });
-         if (note) {
+        if (note) {
             sp.discount_type = "Percent";
             sp.discount = 0;
             sp.discount_amount = 0,
-            updateSaleProduct(sp);
+                updateSaleProduct(sp);
         }
     } else {
-         sp.discount_type = "Percent";
+        sp.discount_type = "Percent";
         sp.discount = 0;
         sp.discount_amount = 0,
-        updateSaleProduct(sp);
+            updateSaleProduct(sp);
     }
 
-   
+
     app.showSuccess("Remove discount successfully")
 }
 
@@ -693,74 +703,74 @@ async function onPrintRequestBill(format) {
         await app.showSuccess("Save sale successfully.")
         selectedPrintFormat.value = format;
         printBill(res.data.name)
-        if(app.route.params.name){
-            res.data.sale_products.forEach((x)=>{
+        if (app.route.params.name) {
+            res.data.sale_products.forEach((x) => {
                 x.coupons = JSON.parse(x.coupons)
             })
             saleDoc.value = res.data;
-        }else {
+        } else {
             initSaleDoc();
-        app.ionRouter.navigate(`${pageRoute.value}/${res.data.name}`, "push", "replace")
-    
+            app.ionRouter.navigate(`${pageRoute.value}/${res.data.name}`, "push", "replace")
+
         }
-        
+
     }
     await l.dismiss();
 }
 
-async function getTotalPendingOrder(){
-    const res = await  app.getCount("Sale",{
-        docstatus:0
+async function getTotalPendingOrder() {
+    const res = await app.getCount("Sale", {
+        docstatus: 0
     })
-    if(res.data){
+    if (res.data) {
         totalPendingOrder.value = res.data
-    }else {
-totalPendingOrder.value = 0
+    } else {
+        totalPendingOrder.value = 0
     }
-    
+
 }
 
-async function onChangeSaleProductPrice(sp){
-    if(saleDoc.value.sale_status =="Bill Requested"){
+async function onChangeSaleProductPrice(sp) {
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
-    if(sp.allow_change_price==0){
+    if (sp.allow_change_price == 0) {
         app.showWarning("This product is not allow to change price")
         return
     }
-    const hasPermission =await app.utils.hasPermission("change_item_price");
-    if(!hasPermission) return false;
+    const hasPermission = await app.utils.hasPermission("change_item_price");
+    if (!hasPermission) return false;
 
 
     const result = await app.utils.onInputNumber({
-        checkRequireNoteKey:"change_item_price_required_note",
-        storageKey:"change_item_price_note",
-        label:app.t("Price"),
-        title:app.t("Change Price")
+        checkRequireNoteKey: "change_item_price_required_note",
+        storageKey: "change_item_price_note",
+        label: app.t("Price"),
+        title: app.t("Change Price")
     })
 
 
-    if(result){
+    if (result) {
         sp.price = result.inputNumber
         sp.change_price_note = result.note
         updateSaleProduct(sp)
     }
 }
-async function onChangeSaleProductQuantity(sp){
-    if(saleDoc.value.sale_status =="Bill Requested"){
+async function onChangeSaleProductQuantity(sp) {
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
     const result = await app.utils.onOpenKeypad("Change Quantity")
-    if(result && result> 0){
+    if (result && result > 0) {
         sp.quantity = result;
         updateSaleProduct(sp)
-    }   
+    }
 }
 
-async function onFreeProduct(sp){
-    if(saleDoc.value.sale_status =="Bill Requested"){
+async function onFreeProduct(sp) {
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
@@ -770,65 +780,65 @@ async function onFreeProduct(sp){
 
     let freeQuantity = sp.quantity;
     let freeNote = ""
-    if(freeQuantity==1 || sp.coupons.length>0){
-        if(app.setting.pos_config.free_item_required_note==1){
+    if (freeQuantity == 1 || sp.coupons.length > 0) {
+        if (app.setting.pos_config.free_item_required_note == 1) {
             const noteResult = await app.utils.onOpenKeyboard({
-                title:app.t("Free Note"),
-                storageKey:"free_note"
+                title: app.t("Free Note"),
+                storageKey: "free_note"
             })
-            if((typeof noteResult) =="string"){
+            if ((typeof noteResult) == "string") {
                 freeNote = noteResult;
             }
         }
-    }else {
+    } else {
         // free quantity
     }
 
-   
-        sp.is_free = 1
-        sp.price = 0;
-        sp.free_note = freeNote
-        updateSaleProduct(sp)
-   
+
+    sp.is_free = 1
+    sp.price = 0;
+    sp.free_note = freeNote
+    updateSaleProduct(sp)
+
 
 }
-async function onRemoveFreeProduct(sp){
-    if(saleDoc.value.sale_status =="Bill Requested"){
+async function onRemoveFreeProduct(sp) {
+    if (saleDoc.value.sale_status == "Bill Requested") {
         app.showWarning("This sale order is already print bill. Please cancel print bill first.")
         return
     }
-    if(sp.coupons.length>0){
+    if (sp.coupons.length > 0) {
         sp.is_free = 0
         sp.price = sp.regular_price;
         updateSaleProduct(sp)
     }
-    
+
 }
 
-export function onClearData(){
+export function onClearData() {
     setTimeout(() => {
-    if(inputScanQRCode.value){
-        inputScanQRCode.value.focus()
-    }    
+        if (inputScanQRCode.value) {
+            // inputScanQRCode.value.focus()
+        }
     }, 500);
-    
+
     initSaleDoc()
     topUpCouponInfo.value = null
-    
-    if(saleType.value =="Top Up"){
-       
-        topUpSaleProduct.value = {"product_code":"",quantity:1,price:0}
-        saleDoc.value.sale_products=[topUpSaleProduct.value]
+
+    if (saleType.value == "Top Up") {
+
+        topUpSaleProduct.value = { "product_code": "", quantity: 1, price: 0 }
+        saleDoc.value.sale_products = [topUpSaleProduct.value]
     }
-    
+
 }
- 
+
 
 
 
 export function useSaleCoupon() {
- 
-  
+
+
     return {
         saleDoc,
         inputScanQRCode,

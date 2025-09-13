@@ -21,7 +21,7 @@
         <!-- v-if="plateform != 'mobile'"  -->
 
         <div>
-            <com-input ref="inputRef" type="BarcodeScanerInput" v-model="coupon" @change="onScanBarCode"
+            <com-input  ref="inputRef" type="BarcodeScanerInput" v-model="coupon" @change="onScanBarCode"
             @onBarcodeChange="onScanBarCode"
             :label="t('Coupon Code')"
                 :placeholder="t('Please scan coupon codes')" label-placement="stacked" fill="outline"></com-input>
@@ -144,11 +144,13 @@ import { checkboxOutline, checkmarkOutline, closeOutline } from 'ionicons/icons'
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import ComKeyPadInput from "@/views/components/public/ComKeyPadInput.vue"
+import useBarcodeDetector from '@programic/vue-barcode-detector';
 const { saleDoc } = useSaleCoupon()
 const inputRef = ref(null)
 const txtPrice = ref(null)
 const plateform = ref(app.utils.getPlateform())
 const isMobile = ref(app.utils.isMobile())
+
 const props = defineProps({
     data: Object,
 })
@@ -172,8 +174,10 @@ const minAmountUSD = ref(1)
 const maxAmountUSD = ref(100)
 
 let disableTextboxInput = false;
-const buffer = ref("");
-let lastTime = 0;
+
+   
+
+const barcodeDetector = useBarcodeDetector();
 
 
 
@@ -227,16 +231,16 @@ async function onScanWithCamera() {
 }
 
 
-async function addCoupon() {
+async function addCoupon(coupon_code = null) {
+   
+    const data = await validateCouponCode(app.utils.getCouponNumber(coupon_code  || coupon.value))
     
-    const data = await validateCouponCode(app.utils.getCouponNumber(coupon.value))
     if (!data) {
         coupon.value = ""
         
         return;
     }
-    // check 
-    // check exists
+
 
     coupounList.value.push({
         name: data.name,
@@ -250,11 +254,11 @@ async function addCoupon() {
  
 }
 
-function onRemoveCoupon() {
-    const couponNumber = app.utils.getCouponNumber(coupon.value);
+function onRemoveCoupon(coupon_code = null) {
+    const couponNumber = app.utils.getCouponNumber(coupon_code || coupon.value);
     // find coupon index in coupon list
 
-    const index = coupounList.value.findIndex(x => x.coupon == coupon.value);
+    const index = coupounList.value.findIndex(x => x.coupon == couponNumber);
     if (index == -1) {
         coupon.value = "";
         app.showWarning(t("coupon_code_number_does_not_exist", { coupon: couponNumber }))
@@ -267,7 +271,7 @@ function onRemoveCoupon() {
 }
 
 async function validateCouponCode(c) {
-
+    
     if (c == "") {
         app.showWarning("Plese enter or scan coupon code")
     }
@@ -287,17 +291,19 @@ async function validateCouponCode(c) {
     // validate in existing in db
     const l = await app.showLoading("Checking coupon code...")
     const res = await app.getApi("epos_restaurant_2023.selling.doctype.coupon_codes.coupon_codes.check_coupon_code", { coupon: c })
+   
     if (res.error) {
         await l.dismiss();
         return false
     }
     await l.dismiss();
+
     return res.data
 }
 
 function onDelete(index) {
     coupounList.value.splice(index, 1)
-    inputRef.value.select()
+
     coupon.value = "";
 }
 
@@ -310,12 +316,12 @@ function onConfirm(process_payment = false) {
     
     if (coupounList.value.length == 0) {
         app.showWarning("Please enter coupon code")
-        inputRef.value.select()
+
         return
     }
     if (props.data.is_open_product == 1 && Number(doc.value.price == 0)) {
         app.showWarning("Please enter price")
-        txtPrice.value.select()
+ 
 
         return;
     }
@@ -357,9 +363,7 @@ function onConfirm(process_payment = false) {
     if(app.setting.currency != selectedCurrency.value){
         price = price / exchange_rate.value;
     }
-
-
-
+ 
     const returnData = {
         creation: app.dayjs(),
         product_code: props.data.name,
@@ -390,50 +394,39 @@ function onConfirm(process_payment = false) {
 }
 
 
-
-// keyboard listener to hadle scan 
-async function onHandleScan(e) {
-
-  const now = Date.now();
-
-  // Only track printable keys or Enter
-  if (e.key.length === 1 || e.key === "Enter") {
-    const timeDiff = now - lastTime;
-    lastTime = now;
-
-    // If typing is too slow (>50ms), reset buffer (likely human typing)
-    if (timeDiff > 50) {
-      buffer.value = "";
-    }
-
-    if (e.key === "Enter") {
-      if (buffer.value.length > 3) { // prevent noise
-        coupon.value = buffer.value;
-      
-        if (scanMode.value == "add") {
-                await addCoupon()
-            } else {
-                onRemoveCoupon()
-            }
-        disableTextboxInput = true;
-      }
-      buffer.value = "";
-    } else {
-      buffer.value += e.key;
-    }
-  }
-}
+ 
 
 
 onMounted(async () => {
-     window.disable_scan_check_coupon = true;
-    window.addEventListener("keydown", onHandleScan);
+ 
+
+    barcodeDetector.listen(async (barcodeData) => {
+    if (barcodeData.value ) {
+        
+        if (scanMode.value == "add") {
+                await addCoupon(barcodeData.value)
+            } else {
+                onRemoveCoupon(barcodeData.value)
+            }
+    }
+    });
+
+
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
     } else {
-        if (app.utils.getPlateform() == "mobile") {
-            await onScanWithCamera()
-        }
+        
+  if (app.utils.isMobile()) {
+    let setting = await app.storageService.getItem("userPreference")
+    if (setting) {
+      setting = JSON.parse(setting);
+      if (setting.open_camera_on_add_sale_coupon) {
+        await onScanWithCamera();
+      }
+
+    }
+
+  }
     }
     doc.value.price = props.data.price
     doc.value.coupon_markup_type = props.data.coupon_markup_type
@@ -449,9 +442,8 @@ onMounted(async () => {
 })
 
 onUnmounted(()=>{
-   
-     window.disable_scan_check_coupon = false;
-    window.removeEventListener("keydown", onHandleScan);
+  
+barcodeDetector.stopListening();
 })
 
 </script>

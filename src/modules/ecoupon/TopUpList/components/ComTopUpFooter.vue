@@ -38,10 +38,7 @@ const t = window.t;
 const plateform = ref(app.utils.getPlateform());
  
 async function onPaymentClick(){
-    if(saleDoc.value.sale_products[0].product_code ==""){
-        await app.showWarning("Please select top up amount")
-        return
-    }
+    
     
     await onPayment()
     

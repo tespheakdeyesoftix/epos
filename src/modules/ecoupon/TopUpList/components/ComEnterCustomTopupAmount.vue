@@ -1,6 +1,6 @@
 <template>
     <BaseModal :title="t('Top Up Coupon Amount')" @onConfirm="onConfirm">
-        <template v-if="plateform == 'mobile'">
+        <template v-if="plateform == 'mobile' || plateform == 'tablet'">
              <div style=" display: flex;justify-content: center;gap: 10px;">
                 <ion-chip :color="selectedCurrency == 'KHR' ? 'primary' : ''" @click="onChangeInputCurrency('KHR')">{{
                     t("KHR") }}</ion-chip>

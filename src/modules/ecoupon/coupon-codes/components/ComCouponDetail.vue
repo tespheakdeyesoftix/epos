@@ -171,7 +171,7 @@
     </ion-card>
     <ion-note class="ion-padding">
        
-        {{ t("This coupon is register by:") }} {{ data?.coupon_info.owner.split("@")[0] }} {{ t("on_date_time") }} <ion-text v-tooltip.top="`${creationDate}`">{{ dayjs(data?.coupon_info.creation).fromNow() }}</ion-text>
+        {{ t("This coupon is register by:") }} {{ (data?.coupon_info.owner || "").split("@")[0] }} {{ t("on_date_time") }} <ion-text v-tooltip.top="`${creationDate}`">{{ dayjs(data?.coupon_info.creation).fromNow() }}</ion-text>
     </ion-note>
 
 </template>

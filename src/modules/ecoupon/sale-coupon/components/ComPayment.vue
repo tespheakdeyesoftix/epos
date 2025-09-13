@@ -3,6 +3,7 @@
     <template #end v-if="plateform=='mobile'">
         <ComSelectPOSReceiptMobile />
     </template>
+    
  <ComPaymentAmountInfo class="ion-hide-md-up"/> 
   
    <ion-grid v-if="plateform!=='mobile'">
@@ -68,19 +69,16 @@ onMounted(()=>{
   
   // disable widnow listender scanner on   redeem scren
   window.disable_scan_redeem = true;
-
-  window.disable_scan_check_coupon = true;
-
+ 
 
 })
 
 onUnmounted(()=>{
   //enable widnow listender scanner on top up screen
   window.disable_scan_top_up = false;
-  
   //enable widnow listender scanner on   redeem scren
   window.disable_scan_redeem = false;
-  window.disable_scan_check_coupon = false;
+ 
 
 })
 

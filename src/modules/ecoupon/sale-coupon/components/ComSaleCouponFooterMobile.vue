@@ -1,7 +1,7 @@
 <template>
 <ion-footer >
   
-    <ion-card @click="onViewSelectedSaleProduct" color="danger" class="ion-no-margin ion-no-padding">
+    <ion-card @click="onViewSelectedSaleProduct" color="success" class="ion-no-margin ion-no-padding" button>
         <ion-card-content>
 
             <ion-label>{{ lastSelectedCouponAndProduct }}</ion-label>
@@ -17,11 +17,13 @@
                 </ion-row>
                
                 <ion-row >
-                    <ion-col size="9">
+                    <ion-col size="9"> <ion-text class="text-2xl">
                         {{t('Total')}} ({{ t(mainCurrency) }})
+                        </ion-text>
                     </ion-col>
                     <ion-col size="3">
-                        <ComCurrency :value="grandTotal"/>
+                        <ion-text class="text-3xl"><ComCurrency :value="grandTotal"/></ion-text>
+                        
                     </ion-col>
                 </ion-row>
 

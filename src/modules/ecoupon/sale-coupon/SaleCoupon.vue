@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ToolBar>
-      {{ t("Sale Coupon") }} {{ isMobileUI }}
+      {{ t("Sale Coupon") }} 
       <ion-text v-if="saleDoc.name"> - {{ saleDoc.name }}</ion-text>
       <ion-chip :color="saleDoc.sale_status == 'Bill Requested' ? 'success' : 'danger'">{{ saleDoc.sale_status }}</ion-chip>
       <template #end>
@@ -113,6 +113,7 @@ onMounted(async () => {
 
 
 onIonViewWillEnter(() => {
+  
   window.disable_scan_check_coupon = true;
   window.addEventListener("resize", handleUpdateScreenMode);
 

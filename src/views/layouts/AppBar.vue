@@ -1,72 +1,94 @@
 <template>
 
-    
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-menu-button />
-          </ion-buttons>
-          <ion-title><slot></slot></ion-title>
-             
-          <slot name="search">
- <ion-searchbar
-      :search-icon="qrCode"
-        :placeholder="t('Check coupon code')"
-        style="max-width: 300px;"
-        @ionChange="onCheckCouponCode"
-        class="ion-hide-sm-down search_bar"
-        v-model="keyword"
-        
-      ></ion-searchbar>
-          </slot>
-     
-  
-           <ion-buttons slot="end">
-            <ion-button @click="onScanQRCode" shape="round" v-if="isMobile">
-                    <ion-icon :icon="scanOutline" slot="icon-only" />
-                </ion-button>
-            <ComQuickAction   /> 
-            <slot name="end"></slot>
-                <ComUserProfile />
-           </ion-buttons>
-         
-        </ion-toolbar>
-      </ion-header>
- 
 
-  </template>
-  <script setup lang="ts">
-  import {  IonButtons, IonTitle, IonMenuButton } from '@ionic/vue';
- 
-    import ComUserProfile from "@/views/layouts/ComUserProfile.vue"  
-    import ComQuickAction from "@/views/layouts/ComQuickAction.vue"  
-  
-    import { useAuth } from '@/hooks/useAuth';
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button />
+      </ion-buttons>
+      <ion-title>
+        <slot></slot>
+      </ion-title>
+
+      <slot name="search">
+        <ion-searchbar :search-icon="qrCode" :placeholder="t('Check coupon code')" style="max-width: 300px;"
+          @ionChange="onCheckCouponCode" class="ion-hide-sm-down search_bar" v-model="keyword" 
+            
+          ></ion-searchbar>
+      </slot>
+
+
+      <ion-buttons slot="end">
+        <ion-button @click="onScanQRCode" shape="round" v-if="isMobile">
+          <ion-icon :icon="scanOutline" slot="icon-only" />
+        </ion-button>
+        <ComQuickAction />
+        <slot name="end"></slot>
+        <ComUserProfile />
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+</template>
+<script setup lang="ts">
+import { IonButtons, IonTitle, IonMenuButton } from '@ionic/vue';
+
+import ComUserProfile from "@/views/layouts/ComUserProfile.vue"
+import ComQuickAction from "@/views/layouts/ComQuickAction.vue"
+
+
 import { qrCode, scanOutline } from 'ionicons/icons';
-import { ref } from 'vue';
-    const {isAuthenticated} = useAuth();
+import { onMounted, onUnmounted, ref } from 'vue';
 
-    const isMobile = ref(app.utils.isMobile())
+import useBarcodeDetector from '@programic/vue-barcode-detector';
+const barcodeDetector = useBarcodeDetector();
+
+const isMobile = ref(app.utils.isMobile())
 
 const t = window.t;
 const keyword = ref("")
-import {onCheckCouponCode} from "@/services/scanner-service.js"
-
-async function onScanQRCode(){
+function onCheckCouponCode() {
+  app.utils.checkCouponCodeModal(keyword.value)
+  keyword.value = ""
+}
+async function onScanQRCode() {
   const result = await app.onScanBarcode();
   if (result) {
-    keyword.value = result
-    onCheckCouponCode(keyword.value);
+
+    app.utils.checkCouponCodeModal(result)
+    keyword.value = ""
   }
 }
-  </script>
+
+ 
+
+function onListeningScanBarCode() {
+ 
+  barcodeDetector.listen(async (barcodeData) => {
+      if(keyword.value) return;
+    if (barcodeData.value && !window.disable_scan_check_coupon) {
+      app.utils.checkCouponCodeModal(barcodeData.value)
+    }
+
+  });
+}
+
+onMounted(() => {
+  onListeningScanBarCode()
+})
+
+onUnmounted(() => {
+  barcodeDetector.stopListening();
+})
+</script>
 <style scoped>
-.search_bar{
+.search_bar {
   position: absolute;
-max-width: 300px;
-top: 0;
-left: 50%;
-transform: translateX(-50%);
+  max-width: 300px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
-  

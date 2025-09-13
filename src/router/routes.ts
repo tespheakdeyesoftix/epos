@@ -106,7 +106,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/sale-coupon/:name",
     name:"EditSaleCoupon",
-    component: () => window.matchMedia('(max-width: 900px)').matches? import('@/modules/ecoupon/sale-coupon/SaleCouponMobile.vue'):import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
+    component: () => import('@/modules/ecoupon/sale-coupon/SaleCoupon.vue'),
     meta: { requiresAuth: true }
   }, 
   {
@@ -121,7 +121,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/redeem",
-    component: () => window.matchMedia('(max-width: 640px)').matches? import('@/modules/ecoupon/RedeemList/RedeemMobile.vue'): import('@/modules/ecoupon/RedeemList/Redeem.vue'),
+    component: () => import('@/modules/ecoupon/RedeemList/Redeem.vue'),
     meta: { requiresAuth: true }
   },
    {
@@ -228,7 +228,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/top-up",
-    component: () => window.matchMedia('(max-width: 640px)').matches?import('@/modules/ecoupon/TopUpList/TopUpMobile.vue'):import('@/modules/ecoupon/TopUpList/TopUp.vue'),
+    component: () => import('@/modules/ecoupon/TopUpList/TopUp.vue'),
     meta: { requiresAuth: true }
   },
   {
