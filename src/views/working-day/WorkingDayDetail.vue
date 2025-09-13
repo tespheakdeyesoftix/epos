@@ -46,7 +46,24 @@
           </ion-list>
         </template>
        </ComPopOver>
-       <ComPopOver>
+
+       <!-- popover == mobile -->
+       <ComPopOver v-if="plateform=='mobile'">
+       <ion-button style="height: 45px;">
+        <ion-icon :icon="printOutline" slot="start"></ion-icon>
+        {{ t("Print") }}
+       </ion-button>
+       <template #content>
+          <ion-list>
+            <ion-item v-for="l in languages"  lines="full" @click="onPrint('base64',l.server_lang)">
+              <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
+              <ion-label>{{ l.label }}</ion-label>  
+            </ion-item>
+          </ion-list>
+        </template>
+       </ComPopOver>
+       <!-- popover != mobile -->
+       <ComPopOver v-if="plateform !='mobile'">
        <ion-button>
         <ion-icon :icon="printOutline" slot="start"></ion-icon>
         {{ t("Print") }}
