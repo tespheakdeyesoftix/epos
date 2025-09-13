@@ -22,7 +22,7 @@
 <ion-grid>
   <ion-row class="ion-align-items-center">
     <!-- Left side: totals -->
-    <ion-col size="8" style="font-size: 13px;">
+    <ion-col size="7" style="font-size: 13px;">
       {{ t("Total Redeem Amount") }} : <ComCurrency :value="grandTotal" /> <br>
       {{ t("Grand Total") }} ({{ second_currency }}) :
       <ComCurrency
@@ -32,11 +32,14 @@
     </ion-col>
 
     <!-- Right side: exchange rate chip -->
-    <ion-col size="4" class="ion-text-end">
-      <ion-chip  style="font-size: 13px;">
+    <ion-col size="5" class="ion-text-end">
+      <!-- <ion-chip  style="font-size: 13px;">
         <ComCurrency :value="1" :currency="mainCurrency" /> =
         <ComCurrency :value="exchange_rate" :currency="second_currency" />
-       
+      </ion-chip> -->
+      <ion-chip  style="font-size: 11px;">
+         <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
+          <ComExchangeRate />
       </ion-chip>
     </ion-col>
   </ion-row>
@@ -66,6 +69,11 @@ const t = window.t
     const {exchange_rate} = useApp();
     const second_currency = ref(app.setting.second_currency);
 const mainCurrency = ref(app.setting.currency);
+const mainExchangeRateCurrency = ref(app.setting.exchange_rate_main_currency);
+
+if(second_currency.value == mainCurrency.value){
+    second_currency.value = app.setting.currency
+}
 
 onIonViewWillEnter(()=>{
   if(!app.route.params.name){
