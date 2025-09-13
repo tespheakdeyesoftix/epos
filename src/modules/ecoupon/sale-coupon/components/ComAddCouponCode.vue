@@ -415,11 +415,14 @@ onMounted(async () => {
     if (props.data.coupons) {
         coupounList.value = props.data.coupons;
     } else {
-        
+      
   if (app.utils.isMobile()) {
+
     let setting = await app.storageService.getItem("userPreference")
     if (setting) {
-      setting = JSON.parse(setting);
+     
+        setting = JSON.parse(setting);
+      
       if (setting.open_camera_on_add_sale_coupon) {
         await onScanWithCamera();
       }

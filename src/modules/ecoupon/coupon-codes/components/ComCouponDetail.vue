@@ -1,6 +1,6 @@
 <template>
    
-<ion-grid>
+<ion-grid class="ion-no-margin ion-no-padding">
   <ion-row>
     <ion-col size="6" size-md="3">
       <ion-chip class="m-0 w-full" color="primary">
@@ -42,7 +42,7 @@
 
 
 
-    <ion-card>
+    <ion-card class="ion-no-margin ion-no-padding mt-4">
         <ion-card-header>
             <ion-item class="ion-no-padding" lines="none">
                 <ion-label><h1>{{ t("Coupon #") }}: {{ data?.coupon_info.coupon }}</h1></ion-label>
@@ -83,7 +83,7 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-card v-if="data?.coupon_transaction.length>0">
+    <ion-card v-if="data?.coupon_transaction.length>0" class="ion-no-margin ion-no-padding mt-4" >
         <ion-card-header>
             <ion-card-title>
                <ion-item class="ion-no-padding" lines="none">
@@ -135,7 +135,7 @@
     </ion-card>
  
 
-    <ion-card v-if="data?.coupon_transaction.length>0">
+    <ion-card v-if="data?.coupon_transaction.length>0" class="ion-no-margin ion-no-padding mt-4">
         <ion-card-header>
             <ion-item class="ion-no-padding" lines="none">
                 <ion-label><h1>{{ t("Coupon Transactions") }}</h1></ion-label>

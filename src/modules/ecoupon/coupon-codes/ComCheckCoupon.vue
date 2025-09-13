@@ -1,10 +1,10 @@
 <template>
     <BaseModal :title="t('Check Coupon') + '-' + coupon_code">
-   
+  
             <ion-refresher slot="fixed" @ionRefresh="onRefreshData">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
-        <div class="fixed-container"> 
+        <div :class="plateform=='mobile'?'':'fixed-container'"> 
 <ComCouponDetail :data="couponDetail" />
         </div>
         
@@ -24,7 +24,7 @@ const props = defineProps({
 const t = window.t;
  
 const barcodeDetector = useBarcodeDetector();
-
+const plateform = ref(app.utils.getPlateform())
 
 const couponDetail = ref()
 
