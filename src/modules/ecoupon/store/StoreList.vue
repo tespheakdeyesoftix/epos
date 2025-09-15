@@ -24,7 +24,8 @@
      
   </stack>
 </div>
-                <DataTable :value="data" stripedRows class="ion-padding-start ion-padding-end" tableStyle="min-width:25rem">
+
+        <DataTable :value="data" stripedRows class="ion-padding-start ion-padding-end" tableStyle="min-width:25rem" v-if="plateform !== 'mobile'">
                     <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center" style="width: 60px">
                         <template #body="slotProps">
                             {{ slotProps.index + 1 }}
@@ -53,32 +54,53 @@
                             <ComCurrency :value="slotProps.data.ytd_revenue" />
                         </template>
                     </Column>
- <ColumnGroup type="footer">
-            <Row>
-                <Column :footer="t('Totals:')" :colspan="2" footerStyle="text-align:right"/>
-                <Column footerStyle="text-align:right;font-weight:bold">
-                    <template #footer>
-                        <ComCurrency :value="getTotal('current_revenue')" />
-                    </template>
-                </Column>
-                
-                <Column footerStyle="text-align:right;font-weight:bold">
-                    <template #footer>
-                        <ComCurrency :value="getTotal('mtd_revenue')" />
-                    </template>
-                </Column>
-                <Column footerStyle="text-align:right;font-weight:bold">
-                    <template #footer>
-                        <ComCurrency :value="getTotal('ytd_revenue')" />
-                    </template>
-                </Column>
+            <ColumnGroup type="footer">
+                <Row>
+                    <Column :footer="t('Totals:')" :colspan="2" footerStyle="text-align:right"/>
+                    <Column footerStyle="text-align:right;font-weight:bold">
+                        <template #footer>
+                            <ComCurrency :value="getTotal('current_revenue')" />
+                        </template>
+                    </Column>
+                    
+                    <Column footerStyle="text-align:right;font-weight:bold">
+                        <template #footer>
+                            <ComCurrency :value="getTotal('mtd_revenue')" />
+                        </template>
+                    </Column>
+                    <Column footerStyle="text-align:right;font-weight:bold">
+                        <template #footer>
+                            <ComCurrency :value="getTotal('ytd_revenue')" />
+                        </template>
+                    </Column>
+                </Row>
+            </ColumnGroup>
+        </DataTable>
 
-                
-                
-            </Row>
-        </ColumnGroup>
-
-                </DataTable>
+        <div v-if="plateform == 'mobile'">
+            <ion-card v-for="(d,index) in data" :key="index">
+                <ion-card-content>
+                    <stack row equal>
+                        <ion-text>{{t("Store Name")}}:</ion-text>
+                        <router-link :to="'/store-detail/' + d.name ">
+                            <ion-text> {{ d.name }} - {{ d.vendor_name }}</ion-text>
+                        </router-link>
+                    </stack>
+                    <stack row equal>
+                        <ion-text>{{t("Today Revenue")}}:</ion-text>
+                        <ion-text> <ComCurrency :value="d.current_revenue" /></ion-text>
+                    </stack>
+                    <stack row equal>
+                        <ion-text>{{t("MTD Revenue")}}:</ion-text> 
+                        <ion-text><ComCurrency :value="d.mtd_revenue" /></ion-text>
+                    </stack>
+                    <stack row equal>
+                        <ion-text>{{t("YTD Revenue")}}:</ion-text> 
+                        <ion-text><ComCurrency :value="d.ytd_revenue" /></ion-text>
+                    </stack>  
+                </ion-card-content>
+            </ion-card>
+        </div>
         </ion-content>
     
     </ion-page>
@@ -95,7 +117,7 @@ import { refreshOutline } from 'ionicons/icons';
 const data = ref([])
 
  const selectedRow = ref()
- 
+const plateform = ref(app.utils.getPlateform())
 const t = window.t
 
 function getTotal(fieldname){
