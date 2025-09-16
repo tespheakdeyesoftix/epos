@@ -15,7 +15,7 @@
                     <ion-item>
                         <ion-select @ionChange="onChangeDefaultPrinter" v-model="default_printer"
                             :label="t('Default Printer')" :placeholder="t('Default Printer')">
-                            <ion-select-option v-for="p in printers" :value="p.type">{{ p.type }}</ion-select-option>
+                            <ion-select-option v-for="p in printers" :value="p.type">{{t( p.type )}}</ion-select-option>
                         </ion-select>
                     </ion-item>
 

@@ -645,5 +645,15 @@
     "Add Store Payment":"បញ្ចូលការបង់ប្រាក់តាមហាង",
     "Edit Store Payment":"កែប្រែការបង់ប្រាក់តាមហាង",
     "This coupon code has been selected.":"លេខគូប៉ុងនេះបានជ្រើសរើសរួចហើយ",
-    "":""
+    "Cashier Printer":"ម៉ាស៊ីនបោះពុម្ពអ្នកគិតលុយ",
+    "Min/Max Selling Coupon Amount":"ចំនួនទឹកប្រាក់អប្បបរមា/អតិបរមានៃការលក់គូប៉ុង",
+    "Min Amount (KHR)":"ចំនួនអប្បបរមា (រៀល)",
+    "Max Amount (KHR)":"ចំនួនអតិបរមា (រៀល)",
+    "Min Amount (USD)":"ចំនួនអប្បបរមា (ដុល្លារ)",
+    "Max Amount (USD)":"ចំនួនអតិបរមា (ដុល្លារ)",
+    "Open Camera Setting":"បើកការកំណត់កាមេរ៉ា",
+    "Open scanning camera when add coupon to sale order":"បើកកាមេរ៉ាស្កេន នៅពេលបញ្ចូលគូប៉ុងចូលក្នុងការបញ្ជាទិញ",
+    "Open scanning camera when top up on mobile devices":"បើកកាមេរ៉ាស្កេន នៅពេលបញ្ចូលប្រាក់នៅលើឧបករណ៍ទូរស័ព្ទ",
+    "Open scanning camera when redeem on mobile devices":"បើកកាមេរ៉ាស្កេន នៅពេលដកប្រាក់លើឧបករណ៍ទូរស័ព្ទ",
+    "Update successfully":"ធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ"
   }   
