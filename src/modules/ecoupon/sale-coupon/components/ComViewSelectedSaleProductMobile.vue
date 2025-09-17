@@ -1,5 +1,5 @@
 <template>
-    <BaseModal title="Your Order" :hideFooter="false" :footerHeight="110">
+    <BaseModal title="Your Order" :hideFooter="false" :footerHeight="135">
        
             <ComCustomerCard v-if="saleDoc?.customer"/>
             <ComSaleProductMobile />     

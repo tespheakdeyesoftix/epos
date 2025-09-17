@@ -89,6 +89,13 @@
         
         <ion-row>
             <ion-col>
+                <ComStoreRevenueSummary v-if="data?.doc.name" :working_day="data?.doc.name"/>
+            </ion-col>
+        </ion-row>
+
+        
+        <ion-row>
+            <ion-col>
                 <ComCopuponTransaction v-if="data?.doc.name" :working_day="data?.doc.name"/>
             </ion-col>
         </ion-row>
@@ -110,6 +117,7 @@ import ComPaymentBreakdown from "@/views/shift/components/ComPaymentBreakdown.vu
  import ComCopuponTransaction from "@/views/working-day/components/ComCopuponTransaction.vue"
  import ComCashierShiftList from "@/views/working-day/components/ComCashierShiftList.vue"
 import ComExchangeRate from '@/views/components/public/ComExchangeRate.vue';
+import ComStoreRevenueSummary from "@/views/shift/components/ComStoreRevenueSummary.vue"
 const props = defineProps({
     data:Object
 })

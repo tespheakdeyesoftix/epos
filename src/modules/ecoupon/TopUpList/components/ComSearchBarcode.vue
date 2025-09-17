@@ -10,7 +10,13 @@
     <ion-card-content class="ion-no-margin">
 
       <com-input :placeholder="t('Scan qr code here')" :label="t('Scan qr code here')" @onChange="onScanQRCode"
-        @onBarcodeChange="onScanQRCode" ref="inputScanQRCode" v-model="couponCode" :icon="scan" />
+         @onBarcodeChange="onScanQRCode" 
+        ref="inputScanQRCode" v-model="couponCode" :icon="scan" />
+        
+      <!-- <com-input :placeholder="t('Scan qr code here')" :label="t('Scan qr code here')" @onChange="onScanQRCode"
+        @onBarcodeChange="onScanQRCode" 
+        ref="inputScanQRCode" v-model="couponCode" :icon="scan" /> -->
+
     </ion-card-content>
   </ion-card>
 
@@ -25,20 +31,16 @@ const plateform = ref(app.utils.getPlateform())
 const bacodeDetector = useBarcodeDetector();
 const t = window.t
 let disableTextboxInput = false;
-const buffer = ref("");
-let lastTime = 0;
+ 
 
 
-async function onScanQRCode(valueFromIcon) {
-
+async function onScanQRCode() {
+  let _coupon_code = couponCode.value;
   // we validate this to stop process code when use scan barcode using keydown event listender
   // this event raise when use manually enter qr code in txt scan qr code only
   if (disableTextboxInput == true) return;
 
-  if (valueFromIcon) {
-    couponCode.value = valueFromIcon
-  }
-
+ 
   if (topUpCouponInfo.value && couponCode.value) {
 
     await app.showWarning("Please close the current top up transaction first")
@@ -54,8 +56,9 @@ async function onScanQRCode(valueFromIcon) {
     return;
   }
 
-  couponCode.value = app.utils.getCouponNumber(couponCode.value);
-  if (!couponCode.value) {
+ _coupon_code  = app.utils.getCouponNumber(_coupon_code);
+
+  if (!_coupon_code) {
     await app.showWarning("Please scan qr code")
     disableTextboxInput = false;
     return
@@ -63,7 +66,7 @@ async function onScanQRCode(valueFromIcon) {
 
   const l = await app.showLoading();
   const res = await app.getApi("epos_restaurant_2023.api.coupon.check_coupon_code_for_top_up", {
-    coupon_code: couponCode.value
+    coupon_code: _coupon_code
   })
   if (res.data) {
  
@@ -78,7 +81,8 @@ async function onScanQRCode(valueFromIcon) {
 async function onScanWithCamera() {
   const result = await app.utils.onScanBarcode();
   if (result) {
-    await onScanQRCode(result)
+        couponCode.value = result;
+    await onScanQRCode()
 
   }
 
@@ -88,10 +92,13 @@ async function onScanWithCamera() {
 
 
 onMounted(async () => {
+  
   window.disable_scan_check_coupon = true;
   bacodeDetector.listen((barcode)=>{
     if(window.disable_scan_top_up) return;
-    onScanQRCode(barcode.value)
+   
+    couponCode.value = barcode.value;
+    onScanQRCode()
   })
 
   if (app.utils.isMobile()) {

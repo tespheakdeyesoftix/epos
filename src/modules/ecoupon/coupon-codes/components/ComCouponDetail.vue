@@ -1,6 +1,6 @@
 <template>
    
-<ion-grid class="ion-no-margin ion-no-padding">
+<ion-grid class="ion-no-margin">
   <ion-row>
     <ion-col size="6" size-md="3">
       <ion-chip class="m-0 w-full" color="primary">

@@ -1,11 +1,8 @@
 <template>
     <com-input :placeholder="t('Scan qr code here')" 
     @change="onScanCouponCode" v-model="couponCode" 
- 
     :icon="scan" />
-
  
-
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue"
@@ -44,9 +41,9 @@ async function checkCouponCode(coupon_code) {
         coupon_code: app.utils.getCouponNumber(coupon_code)
     })
     if (res.data) {
-
+        
         // valite sale_products list if coupon code is already selected 
-        if (saleDoc.value.sale_products?.flatMap(x => x.coupons).find(x => x.coupon == couponCode.value)) {
+        if (saleDoc.value.sale_products?.flatMap(x => x.coupons).find(x => x.coupon ==  app.utils.getCouponNumber(coupon_code))) {
             await app.showWarning("This coupon code has been selected.")
    
             await l.dismiss();
@@ -99,6 +96,7 @@ async function onScanWithCamera() {
 onMounted(async () => {
     window.disable_scan_check_coupon = true;
     barcodeDetector.listen((barcode)=>{
+        if (window.disable_scan_redeem) return;
         if(!couponCode.value){
              
 checkCouponCode(barcode.value);

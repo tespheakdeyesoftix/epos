@@ -89,6 +89,7 @@ onIonViewWillEnter(()=>{
   window.addEventListener("resize", handleUpdateScreenMode);
   if(!app.route.params.name){
   saleType.value = "Top Up"
+  
   pageRoute.value = "top-up"
     onClearData()
       saleDoc.value.sale_type = "Top Up";

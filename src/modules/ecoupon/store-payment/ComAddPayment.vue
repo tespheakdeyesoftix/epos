@@ -103,7 +103,7 @@ const doc = ref({
   working_day: app.setting.working_day.name,
   cashier_shift: app.setting.cashier_shift?.name,
   posting_date: new Date(app.setting.working_day.posting_date),
-  payments: [{ payment_type: paymentTypes[0].payment_type }],
+  payments: [{ payment_type: paymentTypes[0].payment_type,exchange_rate:paymentTypes[0].exchange_rate }],
   note: '',
 })
 

@@ -42,8 +42,7 @@ import ComQuickAction from "@/views/layouts/ComQuickAction.vue"
 import { qrCode, scanOutline } from 'ionicons/icons';
 import { onMounted, onUnmounted, ref } from 'vue';
 
-import useBarcodeDetector from '@programic/vue-barcode-detector';
-const barcodeDetector = useBarcodeDetector();
+
 
 const isMobile = ref(app.utils.isMobile())
 
@@ -62,26 +61,8 @@ async function onScanQRCode() {
   }
 }
 
+  
  
-
-function onListeningScanBarCode() {
- 
-  barcodeDetector.listen(async (barcodeData) => {
-      if(keyword.value) return;
-    if (barcodeData.value && !window.disable_scan_check_coupon) {
-      app.utils.checkCouponCodeModal(barcodeData.value)
-    }
-
-  });
-}
-
-onMounted(() => {
-  onListeningScanBarCode()
-})
-
-onUnmounted(() => {
-  barcodeDetector.stopListening();
-})
 </script>
 <style scoped>
 .search_bar {

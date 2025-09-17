@@ -19,7 +19,8 @@ import { initializeScanner } from '@/helpers/scan-barcode.js'
 import { StatusBar, Style } from '@capacitor/status-bar';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
- 
+ import useBarcodeDetector from '@programic/vue-barcode-detector';
+const barcodeDetector = useBarcodeDetector();
 const toast = useToast();
  
  
@@ -51,8 +52,23 @@ watch(() => route.meta.title, (newTitle) => {
 
 });
 
+
+function onListeningScanBarCode() {
+  
+  barcodeDetector.listen(async (barcodeData) => {
+      if(!barcodeData.value) return;
+    if (barcodeData.value && !window.disable_scan_check_coupon) {
+      app.utils.checkCouponCodeModal(barcodeData.value)
+    }
+
+  });
+}
+
 onMounted(async () => {
  
+  barcodeDetector.stopListening();
+  
+  onListeningScanBarCode();
 
   window.toast = toast;
   if (Capacitor.getPlatform() !== "web") {
@@ -65,6 +81,7 @@ onMounted(async () => {
     await initializeScanner();
   }
 })
+
 </script>
 
 <style>

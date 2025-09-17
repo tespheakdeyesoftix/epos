@@ -4,7 +4,6 @@ import ComPayment from "@/modules/ecoupon/sale-coupon/components/ComPayment.vue"
 import ComDiscountPercent from "@/modules/ecoupon/sale-coupon/components/ComDiscountPercent.vue"
 import ComDiscountAmount from "../modules/ecoupon/sale-coupon/components/ComDiscountAmount.vue"
 import dayjs from "dayjs"
-import { Capacitor } from '@capacitor/core';
 import { modalController } from "@ionic/vue"
 import beep from '/assets/sound/submit.mp3'
 const beepSound = new Audio(beep)
@@ -194,7 +193,7 @@ async function onPayment() {
         return;
     }
 
-    if (saleDoc.value.sale_type == "Redeem") {
+    if ((saleDoc.value.sale_type || saleType.value) == "Redeem") {
         if (Math.abs(paymentBalance.value <= 0)) {
             await app.showWarning("No amount to Redeem")
             return
@@ -203,7 +202,7 @@ async function onPayment() {
 
     }
 
-    if (saleDoc.value.sale_type == "Top Up") {
+    if ((saleDoc.value.sale_type || saleType.value) == "Top Up") {
         if (saleDoc.value.sale_products[0].product_code == "") {
             await app.showWarning("Please select top up amount")
             return
@@ -287,14 +286,17 @@ async function onQuickPay(payment_type) {
         return
     }
 
-    if (saleDoc.value.sale_type == "Redeem") {
-        await app.showWarning("No amount to Redeem")
-        return
+    if ((saleDoc.value.sale_type || saleType.value) == "Redeem") {
+        if (grandTotal.value == 0) {
+            await app.showWarning("No amount to Redeem")
+            return
+        }
+
     }
 
 
     // if top up validate user select topup
-    if (saleDoc.value.sale_type == "Top Up") {
+    if ((saleDoc.value.sale_type || saleType.value) == "Top Up") {
         if (saleDoc.value.sale_products[0].product_code == "") {
             await app.showWarning("Please select top up amount")
             return

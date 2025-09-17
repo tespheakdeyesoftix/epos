@@ -51,7 +51,6 @@
         <div class="ion-padding" v-if="doc?.name">
           <DocList ref="docListRef" docType="Coupon Codes" :options="options" :focus="false">
             <template #coupon_status="{ item }">
-           
               <template v-if="item.coupon_status == 'Saving...' || item.coupon_status == 'Deleting...'">
                 <ion-chip class="no-background">
                 <ion-spinner name="dots"></ion-spinner>

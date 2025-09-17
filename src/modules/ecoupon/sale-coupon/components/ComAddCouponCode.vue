@@ -46,7 +46,7 @@
         <ion-list v-if="sortedCouponList.length > 0">
             <ion-item button v-for="(c, index) in sortedCouponList" :key="index">
                 <ion-label>{{ c.coupon }}</ion-label>
-                <ComCurrency :value="data.is_open_product ? doc.price : data.price" slot="end" />
+                <ComCurrency :value="data.is_open_product ? doc.price : data.price" :currency="selectedCurrency" slot="end" />
                 <ion-button @click="onDelete(index)" slot="end" size="large" fill="clear" shape="round" color="danger">
                     <ion-icon :icon="closeOutline"></ion-icon>
                 </ion-button>
@@ -331,7 +331,9 @@ function onConfirm(process_payment = false) {
     }
 
     let price =  props.data.is_open_product == 1 ? doc.value.price : props.data.price;
-    
+    let input_price =  props.data.is_open_product == 1 ? doc.value.price : props.data.price;
+    let coupon_value =  props.data.is_open_product == 1 ? couponValue.value : props.data.coupon_value
+   
     // validate max and min input amount to prevent wrong posting data
     if (props.data.is_open_product == 1){
        if(selectedCurrency.value =="KHR"){
@@ -363,6 +365,13 @@ function onConfirm(process_payment = false) {
     if(app.setting.currency != selectedCurrency.value){
         price = price / exchange_rate.value;
     }
+    
+    if(app.setting.currency != selectedCurrency.value){
+        coupon_value  = coupon_value / exchange_rate.value;
+        
+    }
+    
+
  
     const returnData = {
         creation: app.dayjs(),
@@ -372,14 +381,16 @@ function onConfirm(process_payment = false) {
         quantity: coupounList.value.length,
         unit: props.data.unit,
         sub_total: props.data.price,
+        input_price:input_price,
+        input_currency:selectedCurrency.value,
         price:price,
         amount: coupounList.value.length * props.data.price,
         coupons: coupounList.value,
         allow_discount: props.data.allow_discount,
         coupon_markup_type: doc.value.coupon_markup_type,
         coupon_markup_value: doc.value.coupon_markup_value,
-        coupon_value: props.data.is_open_product == 1 ? couponValue.value : props.data.coupon_value,
-        total_coupon_value: (props.data.is_open_product == 1 ? couponValue.value : props.data.coupon_value) * coupounList.value.length,
+        coupon_value:coupon_value,
+        total_coupon_value: coupon_value * coupounList.value.length,
         is_open_product: props.data.is_open_product,
         append_quantity: props.data.append_quantity,
         allow_free: props.data.allow_free,

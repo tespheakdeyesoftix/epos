@@ -36,7 +36,7 @@
         </slot>
 
         <slot v-if="data && data.length > 0" :item="data">
-            <template v-if="plateform == 'desktop'">
+            <template v-if="plateform == 'desktop' || plateform == 'tablet'">
                 <DataTable :value="data" class="ion-padding-start ion-padding-end" tableStyle="min-width: 50rem"
                     selectionMode="single" v-model:selection="selectedRow" showGridlines stripedRows @sort="onSort"
                     :lazy="true" @row-dblclick="onRowDblClick" :sortField="options.presort"
@@ -118,7 +118,7 @@
         </div>
     </template>
     <ion-chip v-if="data.length > 0"
-        style="position: fixed; background: #e4eaf5; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+        style="position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%); z-index: 1000;">
         {{ t("Showing Record") }} {{ data.length }} {{ t("of") }} {{ totalRecord }}
     </ion-chip>
 </template>

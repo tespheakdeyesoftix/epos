@@ -26,7 +26,7 @@
     </ion-footer>
     <ion-footer v-if="plateform=='mobile'" >
                
-                <ion-card class="p-0 m-0 card-height"   button @click="_onPayment" style="color: black;" >
+                <ion-card color="success" class="p-0 m-0 card-height"   button @click="_onPayment"  >
                 <ion-card-content class="ion-no-padding" >
                     <ion-grid>
                         <ion-row>
@@ -34,20 +34,23 @@
                             <span class="title-payment font " >
                             {{ t('Payment') }} 
                             </span>
-                            <ion-chip class="small-chip" color="success">
+                            <ion-chip class="small-chip" color="primary">
                                 <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
                                 <ComExchangeRate />
                             </ion-chip>
                         </ion-col>
                         <ion-col size="5" class="ion-no-padding">
-                            <div>
-                                <ion-label class="big-chip font">
-                                {{t('Total')}} ({{ t(mainCurrency) }}) :  <ComCurrency :value="grandTotal"/> 
+                            <div style="float: right;">
+                                <ion-label class="big-chip font text-3xl">
+                                 <ComCurrency :value="grandTotal"/> 
                             </ion-label>
+                            <br/>
+                                <ion-label class="big-chip font text-2xl">
+                                <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
+                            </ion-label>
+
                             </div>
-                            <ion-label class="big-chip font">
-                                {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
-                            </ion-label>
+                            
                         </ion-col>
                         
                         </ion-row>

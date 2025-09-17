@@ -91,9 +91,9 @@ const minAmountUSD = ref(1)
 const maxAmountUSD = ref(100)
 const isOn = ref(false)
 const userPreference = ref({
-    open_camera_on_top_up:true,
-    open_camera_on_redeem:true,
-    open_camera_on_add_sale_coupon:true
+    open_camera_on_top_up:false,
+    open_camera_on_redeem:false,
+    open_camera_on_add_sale_coupon:false
 })
 
 

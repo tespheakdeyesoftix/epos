@@ -242,9 +242,7 @@
                     <ion-note>{{ SaleDoc?.note }}</ion-note>
                 </ion-item>
             </ion-list>
-     
-<!-- {{ saleDoc }}
-                  {{ saleProducts }} -->
+
 </template>
 
 <script setup>
