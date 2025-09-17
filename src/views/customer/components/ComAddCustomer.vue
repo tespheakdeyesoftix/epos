@@ -61,15 +61,16 @@ const props = defineProps({
   docname:String,
 
 })
-
 const t = window.t
 const doc = ref({})
 
-
-
-
 async function onSave() {
   const loading = await app.showLoading()
+
+  if (doc.value.date_of_birth) {
+    doc.value.date_of_birth = dayjs(doc.value.date_of_birth).format("YYYY-MM-DD")
+  }
+  
   let result = null
  
     if (doc.value.name) {

@@ -5,7 +5,6 @@
     :confirmText="buttonText"
     :hideConfirm="doc.docstatus!=0"
   >
-  
   <Message v-if="doc.name && doc.docstatus == 0 && !docChanged" severity="info" class="mb-3">{{ t('Submit this document to confirm') }}</Message>
   <Message v-if="doc.pos_profile" severity="success" class="mb-3">{{ t('Current Balance:') }} <ComCurrency :value="creditBalance" /> </Message>
  
@@ -15,8 +14,6 @@
         <com-input type="date" :label="t('Posting Date')" v-model="doc.posting_date" />
       </stack>
     </stack>
-
- 
 
     <card :header="t('Payment Type')" class="ion-padding ion-no-margin mt-4 mb-4">
       <ion-grid>
@@ -116,8 +113,6 @@ function isDocChanged(newDoc, oldDoc) {
   return JSON.stringify(newDoc) !== JSON.stringify(oldDoc)
 }
 
-
-
 // Watch doc deeply and update docChanged
 watch(
   doc,
@@ -145,17 +140,13 @@ const totalPaymentAmount = computed(() => {
 })
 
 async function onSelectPOSProfile(profile){
-
- 
   const res = await app.getApi("epos_restaurant_2023.selling.doctype.store_payment.store_payment.get_vendor_credit_balance",{
     pos_profile:profile.name
   });
   
   if(res.data){
-     
     creditBalance.value = res.data.balance
   }
-
 }
 
 function onSelectPayemntType(event, p) {
@@ -183,19 +174,15 @@ async function onSubmit() {
   saveDoc.posting_date = dayjs(saveDoc.posting_date).format('YYYY-MM-DD')
   const res =  await app.submitDoc(saveDoc)
  
-
   if(res.data){
    beepSound.currentTime = 0
       beepSound.play()
     app.showSuccess("Submit successfully")
-
-        
+    
   if(props.docListRef?.value){
-
     props.docListRef.value.onRefresh();
   }    
     modalController.dismiss();
-
   }
   await l.dismiss();
 }
@@ -212,7 +199,6 @@ async function onSave() {
   if (result.data) {
         updateDocChangeStatus(result.data);
     app.showSuccess(saveDoc.name ? 'Update successfully.' : 'Added successfully.')
-
   }
 
   if(props.docListRef?.value){
@@ -225,7 +211,6 @@ async function onSave() {
   
   await loading.dismiss()
   // props.docListRef.value.onRefresh();
-
 }
 
 function onConfirmClick() {
@@ -239,7 +224,6 @@ function onConfirmClick() {
   } else {
     onSubmit()
   }
-
 }
 
 function updateDocChangeStatus(data){
@@ -255,17 +239,13 @@ onMounted(async () => {
   if (props.docname) {
     const l = await app.showLoading()
     const res = await app.getDoc('Store Payment', props.docname)
-
     if (res.data) {
-    
      updateDocChangeStatus(res.data);
     }
-    
     onSelectPOSProfile({name:doc.value.pos_profile});
     await l.dismiss()
   } else {
-     updateDocChangeStatus(doc.value);
-    
+     updateDocChangeStatus(doc.value); 
   }
 })
 </script>
