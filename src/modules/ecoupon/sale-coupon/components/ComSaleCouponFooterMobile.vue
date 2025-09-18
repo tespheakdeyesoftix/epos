@@ -75,7 +75,7 @@ if(second_currency.value == mainCurrency.value){
  
 async function onViewSelectedSaleProduct(){
     if (saleDoc.value.sale_products.length == 0) {
-        app.showWarning("No product selected.")
+        app.showWarning(t("No product selected."))
         return
     }
     const result = await app.openModal({
