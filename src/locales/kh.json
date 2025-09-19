@@ -659,5 +659,8 @@
     "Update successfully":"ធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ",
     "Refresh Data":"ផ្ទុកទិន្នន័យឡើងវិញ",
     "Plese enter or scan coupon code":"សូមបញ្ចូល ឬស្កេនលេខគូប៉ុង",
-    "Please scan the QR code of the coupon":"សូមស្កេន QR កូដនៃគូប៉ុង"
+    "Please scan the QR code of the coupon":"សូមស្កេន QR កូដនៃគូប៉ុង",
+    "UNAUTHORIZED":"មិនមានសិទ្ធិចូលប្រើ",
+    "Usename and password incorrect.":"ឈ្មោះអ្នកប្រើ និងពាក្យសម្ងាត់មិនត្រឹមត្រូវ។",
+    "No product selected.":"មិនបានជ្រើសរើសផលិតផលទេ។"
   }   
