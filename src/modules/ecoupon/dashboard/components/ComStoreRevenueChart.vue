@@ -109,7 +109,7 @@ const option = computed(() => {
       
     },
     grid: {
-      top: 25,
+      top: 50,
       bottom: 5,
       left: 40,
       right: 10,
@@ -120,7 +120,7 @@ const option = computed(() => {
       data: posProfiles,
       axisLabel: {
         interval: 0,
-        rotate: 0
+        rotate: 15
       }
     },
     yAxis: {

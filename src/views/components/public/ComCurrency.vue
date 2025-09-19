@@ -28,6 +28,8 @@ const props = defineProps({
     color:String
 })
 
+const decimal_precission = 6;
+
 const setting = app.setting;
 const symbol_on_right = computed(()=>{
   if(!props.currency) return setting.symbol_on_right
@@ -52,21 +54,21 @@ function formatCurrency() {
   if(!props.format){
   
     if(!props.currency ) {
-          return `${Number(props.value || 0).toLocaleString('en-US', {
+          return `${Number((props.value || 0).toFixed(decimal_precission)).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.currency_precision,
           maximumFractionDigits: app.setting.currency_precision
       })}`;
     }
     
     if(props.currency == setting.currency ) {
-          return `${Number(props.value || 0).toLocaleString('en-US', {
+          return `${Number((props.value || 0).toFixed(decimal_precission)).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.currency_precision,
           maximumFractionDigits: app.setting.currency_precision
       })}`;
     }
     
     if(props.currency == setting.second_currency ) {
-          return `${Number(props.value ||0).toLocaleString('en-US', {
+          return `${Number((props.value ||0).toFixed(decimal_precission)).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.second_currency_precision,
           maximumFractionDigits: app.setting.second_currency_precision
       })}`;
@@ -75,7 +77,7 @@ function formatCurrency() {
 
   }else {
      
-    return  app.currencyFormat(props.value, props.format)
+    return  app.currencyFormat((props.value || 0).toFixed(decimal_precission), props.format)
   }
   
 }

@@ -95,7 +95,7 @@ const option = computed(() => {
       }
     },
     legend: {
-      data: [t("Total Revenue")]
+      data: [t("Coupon Revenue")]
       // data: [t("Total Revenue"),t("Coupon Value")]
     },
      grid: {
@@ -110,29 +110,17 @@ const option = computed(() => {
       data: labels,
       axisLabel: {
         interval: 0,
-        rotate: 0
+        rotate: 15
       }
     },
     yAxis: {
       type: 'value'
     },
     series: [
-      {
-        name: t("Total Revenue"),
-        type: chartType.value,
-        data: totalAmount,
-         label: {
-            show: true,
-            position: 'top', // or 'inside', 'bottom', etc.
-            formatter: function (params) {
-                return app.currencyFormat(params.value)
-            }
-            }
-      },
       // {
-      //   name: t("Coupon Value"),
+      //   name: t("Total Revenue"),
       //   type: chartType.value,
-      //   data: couponValues,
+      //   data: totalAmount,
       //    label: {
       //       show: true,
       //       position: 'top', // or 'inside', 'bottom', etc.
@@ -141,6 +129,18 @@ const option = computed(() => {
       //       }
       //       }
       // },
+      {
+        name: t("Coupon Value"),
+        type: chartType.value,
+        data: couponValues,
+         label: {
+            show: true,
+            position: 'top', // or 'inside', 'bottom', etc.
+            formatter: function (params) {
+                return app.currencyFormat(params.value)
+            }
+            }
+      },
       
     ]
   }

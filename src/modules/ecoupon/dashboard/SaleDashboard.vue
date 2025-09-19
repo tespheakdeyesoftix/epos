@@ -18,7 +18,7 @@
             <ion-grid  class="ion-no-margin ion-no-padding">
                 <ion-row   >
                     <ion-col  size="12"  size-xs="12"   size-md="8"   class="ion-no-padding">
-                             <ComCouponBreakdownChart :data="saleCouponBreakdown"/>
+                            <ComStoreRevenueChart :data="storeRevenueSummaryData"/>
                     </ion-col>
                     <ion-col  size="12" size-xs="12"  size-md="4" class="mt-3 ion-no-padding" >                       
                             <ComCouponTransactionSummary :data="couponTransactionSummary"/>
@@ -104,7 +104,6 @@ const {
         chartData,
         couponUsedSummaryByPOSStation,
         getKpiData,
-        getSaleCouponBreakdown,
         getCouponTransactionSummary,
         getChartData,
         getPaymentBreakDown,

@@ -41,17 +41,30 @@
                     </Column>
                     <Column field="current_revenue" :header="t('Today Revenue')" headerClass="text-right" bodyClass="text-right" sortable >
                         <template #body="slotProps">
-                            <ComCurrency :value="slotProps.data.current_revenue" />
+                            <ComCurrency :value="slotProps.data.current_revenue" v-tooltip.bottom="`${t('Actual Amount')}`" /> 
+                           <template v-if="slotProps.data.current_revenue != slotProps.data.current_coupon_value">
+                                / <ComCurrency :value="slotProps.data.current_coupon_value"  v-tooltip.bottom="`${t('Coupon Value')}`"/> 
+                                </template>
+                            
+
                         </template>
                     </Column>
                     <Column field="mtd_revenue" :header="t('MTD Revenue')" headerClass="text-right" bodyClass="text-right" sortable >
                         <template #body="slotProps">
-                            <ComCurrency :value="slotProps.data.mtd_revenue" />
+                            <ComCurrency :value="slotProps.data.mtd_revenue" v-tooltip.bottom="`${t('Actual Amount')}`" />
+                           <template v-if="slotProps.data.mtd_revenue != slotProps.data.mtd_coupon_value">
+                                / <ComCurrency :value="slotProps.data.mtd_coupon_value" v-tooltip.bottom="`${t('Coupon Value')}`" /> 
+                            
+                            </template>
                         </template>
                     </Column>
                     <Column field="ytd_revenue" :header="t('YTD Revenue')" headerClass="text-right" bodyClass="text-right" sortable >
                         <template #body="slotProps">
-                            <ComCurrency :value="slotProps.data.ytd_revenue" />
+                            <ComCurrency :value="slotProps.data.ytd_revenue" v-tooltip.bottom="`${t('Actual Amount')}`"/>
+                             <template v-if="slotProps.data.ytd_revenue != slotProps.data.ytd_coupon_value">
+                                / <ComCurrency :value="slotProps.data.ytd_coupon_value" v-tooltip.bottom="`${t('Coupon Value')}`"/> 
+                        
+                            </template>
                         </template>
                     </Column>
             <ColumnGroup type="footer">
@@ -59,18 +72,27 @@
                     <Column :footer="t('Totals:')" :colspan="2" footerStyle="text-align:right"/>
                     <Column footerStyle="text-align:right;font-weight:bold">
                         <template #footer>
-                            <ComCurrency :value="getTotal('current_revenue')" />
+                            <ComCurrency :value="getTotal('current_revenue')" /> 
+                            <template v-if="getTotal('current_revenue')!=getTotal('current_coupon_value')">
+                                / <ComCurrency :value="getTotal('current_coupon_value')" /> 
+                            </template>
                         </template>
                     </Column>
                     
                     <Column footerStyle="text-align:right;font-weight:bold">
                         <template #footer>
                             <ComCurrency :value="getTotal('mtd_revenue')" />
+                            <template v-if="getTotal('mtd_revenue')!=getTotal('mtd_coupon_value')">
+                                / <ComCurrency :value="getTotal('mtd_coupon_value')" /> 
+                            </template>
                         </template>
                     </Column>
                     <Column footerStyle="text-align:right;font-weight:bold">
                         <template #footer>
                             <ComCurrency :value="getTotal('ytd_revenue')" />
+                            <template v-if="getTotal('ytd_revenue')!=getTotal('ytd_coupon_value')">
+                                / <ComCurrency :value="getTotal('ytd_coupon_value')" /> 
+                            </template>
                         </template>
                     </Column>
                 </Row>
