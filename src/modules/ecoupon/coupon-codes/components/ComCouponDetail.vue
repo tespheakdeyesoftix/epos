@@ -1,12 +1,13 @@
 <template>
-   
+ 
+ 
 <ion-grid class="ion-no-margin">
   <ion-row>
     <ion-col size="6" size-md="3">
       <ion-chip class="m-0 w-full" color="primary">
         <strong>
           {{ t("Coupon Amount") }} <br>
-          <ComCurrency :value="(data?.coupon_info.price || 0) + (topUp.price || 0)" />
+          <ComCurrency :value="(data?.coupon_info.coupon_value || 0) + (topUp.coupon_value || 0)" />
         </strong>
       </ion-chip>
     </ion-col>
@@ -15,7 +16,7 @@
       <ion-chip class="m-0 w-full" color="warning">
         <strong>
           {{ t("Used Amount") }} <br>
-          <ComCurrency :value="usedAmount.price" />
+          <ComCurrency :value="usedAmount.coupon_value" />
         </strong>
       </ion-chip>
     </ion-col>
@@ -24,7 +25,7 @@
       <ion-chip class="m-0 w-full" color="danger">
         <strong>
           {{ t("Redeem Amount") }} <br>
-          <ComCurrency :value="redeemAmount.price" />
+          <ComCurrency :value="redeemAmount.coupon_value" />
         </strong>
       </ion-chip>
     </ion-col>
@@ -33,7 +34,7 @@
       <ion-chip class="m-0 w-full" color="success">
         <strong>
           {{ t("Balance") }} <br>
-          <ComCurrency :value="totalAmount.price" />
+          <ComCurrency :value="totalAmount.coupon_value" />
         </strong>
       </ion-chip>
     </ion-col>

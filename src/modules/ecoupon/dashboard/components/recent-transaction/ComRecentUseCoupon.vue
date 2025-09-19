@@ -21,7 +21,8 @@ async function getData() {
     fields: ["sale", "customer","customer_name", "pos_station","creation","owner","posting_date","coupon_code" ,"coupon_number", "actual_amount", "coupon_amount"],
     filters: [
       ["business_branch", "=", app.setting.property.property_name],
-      ["transaction_type", "=", "Used"]
+      ["transaction_type", "=", "Used"],
+      ["status", "!=", "Deleted"]
     ],
     orderBy: {
       field: "creation",
