@@ -25,7 +25,7 @@
 
                 </stack>
             </div>
-            <DataTable :value="data" stripedRows class="ion-padding-start ion-padding-end" tableStyle="min-width:25rem">
+            <DataTable v-if="plateform != 'mobile'" :value="data" stripedRows class="ion-padding-start ion-padding-end" tableStyle="min-width:25rem">
                 <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center" style="width: 60px">
                     <template #body="slotProps">
                         {{ slotProps.index + 1 }}
