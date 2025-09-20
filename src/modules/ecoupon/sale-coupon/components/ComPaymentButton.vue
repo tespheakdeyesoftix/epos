@@ -34,18 +34,18 @@
                             <span class="title-payment font " >
                             {{ t('Payment') }} 
                             </span>
-                            <ion-chip class="small-chip" color="primary">
+                            <ion-chip class="small-chip font-bold" color="primary">
                                 <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
                                 <ComExchangeRate />
                             </ion-chip>
                         </ion-col>
                         <ion-col size="5" class="ion-no-padding">
                             <div style="float: right;">
-                                <ion-label class="big-chip font text-3xl">
+                                <ion-label class="big-chip text-3xl">
                                  <ComCurrency :value="grandTotal"/> 
                             </ion-label>
                             <br/>
-                                <ion-label class="big-chip font text-2xl">
+                                <ion-label class="big-chip text-2xl">
                                 <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
                             </ion-label>
 
@@ -67,36 +67,30 @@
                         <ion-col size="5">
                         <div >
                             <div>
-                                  <ion-label class="big-chip font text-2xl" >
+                                  <ion-label class="big-chip text-2xl" >
                                 {{ t('Payment') }} 
                             </ion-label>
                             </div>
                           
-                                
-                             <ion-label Color="danger" class="big-chip font">
+                             <ion-label Color="danger" class="big-chip">
                                  <ComCurrency :value="1" :currency="mainExchangeRateCurrency" /> <span class="mx-2">=</span>   
                                 <ComExchangeRate />
                             </ion-label>
                                
-                      
-                         
                         </div>
-                        
                         </ion-col>
                         <ion-col size="7" >
                             <div style="text-align: right;">
-  <div>
-                                <ion-label class="big-chip font text-3xl">
-                                {{t('Total')}}  :  <ComCurrency :value="grandTotal"/> 
-                            </ion-label>
+                                <div>
+                                    <ion-label class="big-chip text-3xl">
+                                    {{t('Total')}}  :  <ComCurrency :value="grandTotal"/> 
+                                </ion-label>
+                                </div>
+                                <ion-label class="big-chip">
+                                    {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
+                                </ion-label>
                             </div>
-                            <ion-label class="big-chip font">
-                                {{t('Total')}} ({{ t(second_currency) }}) : <ComCurrency :value="grandTotalSecondCurrency || 0" :currency="second_currency"/> 
-                            </ion-label>
-                            </div>
-                          
                         </ion-col>
-                        
                         </ion-row>
                     </ion-grid>
                 </ion-card-content>
@@ -141,6 +135,6 @@ async function _onPayment(){
 }
 .font{
     
-    font-size: 14px;
+    font-size: 17px;
 }
 </style>

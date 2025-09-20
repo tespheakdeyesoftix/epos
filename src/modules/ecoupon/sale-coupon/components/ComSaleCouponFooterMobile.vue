@@ -17,12 +17,12 @@
                 </ion-row>
                
                 <ion-row >
-                    <ion-col size="9"> <ion-text class="text-2xl">
+                    <ion-col size="9"> <ion-text class="text-xl">
                         {{t('Total')}} ({{ t(mainCurrency) }}) 
                         </ion-text>
                     </ion-col>
                     <ion-col size="3">
-                        <ion-text class="text-2xl md:text-3xl"><ComCurrency :value="grandTotal"/></ion-text>
+                        <ion-text class="text-lg md:text-3xl"><ComCurrency :value="grandTotal"/></ion-text>
                         
                     </ion-col>
                 </ion-row>
