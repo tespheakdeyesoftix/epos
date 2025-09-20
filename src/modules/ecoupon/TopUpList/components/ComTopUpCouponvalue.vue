@@ -48,10 +48,15 @@ import ComCurrency from "@/views/components/public/ComCurrency.vue";
 import { getAvatarLetter } from "@/helpers/utils"
 const { products } = useProductMenu();
 const { saleDoc, topUpCouponInfo, topUpSaleProduct } = useSaleCoupon();
-
+ 
 saleDoc.value.sale_products = [topUpSaleProduct.value]
 
 async function onSelectCoupon(p) {
+ 
+  if (!saleDoc.sale_products){
+    saleDoc.value.sale_products = [topUpSaleProduct.value]
+
+  }
   let price = p.price
   let couponValue = p.coupon_value
   // check if is open price enter coupon price 

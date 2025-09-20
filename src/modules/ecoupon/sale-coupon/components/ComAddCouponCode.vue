@@ -274,6 +274,7 @@ async function validateCouponCode(c) {
     
     if (c == "") {
         app.showWarning("Plese enter or scan coupon code")
+        return false;
     }
 
     // check if exist in list 

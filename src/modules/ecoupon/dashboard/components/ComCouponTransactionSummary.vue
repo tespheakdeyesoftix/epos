@@ -3,7 +3,7 @@
     <ion-card v-if="plateform == 'mobile'" class="ion-no-margin">
         <ion-card-header>
             <ion-card-title>
-                {{ t("Coupon Transaction Summary") }} mb
+                {{ t("Coupon Transaction Summary") }} 
             </ion-card-title>
         </ion-card-header>
    <ion-card-content>

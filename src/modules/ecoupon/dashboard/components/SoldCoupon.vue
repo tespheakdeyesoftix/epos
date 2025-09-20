@@ -9,7 +9,7 @@
             ref="docListRef"
             >
              <template #price="{ item, index }">
-                  <template v-if="item.price>0">
+                  <template v-if="item.price>0 || item.coupon_value!=0">
                       <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.price" />
                       <template v-if="item.price != item.coupon_value">
 
@@ -22,7 +22,7 @@
                    
                 </template>
                 <template #top_up_amount="{ item, index }">
-                  <template  v-if="item.top_up_amount>0">
+                  <template  v-if="item.top_up_amount>0 || item.top_up_coupon_value!=0">
                     <ComCurrency v-tooltip.left="`${t('Price')}`" :value="item.top_up_amount" /> 
                     <template v-if="item.top_up_amount!=item.top_up_coupon_value">
                     / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.top_up_coupon_value"/>
@@ -33,7 +33,7 @@
                 </template>
                 <!-- Use Amount -->
                 <template #use_amount="{ item, index }">
-                  <template  v-if="item.use_amount!=0">
+                  <template  v-if="item.use_amount!=0 || item.use_coupon_value!=0">
                     <ComCurrency v-tooltip.left="`${t('Actual Amount')}`" :value="item.use_amount" />
                     <template v-if="item.use_amount != item.use_coupon_value">
                     / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="item.use_coupon_value"/>
@@ -44,7 +44,7 @@
                 
                 <!-- Redeem -->
                 <template #redeem_amount="{ item, index }">
-                  <template  v-if="item.redeem_amount!=0">
+                  <template  v-if="item.redeem_amount!=0 || item.redeem_coupon_value!=0">
                     <ion-text color="danger">
                     <ComCurrency v-tooltip.left="`${t('Price')}`" :value="Math.abs(item.redeem_amount)" />
                     <template v-if="item.redeem_amount !=item.redeem_coupon_value">
@@ -58,7 +58,7 @@
                 
                 <!-- Balance -->
                 <template #balance_amount="{ item, index }">
-                  <template  v-if="item.balance_amount!=0">
+                  <template  v-if="item.balance_amount!=0 || item.balance_coupon_value">
                     <ComCurrency v-tooltip.left="`${t('Balance')}`" :value="item.balance_amount" />
                     <template v-if="item.balance_amount !=item.balance_coupon_value">
 / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.balance_coupon_value)"/>

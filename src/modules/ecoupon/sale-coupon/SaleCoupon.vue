@@ -98,14 +98,14 @@ function handleUpdateScreenMode() {
 }
 
 onMounted(async () => {
-
+ 
   pageRoute.value = "/sale-coupon"
   saleType.value = "Sale Coupon";
   if (app.route.params.name) {
     await getSaleDoc()
 
   } else {
-
+    initSaleDoc()
     saleDoc.value.sale_type = "Sale Coupon";
   }
 })

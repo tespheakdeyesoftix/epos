@@ -50,8 +50,8 @@ import ComRedeemCouponList from "@/modules/ecoupon/RedeemList/components/ComRede
 import ComRedeemFooter from "@/modules/ecoupon/RedeemList/components/ComRedeemFooter.vue"
 import ComRedeemFooterMobile from "@/modules/ecoupon/RedeemList/components/ComRedeemFooterMobile.vue"
 import { useSaleCoupon } from "@/hooks/useSaleCoupon";
-import { useApp } from "@/hooks/useApp";
-import { ref } from "vue";
+ 
+import { ref,onMounted } from "vue";
 import {
   onIonViewWillEnter
 } from '@ionic/vue';
@@ -60,17 +60,10 @@ import ComPaymentButton from "../sale-coupon/components/ComPaymentButton.vue";
 const isMobileUI = ref(window.innerWidth <= 900)
 
 const t = window.t;
-const { saleDoc, grandTotal, saleType, pageRoute, onClearData, initSaleDoc } = useSaleCoupon()
-const { exchange_rate } = useApp();
-const second_currency = ref(app.setting.second_currency);
-const mainCurrency = ref(app.setting.currency);
-const exchangeRateMainCurrency = ref(app.setting.exchange_rate_main_currency);
-const exchangeRateSecondCurrency = ref(app.setting.second_currency);
+const { saleDoc,  saleType, pageRoute, onClearData, initSaleDoc } = useSaleCoupon()
 
-if (mainCurrency.value != exchangeRateMainCurrency.value) {
-  exchangeRateSecondCurrency.value = mainCurrency.value;
-}
-const exchangeRate = app.setting.exchange_rate_input
+
+
 function handleUpdateScreenMode() {
   isMobileUI.value = (window.innerWidth <= 900);
 }
@@ -85,6 +78,10 @@ onIonViewWillEnter(() => {
   }
 
 
+})
+
+onMounted(() => {
+   initSaleDoc()
 })
 
 

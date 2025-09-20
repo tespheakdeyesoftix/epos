@@ -12,7 +12,6 @@
         @onRowDblClick="onRowDblClick"
         ref="docListRef"
       >
-      
          <template v-slot:default="{ item }" v-if="plateform=='mobile'"> 
           <ComCouponTransactionCard v-for="d in item" :data="d"/>
          </template>
@@ -89,7 +88,7 @@ const options = {
   },
   filters: [],
   filterOptions: [
-    { fieldname: "transaction_type", fieldtype: "Select", label: t('Transaction Type'), clear: true, modal_type: plateform.value === 'mobile' ? 'sheet_modal' : 'modal', options: ['Sale Coupon', 'Top Up', 'Redeem', 'Use'] },
+    { fieldname: "transaction_type", fieldtype: "Select", label: t('Transaction Type'), clear: true, modal_type: plateform.value === 'mobile' ? 'sheet_modal' : 'modal', options: ['Sale Coupon', 'Top Up', 'Redeem', 'Used'] },
     { fieldname: "working_day", fieldtype: "Link", options: "Working Day", label: t("Working Day") },
     { fieldname: "cashier_shift", fieldtype: "Link", options: "Cashier Shift", label: t("Cashier Shift") },
     { fieldname: "pos_station", fieldtype: "Link", options: "POS Station", label: t("POS Station #") },

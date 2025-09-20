@@ -115,7 +115,7 @@ const option = computed(() => {
                         }
                     },
                     label: {
-                        show:false,
+                        show:true,
                         formatter:function (params) {
                             return  params.name + ": "  + getInputAmount( params.name)
                         }

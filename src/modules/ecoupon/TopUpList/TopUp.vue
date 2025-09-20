@@ -14,6 +14,7 @@
         >
     <ion-menu content-id="main">
       <ion-content class="ion-padding">   
+       
       <ComSearchBarcode />
       <ComTopUpCouponValue />
       </ion-content>
@@ -81,7 +82,7 @@ function handleUpdateScreenMode() {
 }
 
 onMounted(async () => {
-  
+   initSaleDoc()
 })
 
 onIonViewWillEnter(()=>{

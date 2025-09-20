@@ -54,21 +54,32 @@ function formatCurrency() {
   if(!props.format){
   
     if(!props.currency ) {
-          return `${Number((props.value || 0).toFixed(decimal_precission)).toLocaleString('en-US', {
+
+          let n =parseFloat(props.value)
+          if (!n){
+            n = 0
+          }
+          n = n.toFixed(decimal_precission);
+
+   return `${Number(n).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.currency_precision,
           maximumFractionDigits: app.setting.currency_precision
       })}`;
+
+         
+
+
     }
     
     if(props.currency == setting.currency ) {
-          return `${Number((props.value || 0).toFixed(decimal_precission)).toLocaleString('en-US', {
+          return `${Number((parseFloat(props.value) || 0).toFixed(decimal_precission)).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.currency_precision,
           maximumFractionDigits: app.setting.currency_precision
       })}`;
     }
     
     if(props.currency == setting.second_currency ) {
-          return `${Number((props.value ||0).toFixed(decimal_precission)).toLocaleString('en-US', {
+          return `${Number(( parseFloat(props.value) ||0).toFixed(decimal_precission)).toLocaleString('en-US', {
           minimumFractionDigits: app.setting.second_currency_precision,
           maximumFractionDigits: app.setting.second_currency_precision
       })}`;
@@ -77,7 +88,7 @@ function formatCurrency() {
 
   }else {
      
-    return  app.currencyFormat((props.value || 0).toFixed(decimal_precission), props.format)
+    return  app.currencyFormat((parseFloat(props.value) || 0).toFixed(decimal_precission), props.format)
   }
   
 }

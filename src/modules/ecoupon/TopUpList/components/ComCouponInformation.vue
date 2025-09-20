@@ -90,7 +90,7 @@
   </ion-row>
 
   <ion-row v-for="(tx, index) in topUpCouponInfo?.coupon_transaction" :key="index" class="data-row">
-  {{ tx }}
+
     <ion-col size="3">{{ t(tx.transaction_type) }}</ion-col>
     <ion-col size="3">
       <ComCurrency :value="tx.input_actual_amount" />
@@ -99,7 +99,7 @@
       {{ tx.markup_percentage.toFixed(2) }}%
     </ion-col>
     <ion-col size="3">
-        <ComCurrency :value="tx.coupon_amount" />
+        <ComCurrency :value="tx.coupon_amount" :currency="tx.currency" />
     </ion-col>
   </ion-row>
 </ion-grid>

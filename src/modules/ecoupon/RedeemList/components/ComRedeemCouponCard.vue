@@ -111,15 +111,11 @@ const props = defineProps({
   index: Number
 })
 
-const plateform = app.utils.getPlateform();
 
 const couponNumber = computed(() => {
   return props.data?.coupons[0]["coupon"]
 })
-const useCouponAmount = computed(() => {
-  return props.data.redeem_coupon_info.coupon_transaction.filter(x => x.transaction_type == 'Used').reduce((sum, item) => sum + (item?.actual_amount || 0), 0);
-})
-
+ 
 const topUpCouponAmount = computed(() => {
   return props.data.redeem_coupon_info.coupon_transaction.filter(x => x.transaction_type == 'Top Up').reduce((sum, item) => sum + (item?.actual_amount || 0), 0);
 })
