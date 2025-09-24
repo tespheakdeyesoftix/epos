@@ -105,8 +105,11 @@ export async function printPreview(options={
 export async function getPrinterNames(){
   
   let url = app.setting.pos_config.print_service_url.replace("wss","https")
+
   url =url.replace("ws","http")
-  url =url.replace("printer","config.json")
+   url = new URL(url);
+ url = url.origin + "/config.json";
+
 
  
    try {
