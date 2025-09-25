@@ -92,7 +92,7 @@
                                         <div class="card-title">{{ d.product_name }}</div>
                                         <p class="card-subtitle" style="color: black;">{{d.quantity}} x <com-currency :value="d.price"/></p>
                                         <div>
-                                            <ion-chip v-for="(c,index) in (d.coupons || [])" :key="index">
+                                            <ion-chip v-for="(c,index) in (d.coupons || [])" :key="index" :routerLink="'/coupon-detail/' + c.coupon_code">
                                                 {{ c.coupon }}
                                             </ion-chip>
                                         </div>
