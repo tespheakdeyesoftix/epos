@@ -188,6 +188,10 @@ async function onSelectProduct(p) {
 
 async function onPayment() {
 
+    
+        saleDoc.value.sale_type = saleType.value;
+    
+
     if (saleDoc.value.sale_products.length == 0) {
         await app.showWarning("Please add product to your order")
         return;
@@ -210,6 +214,7 @@ async function onPayment() {
 
     }
 
+    
 
 
     const result = await app.openModal({

@@ -1,4 +1,5 @@
 <template>
+  
    <ion-grid class="ion-no-padding">
   <ion-row>
     <ion-col 

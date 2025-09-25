@@ -1,4 +1,5 @@
 <template>
+
     <com-input :placeholder="t('Scan qr code here')" 
     @change="onScanCouponCode" v-model="couponCode" 
     :icon="scan" />
