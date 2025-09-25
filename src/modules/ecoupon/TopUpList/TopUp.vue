@@ -9,7 +9,6 @@
     <ion-content>
       <!-- desktop ui -->
         <ion-split-pane when="xs" content-id="main"
-        
         v-if="!isMobileUI"
         >
     <ion-menu content-id="main">
@@ -90,6 +89,7 @@ onIonViewWillEnter(()=>{
   window.addEventListener("resize", handleUpdateScreenMode);
   if(!app.route.params.name){
   saleType.value = "Top Up"
+  
   
   pageRoute.value = "top-up"
     onClearData()
