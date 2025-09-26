@@ -29,7 +29,7 @@
         <!-- Avatar wrapper with overlay icon -->
         <div class="avatar-wrapper">
           <ion-avatar class="custom-avatar" @click="onAvatarClick" style="cursor: pointer">
-            <img
+            <Img
               v-if="data?.photo"
               :src="data.photo"
               alt="avatar"
