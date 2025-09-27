@@ -25,7 +25,7 @@
             <h4>{{ t("Coupon Code List") }}</h4>
         </ion-text>
         <ion-list>
-            <ion-item button v-for="c in data.coupons" :key="c">
+            <ion-item button v-for="c in data.coupons" :key="c"  @click="closeModal(c)">
                 <ion-label>{{ c.coupon }}</ion-label>
                 <ion-label slot="end"><ComCurrency :value="data.price"/></ion-label>
             </ion-item>
@@ -33,9 +33,16 @@
     </BaseModal>
 </template>
 <script setup>
+ import { modalController } from '@ionic/vue';
 import { getAvatarLetter } from "@/helpers/utils"
 const props = defineProps({
     data:Object
 })
 const t  = window.t
+
+function closeModal(c){
+    modalController.dismiss();
+    app.ionRouter.navigate("/coupon-detail/" + c.coupon_code, "forward", "push");
+}
+
 </script>
