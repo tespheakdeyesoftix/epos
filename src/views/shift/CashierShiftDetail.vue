@@ -13,9 +13,12 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
        <div style="position: sticky; top: 0; z-index: 10; background: white;">
-       
-        <ion-segment @ionChange="onSelected">
-<ion-segment-button v-for="(d,index) in tabs" :key="index" :value="d.label" :content-id="'recent_' + index">
+       {{ activeTabIndex }}
+        <ion-segment @ionChange="onSelected"  v-model="activeTabIndex">
+<ion-segment-button v-for="(d,index) in tabs" :key="index" :value="index" 
+:content-id="'recent_' + index"
+
+>
                     <ion-label>{{ t(d.label) }}</ion-label>
                 </ion-segment-button>
                 
@@ -23,7 +26,14 @@
   </div>
   <ion-segment-view>
    <ion-segment-content v-for="(d,index) in tabs" :key="index"  :id="'recent_' + index">
-       <component :is="d.component"  v-if="d.is_loaded==true" :data="data" :cashier_shift="name" :options="d.props || {}"/>
+       <component 
+       :is="d.component"
+          ref="tabRefs"
+    :ref_key="index"
+       v-if="d.is_loaded==true"
+          :data="data" 
+          :cashier_shift="name"
+           :options="d.props || {}"/>
     </ion-segment-content>
     
   </ion-segment-view>
@@ -157,26 +167,21 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import ComCashierShiftSummary from "@/views/shift/components/ComCashierShiftSummary.vue"
-import ComReceiptList from "@/views/shift/components/ComReceiptList.vue"
-import ComServerContent from "@/views/components/public/ComServerContent.vue"
+
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
 import Message from 'primevue/message';
 import { useApp } from '@/hooks/useApp';
+import { useCashierShiftDetail } from '@/hooks/useCashierShiftDetail';
+const activeTabIndex = ref(0)
+const tabRefs =ref(null)
+
+const {
+  tabs
+} = useCashierShiftDetail()
 const {languages} = useApp()
 const selected  = ref({ label: "Shift Information", print_template:"Coupon Shift Summary" })
 const name = ref(app.route.params.name)
-const tabs = ref([
-    { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary" },
-    { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Shift Receipt List"},
-    { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, print_template:"Cashier Shift Sale Product Summary - Print", props:{
-      doctype:"Cashier Shift",
-      docname: name.value,
-      template: "Cashier Shift Sale Product Summary - UI",
-     
-    } },
- 
-])
+
 const plateform = ref(app.utils.getPlateform())
 const loading = ref(true)
 
@@ -206,14 +211,25 @@ function onOpenCloseShift(){
 }
 
 const onRefreshData = async (event) => {
-    await getData()
-    event.target.complete();
+    // await getData()
+
+   
+     try {
+    const currentComp = tabRefs.value[activeTabIndex.value]
+    if (currentComp?.onRefresh) {
+      await currentComp.onRefresh()
+    }
+  } finally {
+    event.target.complete() // stop refresher spinner
+  }
   
 };
 
 
 function onSelected(event) {
-    const s = tabs.value.find(x=>x.label == event.detail.value);
+  console.log(event)
+  
+    const s = tabs.value[event.detail.value];
     s.is_loaded = true;
     selected.value = s;
 
@@ -231,12 +247,13 @@ async function onPrint(return_type="base64",lang="en"){
 }
 
 
+
+
 onMounted(async ()=>{
 await getData();
   const printer = app.storageService.getItem("default_printer")
   default_printer.value = printer || ""
-
-
+ 
   loading.value = false;
 })
 

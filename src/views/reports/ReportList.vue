@@ -37,15 +37,7 @@ const t = window.t
 const reports =ref([])
   
 async function getReport(){
-    const res =await app.getDocList("Mobile Reports",{
-        fields:["name","parent_mobile_reports","report_title","report_url","filter_options"],
-        orderBy: {
-            field: 'sort_order',
-            order: 'asc',
-        },
-        limit: 10000
-    })
-
+    const res =await app.getApi("epos_restaurant_2023.api.auth.get_mobile_reports")
     if(res.data){
         reports.value = res.data
     }

@@ -48,9 +48,16 @@ async function getData(){
 
     }
 }
+
+async function onRefresh(){
+   
+    await getData()
+}
+defineExpose({
+    onRefresh
+})
 onMounted(async ()=>{
     setTimeout(async () => {
-  
     await getData();
     loading.value = false;    
     }, 1000);

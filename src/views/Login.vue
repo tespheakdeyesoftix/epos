@@ -82,8 +82,7 @@ const { login, checkPropertyCode } = useAuth()
 
 const formData = ref({
 
-  username: "Administrator",
-  password: "123456"
+  username: "Administrator"
 
 })
 
