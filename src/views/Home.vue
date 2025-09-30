@@ -27,6 +27,7 @@
             </ion-col>
             <ion-col size-lg="3" size-xs="6" class="flex">
               <HomeButton color="danger" v-if="!currentMenu" @click="onLogout" :icon="logOutOutline">{{ t("Logout") }}</HomeButton>
+             
             </ion-col>
           </ion-row>
         </ion-grid> 
@@ -47,8 +48,7 @@ import HomeButton from '@/views/components/public/HomeButton.vue';
 import { onBeforeRouteLeave } from 'vue-router'
 const {currentMenu,appMenu,getAppMenu,onOpenRoute,getCurrentMenu} = useHome();
  
-import { CapacitorThermalPrinter } from 'capacitor-thermal-printer';
- 
+
  const t = window.t;
  
 const { logout,isAuthenticated } = useAuth();
@@ -61,9 +61,8 @@ function getDynamicComponent(component:string){
     else if(component == "ComShiftButton"){
     return ComShiftButton
    }
-}
-     
- 
+} 
+
 
 onMounted(async ()=>{
  getAppMenu()

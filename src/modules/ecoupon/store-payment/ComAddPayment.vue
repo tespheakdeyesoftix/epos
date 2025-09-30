@@ -157,6 +157,7 @@ function onSelectPayemntType(event, p) {
   p.currency = pt.currency
 }
 
+
 function onRemovePayment(index) {
   doc.value.payments.splice(index, 1)
 }

@@ -8,6 +8,7 @@
                     @onEdit="onEdit"
                     @onPrint="onPrint"
                     @onDelete="onDelete"
+                    @onChangePaymentType="onChangePaymentType"
                 />
             </template>
         </ToolBar>
@@ -42,6 +43,7 @@ import   ComSaleDetailDesktop   from "@/views/sales/components/ComSaleDetailDesk
 import   ComSaleDetailMobile   from "@/views/sales/components/ComSaleDetailMobile.vue"
 import   ComPrintBillButton   from "@/views/sales/components/ComPrintBillButton.vue"
 import   ComSaleDetailMobileActionMenu   from "@/views/sales/components/ComSaleDetailMobileActionMenu.vue"
+import ComChangePaymentType from  '@/views/sales/components/ComChangePaymentType.vue';
 const plateform = ref(app.utils.getPlateform())
 
 
@@ -68,6 +70,17 @@ async function onEdit(){
      await app.sale.onEditBill({docname:doc.value.name,sale_type:doc.value.sale_type})
     
 }
+
+async function onChangePaymentType(){
+     const result = await app.openModal({
+        component : ComChangePaymentType,
+        componentProps: {
+            data:doc.value
+        }
+     })
+}
+
+
 async function onPrint(format){
     // add to audit trail
     await app.printing.onPrintBill({
@@ -77,6 +90,7 @@ async function onPrint(format){
         show_loading:true
     })
 }
+
 async function onDelete(){
 
     

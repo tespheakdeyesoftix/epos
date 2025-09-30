@@ -9,6 +9,12 @@
                             <ion-icon :icon="pencilOutline" slot="start"/>
                             <ion-label >{{ t("Edit") }}</ion-label>
                         </ion-item>
+                       
+                        <ion-item @click="emit('onChangePaymentType')" lines="full" button>
+                            <ion-icon :icon="cashOutline" slot="start"/>
+                            <ion-label >{{ t("Change Payment Type") }}</ion-label>
+                        </ion-item>
+                       
                         <ion-item  v-for="f in printFormat" @click="emit('onPrint',f)" lines="full" button>
                             <ion-icon :icon="printOutline" slot="start"/>
                             <ion-label >{{ t(f.name) }}</ion-label>
@@ -22,7 +28,7 @@
                     </ComPopOver>
 </template>
 <script setup>
-import {   ellipsisVertical, pencilOutline, printOutline, trash, trashBinOutline} from 'ionicons/icons';
+import {   cashOutline, ellipsisVertical, pencilOutline, printOutline, trash, trashBinOutline} from 'ionicons/icons';
 import { IonListHeader } from '@ionic/vue';
 import { onMounted, ref } from 'vue';
  

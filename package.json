@@ -16,6 +16,7 @@
   "dependencies": {
     "@awesome-cordova-plugins/bluetooth-serial": "^8.1.0",
     "@awesome-cordova-plugins/core": "^8.1.0",
+    "@awesome-cordova-plugins/network-interface": "^8.1.0",
     "@capacitor-mlkit/barcode-scanning": "^7.2.1",
     "@capacitor/android": "^7.2.0",
     "@capacitor/app": "7.0.0",
@@ -40,6 +41,7 @@
     "capacitor-thermal-printer": "^0.2.5",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-bluetooth-serial": "^0.4.7",
+    "cordova-plugin-networkinterface": "^2.2.0",
     "dayjs": "^1.11.13",
     "dayjs-plugin-utc": "^0.1.2",
     "echarts": "^5.6.0",

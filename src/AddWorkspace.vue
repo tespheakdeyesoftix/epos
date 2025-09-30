@@ -10,6 +10,14 @@
           <p>{{ t("Please enter your property code, username and password") }}</p>
         </ion-text>
 
+        <!-- <ion-label>{{ t("Your current IP Address") }}</ion-label>
+        <ion-text>
+          <p>{{ currentIP }}</p>
+        </ion-text>
+        <ion-button @click="onFindServer" expand="full" size="large" color="secondary" shape="round">{{ t("Find Server") }}</ion-button> -->
+
+        <ion-item-divider class="mb-4"/>
+         
         <ion-input
           v-model="formData.property_code"
           :label="t('Property Code')"
@@ -17,7 +25,15 @@
           fill="outline"
           :placeholder="t('Property Code')"
           class="ion-margin-bottom" 
-          :disabled="apiUrl!=''"
+       
+        ></ion-input>
+        <ion-input
+          v-model="formData.apiUrl"
+          :label="t('Server URL')"
+          label-placement="floating"
+          fill="outline"
+          placeholder="http://server-host:port-number/"
+          class="ion-margin-bottom" 
         ></ion-input>
 
         <ion-input
@@ -51,7 +67,7 @@
 <script setup>
 // Import Vue Composition API and Ionic components/hooks
 import { ref, onMounted } from "vue";
-
+import { CapacitorHttp } from '@capacitor/core';
 import {
   IonPage,
   IonContent,
@@ -72,13 +88,13 @@ import { useI18n } from "vue-i18n";
 import { useAuth } from "@/hooks/useAuth";
 import { useApp } from "@/hooks/useApp";
 const { t } = useI18n();
-
+const currentIP = ref(null)
 const route = useRoute();
 const { getSetting } = useApp();
-
+import { Capacitor } from '@capacitor/core';
 const ionRouter = useIonRouter();
 
-const { login, checkPropertyCode } = useAuth();
+const { login, checkPropertyCode,checkServerURL } = useAuth();
 
 const apiUrl = ref(import.meta.env.VITE_API_URL)
 
@@ -89,6 +105,7 @@ const formData = ref({
 });
 
 async function onSaveWorkspace() {
+  
   if (!formData.value.property_code) {
     showWarning(t("Please enter property code"));
     return;
@@ -103,13 +120,20 @@ async function onSaveWorkspace() {
     return;
   }
 
-  const loading = await loadingController.create({
-    message: t("Checking property code"),
-  });
+  if(formData.value.apiUrl) {
+    const isValid  =  await checkServerURL(formData.value.apiUrl)
+    if (!isValid){
+      app.showWarning("Invalid server url");
+    }
+  }
+    
 
-  await loading.present();
+  const loading = await app.showLoading("Checking property code")
 
-  const response = await getPropertyInformation(formData.value.property_code);
+
+
+  
+  const response = await getPropertyInformation(formData.value.property_code,formData.value.apiUrl);
   await loading.dismiss();
 
   if (response.error) {
@@ -197,7 +221,106 @@ function updatePropertyToStorage(data) {
   app.storageService.setItem("properties", JSON.stringify(properties));
 }
 
+ 
+ import { NetworkInterface } from "@awesome-cordova-plugins/network-interface";
+
+const getLocalIP = async () => {
+ 
+  try {
+    const address = await NetworkInterface.getWiFiIPAddress();
+    currentIP.value =address.ip;
+     
+  } catch (err) {
+     
+  }
+};
+
+const found = ref()
+const stopRequested = ref(false)
+const concurrency = 20
+const timeoutMs = 2500
+
+const onFindServer = async () => {
+  const loading = await app.showLoading("Find Server...")
+  
+ 
+  const base = cidr24FromIp(currentIP.value)
+ 
+ 
+  stopRequested.value = false
+ 
+  found.value = null
+   
+  await scanCidr24(base)
+
+  if (found.value) {
+    alert("u fond me")
+     await loading.dismiss()
+  
+  } else {
+   alert("not dound")
+  }
+
+ await loading.dismiss()
+}
+const scanCidr24 = async (base) => {
+  if (!base) return
+  const ips = []
+  for (let i = 1; i <= 254; i++) ips.push(`${base}.${i}`)
+  
+  let next = 0
+  const worker = async () => {
+    while (next < ips.length && !found.value && !stopRequested.value) {
+      const idx = next++
+      const ip = ips[idx]
+      await probeIp(ip)
+    }
+  }
+
+  // start concurrency workers
+  await Promise.all(new Array(concurrency).fill(0).map(() => worker()))
+}
+const probeIp = async (ip) => {
+  if (found.value || stopRequested.value) return null
+
+  const url = `http://${ip}:1216/api/method/ping`
+
+  try {
+    const res = await CapacitorHttp.get({ url })
+ 
+    if (res?.status !== 200 || !res?.data) {
+      
+      return null
+    }
+
+  
+    const data = res.data // JSON parsed automatically
+ 
+    if (data?.message?.toLowerCase() === 'pong') {
+      alert("fond")
+      found.value = `http://${ip}:1216`
+      stopRequested.value = true
+      return ip
+    }
+  } catch (err) {
+    console.log(err)
+  } finally {
+    
+  }
+
+  return null
+}
+
+const cidr24FromIp = (ip) => {
+  const m = ip && ip.match(/^(\d+\.\d+\.\d+)\.\d+$/)
+  return m ? m[1] : null
+}
+
+
 onMounted(() => {
+  // if(Capacitor.getPlatform() == "android"){
+  //   getLocalIP();
+  // }
   if(import.meta.env.VITE_MODE == "development"){
     formData.value = {
       property_code: import.meta.env.VITE_PROPERTY_CODE,

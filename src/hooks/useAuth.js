@@ -9,22 +9,22 @@ const isAuthenticated = ref(false);
 const currentUser = ref();
 
 export function useAuth() {
-  
+
 
   async function login(data) {
     const propertyInfoRes = await getPropertyInformation(data.property_code);
-      
-      if(propertyInfoRes.data){
-        data.api_url = propertyInfoRes.data.app_url
-       
-      } else {
-        app.showWarning("Invalid property code")
-        return
-      }
-    try {
-      
 
-      
+    if (propertyInfoRes.data) {
+      data.api_url = propertyInfoRes.data.app_url
+
+    } else {
+      app.showWarning("Invalid property code")
+      return
+    }
+    try {
+
+
+
 
       const options = {
         url: data.api_url + "api/method/epos_restaurant_2023.api.auth.login",
@@ -45,7 +45,7 @@ export function useAuth() {
       currentUser.value = JSON.parse(JSON.stringify(response.data.message));
 
       delete response.data.message["app_menus"];
-      
+
       app.storageService.setItem("current_user", JSON.stringify(response.data.message));
       app.currentUser = currentUser.value;
       setFrappeAppUrl(data.api_url);
@@ -67,12 +67,33 @@ export function useAuth() {
     app.storageService.removeItem("current_user");
     isAuthenticated.value = false;
     currentUser.value = {};
-    
+
     await loading.dismiss();
   }
 
   function setCurrentLoginUser(data) {
     currentUser.value = data;
+  }
+
+  async function checkServerURL(url) {
+    const loading = await app.showLoading("Check server url");
+    const options = {
+      url: url + "api/method/ping",
+    };
+    try {
+      const response = await CapacitorHttp.get(options);
+      if (response.status == 200) {
+        if (response.data.message == "pong") {
+          
+          await loading.dismiss();
+          return true;
+        }
+      }
+    } catch (error) {
+      await loading.dismiss();
+    }
+    await loading.dismiss();
+    return false;
   }
 
   async function checkPropertyCode(api_url, property_code) {
@@ -106,7 +127,7 @@ export function useAuth() {
   }
 
   async function checkUserLogin() {
-    
+
     const loading = await app.showLoading()
 
     const strCurrentProperty = app.storageService.getItem("current_property");
@@ -126,9 +147,9 @@ export function useAuth() {
         } else {
           if (checkResponse.data) {
             isAuthenticated.value = true;
-        
+
             app.setting.property = property
-           
+
             setFrappeAppUrl(property.api_url);
           } else {
             app.storageService.removeItem("current_user");
@@ -161,7 +182,7 @@ export function useAuth() {
 
       currentUser.value = response.data.message;
       app.currentUser = currentUser.value;
-      
+
       isAuthenticated.value = true;
       return { data: response.data.message, error: null };
     } catch (error) {
@@ -176,6 +197,7 @@ export function useAuth() {
     login,
     checkPropertyCode,
     setCurrentLoginUser,
+    checkServerURL,
     currentUser
   };
 }
