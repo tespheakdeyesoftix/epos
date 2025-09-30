@@ -8,15 +8,15 @@ import ComServerContent from "@/views/components/public/ComServerContent.vue"
 export function useCashierShiftDetail() {
     
 const tabs = ref([
-    { label: "Shift Information", is_loaded: true, component: ComServerContent,print_template:"Coupon Shift Summary",
-        props:{
-      doctype:"Cashier Shift",
-      docname: app.route.params.name,
-      template: "Cashier Shift Summary - UI",
+    // { label: "Shift Information", is_loaded: true, component: ComServerContent,print_template:"Coupon Shift Summary",
+    //     props:{
+    //   doctype:"Cashier Shift",
+    //   docname: app.route.params.name,
+    //   template: "Cashier Shift Summary - UI",
      
-    }
-     },
-    { label: "Shift Informationxx", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary",
+    // }
+    //  },
+    { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary",
        
      },
 

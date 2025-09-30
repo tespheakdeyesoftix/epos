@@ -162,9 +162,11 @@ globalThis.app.currentUser = null;
  
 
  
-globalThis.app.showLoading = async function (message = 'Loading...') {
+globalThis.app.showLoading = async function (message = 'Loading...',duration=1000*15) {
     const loading = await loadingController.create({
-      message:window.t(message)
+      message:window.t(message),
+       duration: duration,
+
     });
   
     await loading.present();  
@@ -182,14 +184,7 @@ globalThis.app.showConfirm = async function (message = 'Loading...') {
  
 
   globalThis.app.showSuccess = async function (message){
-    // const toast = await toastController.create({
-    //     message: message,
-    //     duration: 5000,
-    //     position: "top",
-    //     swipeGesture:"vertical",
-    //     color: "success"
-    // });
-    // toast.present();
+ 
     if (!message) return;
     window.toast.add({ severity: 'success', summary: window.t('Success'), detail: window.t(message),   life: 3000 });
 

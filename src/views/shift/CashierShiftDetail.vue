@@ -13,7 +13,7 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
        <div style="position: sticky; top: 0; z-index: 10; background: white;">
-       {{ activeTabIndex }}
+      
         <ion-segment @ionChange="onSelected"  v-model="activeTabIndex">
 <ion-segment-button v-for="(d,index) in tabs" :key="index" :value="index" 
 :content-id="'recent_' + index"

@@ -16,6 +16,7 @@ let userPreference = reactive({sale_ui_setting:{
       product_container_width:65,
       product_font_size:14,
       button_font_size:12,
+      use_simple_product_list_ui:false
       }
 }
 )

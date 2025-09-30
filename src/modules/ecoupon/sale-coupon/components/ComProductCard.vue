@@ -1,6 +1,10 @@
 <template>
+<div>
+<ion-button size="large"  @click="onSelectProduct(data)" expand="full" shape="round" v-if="userPreference?.sale_ui_setting?.use_simple_product_list_ui">
+  {{ data.product_name_en }}
+</ion-button>
 
-<ion-card button class="card-product"   @click="onSelectProduct(data)">
+<ion-card button class="card-product"   @click="onSelectProduct(data)" v-else>
       <ion-card-content class="content-product" >
     <div v-if="plateform == 'mobile'" style="display: flex; align-items: center; gap: 10px;">
       <img :src="data.photo" alt="Image" style="width: 100px; height: 60px;" />
@@ -35,6 +39,7 @@
     </div>
   </ion-card-content>
 </ion-card>
+</div>
     </template>
 <script setup>
 import {useSaleCoupon} from "@/hooks/useSaleCoupon.js"
