@@ -1,6 +1,6 @@
 <template>
    
-    <ion-card button class="ion-no-margin ion-no-padding mb-3" :routerLink="'/sale-detail/' + data.name" >
+    <ion-card button class="ion-no-margin ion-no-padding mb-3" :routerLink="'/coupon-detail/' + data.coupon_code" >
         <ion-item lines="none" style="--background: rgba(255, 0, 0, 0);">   
 
             <!-- Middle Text -->
