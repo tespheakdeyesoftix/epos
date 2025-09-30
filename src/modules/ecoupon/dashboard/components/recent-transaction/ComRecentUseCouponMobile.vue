@@ -5,7 +5,7 @@
 
             <!-- Middle Text -->
             <ion-label>
-                <h2 class="card-title">{{ data?.sale || data?.name }}</h2>
+                <h2 class="card-title">{{ data?.sale }}</h2>
                 <p class="card-subtitle">
                     <ion-text color="medium-tint">
                         <div>
@@ -18,9 +18,7 @@
                             {{dayjs(data?.closed_date).format('DD/MM/YYYY hh:mm A')}}
                         </div>
                     </ion-text>
-
                 </p>
-                
             </ion-label>
             <div slot="end" style="font-size: 20px;font-weight: bold;">
                 <ion-label color="primary"><com-currency :value="Math.abs(data?.coupon_amount)" /></ion-label>
