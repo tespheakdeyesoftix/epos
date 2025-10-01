@@ -128,6 +128,7 @@ function onSave() {
     app.storageService.setItem("min_amount_usd", minAmountUSD.value)
     app.storageService.setItem("max_amount_usd", maxAmountUSD.value)
     app.storageService.setItem("userPreference", JSON.stringify(userPreference.value))
+
     app.showSuccess("Update successfully")
 }
 
@@ -137,11 +138,21 @@ onMounted(async () => {
     const printer = await app.storageService.getItem("default_printer")
     default_printer.value = printer || "";
     const setting = await app.storageService.getItem("userPreference")
+
+    // get min max amount
+    minAmountKHR.value = (await app.storageService.getItem("min_amount_khr")) || 500
+    minAmountUSD.value = (await app.storageService.getItem("min_amount_usd")) || 100000
+    maxAmountKHR.value = (await app.storageService.getItem("max_amount_khr")) || 1
+    maxAmountUSD.value = (await app.storageService.getItem("max_amount_usd")) || 100
+
+
     if (setting){
         userPreference.value = JSON.parse(setting)
     }
 
 
 })
+
+
 
 </script>

@@ -293,7 +293,7 @@ export async function getPrintFormat(pos_profile){
     });
 
     await TcpSocket.disconnect({ client });
-    console.log('Long receipt printed successfully!');
+  
     
   } catch (error) {
     console.error('Print error:', error);

@@ -101,10 +101,10 @@ const changeLanguage = (lang) => {
 
 
 async function testbluetoothprinter(){
-  console.log(window.Capacitor.Plugins.EscPosPrinter);
+  
   try {
     const result = await EscPosPrinter.getBluetoothPrinterDevices();
-    console.log('Printers found:', result);
+    
     return result.devices || result; // depends on plugin return shape
   } catch (error) {
     console.error('Error discovering printers:', error);
@@ -122,7 +122,7 @@ async function testme(){
   //     ipAddress: '192.168.10.247',
   //     port: 9100
   //   });
-  //   console.log(`Connected with client ID: ${result.client}`);
+   
   //   await sendData(result.client)
   //   return result.client;
   // } catch (error) {
@@ -140,7 +140,7 @@ const sendData = async (clientId) => {
       data: 'Hello សួស្តី,',
        encoding: 'utf8'
     });
-    console.log('Data sent successfully');
+  
 
   // Feed 3mm (24 dots)
 await TcpSocket.send({
@@ -185,9 +185,9 @@ const disconnect = async (clientId) => {
     const result = await TcpSocket.disconnect({
       client: clientId
     });
-    console.log(`Disconnected client: ${result.client}`);
+    
   } catch (error) {
-    console.error('Disconnect failed:', error);
+    
   }
 };
 async function sendCutCommand(clientId) {
@@ -207,7 +207,7 @@ async function sendCutCommand(clientId) {
         data: cmd,
         encoding: DataEncoding.HEX,
       });
-      console.log(`Sent cut command: ${cmd}`);
+    
       await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 sec
     } catch (error) {
       console.error(`Failed to send ${cmd}:`, error);
@@ -217,8 +217,13 @@ async function sendCutCommand(clientId) {
 
 
 async function onLogin(p) {
+  
+ 
+
   const loading = await app.showLoading("Login in...")
+
   const response = await login(p);
+  
   await loading.dismiss();
 
   if (response) {

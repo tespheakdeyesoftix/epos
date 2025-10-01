@@ -138,7 +138,7 @@ if (exchangeCurrency == mainExchangeRateCurrency) {
 function onDeletePayment(index) {
   saleDoc.value.payment.splice(index, 1)
 }
-console.log(app.setting)
+ 
 </script>
 <style scoped>
 .fixed-payment {

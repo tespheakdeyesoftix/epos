@@ -23,7 +23,7 @@ export function usePrintBarcode() {
 async function findBluetoothPrinter(){
   // Optional: listen to scan results
   CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
-    console.log('Discovered printers:', devices);
+    
   });
 
   // Start scanning
@@ -33,7 +33,7 @@ async function findBluetoothPrinter(){
 async function connectBluetoothPrinter(){
  
   const result = await CapacitorThermalPrinter.connect({ address:"DC:0D:30:6F:9C:B4" });
-  console.log('Connected:', result);
+ 
  
 
 }

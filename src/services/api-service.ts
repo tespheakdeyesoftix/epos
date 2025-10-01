@@ -260,7 +260,7 @@ export async function uploadFile(
 
         (completedBytes, totalBytes) => {
             if (totalBytes) {
-              //  console.log(Math.round((completedBytes / totalBytes) * 100), " completed")
+              //  log(Math.round((completedBytes / totalBytes) * 100), " completed")
             }
         },
         "epos_restaurant_2023.api.upload.upload_file"

@@ -118,7 +118,7 @@ function onSelectReport(p) {
             showViewList: true,  // Enables selecting a saved view
         },
         printAction: function (args) {
-            alert("u print me")
+        
             args.printOption.pageSize = "Landscape"; // Force Landscape mode
         }
         ,

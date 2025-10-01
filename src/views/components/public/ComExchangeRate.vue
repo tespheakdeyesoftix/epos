@@ -17,6 +17,6 @@ if(app.setting.exchange_rate_main_currency == currency.value){
 
 const {exchange_rate_input} = useApp();
 
-console.log(app.setting)
+ 
  
 </script>

@@ -2,7 +2,7 @@ import supabase  from "@/services/supabase-client";
 
 export async function getPropertyInformation(propertyCode:string,apiUrl:string = "") {
     
-
+    
     if(propertyCode && apiUrl){
         const data = {"property_code":propertyCode,
             "app_url":apiUrl
@@ -21,7 +21,7 @@ export async function getPropertyInformation(propertyCode:string,apiUrl:string =
     }
     
   
-
+ 
     const { data, error } = await supabase
         .from('business_information')
         .select('property_code, app_url')

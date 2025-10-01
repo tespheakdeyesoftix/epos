@@ -43,7 +43,7 @@ const { elements, generateTspl } =  usePrintBarcode();
 async function onFindPrinter(){
   // Optional: listen to scan results
   CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
-    console.log('Discovered printers:', devices);
+    // log('Discovered printers:', devices);
   });
 
   // Start scanning
@@ -53,7 +53,7 @@ async function onFindPrinter(){
 async function onConnectPrinter(){
  
   const result = await CapacitorThermalPrinter.connect({ address:"DC:0D:30:6F:9C:B4" });
-  console.log('Connected:', result);
+ 
  
 
 }
@@ -73,9 +73,9 @@ async function printReceipt() {
       .cutPaper()
       .write();
 
-    console.log('✅ Printed image successfully');
+    
   } catch (err) {
-    console.error('❌ Failed to print image:', err);
+    
   }
 }
  

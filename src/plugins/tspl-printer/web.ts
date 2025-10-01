@@ -3,12 +3,12 @@ import type { TsplPrinterPlugin } from './definitions';
 
 export class TsplPrinterWeb extends WebPlugin implements TsplPrinterPlugin {
   async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
+    // .log('ECHO', options);
     return options;
   }
 
   async printTsplCommand(options: { command: string }): Promise<{ success: boolean }> {
-    console.log('TSPL Command (web dummy implementation):', options.command);
+    // .log('TSPL Command (web dummy implementation):', options.command);
     return { success: true };
   }
 }
