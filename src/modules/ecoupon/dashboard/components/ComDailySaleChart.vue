@@ -37,6 +37,7 @@
                                     <ion-label>{{ t("View Graph as Line Chart") }}</ion-label>
                                 </ion-item>
                                 <ion-item button @click="onViewData">
+                                    <ion-icon slot="start" :icon="documentTextOutline"></ion-icon>
                                     <ion-label>{{ t("View Data") }}</ion-label>
                                 </ion-item>
                             </ion-list>
@@ -67,7 +68,7 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import VChart from 'vue-echarts'
 import ComViewDailySaleRevenueData from '@/modules/ecoupon/dashboard/components/ComViewDailySaleRevenueData.vue'
-import { analyticsOutline, barChartOutline, menuOutline, ellipsisVerticalOutline } from 'ionicons/icons';
+import { analyticsOutline,documentTextOutline, barChartOutline, menuOutline, ellipsisVerticalOutline } from 'ionicons/icons';
 import dayjs from 'dayjs';
 const t = window.t;
 const platform = ref(app.utils.getPlateform())

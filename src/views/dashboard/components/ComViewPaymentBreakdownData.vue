@@ -10,13 +10,13 @@
       {{ slotProps.index + 1 }}
     </template>
   </Column>
-    <Column field="payment_type" :header="t('Payment Type')" 
+    <Column field="payment_type" sortable :header="t('Payment Type')" 
     >
       <template #body="slotProps">
             {{ t(slotProps.data.payment_type) }}
         </template>
     </Column>
-    <Column field="input_amount" :header="t('Payment Amount')" headerClass="text-right" bodyClass="text-right">
+    <Column field="input_amount" sortable :header="t('Payment Amount')" headerClass="text-right" bodyClass="text-right">
      <template #body="slotProps">
             <ComCurrency :value="slotProps.data.input_amount" :currency="slotProps.data.currency" />
         </template>

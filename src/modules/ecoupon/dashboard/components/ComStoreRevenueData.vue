@@ -2,25 +2,24 @@
     <BaseModal :title="t('Revenue Summary by Store')">
      
         <DataTable :value="data" stripedRows >
-            <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center"  
-          style="width: 60px"
-            
+    <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center"  
+          style="width: 60px" 
             >
     <template #body="slotProps">
       {{ slotProps.index + 1 }}
     </template>
   </Column>
-    <Column  :header="t('Store Name')" >
+    <Column field="pos_profile" sortable  :header="t('Store Name')" >
       <template #body="slotProps">
             {{slotProps.data.pos_profile}}
         </template>
     </Column>
-    <Column field="total_transaction" :header="t('Total Transaction')" headerClass="text-center" bodyClass="text-center">
+    <Column field="total_transaction" :header="t('Total Transaction')" headerClass="text-center" bodyClass="text-center" sortable>
      <template #body="slotProps">
             {{slotProps.data.total_transaction}}
     </template>
     </Column>
-    <Column field="total_amount" :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
+    <Column field="total_amount" sortable :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
      <template #body="slotProps">
             <ComCurrency :value=" Math.abs(slotProps.data.total_amount)" />
         </template>
