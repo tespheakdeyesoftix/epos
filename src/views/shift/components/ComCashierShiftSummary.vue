@@ -71,8 +71,7 @@
                             </stack>
                             <stack row equal v-if="data?.shift_doc.is_closed == 1">
                                 <ion-label><strong>{{ t("Closed Date") }}:</strong></ion-label>
-                                <ion-label>{{ dayjs(data?.shift_doc.closed_date).format("DD/MM/YYYY hh:mm A")
-                                    }}</ion-label>
+                                <ion-label>{{ dayjs(data?.shift_doc.closed_date).format("DD/MM/YYYY hh:mm A")}}</ion-label>
                             </stack>
 
                         </ion-card-content>

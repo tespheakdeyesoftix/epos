@@ -322,6 +322,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/modules/ecoupon/CouponRegister/CouponRegister.vue'),
     meta: { requiresAuth: true }
   },
+  {
+    path: "/store-shift-list",
+    component: () => import('@/modules/ecoupon/StoreShift/StoreShift.vue'),
+    meta: { requiresAuth: true }
+  },
   
  
 

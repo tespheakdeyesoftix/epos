@@ -50,6 +50,11 @@ const getSeverity = () => {
             return 'danger';
         case 'Fail':
             return 'danger';
+            // store shift check 
+        case 'Opened':
+            return 'primary';
+        case 'Not Opened':
+            return 'danger';
 
 
 
