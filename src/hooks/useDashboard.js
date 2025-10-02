@@ -41,7 +41,8 @@ export function useDashboard(props = null) {
             param: {
                 pos_profiles: selectedPOSProfiles.value.length == 0 ? [] : selectedPOSProfiles.value.map(r => r.name),
                 business_branch: (selectedBranch.value?.length ?? 0) == 0 ? "" : selectedBranch.value,
-                working_date: getWorkingDate()
+                working_date: getWorkingDate(),
+                plateform:app.utils.getPlateform()
             }
         })
         if (res.data) {

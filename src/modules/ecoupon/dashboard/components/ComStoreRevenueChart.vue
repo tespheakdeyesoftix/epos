@@ -120,7 +120,7 @@ const option = computed(() => {
       data: posProfiles,
       axisLabel: {
         interval: 0,
-        rotate: 15
+        rotate: 25
       }
     },
     yAxis: {

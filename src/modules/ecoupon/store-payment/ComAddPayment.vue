@@ -5,16 +5,15 @@
     :confirmText="buttonText"
     :hideConfirm="doc.docstatus!=0"
   >
+  
   <Message v-if="doc.name && doc.docstatus == 0 && !docChanged" severity="info" class="mb-3">{{ t('Submit this document to confirm') }}</Message>
   <Message v-if="doc.pos_profile" severity="success" class="mb-3">{{ t('Current Balance:') }} <ComCurrency :value="creditBalance" /> </Message>
- 
   <stack>
       <stack row equal>
         <ComSelectInput docType="POS Profile" v-model="doc.pos_profile" :label="t('Select Store')" @onSelected="onSelectPOSProfile" />
         <com-input type="date" :label="t('Posting Date')" v-model="doc.posting_date" />
       </stack>
     </stack>
-
     <card :header="t('Payment Type')" class="ion-padding ion-no-margin mt-4 mb-4">
       <ion-grid>
         <ion-row v-for="(p, index) in doc.payments" :key="index">
