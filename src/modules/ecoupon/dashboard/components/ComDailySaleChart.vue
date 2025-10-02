@@ -44,13 +44,13 @@
                 </template>
             </ion-item>
             
-            <!-- Mobile week filter chips -->
+            <!-- Mobile day filter chips -->
             <div v-if="platform === 'mobile'" class="ion-padding-horizontal">
-                <ion-chip @click="showThisWeek" :color="weekFilter === 'this' ? 'primary' : 'medium'">
-                    {{ t("This Week") }}
-                </ion-chip>
-                <ion-chip @click="showLastWeek" :color="weekFilter === 'last' ? 'primary' : 'medium'">
+                <ion-chip @click="showLastWeek" :color="dayFilter === 'today' ? 'primary' : 'medium'">
                     {{ t("Last Week") }}
+                </ion-chip>
+                <ion-chip @click="showThisWeek" :color="dayFilter === 'yesterday' ? 'primary' : 'medium'">
+                    {{ t("This Week") }}
                 </ion-chip>
             </div>
         </ion-card-header>
@@ -66,9 +66,10 @@
 import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 import VChart from 'vue-echarts'
 import ComViewDailySaleRevenueData from '@/modules/ecoupon/dashboard/components/ComViewDailySaleRevenueData.vue'
-import { analyticsOutline, barChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
+import { analyticsOutline, barChartOutline, menuOutline, ellipsisVerticalOutline } from 'ionicons/icons';
 const t = window.t;
 const platform = ref(app.utils.getPlateform())
+
 function updatePlatform() {
   platform.value = window.innerWidth <= 1024 ? 'mobile' : 'desktop'
 }
@@ -88,60 +89,69 @@ const props = defineProps({
   }
 })
 
-// Helper: aggregate data by week for mobile view
-function aggregateWeeklyData(data) {
-  // Initialize all 4 weeks with 0 value
-  const weeklyMap = {
-    'Week 1': 0,
-    'Week 2': 0,
-    'Week 3': 0,
-    'Week 4': 0
+ 
+function aggregateDailyData(data) {
+   
+  const dailyMap = {
+    'Mon': 0,
+    'Tue': 0,
+    'Wed': 0,
+    'Thu': 0,
+    'Fri': 0,
+    'Sat': 0,
+    'Sun': 0
   }
   
   data.forEach(item => {
-    const day = new Date(item.day).getDate()
-    const week = Math.floor((day - 1) / 7) + 1
-    // Ensure week is between 1-4
-    const weekNumber = Math.min(week, 4)
-    const weekLabel = `Week ${weekNumber}`
-    weeklyMap[weekLabel] += item.value
+    const date = new Date(item.day)
+    const dayOfWeek = date.getDay()  
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const dayLabel = dayNames[dayOfWeek]
+    dailyMap[dayLabel] += item.value
   })
   
-  // Return all 4 weeks in order
+ 
   return [
-    { day: 'Week 1', value: weeklyMap['Week 1'] },
-    { day: 'Week 2', value: weeklyMap['Week 2'] },
-    { day: 'Week 3', value: weeklyMap['Week 3'] },
-    { day: 'Week 4', value: weeklyMap['Week 4'] }
+    { day: 'Mon', value: dailyMap['Mon'] },
+    { day: 'Tue', value: dailyMap['Tue'] },
+    { day: 'Wed', value: dailyMap['Wed'] },
+    { day: 'Thu', value: dailyMap['Thu'] },
+    { day: 'Fri', value: dailyMap['Fri'] },
+    { day: 'Sat', value: dailyMap['Sat'] },
+    { day: 'Sun', value: dailyMap['Sun'] }
   ]
 }
 
 const chartType = ref('line')
-const weekFilter = ref('this') // default to 'this week'
+const dayFilter = ref('today') 
 
 const option = computed(() => {
   let chartData = props.data
   
-  // For mobile, show weekly aggregated view with highlighting
+ 
   if (platform.value === 'mobile') {
-    chartData = aggregateWeeklyData(props.data)
+    chartData = aggregateDailyData(props.data)
   }
   
   const days = chartData.map(item => item.day)
   const values = chartData.map(item => item.value)
   
-  // For mobile, calculate which week to highlight
-  let highlightWeekIndex = -1
+  
+  let highlightDayIndex = -1
   if (platform.value === 'mobile') {
     const currentDate = new Date()
-    const currentDay = currentDate.getDate()
-    const currentWeek = Math.floor((currentDay - 1) / 7) + 1
+    const currentDayOfWeek = currentDate.getDay()  
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     
-    if (weekFilter.value === 'this') {
-      highlightWeekIndex = currentWeek - 1 // 0-indexed
-    } else if (weekFilter.value === 'last') {
-      const lastWeek = currentWeek > 1 ? currentWeek - 1 : 1
-      highlightWeekIndex = lastWeek - 1
+    if (dayFilter.value === 'today') {
+      
+      const todayName = dayNames[currentDayOfWeek]
+      highlightDayIndex = days.indexOf(todayName)
+    } else if (dayFilter.value === 'yesterday') {
+      
+      const yesterday = currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1
+      const yesterdayName = dayNames[yesterday]
+      highlightDayIndex = days.indexOf(yesterdayName)
     }
   }
  
@@ -187,10 +197,10 @@ const option = computed(() => {
         },
         itemStyle: platform.value === 'mobile' ? {
           color: function(params) {
-            // Highlight the selected week with primary color
-            return params.dataIndex === highlightWeekIndex ? '#3880ff' : '#92949c'
+            
+            return params.dataIndex === highlightDayIndex ? '#3880ff' : '#92949c'
           }
-        } : {},
+        } : undefined,
         emphasis: {
           itemStyle: {
             color: '#3880ff'
@@ -202,22 +212,22 @@ const option = computed(() => {
 })
 
 function onChangeChartType(type='bar'){
-    chartType.value= type
+    chartType.value = type
 }
 
 function showThisWeek() {
-    weekFilter.value = 'this'
+    dayFilter.value = 'today'
 }
 
 function showLastWeek() {
-    weekFilter.value = 'last'
+    dayFilter.value = 'yesterday'
 }
 
 function onViewData(){
     app.openModal({
-        component:ComViewDailySaleRevenueData,
-        componentProps:{
-            data:props.data
+        component: ComViewDailySaleRevenueData,
+        componentProps: {
+            data: props.data
         }
     })
 }
