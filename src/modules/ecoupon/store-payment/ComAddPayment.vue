@@ -18,7 +18,9 @@
     <card :header="t('Payment Type')" class="ion-padding ion-no-margin mt-4 mb-4">
       <ion-grid>
         <ion-row v-for="(p, index) in doc.payments" :key="index">
+          
           <ion-col :size="6">
+         
             <Select 
               size="large" 
               v-model="p.payment_type"  
@@ -92,7 +94,17 @@ const props = defineProps({
 const creditBalance = ref(0)
 
 const t = window.t
-const paymentTypes = app.setting?.pos_config?.payment_type
+let  paymentTypes = app.setting?.pos_config?.payment_type
+paymentTypes = paymentTypes.map(x=>{
+            return {
+              payment_type:x.payment_type,
+              exchange_rate:x.exchange_rate,
+              currency:x.currency
+            }
+          })
+    paymentTypes =  Array.from(
+      new Map(paymentTypes.map(item => [item.payment_type, item])).values()
+    );
 
 const doc = ref({
   business_branch: app.setting.property?.property_name,
