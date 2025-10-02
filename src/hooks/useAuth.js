@@ -12,11 +12,10 @@ export function useAuth() {
 
 
   async function login(data) {
-    const propertyInfoRes = await getPropertyInformation(data.property_code);
-
+ 
+    const propertyInfoRes = await getPropertyInformation(data.property_code,data.api_url);
     if (propertyInfoRes.data) {
       data.api_url = propertyInfoRes.data.app_url
-
     } else {
       app.showWarning("Invalid property code")
       return

@@ -227,7 +227,7 @@ const onRefreshData = async (event) => {
 
 
 function onSelected(event) {
-  console.log(event)
+ 
   
     const s = tabs.value[event.detail.value];
     s.is_loaded = true;

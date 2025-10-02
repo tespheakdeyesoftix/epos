@@ -172,9 +172,9 @@ async function onCloseCashierShift(){
 
   await app.showSuccess("Close shift successfully")
     await loading.dismiss()
- await printReport();
- 
-    app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
+      app.ionRouter.navigate("/shift-detail/" + res.data.name,"push","replace");
+ printReport();
+  
     
   }
   loading.dismiss();

@@ -71,8 +71,7 @@ export function useDocList(props) {
 
 
   async function getCount() {
-    console.log(options.value.filters) 
-    console.log(options.value?.orFilters) 
+ 
     const response = await getDocList(props.docType, {
       fields: ["count(name) as total"],
       filters: options.value.filters,

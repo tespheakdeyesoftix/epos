@@ -28,7 +28,7 @@
        
         ></ion-input>
         <ion-input
-          v-model="formData.apiUrl"
+          v-model="formData.api_url"
           :label="t('Server URL')"
           label-placement="floating"
           fill="outline"
@@ -95,13 +95,11 @@ import { Capacitor } from '@capacitor/core';
 const ionRouter = useIonRouter();
 
 const { login, checkPropertyCode,checkServerURL } = useAuth();
-
-const apiUrl = ref(import.meta.env.VITE_API_URL)
-
+ 
 const formData = ref({
   property_code: "SR2021-0001",
   username: "Pheakdey",
-  password: "112233",
+  password: "112233"
 });
 
 async function onSaveWorkspace() {
@@ -120,20 +118,22 @@ async function onSaveWorkspace() {
     return;
   }
 
-  if(formData.value.apiUrl) {
-    const isValid  =  await checkServerURL(formData.value.apiUrl)
+  if(formData.value.api_url) {
+    const isValid  =  await checkServerURL(formData.value.api_url)
     if (!isValid){
       app.showWarning("Invalid server url");
     }
   }
     
+ 
 
   const loading = await app.showLoading("Checking property code")
 
 
 
   
-  const response = await getPropertyInformation(formData.value.property_code,formData.value.apiUrl);
+  const response = await getPropertyInformation(formData.value.property_code,formData.value.api_url);
+ 
   await loading.dismiss();
 
   if (response.error) {
@@ -149,10 +149,12 @@ async function onSaveWorkspace() {
   }
 
   // get api url
+ 
   const checkPropertyCodeResponse = await checkPropertyCode(
     response.data.app_url,
     formData.value.property_code
   );
+
   
   if (checkPropertyCodeResponse?.error) {
     return;
@@ -254,11 +256,10 @@ const onFindServer = async () => {
   await scanCidr24(base)
 
   if (found.value) {
-    alert("u fond me")
      await loading.dismiss()
   
   } else {
-   alert("not dound")
+   
   }
 
  await loading.dismiss()
@@ -297,13 +298,12 @@ const probeIp = async (ip) => {
     const data = res.data // JSON parsed automatically
  
     if (data?.message?.toLowerCase() === 'pong') {
-      alert("fond")
       found.value = `http://${ip}:1216`
       stopRequested.value = true
       return ip
     }
   } catch (err) {
-    console.log(err)
+    
   } finally {
     
   }

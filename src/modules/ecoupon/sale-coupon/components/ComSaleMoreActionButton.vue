@@ -134,7 +134,7 @@ async function onOpenUISetting(){
         component:ComSaleUISetting
     })
  
-    console.log(result)
+ 
     if(result){
         //save setting 
         await app.storageService.setItem("userPreference",JSON.stringify(result))

@@ -1,8 +1,9 @@
 <template>
     
 <BaseModal :title="t('Change Payment Type')">
-    {{ paymentTypes }}
+    <!-- {{ paymentTypes }} -->
     <ion-list>
+        
     <ion-item v-for="(p,index) in data.payment" :key="index">
         <ion-label>
             <p>
@@ -12,7 +13,11 @@
         </ion-label>
 
         
-        
+          <ion-select label="Default label" placeholder="Favorite Fruit">
+        <ion-select-option value="apple">Apple</ion-select-option>
+        <ion-select-option value="banana">Banana</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+      </ion-select>
     </ion-item>
     </ion-list>
 </BaseModal>
@@ -26,7 +31,7 @@ const props = defineProps({
 })
 
 const paymentTypes = app.setting?.pos_config.payment_type;
-alert(JSON.stringify(paymentTypes))
+ 
     const t = window.t;
 
     function onSelectPayemntType(event, p) {

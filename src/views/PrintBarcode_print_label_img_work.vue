@@ -45,14 +45,14 @@ import { CapacitorThermalPrinter } from 'capacitor-thermal-printer'
             
 async function onFindPrinter() {
   CapacitorThermalPrinter.addListener('discoverDevices', (devices) => {
-    console.log('Discovered printers:', devices)
+    // .log('Discovered printers:', devices)
   })
   await CapacitorThermalPrinter.startScan()
 }
 
 async function onConnectPrinter() {
   const result = await CapacitorThermalPrinter.connect({ address: "DC:0D:30:6F:9C:B4" })
-  console.log('Connected:', result)
+  // log('Connected:', result)
 }
  
  
@@ -122,7 +122,7 @@ BITMAP 20,20,${bytesPerRow},${targetHeight},0,${hexData}
 
       try {
         await CapacitorThermalPrinter.begin().raw(rawData).write();
-        console.log("Print sent!");
+        // .log("Print sent!");
       } catch (e) {
         console.error("Printing error:", e);
         alert("Failed to print: " + e.message);
