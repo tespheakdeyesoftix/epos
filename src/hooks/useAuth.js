@@ -20,6 +20,9 @@ export function useAuth() {
       app.showWarning("Invalid property code")
       return
     }
+    // ping to server
+ 
+
     try {
 
 
@@ -32,10 +35,12 @@ export function useAuth() {
           property: data.property_name,
           usr: data.username,
           pwd: data.password,
-        }
+        },
+        timeout:5000
       };
-
+     
       const response = await CapacitorHttp.post(options);
+     
       if (response.status !== 200) {
         handleErrorMessage(response.data);
         throw new Error(response.data);
@@ -52,6 +57,9 @@ export function useAuth() {
 
       return { data: response.data.message, error: null };
     } catch (error) {
+      if(error.message == "Failed to fetch"){
+        app.showWarning("Login fail. Cannot connect to server.")
+      }
       return { data: null, error };
     }
   }
