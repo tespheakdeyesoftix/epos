@@ -7,18 +7,18 @@
           {{ slotProps.index + 1 }}
         </template>
       </Column>
-      <Column field="pos_station" :header="t('POS Station')">
+      <Column field="pos_station" sortable :header="t('POS Station')">
         <template #body="slotProps">
           {{ slotProps.data.pos_station }}
         </template>
       </Column>
-      <Column field="total_amount" :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
+      <Column field="total_amount" sortable :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
         <template #body="slotProps">
           <ComCurrency :value="Math.abs(slotProps.data.total_amount)" />
         </template>
       </Column>
 
-      <Column field="coupon_value" :header="t('Coupon Value')" headerClass="text-right" bodyClass="text-right">
+      <Column field="coupon_value" sortable :header="t('Coupon Value')" headerClass="text-right" bodyClass="text-right">
         <template #body="slotProps">
           <ComCurrency :value="Math.abs(slotProps.data.coupon_value)" />
         </template>

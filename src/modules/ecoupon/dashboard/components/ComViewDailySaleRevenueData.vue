@@ -10,14 +10,14 @@
       {{ slotProps.index + 1 }}
     </template>
   </Column>
-    <Column field="datre" :header="t('Date')" headerClass="text-center" bodyClass="text-center"
+    <Column field="date" sortable :header="t('Date')" headerClass="text-center" bodyClass="text-center"
       style="width: 100px"
     >
       <template #body="slotProps">
             {{ dayjs(slotProps.data.date).format("DD/MM/YYYY") }}
         </template>
     </Column>
-    <Column field="value" :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
+    <Column field="value" sortable :header="t('Sale Revenue')" headerClass="text-right" bodyClass="text-right">
      <template #body="slotProps">
             <ComCurrency :value="slotProps.data.value" />
         </template>

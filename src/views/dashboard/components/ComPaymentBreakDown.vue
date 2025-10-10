@@ -36,6 +36,7 @@
                                     <ion-label>{{ t("View Graph as Pie Chart") }}</ion-label>
                                 </ion-item>
                                 <ion-item button @click="onViewData">
+                                    <ion-icon slot="start" :icon="documentTextOutline"></ion-icon>
                                     <ion-label>{{ t("View Data") }}</ion-label>
                                 </ion-item>
                             </ion-list>
@@ -55,7 +56,7 @@
 </template>
 
 <script setup>
-import {  barChartOutline, pieChartOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
+import {  barChartOutline, pieChartOutline,documentTextOutline, menuOutline,ellipsisVerticalOutline } from 'ionicons/icons';
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import  ComViewPaymentBreakdownData from '@/views/dashboard/components/ComViewPaymentBreakdownData.vue'
 const t = window.t;
