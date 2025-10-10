@@ -1,9 +1,9 @@
 <template>
     <ion-page>
-        <AppBar>{{ t("Sold Coupon") }}</AppBar>
+        <AppBar>{{ t("Coupon Code History") }}</AppBar>
         <ion-content  ref="pageRef" :scrollEvents="true" @ionScroll="handleScroll">
  
-            <DocList docType="Coupon Codes" :options="options"
+            <DocList docType="Coupon Codes History" :options="options"
             v-model:selectedRow="selectedRow"
             @onRowDblClick="onRowDblClick"
             ref="docListRef"
@@ -48,7 +48,7 @@
                     <ion-text color="danger">
                     <ComCurrency v-tooltip.left="`${t('Price')}`" :value="Math.abs(item.redeem_amount)" />
                     <template v-if="item.redeem_amount !=item.redeem_coupon_value">
-/ <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.redeem_coupon_value)"/>
+                        / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.redeem_coupon_value)"/>
                     </template>
                     </ion-text>
                   </template>
@@ -61,7 +61,7 @@
                   <template  v-if="item.balance_amount!=0 || item.balance_coupon_value">
                     <ComCurrency v-tooltip.left="`${t('Balance')}`" :value="item.balance_amount" />
                     <template v-if="item.balance_amount !=item.balance_coupon_value">
-/ <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.balance_coupon_value)"/>
+                        / <ComCurrency v-tooltip.right="`${t('Coupon Value')}`" :value="Math.abs(item.balance_coupon_value)"/>
                     </template>
                     
                   </template>
@@ -132,12 +132,12 @@ const options = {
       order: "desc",
   },
   filters:[
-    ["sale", "is", "set"],
+    // ["sale", "is", "set"],
   ],
   filterOptions:[
    
-    {fieldname:"sale_date", fieldtype:"Date",clear:true,label:t('Sale Date'),default:"Today"},
-    // {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
+    {fieldname:"sale_date", fieldtype:"Date",clear:true, label:t('Sale Date')},
+    {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
     {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
     {fieldname:"sale", fieldtype:"Link",options:"Sale", label:t("Sale #")}
     

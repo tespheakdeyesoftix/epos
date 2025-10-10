@@ -22,7 +22,8 @@
 </template>
 <script setup>
 import dayjs from 'dayjs';
- 
+import { modalController } from '@ionic/vue'; 
+
 const props = defineProps({
     data:Object,
     fields:Object,
@@ -35,9 +36,10 @@ function getTitle(){
     if(props.data.name) return props.data.name
 }
 function openLink(){
-    const link = props.fields.find(x=>x.url)
-
-    app.ionRouter.navigate(`${link.url}/${props.data.name}` ,"forward","push")
+    app.ionRouter.navigate(`/sale-coupon/${props.data.name}` ,"forward","push")
+    modalController.dismiss();
+    // const link = props.fields.find(x=>x?.url)
+    // app.ionRouter.navigate(`${link?.url}/${props?.data?.name}` ,"forward","push")
 }
 
 function getCreatedBy(){
