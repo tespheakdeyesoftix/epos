@@ -36,7 +36,7 @@
         </ion-item>
 
         
-        <ion-item routerLink="/setting" lines="full">
+        <ion-item   lines="full" @click="onOpenRoute('/setting')">
           <ion-icon slot="start" :icon="settingsOutline"></ion-icon>
           <span>{{ t("Setting") }}</span>
         </ion-item>
@@ -98,6 +98,10 @@ const onDismissModal = async (lang:string) =>{
       window.localStorage.setItem("lang",locale.value)
  
 };
+
+function onOpenRoute(url:string){
+   ionRouter.navigate(url, 'forward', 'replace');
+}
 
 
 const { logout } = useAuth()

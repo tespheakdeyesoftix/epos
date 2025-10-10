@@ -60,7 +60,7 @@ const props = defineProps({
 const data = ref()
 const t = window.t
 async function getData(){
-    let sql = " select  pos_profile , count(*) as total_transaction, sum(actual_amount) as total_amount from `tabCoupon Transaction`  where  transaction_type = 'Used' and  working_day = %(working_day)s   group by pos_profile"
+    let sql = " select  pos_profile , count(*) as total_transaction, sum(coupon_amount) as total_amount from `tabCoupon Transaction`  where  transaction_type = 'Used' and  working_day = %(working_day)s and coalesce(status,'') <> 'Deleted'   group by pos_profile"
     
     const res = await app.sql(sql,
         {

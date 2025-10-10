@@ -35,6 +35,7 @@ export function useDashboard(props = null) {
         }
     }
 
+    
     async function getChartData() {
 
         const res = await app.postApi("epos_restaurant_2023.api.mobile.dashboard.daily_sale_chart", {

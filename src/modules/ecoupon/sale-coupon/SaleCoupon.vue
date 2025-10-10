@@ -99,7 +99,17 @@ function handleUpdateScreenMode() {
 
 onMounted(async () => {
  
-  pageRoute.value = "/sale-coupon"
+ 
+})
+
+
+
+onIonViewWillEnter(async () => {
+  
+  window.disable_scan_check_coupon = true;
+  window.addEventListener("resize", handleUpdateScreenMode);
+  
+   pageRoute.value = "/sale-coupon"
   saleType.value = "Sale Coupon";
   if (app.route.params.name) {
     await getSaleDoc()
@@ -108,14 +118,7 @@ onMounted(async () => {
     initSaleDoc()
     saleDoc.value.sale_type = "Sale Coupon";
   }
-})
 
-
-
-onIonViewWillEnter(() => {
-  
-  window.disable_scan_check_coupon = true;
-  window.addEventListener("resize", handleUpdateScreenMode);
 
 })
 

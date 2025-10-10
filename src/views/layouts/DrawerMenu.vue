@@ -17,7 +17,7 @@
         <!-- start loop menu -->
          <template v-for="p in drawerMenus?.filter(x=>!x.parent_mobile_app_module)" :key="p.name" >
             <ion-menu-toggle v-if="p.is_group==0">  
-          <ion-item lines="full" button :routerLink="p.route_url">
+          <ion-item lines="full" button   @click="onOpenPage(p)">
               <div  v-html="p.icon" :style="{height: '25px',width: '25px',marginRight: '20px',color:`var(--ion-color-${p.color})`}"></div>
                 <ion-label>{{ t(p.title) }}</ion-label>
             </ion-item>
@@ -32,7 +32,7 @@
       </ion-item>
       <div  slot="content">
           <ion-menu-toggle v-for="m in drawerMenus.filter(r=>r.parent_mobile_app_module==p.name)" :key="m.name">  
-          <ion-item lines="full" button :routerLink="m.route_url">
+          <ion-item lines="full" button  @click="onOpenPage(m)">
             <ion-icon slot="start" :icon="chevronForwardOutline" class="ion-no-margin" style="margin-right:15px;margin-left: 10px;"></ion-icon>
             <ion-label>{{ t(m.title) }}</ion-label>
             </ion-item>
@@ -85,6 +85,11 @@ import { computed, onMounted, ref } from 'vue';
 const drawerMenus = computed(()=>{
   return  currentUser.value.app_menus?.filter(x=>x.show_in_drawer_menu == 1)
 })
+
+function onOpenPage(p){
+  
+  app.ionRouter.navigate(p.route_url,"forward","replace")
+}
 
 const onLogout = async () => {
   await logout();

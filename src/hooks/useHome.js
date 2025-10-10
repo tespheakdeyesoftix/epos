@@ -10,13 +10,17 @@ export function useHome() {
 const appMenu = ref([{"component":"","icon":Object,"title":"","color":""}])
 
     function onOpenRoute(m) {
-      
+        let route_action ="replace"
+     
+        if ( ["/sale-coupon","/top-up",'/redeem'].includes(m.route_url)){
+            route_action = "push"
+        }
         if (m.is_group == 1) {
-            app.ionRouter.navigate("/home/" + m.name, "forward", "push");
+            app.ionRouter.navigate("/home/" + m.name, "forward", route_action);
             return;
         }
         if (m.route_url) {
-            app.ionRouter.navigate(m.route_url, "forward", "push");
+            app.ionRouter.navigate(m.route_url, "forward", route_action);
             return
         }
     }
