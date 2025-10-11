@@ -136,9 +136,7 @@ const options = {
   ],
   filterOptions:[
    
-    {fieldname:"sale_date", fieldtype:"Date",clear:true,label:t('Sale Date'),default:"Today"},
-    // {fieldname:"working_day", fieldtype:"Link",options:"Working Day", label:t("Working Day")},
-    {fieldname:"cashier_shift", fieldtype:"Link",options:"Cashier Shift", label:t("Cashier Shift")},
+    {fieldname:"sale_date", fieldtype:"Date",label:t('Sale Date'),default:"Today", readonly: true}, 
     {fieldname:"sale", fieldtype:"Link",options:"Sale", label:t("Sale #")}
     
   ]
