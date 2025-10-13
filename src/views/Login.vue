@@ -45,6 +45,12 @@
           </ion-grid>
         </div>
       </div>
+      <!-- redirect to coupon balance when server is down  or no internet -->
+      <!-- <div>
+      <ion-button :routerLink="'/check-balance'">
+        Hello
+      </ion-button>
+      </div> -->
     </ion-content>
   </ion-page>
 </template>
@@ -148,6 +154,10 @@ function SaveUsername(){
   }
 }
 
+// function gotoCheckBalance(){
+  
+//   ionRouter.navigate('/check-balance', 'forward', 'replace');
+// }
 
 
 const onRefresh = async (event) => {

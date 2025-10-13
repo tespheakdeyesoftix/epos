@@ -155,7 +155,10 @@ async function addCoupon() {
     coupon_register: doc.value.name,
     coupon: coupon.value,
     coupon_url: coupon.value.split("?c=")[0] ,
-    coupon_status: "Saving..."
+    coupon_status: "Saving...",
+    reference_doctype: "Coupon Register",
+    reference_name: doc.value.name,
+
   }
   docListRef.value.addRecord(coupon_data)
   queue.add(() => addCouponQueue(JSON.parse(JSON.stringify(coupon_data))))
