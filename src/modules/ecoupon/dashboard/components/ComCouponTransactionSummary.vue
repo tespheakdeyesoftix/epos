@@ -75,7 +75,7 @@ const props = defineProps({
 const t = window.t;
 function getColor(transaction_type){
     if(transaction_type == "Sale Coupon" || transaction_type == "Top Up") return "success"
-    if(transaction_type == "Used") return "warning"
+    if(transaction_type == "Used" || transaction_type == "Manager Used") return "warning"
     if(transaction_type == "Redeem" || transaction_type == "Redeemed") return "danger"
 
 

@@ -49,7 +49,7 @@
     </ion-card-header>
 
     <ion-card-content>
-      <div class="mt-1 bg-blue-50 border-round-lg" style="width: 100%; height: 325px;" v-if="data">
+      <div class="mt-1 bg-blue-50 border-round-lg" style="width: 100%; height: 380px;" v-if="data">
         <v-chart :option="option" autoresize />
       </div>
     </ion-card-content>
@@ -120,7 +120,7 @@ const option = computed(() => {
       data: posProfiles,
       axisLabel: {
         interval: 0,
-        rotate: 25
+        rotate: 90
       }
     },
     yAxis: {

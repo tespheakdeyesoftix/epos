@@ -120,6 +120,8 @@ ion-title {
 button.alert-button.alert-button-confirm-success {
 	background-color: var(--ion-color-success);
 	color: var(--ion-color-danger-contrast);
+	padding:20px 50px;
+	font-size: x-large;
   }
   
  
