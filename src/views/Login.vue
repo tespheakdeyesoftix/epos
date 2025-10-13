@@ -46,11 +46,11 @@
         </div>
       </div>
       <!-- redirect to coupon balance when server is down  or no internet -->
-      <div>
+      <!-- <div>
       <ion-button :routerLink="'/check-balance'">
         Hello
       </ion-button>
-      </div>
+      </div> -->
     </ion-content>
   </ion-page>
 </template>

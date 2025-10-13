@@ -61,7 +61,7 @@
                 </stack>
                 <stack>
                 <ion-text :color="couponDetail.is_redeem == '0' ? 'danger' : 'success'">
-                    {{ couponDetail.is_redeem == '0' ? 'No Redeem' : 'Redeem' }}
+                    {{ couponDetail.is_redeem == '0' ? 'No Redeem' : 'Redeemed' }}
                 </ion-text>
                 </stack>
                  
