@@ -104,6 +104,7 @@ import Column from 'primevue/column';
 import {scan} from 'ionicons/icons';
 import dayjs from 'dayjs';
 import ComSelectDateFilter from "@/views/components/public/ComSelectDateFilter.vue"
+import ComCurrency from "@/views/components/public/ComCurrency.vue"
 const t = window.t
 const couponData = ref([]);
 const allCoupons = ref([]);
