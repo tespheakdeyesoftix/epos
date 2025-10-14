@@ -21,6 +21,16 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   // add from route path to window object, in case that we want to go back to previouse router on delete operation\
   window.fromRoute = from.path;
+
+
+   // List of public routes that don't require authentication
+  const publicRoutes = ['/check-balance', '/check-balance-detail'];
+  
+  // If accessing a public route, skip all auth checks
+  if (publicRoutes.includes(to.path) || to.path.startsWith('/check-balance')) {
+    next();
+    return;
+  }
   
   // this logic here is set timer to check wait until all setting is geting from 
   // db then we start check router redirecting

@@ -667,5 +667,6 @@
     "There's pending order in your current open shift. Please close all your pending order first.":"មានការបញ្ជាទិញមិនទាន់បញ្ចប់នៅក្នុងវេនបើកបច្ចុប្បន្ន។ សូមបិទការកម្មង់ទាំងអស់ជាមុនសិន។",
     "View Pending Order":"មើលការកម្មង់មិនទាន់បញ្ចប់",
     "Store Shift List":"បញ្ជីវេនហាង",
-    "Not Opened":"មិនបានបើក"
+    "Not Opened":"មិនបានបើក",
+    "Check Balance":"ពិនិត្យចំនួនទឹកប្រាក់នៅសល់"
   }   

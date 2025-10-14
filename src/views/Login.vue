@@ -45,12 +45,17 @@
           </ion-grid>
         </div>
       </div>
+      
       <!-- redirect to coupon balance when server is down  or no internet -->
-      <!-- <div>
-      <ion-button :routerLink="'/check-balance'">
-        Hello
-      </ion-button>
-      </div> -->
+       
+  <div @click="checkBalance" class="center-check-balance">
+      <ion-text style="cursor: pointer;">
+         {{t("Check Balance")}}
+      </ion-text>
+       
+    </div>
+      
+      
     </ion-content>
   </ion-page>
 </template>
@@ -154,10 +159,9 @@ function SaveUsername(){
   }
 }
 
-// function gotoCheckBalance(){
-  
-//   ionRouter.navigate('/check-balance', 'forward', 'replace');
-// }
+function checkBalance(){
+  app.ionRouter.navigate('/check-balance', 'back', 'replace');
+}
 
 
 const onRefresh = async (event) => {
@@ -214,5 +218,12 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.center-check-balance {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -120px;
+  color:#d8dade;
 }
 </style>

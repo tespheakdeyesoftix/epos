@@ -1,6 +1,6 @@
 <template>
 <ion-page>
-    <AppBar>{{ t("Coupon Balance List") }}</AppBar>
+    <ToolBar>{{ t("Coupon Balance List") }}</ToolBar>
     <ion-content>
        
        
@@ -13,6 +13,11 @@
             @onBarcodeChange="onScanCoupon"
             :icon="scan"
           />
+
+          <div class="mt-2">
+          <ComSelectDateFilter :clear="true" @onSelect="onDateChange" />
+          </div>
+
        <!-- <DataTable :value="couponData" showGridlines stripedRows  responsiveLayout="scroll" class="mt-3"> -->
         <DataTable
         :value="couponData"
@@ -70,7 +75,7 @@
         </Column>
         <Column field="posting_date" header="Posting Date" sortable headerClass="text-center" bodyClass="text-center">
             <template #body="slotProps">
-                {{dayjs(posting_date).format('DD/MM/YYYY')}}
+                {{ dayjs(slotProps.data.posting_date).format('DD/MM/YYYY') }}
             </template>
         </Column>
         <Column field="is_redeem" header="Redeemed" sortable>
@@ -96,18 +101,21 @@ import { ref, onMounted } from 'vue';
 import { useCheckCouponBalance } from '@/hooks/useCheckCouponBalance.js'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import ComScanBarcode from "@/views/components/ComScanBarcode.vue"
 import {scan} from 'ionicons/icons';
 import dayjs from 'dayjs';
+import ComSelectDateFilter from "@/views/components/public/ComSelectDateFilter.vue"
 const t = window.t
 const couponData = ref([]);
+const allCoupons = ref([]);
 const selectedCoupon = ref(null);
-
+const startDate = ref(null);
+const endDate = ref(null);
 
 onMounted(async () => {
   const data = await useCheckCouponBalance();
   if (data) {
     couponData.value = data;
+     allCoupons.value = data; 
   }
 });
 
@@ -129,11 +137,13 @@ const redeem = async (coupon) => {
     return; 
   }
 
-
   const { data, error } = await supabase
     .from("food_court_coupon_codes")
     .update({ is_redeem: "1" })
-    .eq("coupon_number", coupon.coupon_number);
+    // .eq("coupon_number", coupon.coupon_number)
+       .gte("posting_date", startDate.value)
+    .lte("posting_date", endDate.value)
+    .order("posting_date", { ascending: false });;
 
   if (error) {
     app.showWarning("Failed to redeem coupon. Please try again.");
@@ -163,5 +173,25 @@ const onScanCoupon = (couponCode) => {
     const data = await useCheckCouponBalance();
     couponData.value = data;
   }, 3000);
+};
+
+const onDateChange = (result) => {
+  if (!result) {
+    // if cleared
+    couponData.value = allCoupons.value;
+    return;
+  }
+
+  const { start_date, end_date } = result;
+  startDate.value = start_date;
+  endDate.value = end_date;
+
+  couponData.value = allCoupons.value.filter((coupon) => {
+    const date = dayjs(coupon.posting_date);
+    return (
+      date.isAfter(dayjs(start_date).subtract(1, "day")) &&
+      date.isBefore(dayjs(end_date).add(1, "day"))
+    );
+  });
 };
 </script>

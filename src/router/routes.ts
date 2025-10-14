@@ -335,13 +335,13 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/check-balance",
     component: () => import('@/modules/ecoupon/check-coupon-balance/CouponBalanceList.vue'),
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: true }
   },
   {
     path: "/check-balance-detail/:coupon_number",
     component: () => import('@/modules/ecoupon/check-coupon-balance/components/ComCouponBalanceDetail.vue'),
     props: true,
-    meta: { requiresAuth: false }
+    meta: { requiresAuth: true }
   }
 ]
 
