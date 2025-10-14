@@ -6,58 +6,58 @@
         <ion-content>
           
         <div v-if="couponDetail" class="fixed-container-cus test">
-            <h2>Coupon: {{ couponDetail.coupon_number }}</h2>
-            <stack row equal>
+            <h2>{{t("Coupon:")}} {{ couponDetail.coupon_number }}</h2>
+            <stack row equal class="p-2">
                 <stack>
-                     <ion-text>Price: </ion-text>
+                     <ion-text>{{t("Price:")}} </ion-text>
                 </stack>
                 <stack>
                      <ComCurrency :value="couponDetail.price" />
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                     <ion-text>Top Up: </ion-text>
+                     <ion-text>{{t("Top Up:")}} </ion-text>
                 </stack>
                 <stack>
                     <ComCurrency :value="couponDetail.top_up_amount" />
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                    <ion-text>Use Amount: </ion-text>
+                    <ion-text>{{t("Use Amount:")}} </ion-text>
                 </stack>
                 <stack>
                      <ComCurrency :value="couponDetail.use_amount" />
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                <ion-text>Redeem Amount: </ion-text>
+                <ion-text>{{t("Redeem Amount:")}} </ion-text>
                 </stack>
                 <stack>
                 <ComCurrency :value="couponDetail.redeem_amount" />
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                <ion-text>Balance: </ion-text>
+                <ion-text>{{t("Balance:")}} </ion-text>
                 </stack>
                 <stack>
                 <ComCurrency :value="couponDetail.balance_amount" />
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                <ion-text>Date: </ion-text>
+                <ion-text>{{t("Date:")}} </ion-text>
                 </stack>
                 <stack>
                 {{ couponDetail.posting_date }}
                 </stack>
             </stack>
-            <stack row equal>
+            <stack row equal class="p-2">
                 <stack>
-                <ion-text>Redeem </ion-text>
+                <ion-text>{{t("Redeem")}} </ion-text>
                 </stack>
                 <stack>
                 <ion-text :color="couponDetail.is_redeem == '0' ? 'danger' : 'success'">
