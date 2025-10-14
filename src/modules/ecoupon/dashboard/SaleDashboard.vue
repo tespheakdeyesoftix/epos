@@ -2,11 +2,7 @@
     <ion-page>
         <AppBar>
             {{ t("Dashboard") }}
-             <template #end>
-                <ion-button @click="onReloadData" shape="round" class="ion-hide-sm-down">
-                    <ion-icon :icon="refreshOutline" slot="icon-only" />
-                </ion-button>
-            </template>
+            
         </AppBar>
 
         <!-- check plateform == mobile -->

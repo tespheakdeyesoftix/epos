@@ -14,7 +14,7 @@
                   
                     <stack gap="1rem">
                       <ion-text color="primary">
-                        <h1 class="m-0">{{ t("Please enter your username and password") }}</h1>
+                        <h1 class="m-0">{{ t("Please enter your username and passwordhell") }}</h1>
                       </ion-text> 
                       <com-input ref="txtUsername" :label="t('Username')" v-model="formData.username" 
                         label-placement="floating" fill="outline"  :placeholder="t('Username')"/> 
@@ -50,7 +50,7 @@
        
   <div @click="checkBalance" class="center-check-balance">
       <ion-text style="cursor: pointer;">
-         {{t("Check Balance")}}
+         {{t("Check Coupon Balance")}}
       </ion-text>
        
     </div>
@@ -75,6 +75,7 @@ import { keypadOutline } from 'ionicons/icons';
 import { useAuth } from "@/hooks/useAuth";
 import { useRoute } from 'vue-router';
 import { useApp } from '@/hooks/useApp';
+import ComInputPinCode from '@/modules/ecoupon/check-coupon-balance/components/ComInputPinCode.vue';
 
 const txtUsername = ref(null)
 const txtPassword = ref(null)
@@ -159,8 +160,20 @@ function SaveUsername(){
   }
 }
 
-function checkBalance(){
-  app.ionRouter.navigate('/check-balance', 'back', 'replace');
+async function checkBalance(){
+
+  const result = await app.openModal({
+      component: ComInputPinCode,
+      componentProps:{title:"Enter your pin code"},
+      cssClass:app.utils.getPlateform() =="desktop"?"keypad-modal":""
+    })
+
+  if (result){
+      app.ionRouter.navigate('/check-balance', 'forward', 'push');
+  } 
+
+
+  
 }
 
 
@@ -220,10 +233,14 @@ onMounted(async () => {
   justify-content: space-between;
 }
 .center-check-balance {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -120px;
-  color:#d8dade;
+  position: absolute;   
+  bottom: 0;           
+  left: 50%;            
+  transform: translateX(-50%); 
+  color: #174be7;
+  text-align: center;   
+  padding:20px;
+  text-decoration: underline;
 }
+
 </style>

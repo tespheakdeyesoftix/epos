@@ -86,6 +86,7 @@ export function useAuth() {
     const loading = await app.showLoading("Check server url");
     const options = {
       url: url + "api/method/ping",
+     
     };
     try {
       const response = await CapacitorHttp.get(options);
