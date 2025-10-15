@@ -7,13 +7,13 @@ import ComServerContent from "@/views/components/public/ComServerContent.vue"
 export function useWorkingDayDetail() {
 const name = ref(app.route.params.name)
 const tabs = ref([
-    { label: "Working Informations", is_loaded: true, component: ComServerContent,print_template:"Coupon Working Day Summary",
-         props:{
-      doctype:"Working Day",
-      docname: name.value,
-      template: "Working Day Summary-UI",
-    }
-     },
+    // { label: "Working Informations", is_loaded: true, component: ComServerContent,print_template:"Coupon Working Day Summary",
+    //      props:{
+    //   doctype:"Working Day",
+    //   docname: name.value,
+    //   template: "Working Day Summary-UI",
+    // }
+    //  },
 
     { label: "Working Information", is_loaded: true, component: ComWorkingDaySummary,print_template:"Coupon Working Day Summary" },
     { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Working Day Receipt List"},
