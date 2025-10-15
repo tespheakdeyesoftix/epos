@@ -106,21 +106,28 @@ import ComServerContent from "@/views/components/public/ComServerContent.vue"
 import { cloudDownloadOutline, eyeOutline, printOutline } from 'ionicons/icons';
 import Message from 'primevue/message';
 import { useApp } from '@/hooks/useApp';
+import { useWorkingDayDetail } from '@/hooks/useWorkingDayDetail';
 const plateform = ref(app.utils.getPlateform())
 const {languages} = useApp()
 const selected  = ref({ label: "Working Information", print_template:"Coupon Working Day Summary" })
+const {
+  tabs
+} = useWorkingDayDetail()
+
 const name = ref(app.route.params.name)
-const tabs = ref([
-    { label: "Working Information", is_loaded: true, component: ComWorkingDaySummary,print_template:"Coupon Working Day Summary" },
-    { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Working Day Receipt List"},
-    { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, print_template:"Working Day Sale Product Summary - Print", props:{
-      doctype:"Working Day",
-      docname: name.value,
-      template: "Working Day Sale Product Summary - UI",
+
+
+// const tabs = ref([
+//     { label: "Working Information", is_loaded: true, component: ComWorkingDaySummary,print_template:"Coupon Working Day Summary" },
+//     { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Working Day Receipt List"},
+//     { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, print_template:"Working Day Sale Product Summary - Print", props:{
+//       doctype:"Working Day",
+//       docname: name.value,
+//       template: "Working Day Sale Product Summary - UI",
      
-    } },
+//     } },
  
-])
+// ])
 const loading = ref(true)
 
 const printer_name = ref()
