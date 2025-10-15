@@ -1,98 +1,141 @@
 <template>
-<ion-page>
-    <ToolBar>{{ t("Coupon Balance List") }}</ToolBar>
+  <ion-page>
+    <ToolBar>{{ t("Coupon Balance List") }}
+
+       <template #end>
+                <ion-button @click="onRefresh" shape="round" class="ion-hide-sm-down">
+                    <ion-icon :icon="refreshOutline" slot="icon-only" />
+                </ion-button>
+            </template>
+
+    </ToolBar>
     <ion-content>
-       
-       
-         <!-- <com-input /> -->
-          <com-input
-            placeholder="Scan or enter coupon number"
-            type="text"
-            @onChange="onScanCoupon"
-            focus
-            @onBarcodeChange="onScanCoupon"
-            :icon="scan"
-          />
 
-          <div class="mt-2">
-          <ComSelectDateFilter :clear="true" @onSelect="onDateChange" />
-          </div>
+      <Message severity="error" closable>
+        <ion-text><h3>{{ t("Warning") }}</h3></ion-text>
+        <ion-text>{{ t("We use option when main server is down.") }}</ion-text>
+      </Message>
+         <ion-refresher slot="fixed" @ionRefresh="onPullToRefresh">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-       <!-- <DataTable :value="couponData" showGridlines stripedRows  responsiveLayout="scroll" class="mt-3"> -->
-        <DataTable
-        :value="couponData"
-        dataKey="coupon_number"
-        selectionMode="single"
-        v-model:selection="selectedCoupon"
-        showGridlines
-        stripedRows
-        responsiveLayout="scroll"
-        class="mt-3"
-      >
-       <!-- No -->
-         <Column header="No." headerClass="text-center" bodyClass="text-center">
+      <ComSearchBar ref="txtSearch" :showBarcodeScanner="true" @onSearch="onSearch"  v-model="filter.keyword" />
+
+      <div class="mt-2">
+       
+        <ComSelectDateFilter  defaultTimespan="Today" :clear="false" v-model="filter.posting_date"
+          @onSelect="onDateChange" />
+        <ComPopOver>
+          <ion-chip>Balance</ion-chip>
+          <template #content>
+            <ion-list>
+              <ion-item button @click="onFilterBalance(-1)">
+                <ion-label>{{ t("Show All") }}</ion-label>
+              </ion-item>
+              <ion-item button @click="onFilterBalance(1)">
+                <ion-label>{{ t("Balance > 0") }}</ion-label>
+              </ion-item>
+              <ion-item button @click="onFilterBalance(0)">
+
+                <ion-label>{{ t("Balance = 0") }}</ion-label>
+
+              </ion-item>
+            </ion-list>
+          </template>
+        </ComPopOver>
+        <ComPopOver>
+          <ion-chip>{{ t("Status") }}</ion-chip>
+          <template #content>
+            <ion-list>
+              <ion-item button @click="onFilterStatus(-1)">
+                <ion-label>{{ t("Show All") }}</ion-label>
+              </ion-item>
+              <ion-item button @click="onFilterStatus(1)">
+                <ion-label>{{ t("Is Redeem") }}</ion-label>
+              </ion-item>
+              <ion-item button @click="onFilterStatus(0)">
+
+                <ion-label>{{ t("Not Redeem") }}</ion-label>
+
+              </ion-item>
+            </ion-list>
+          </template>
+        </ComPopOver>
+      </div>
+
+      <DataTable :value="couponData" dataKey="coupon_number" selectionMode="single" v-model:selection="selectedCoupon"
+        showGridlines stripedRows responsiveLayout="scroll" class="mt-3"
+         :sortField="filter.sort_field"
+  :sortOrder="filter.sort_order"
+  @sort="onSort"
+        >
+        <!-- No -->
+        <Column header="No." headerClass="text-center" bodyClass="text-center">
           <template #body="slotProps">
             {{ slotProps.index + 1 }}
           </template>
         </Column>
 
         <Column field="coupon_number" header="Coupon Number" sortable>
-           <template #body="slotProps">
-        <router-link 
-          :to="{
-            path: '/check-balance-detail/' + slotProps.data.coupon_number,
-            state: slotProps.data
-          }"
-        >
-          <span>{{ slotProps.data.coupon_number }}</span>
-        </router-link>
-      </template>
+          <template #body="slotProps">
+            <router-link :to="{
+              path: '/check-balance-detail/' + slotProps.data.coupon_number,
+              state: slotProps.data
+            }">
+              <span>{{ slotProps.data.coupon_number }}</span>
+            </router-link>
+          </template>
         </Column>
         <Column field="price" header="Price" sortable headerClass="text-center" bodyClass="text-right">
-            <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.price" />
-            </template>
+          <template #body="slotProps">
+            <ComCurrency :value="slotProps.data.price" />
+          </template>
         </Column>
         <Column field="top_up_amount" header="Top Up" sortable headerClass="text-center" bodyClass="text-right">
-            <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.top_up_amount" />
-            </template>
+          <template #body="slotProps">
+            <ComCurrency :value="slotProps.data.top_up_amount" />
+          </template>
         </Column>
         <Column field="use_amount" header="Use Amount" sortable headerClass="text-center" bodyClass="text-right">
-            <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.use_amount" />
-            </template>
+          <template #body="slotProps">
+            <ComCurrency :value="slotProps.data.use_amount" />
+          </template>
         </Column>
         <Column field="redeem_amount" header="Redeem" sortable headerClass="text-center" bodyClass="text-right">
-            <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.redeem_amount" />
-            </template>
+          <template #body="slotProps">
+            <ComCurrency :value="slotProps.data.redeem_amount" />
+          </template>
         </Column>
         <Column field="balance_amount" header="Balance" sortable headerClass="text-center" bodyClass="text-right">
-            <template #body="slotProps">
-                <ComCurrency :value="slotProps.data.balance_amount" />
-            </template>
+          <template #body="slotProps">
+            <ComCurrency :value="slotProps.data.balance_amount" />
+          </template>
         </Column>
         <Column field="posting_date" header="Posting Date" sortable headerClass="text-center" bodyClass="text-center">
-            <template #body="slotProps">
-                {{ dayjs(slotProps.data.posting_date).format('DD/MM/YYYY') }}
-            </template>
+          <template #body="slotProps">
+            {{ dayjs(slotProps.data.posting_date).format('DD/MM/YYYY') }}
+          </template>
         </Column>
         <Column field="is_redeem" header="Redeemed" sortable>
-              <template #body="slotProps">
-            <ion-button
-              size="small"
-              :color="slotProps.data.is_redeem == '1' ? 'success' : 'warning'"
-              :disabled="slotProps.data.is_redeem == '1'"
-              @click="redeem(slotProps.data)"
-            >
+          <template #body="slotProps">
+            <ion-button size="small" :color="slotProps.data.is_redeem == '1' ? 'success' : 'warning'"
+              :disabled="slotProps.data.is_redeem == '1'" @click="onRedeem(slotProps.data)">
               {{ slotProps.data.is_redeem == '1' ? 'Redeemed' : 'Redeem' }}
             </ion-button>
           </template>
         </Column>
-      </DataTable>  
+      </DataTable>
+
+      <ion-infinite-scroll @ionInfinite="onLoadMoreData" threshold="0">
+        <ion-infinite-scroll-content :loading-text="t('Loading more...')"></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+        <ion-chip v-if="couponData.length > 0"
+        style="position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%); z-index: 1000;">
+        {{ t("Showing Record") }} {{ couponData.length }} {{ t("of") }} {{ totalRow }}
+    </ion-chip>
     </ion-content>
-</ion-page>
+  </ion-page>
 </template>
 
 <script setup>
@@ -101,98 +144,113 @@ import { ref, onMounted } from 'vue';
 import { useCheckCouponBalance } from '@/hooks/useCheckCouponBalance.js'
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {scan} from 'ionicons/icons';
+import Message from 'primevue/message';
 import dayjs from 'dayjs';
 import ComSelectDateFilter from "@/views/components/public/ComSelectDateFilter.vue"
-import ComCurrency from "@/views/components/public/ComCurrency.vue"
-const t = window.t
-const couponData = ref([]);
-const allCoupons = ref([]);
-const selectedCoupon = ref(null);
-const startDate = ref(null);
-const endDate = ref(null);
+import ComSearchBar from "@/views/components/ComSearchBar.vue"
+import { useAuth } from "@/hooks/useAuth";
+import { refreshOutline } from "ionicons/icons";
 
-onMounted(async () => {
-  const data = await useCheckCouponBalance();
-  if (data) {
-    couponData.value = data;
-     allCoupons.value = data; 
+const txtSearch = ref(null)
+const {checkServerURL} = useAuth();
+
+
+const t = window.t
+
+const { couponData, getData, filter, onLoadMoreData,totalRow,onRedeem,isServerRunning } = useCheckCouponBalance()
+
+async function onSearch(data) {
+ 
+  let keyword = data;
+  if(isUrl(keyword)){
+   
+    const urlObj = new URL(keyword);
+    keyword = urlObj.searchParams.get("c");
+    keyword = window.decrypt(keyword)
+     
+
   }
-});
+  filter.value.keyword = keyword
+  
+  
+  couponData.value = []
+  setTimeout(() => {
+    txtSearch.value.setText(keyword)
+  }, 300);
+  const loading = await app.showLoading()
+  
+  await getData();
+  loading.dismiss()
+
+  
+}
+
+function isUrl(str) {
+  if (!str) return false;
+
+  const pattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/i;
+  return pattern.test(str.trim());
+}
+
+
+async function onFilterStatus(is_redeem) {
+  filter.value.is_redeem = is_redeem
+  couponData.value = []
+  const loading = await app.showLoading()
+  await getData();
+  loading.dismiss()
+}
+async function onFilterBalance(is_has_balance) {
+  filter.value.has_balance = is_has_balance
+  couponData.value = []
+  const loading = await app.showLoading()
+  await getData();
+  loading.dismiss()
+}
+
+
+
+async function onSort(data){
+  
+  filter.sort_field = data.sortField;
+  filter.sort_order = data.sortOrder;
+
+  const loading = await app.showLoading()
+  await getData();
+  loading.dismiss()
+
+}
+
+async function onRefresh(){
+    const loading = await app.showLoading()
+  await getData();
+  loading.dismiss()
+}
 
  
-const redeem = async (coupon) => {
-  // prevent redeeming again
-  if (coupon.is_redeem === "1") {
-    app.showSuccess("This coupon has already been redeemed.")
-    return;
-  }
 
-   if (coupon.balance_amount <= 0) {
-    app.showWarning("Cannot redeem. The coupon balance is 0.");
-    return;
-  }
+const onPullToRefresh = async (event) => {
+   await getData();
+     
+        event.target.complete();
+    
+};
 
-  const confirm = await app.utils.onConfirm("Redeem Coupon", "Are you sure you want to Redeem this coupon code?");
-  if (!confirm) {
-    return; 
-  }
+onMounted(async () => {
+  couponData.value = []
+  const loading = await app.showLoading()
+  await getData();
+  loading.dismiss()
 
-  const { data, error } = await supabase
-    .from("food_court_coupon_codes")
-    .update({ is_redeem: "1" })
-    // .eq("coupon_number", coupon.coupon_number)
-       .gte("posting_date", startDate.value)
-    .lte("posting_date", endDate.value)
-    .order("posting_date", { ascending: false });;
 
-  if (error) {
-    app.showWarning("Failed to redeem coupon. Please try again.");
-    return;
-  }
+    const currentProperty = await app.storageService.getItem("current_property")
   
-  coupon.is_redeem = "1";
-  app.showSuccess(`Coupon ${coupon.coupon_number} redeemed successfully`);
-};
+  const checkServer = await checkServerURL(JSON.parse(currentProperty).api_url)
+  isServerRunning.value = checkServer;
 
 
-const onScanCoupon = (couponCode) => {
-  if (!couponCode) return;
-  const code = couponCode.trim();
-  const found = couponData.value.find(c => c.coupon_number === code);
+});
 
-  if (!found) {
-    app.showWarning(`Coupon "${code}" not found.`);
-    return;
-  }
 
-  couponData.value = [found];
-  app.showSuccess(`Found coupon: ${found.coupon_number}`);
-
-  // Reset to full list after 3 seconds
-  setTimeout(async () => {
-    const data = await useCheckCouponBalance();
-    couponData.value = data;
-  }, 3000);
-};
-
-const onDateChange = (result) => {
-  if (!result) {
-    // if cleared
-    couponData.value = allCoupons.value;
-    return;
-  }
-
-  const { start_date, end_date } = result;
-  startDate.value = start_date;
-  endDate.value = end_date;
-
-  couponData.value = allCoupons.value.filter((coupon) => {
-    const date = dayjs(coupon.posting_date);
-    return (
-      date.isAfter(dayjs(start_date).subtract(1, "day")) &&
-      date.isBefore(dayjs(end_date).add(1, "day"))
-    );
-  });
-};
+  
 </script>

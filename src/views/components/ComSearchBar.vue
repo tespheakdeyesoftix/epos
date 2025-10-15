@@ -30,7 +30,7 @@ const props = defineProps({
 
 const emit = defineEmits();
 const t = window.t;
-const keyword = ref(''); // 🔁 Removed <string> type annotation
+const keyword = ref('');  
 
 function onSearch() {
   emit("onSearch", keyword.value);
@@ -55,8 +55,14 @@ function onSetFocus(){
   }, 300);
 }
 
+function setText(text){
+   txtSearchRef.value.$el.value = text;
+ 
+}
+
 defineExpose({
-  onSetFocus
+  onSetFocus,
+  setText
 })
 onMounted(()=>{
  
