@@ -16,9 +16,6 @@ const tabs = ref([
      
     }
      },
-    { label: "Shift Information", is_loaded: true, component: ComCashierShiftSummary,print_template:"Coupon Shift Summary",
-       
-     },
 
     { label: "Receipt List", is_loaded: false, component:ComReceiptList , print_template:"Coupon Shift Receipt List"},
     { label: "Sale Product Detail", is_loaded: false, component:ComServerContent, print_template:"Cashier Shift Sale Product Summary - Print", 

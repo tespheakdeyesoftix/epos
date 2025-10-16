@@ -26,7 +26,7 @@
         <ComSelectDateFilter  defaultTimespan="Today" :clear="false" v-model="filter.posting_date"
           @onSelect="onDateChange" />
         <ComPopOver>
-          <ion-chip>Balance</ion-chip>
+          <ion-chip>{{ t("Balance Amount") }}</ion-chip>
           <template #content>
             <ion-list>
               <ion-item button @click="onFilterBalance(-1)">
@@ -70,13 +70,13 @@
   @sort="onSort"
         >
         <!-- No -->
-        <Column header="No." headerClass="text-center" bodyClass="text-center">
+        <Column :header="t('No.')" headerClass="text-center" bodyClass="text-center">
           <template #body="slotProps">
             {{ slotProps.index + 1 }}
           </template>
         </Column>
 
-        <Column field="coupon_number" header="Coupon Number" sortable>
+        <Column field="coupon_number" :header="t('Coupon Number')" sortable>
           <template #body="slotProps">
             <router-link :to="{
               path: '/check-balance-detail/' + slotProps.data.coupon_number,
@@ -86,41 +86,41 @@
             </router-link>
           </template>
         </Column>
-        <Column field="price" header="Price" sortable headerClass="text-center" bodyClass="text-right">
+        <Column field="price" :header="t('Price')" sortable headerClass="text-center" bodyClass="text-right">
           <template #body="slotProps">
             <ComCurrency :value="slotProps.data.price" />
           </template>
         </Column>
-        <Column field="top_up_amount" header="Top Up" sortable headerClass="text-center" bodyClass="text-right">
+        <Column field="top_up_amount" :header="t('Top Up')" sortable headerClass="text-center" bodyClass="text-right">
           <template #body="slotProps">
             <ComCurrency :value="slotProps.data.top_up_amount" />
           </template>
         </Column>
-        <Column field="use_amount" header="Use Amount" sortable headerClass="text-center" bodyClass="text-right">
+        <Column field="use_amount" :header="t('Use Amount')" sortable headerClass="text-center" bodyClass="text-right">
           <template #body="slotProps">
             <ComCurrency :value="slotProps.data.use_amount" />
           </template>
         </Column>
-        <Column field="redeem_amount" header="Redeem" sortable headerClass="text-center" bodyClass="text-right">
+        <Column field="redeem_amount" :header="t('Redeem')" sortable headerClass="text-center" bodyClass="text-right">
           <template #body="slotProps">
             <ComCurrency :value="slotProps.data.redeem_amount" />
           </template>
         </Column>
-        <Column field="balance_amount" header="Balance" sortable headerClass="text-center" bodyClass="text-right">
+        <Column field="balance_amount" :header="t('Balance Amount')" sortable headerClass="text-center" bodyClass="text-right">
           <template #body="slotProps">
             <ComCurrency :value="slotProps.data.balance_amount" />
           </template>
         </Column>
-        <Column field="posting_date" header="Posting Date" sortable headerClass="text-center" bodyClass="text-center">
+        <Column field="posting_date" :header="t('Date')" sortable headerClass="text-center" bodyClass="text-center">
           <template #body="slotProps">
             {{ dayjs(slotProps.data.posting_date).format('DD/MM/YYYY') }}
           </template>
         </Column>
-        <Column field="is_redeem" header="Redeemed" sortable>
+        <Column field="is_redeem" :header="t('Redeem')" sortable>
           <template #body="slotProps">
             <ion-button size="small" :color="slotProps.data.is_redeem == '1' ? 'success' : 'warning'"
               :disabled="slotProps.data.is_redeem == '1'" @click="onRedeem(slotProps.data)">
-              {{ slotProps.data.is_redeem == '1' ? 'Redeemed' : 'Redeem' }}
+              {{ slotProps.data.is_redeem == '1' ? t('Redeemed') : t('Redeem') }}
             </ion-button>
           </template>
         </Column>
@@ -149,7 +149,7 @@ import dayjs from 'dayjs';
 import ComSelectDateFilter from "@/views/components/public/ComSelectDateFilter.vue"
 import ComSearchBar from "@/views/components/ComSearchBar.vue"
 import { useAuth } from "@/hooks/useAuth";
-import { refreshOutline } from "ionicons/icons";
+import {  refreshOutline } from "ionicons/icons";
 
 const txtSearch = ref(null)
 const {checkServerURL} = useAuth();
@@ -160,19 +160,17 @@ const t = window.t
 const { couponData, getData, filter, onLoadMoreData,totalRow,onRedeem,isServerRunning } = useCheckCouponBalance()
 
 async function onSearch(data) {
- 
+  
   let keyword = data;
   if(isUrl(keyword)){
-   
-    const urlObj = new URL(keyword);
-    keyword = urlObj.searchParams.get("c");
-    keyword = window.decrypt(keyword)
+    
+    keyword = app.utils.getCouponNumber(keyword)
      
 
   }
   filter.value.keyword = keyword
   
-  
+
   couponData.value = []
   setTimeout(() => {
     txtSearch.value.setText(keyword)

@@ -141,6 +141,7 @@ const onRedeem = async (coupon) => {
   if (!confirm) {
     return;
   }
+const loading = await app.showLoading()
 
 const { data, error } = await supabase
   .from(import.meta.env.VITE_SUPABASE_COUPON_TRANSACTION_TABLE)
@@ -149,11 +150,13 @@ const { data, error } = await supabase
 
   if (error) {
     app.showWarning("Failed to redeem coupon. Please try again.");
+    await loading.dismiss()
     return;
   }
 
   coupon.is_redeem = "1";
   app.showSuccess(`Coupon ${coupon.coupon_number} redeemed successfully`);
+  await loading.dismiss()
 };
 
 

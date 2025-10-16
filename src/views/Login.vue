@@ -14,7 +14,7 @@
                   
                     <stack gap="1rem">
                       <ion-text color="primary">
-                        <h1 class="m-0">{{ t("Please enter your username and passwordhell") }}</h1>
+                        <h1 class="m-0">{{ t("Please enter your username and password") }}</h1>
                       </ion-text> 
                       <com-input ref="txtUsername" :label="t('Username')" v-model="formData.username" 
                         label-placement="floating" fill="outline"  :placeholder="t('Username')"/> 

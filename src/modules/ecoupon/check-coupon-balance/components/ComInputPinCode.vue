@@ -1,6 +1,6 @@
 <template>
     <BaseModal :title="t(title || 'Enter Pin Codee')" @onConfirm="onConfirm">
-            <com-input  style="font-size: 32px;  text-align: center;" type="password"  focus @keyup="onInput" v-model="numberInput"   :placeholder="title?t(title):title" class="my-2"/> 
+            <com-input  style="font-size: 24px;  text-align: center;" type="password"  focus @keyup="onInput" v-model="numberInput"   :placeholder="title?t(title):title" class="my-2"/> 
         <ion-grid class="ion-no-padding">
                 <ion-row v-for="r in keypad">
                     <ion-col v-for="k in r" class="px-2 py-2">

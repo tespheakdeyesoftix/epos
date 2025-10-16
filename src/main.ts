@@ -8,7 +8,7 @@ import PrimeVue from 'primevue/config';
 import Tooltip from 'primevue/tooltip';
 import debounce from '@/directives/debounce.js'
 import VueECharts from 'vue-echarts'
-import { SafeArea } from 'capacitor-plugin-safe-area';
+
 import { use } from 'echarts/core'
 import ToastService from 'primevue/toastservice';
 import VueCryptojs from 'vue-cryptojs'
@@ -153,7 +153,7 @@ import ComSelectInput from '@/views/components/public/ComSelectInput.vue';
 import Stack from '@/views/components/public/Stack.vue';
 import GetData from '@/views/components/public/GetData.vue';
 import Card from '@/views/components/public/Card.vue';
-
+import { StatusBar } from '@capacitor/status-bar';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
     import utc from 'dayjs/plugin/utc';
@@ -176,7 +176,6 @@ defineCustomElements(window)
 window.t = i18n.global.t;
  
  
-
  
 
 use([
@@ -194,29 +193,6 @@ use([
 
 
 const app = createApp(App)
-// SafeArea setup
-if (Capacitor.isNativePlatform()) {
-  SafeArea.getSafeAreaInsets().then(({ insets }) => {
-   
-    for (const [key, value] of Object.entries(insets)) {
-      document.documentElement.style.setProperty(`--safe-area-inset-${key}`, `${value}px`);
-    }
-  });
-
-  SafeArea.getStatusBarHeight().then(({ statusBarHeight }) => {
-    
-    document.documentElement.style.setProperty('--status-bar-height', `${statusBarHeight}px`);
-  });
-
-  SafeArea.addListener('safeAreaChanged', ({ insets }) => {
-    for (const [key, value] of Object.entries(insets)) {
-      document.documentElement.style.setProperty(`--safe-area-inset-${key}`, `${value}px`);
-    }
-  });
-}
-
-
-
   // check if have current login user then login
 
  

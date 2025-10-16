@@ -17,9 +17,11 @@ import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { Capacitor } from '@capacitor/core';
 import { initializeScanner } from '@/helpers/scan-barcode.js'
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { Fullscreen } from '@boengli/capacitor-fullscreen';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
  import useBarcodeDetector from '@programic/vue-barcode-detector';
+ 
 const barcodeDetector = useBarcodeDetector();
 const toast = useToast();
  
@@ -31,7 +33,7 @@ const { isAuthenticated } = useAuth();
 
 const route = useRoute();
 const title = ref(route.meta.title || 'ePOS');
-const hideTab = ref(false);
+
 const currentRoute = route.path
 const hideDrawerRoutes = ["/login", "/select-workspace"]
 
@@ -72,12 +74,29 @@ onMounted(async () => {
 
   window.toast = toast;
   if (Capacitor.getPlatform() !== "web") {
-    const toolbarColor = getComputedStyle(document.documentElement)
-      .getPropertyValue('--ion-toolbar-background')
-      .trim();
-    await StatusBar.setOverlaysWebView({ overlay: false }); // Optional: ensures webview doesn't go under status bar
-    await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
-    await StatusBar.setBackgroundColor({ color: toolbarColor }); // Use white icons for dark background
+    
+    // const toolbarColor = getComputedStyle(document.documentElement)
+    //   .getPropertyValue('--ion-toolbar-background')
+    //   .trim();
+     
+    // await StatusBar.setOverlaysWebView({ overlay: false }); // Optional: ensures webview doesn't go under status bar
+    // await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
+    // await StatusBar.setBackgroundColor({ color: "green" }); // Use white icons for dark background
+
+    StatusBar.hide().catch(() => {
+    console.log('Failed to hide status bar');
+  });
+
+    try {
+    await Fullscreen.activateImmersiveMode();
+    console.log('Fullscreen enabled');
+  } catch (error) {
+    console.error('Error enabling fullscreen:', error);
+  }
+
+
+   
+    
     await initializeScanner();
   }
 })

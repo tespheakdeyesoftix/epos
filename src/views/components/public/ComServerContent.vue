@@ -53,8 +53,14 @@ async function onRefresh(){
    
     await getData()
 }
+async function  refresh(){
+    const loading = await app.showLoading()
+     await getData()
+     loading.dismiss()
+}
 defineExpose({
-    onRefresh
+    onRefresh,
+    refresh
 })
 onMounted(async ()=>{
     setTimeout(async () => {

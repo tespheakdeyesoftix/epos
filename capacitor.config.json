@@ -2,9 +2,6 @@
   "appId": "com.estccouputer.app.epos",
   "appName": "ePOS",
   "plugins": {
-    "SunmiPrinter": {
-      "bindOnLoad": true
-    },
     "StatusBar": {
       "overlaysWebView": true,
       "style": "DARK",
