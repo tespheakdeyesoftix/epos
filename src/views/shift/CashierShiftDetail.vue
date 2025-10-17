@@ -3,11 +3,12 @@
     <ToolBar>
        {{ t("Cashier Shift Detail") }} - {{ name }}
      <template #end>
-        
-
-<ion-button @click="refreshCurrentTab">
-  <ion-icon slot="icon-only" :icon="refreshOutline"></ion-icon>
-</ion-button>
+        <ion-button @click="refreshCurrentTab">
+          <ion-icon slot="icon-only" :icon="refreshOutline"></ion-icon>
+        </ion-button>
+        <!-- popover -->
+         <ComSettingShift />
+         
      </template>
     </ToolBar>
   <ion-content>
@@ -26,14 +27,14 @@
 <script setup>
 import { ref } from 'vue'
 import Tabs from "@/views/components/Tabs/Tabs.vue"
-import ComServerContent from "@/views/components/public/ComServerContent.vue"
-import { refreshOutline, settingsOutline } from 'ionicons/icons';
+import ComServerContent from "@/views/components/public/ComServerContent.vue";
+import ComSettingShift from "@/views/shift/components/ComSettingShift.vue";
+import { refreshOutline } from 'ionicons/icons';
+
 
 const name = ref(app.route.params.name)
- 
 const t= window.t;
 const tabsRef = ref(null)
-
 const tabs = [
    
   { 
@@ -47,7 +48,6 @@ const tabs = [
       }
     }
   },
-  
    
   { 
     label: t('Receipt List'), 
@@ -61,11 +61,6 @@ const tabs = [
       }
     }
   },
-  
-   
-
-
-
 ]
  
 
