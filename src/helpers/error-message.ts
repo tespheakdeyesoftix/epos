@@ -23,7 +23,12 @@ export async function handleErrorMessage(error_data:any){
 		 
 			_server_messages.forEach((r:any) => {
                 if(JSON.parse(r).message){
-                    showWarningMessage(JSON.parse(r).message.replace("Error: ",""))
+                    if((JSON.parse(r).indicator || '') == 'red'){
+ showWarningMessage (JSON.parse(r).message.replace("Error: ",""))
+                    }else {
+                         showSuccessMessage (JSON.parse(r).message.replace("Error: ",""))
+                    }
+                   
                      result.push(JSON.parse(r).message.replace("Error: ",""))
                 }
 			});
@@ -64,20 +69,24 @@ export async function handleErrorMessage(error_data:any){
 
 export async  function showWarningMessage(message:string){
     if ((message ||"") =="") return;
-     
-    // const toast = await toastController.create({
-    //     message:stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message),
-    //     duration: 5000,
-    //     position: "top",
-    //     swipeGesture:"vertical",
-    //     color: "warning"
-    // });
-    // toast.present();
+      
 
     const str_message = stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message);
 
     if (!str_message) return;
 
     window.toast.add({ severity: 'warn', summary: window.t('Confirm'), detail: str_message,   life: 3000 });
+
+}
+
+export async  function showSuccessMessage(message:string){
+    if ((message ||"") =="") return;
+      
+
+    const str_message = stripHtmlTags(message)? window.t(stripHtmlTags(message)): stripHtmlTags(message);
+
+    if (!str_message) return;
+
+    window.toast.add({ severity: 'success', summary: window.t('Confirm'), detail: str_message,   life: 3000 });
 
 }

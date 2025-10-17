@@ -81,7 +81,14 @@ export function postApi(api_url: string, param: any = null) {
     }
     const call = frappe.call();
     return call.post(api_url, param)
-        .then((r: any) => ({ data: r.message, error: null }))
+        .then((r: any) => {
+            if(r._server_messages){
+                handleErrorMessage(r);
+            }
+          
+            return   { data: r.message, error: null }
+        }
+        )
         .catch(async (err) => {
            const error = await handleErrorMessage(err);
             return { data: null, error }

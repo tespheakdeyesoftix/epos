@@ -19,18 +19,7 @@
  
             </div>
         </ion-content>
-        <ion-footer>
-            <ion-toolbar>
-                <div style="display: flex;justify-content: center;gap:10px">
-                <ion-button @click="onEdit" shape="round" v-if="doc?.sale_type=='Sale Coupon'" :disabled="doc?.docstatus!=1">{{ t("Edit") }}</ion-button>
-                <ComPrintBillButton  :name="doc?.name"/>
-
-                <ion-button :disabled="doc?.docstatus!=1" v-if="doc?.sale_type!='Top Up'"  shape="round" color="danger" @click="onDelete" >{{ t("Delete") }}</ion-button>
-                
-                            </div>
-                                
-            </ion-toolbar>
-        </ion-footer>
+        
     </ion-page>
 
 
@@ -68,16 +57,25 @@ async function loadData() {
 
 async function onEdit(){
      await app.sale.onEditBill({docname:doc.value.name,sale_type:doc.value.sale_type})
-    
 }
 
 async function onChangePaymentType(){
+    if (doc.value.payment.length>1){
+        app.showWarning("You can change the payment type only if the invoice has a single payment record.");
+        return;
+    }
      const result = await app.openModal({
         component : ComChangePaymentType,
         componentProps: {
-            data:doc.value
-        }
+            data:doc.value,
+            confirmText: "OK",
+            
+        },
+        cssClass:"change-payment-type-modal"
      })
+     if (result){
+        await loadData()
+     }
 }
 
 

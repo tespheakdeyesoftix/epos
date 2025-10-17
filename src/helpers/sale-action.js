@@ -44,6 +44,7 @@ export async function onPrintBill(name,format=null) {
 export async function onEditBill(data) {
     const auth = await app.utils.hasPermission("edit_closed_receipt","edit_closed_receipt_required_password")
         if(!auth)  return;
+        
 
     // check if require note
     const note = await app.utils.getOperationNote("Edit Sale", "edit_closed_receipt_required_note");

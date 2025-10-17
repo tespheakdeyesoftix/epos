@@ -823,19 +823,17 @@ async function onRemoveFreeProduct(sp) {
 }
 
 export function onClearData() {
-    setTimeout(() => {
-        if (inputScanQRCode.value) {
-            // inputScanQRCode.value.focus()
-        }
-    }, 500);
+    
 
     initSaleDoc()
     topUpCouponInfo.value = null
-
+ 
     if (saleType.value == "Top Up") {
 
         topUpSaleProduct.value = { "product_code": "", quantity: 1, price: 0 }
         saleDoc.value.sale_products = [topUpSaleProduct.value]
+    } else {
+        topUpSaleProduct.value =  { product_code: "" };
     }
 
 }
