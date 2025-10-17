@@ -6,7 +6,7 @@
   </span>
   <ion-popover
      :is-open="popoverOpen" :event="event" @didDismiss="popoverOpen = false"
-      :dismiss-on-select="true"
+      :dismiss-on-select="false"
   >
     <ion-content class="ion-padding">
       <slot name="content" :close="closePopover">
@@ -30,4 +30,6 @@ function openPopover(e: Event) {
   popoverOpen.value = true
 }
 
+
+defineExpose({ close: closePopover }) // 👈 optional: lets parent call .close()
 </script>
