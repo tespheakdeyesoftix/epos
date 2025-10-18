@@ -8,9 +8,10 @@
               <!-- Print Preview -->
               <ion-item button>
                <ComPopOver ref="previewPopover" :is-open="isOpen" @didDismiss="isOpen = false">
-                    <ion-icon :icon="eyeOutline" style="font-size: 20px;" slot="start"></ion-icon>
-                    <ion-text class="ml-2">{{ t("Print Preview") }}</ion-text>
-                 
+                    <div style="display: flex;">
+                        <ion-icon :icon="eyeOutline" style="font-size: 20px;" slot="start"></ion-icon>
+                        <ion-text class="ml-2">{{ t("Print Preview") }}</ion-text>
+                    </div>
                   <template #content>
                     <ion-list>
                       <ion-item
@@ -30,8 +31,10 @@
               <!-- Print -->
               <ion-item button>
                  <ComPopOver>
-          <ion-icon :icon="printOutline" style="font-size: 20px;" slot="start"></ion-icon>
-          <ion-text class="ml-2">{{ t("Print") }}</ion-text>
+                  <div style="display: flex;">
+                    <ion-icon :icon="printOutline" style="font-size: 20px;" slot="start"></ion-icon>
+                    <ion-text class="ml-2">{{ t("Print") }}</ion-text>
+                  </div>
 
           <template #content="{ close }">
             <ion-list>
@@ -52,9 +55,10 @@
               <!-- Download PDF -->
               <ion-item button>
                  <ComPopOver>
-          <ion-icon :icon="cloudDownloadOutline" style="font-size: 20px;" slot="start"></ion-icon>
-          <ion-text class="ml-2">{{ t("Download PDF") }}</ion-text>
-
+                  <div style="display: flex;">
+                    <ion-icon :icon="cloudDownloadOutline" style="font-size: 20px;" slot="start"></ion-icon>
+                    <ion-text class="ml-2">{{ t("Download PDF") }}</ion-text>
+                  </div>
           <template #content="{ close }">
             <ion-list>
               <ion-item button
