@@ -4,6 +4,7 @@
           <ion-icon slot="icon-only" :icon="ellipsisVertical"/>
         </ion-button>
         <template #content>
+     
             <ion-list>
               <!-- Print Preview -->
               <ion-item>
@@ -84,20 +85,21 @@ const name = ref(app.route.params.name)
  const {languages} = useApp()
 const previewPopover = ref(null)
 
+const model = defineModel()
 
-const selected  = ref({ label: "Shift Information", print_template:"Coupon Shift Summary" })
+
 
  async function onPrint(return_type="base64",lang="en"){
  
   if(return_type=="pdf"){
-    app.printing.downloadPdf( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang})
+    app.printing.downloadPdf( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template, lang:lang})
   }else if(return_type=="html"){
-    app.printing.printPreview( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template, lang:lang,printer_name:default_printer.value,show_loading:true})
+      
+    app.printing.printPreview( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template, lang:lang,show_loading:true})
   }else {
-     app.printing.onPrint( {doctype:"Cashier Shift",docname:name.value, template:selected.value.print_template,printer_name:default_printer.value, lang:lang,show_loading:true})
+     app.printing.onPrint( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template,printer_name:default_printer.value, lang:lang,show_loading:true})
   }
 }
-
 
 function handlePreviewClick(lang) {
   onPrint('html', lang)

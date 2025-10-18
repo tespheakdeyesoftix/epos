@@ -44,8 +44,7 @@ async function getData(){
         docname:props.docname,
         template:props.template,
         return_type:"html",
-        lang:props.lang || "en",
-        printer_name:String
+        lang:props.lang || "en"
 
     })
     if(res.data){

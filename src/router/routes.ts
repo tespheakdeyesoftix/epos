@@ -143,22 +143,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/shift-detail/:name",
     component: () => import('@/views/shift/CashierShiftDetail.vue'),
     meta: { requiresAuth: true },
-     children: [
-       {
-        path: "/shift-detail/:name",
-        component: () => import('@/views/shift/TestPage/Page1.vue'),
-      },
-      {
-        path: '/cashier-shift/page-1',
-        component: () => import('@/views/shift/TestPage/Page1.vue'),
-      },
-       
-      {
-        path: '/cashier-shift/page-2',
-        component: () => import('@/views/shift/TestPage/Page2.vue'),
-      },
-       
-    ],
   },
   {
     path: "/sale-detail/:name",
@@ -359,19 +343,7 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
     meta: { requiresAuth: true }
   },
-  {
-    path: "/page-1",
-    component: () => import('@/views/shift/TestPage/Page1.vue'),
-    props: true,
-    meta: { requiresAuth: true }
-  },
-  
-  {
-    path: "/page-2",
-    component: () => import('@/views/shift/TestPage/Page2.vue'),
-    props: true,
-    meta: { requiresAuth: true }
-  },
+   
 
 ]
 

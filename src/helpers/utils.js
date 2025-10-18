@@ -652,6 +652,25 @@ export async function getPOSConfig(pos_config){
 
   if(res.data){
     
+    // clean up unuse key
+    const remove_key = ["owner","creation","modified","modified_by","docstatus","doctype","idx"]
+    remove_key.forEach(k => {
+      delete res.data[k] ; 
+    });
+    // clean payment type
+    res.data.payment_type.forEach(pt=>{
+      remove_key.forEach(k => {
+      delete pt[k] ; 
+    });
+    })
+    // clean print setting
+    res.data.print_settings.forEach(pt=>{
+      remove_key.forEach(k => {
+      delete pt[k] ; 
+    });
+    })
+    
+   
     app.setting.pos_config = res.data;
 
     // update print service url
@@ -873,26 +892,25 @@ export function playSuccessSound(){
 
 export async function checkCouponCodeModal(barcode){
   if(barcode){
-    const res = await app.getDocList("Coupon Codes", {
-         fields:["name","coupon"],
-        filters: [["coupon", "=", app.utils.getCouponNumber(barcode)]],
-         orderBy: {
-          field: 'creation',
-          order: 'desc',
-        },
-        limit: 1
-      });
-      if(res.data.length == 0){
+
+ 
+      const coupon = app.utils.getCouponNumber(barcode)
+
+      const res = await app.getApi("epos_restaurant_2023.api.coupon.validate_coupon_code_exists",{
+        coupon:coupon
+      })
+       if(!res.data){
         await app.showWarning(t("No coupon code found"));
         return;
       }
+      
       
       window.disable_scan_check_coupon = true;
       await app.openModal({
         component:ComCheckCoupon,
         componentProps:{
-          coupon_code:res.data[0].coupon,
-          coupon_id: res.data[0].name
+          coupon_code:coupon,
+          coupon_id: res.data
         },
         cssClass:"full"
       })

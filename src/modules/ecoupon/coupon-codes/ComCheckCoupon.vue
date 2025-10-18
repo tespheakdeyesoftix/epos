@@ -48,23 +48,21 @@ const onRefreshData = async (event) => {
 function onCheckCouponCode(){
         barcodeDetector.listen(async (barcodeData) => {
     if (barcodeData.value ) {
-        
-        const res = await app.getDocList("Coupon Codes", {
-                    fields: ["name", "coupon"],
-                    filters: [["coupon", "=", app.utils.getCouponNumber(barcodeData.value)]],
-                    orderBy: {
-                        field: 'creation',
-                        order: 'desc',
-                    },
-                    limit: 1
-                });
-                if (res.data.length == 0) {
-                    await app.showWarning(t("No coupon code found"));
-                    return;
-                }
 
-                couponID.value = res.data[0].name;
-                 await getCouponDetail();
+        const coupon =  app.utils.getCouponNumber(barcodeData.value);
+
+         const res = await app.getApi("epos_restaurant_2023.api.coupon.validate_coupon_code_exists",{
+            coupon:coupon
+        })
+       if(!res.data){
+        await app.showWarning(t("No coupon code found"));
+        return;
+      }
+      
+ 
+
+    couponID.value = res.data;
+        await getCouponDetail();
 
     }
     });

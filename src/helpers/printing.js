@@ -50,7 +50,7 @@ export async function onPrint(options={
 
   if(res.data){
     
-    for (let i = 1; i <= (options.copy || 1); i++) {
+    for (let i = 1; i <= (options.copy || 0); i++) {
 
         app.printService.submit({
                     'type':  options.printer_name,
@@ -92,7 +92,7 @@ export async function printPreview(options={
   lang:"en",
   printer_name:""
 }){
-  
+    
   app.openModal({
     component:ComPrintPreview,
     componentProps:options,

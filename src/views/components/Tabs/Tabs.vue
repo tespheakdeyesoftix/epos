@@ -1,7 +1,9 @@
 <template>
-  <div ref="tabBar" class="tab-bar" >
+ 
+  <div ref="tabBar" class="tab-bar"   v-if="tabs.length>1">
       <div
         v-for="(tab, index) in tabs"
+       
         :key="index"
         class="tab-item"
         :class="{
@@ -30,6 +32,7 @@
       </div>
 
       <div
+        
         class="tab-indicator"
         :style="{
           width: indicatorWidth + 'px',
@@ -211,6 +214,7 @@ const onSlideChange = (swiper) => {
   }
   
   emit('tab-change', newIndex)
+  
   nextTick(() => updateIndicator(true))
 }
 
@@ -226,7 +230,8 @@ const onTabClick = (index) => {
   }
   
   swiperRef.value?.slideTo(index)
-  emit('tab-change', index)
+  // emit('tab-change', index)
+  // console.log("tab click")
   nextTick(() => updateIndicator(true))
 }
 
@@ -370,7 +375,7 @@ onBeforeUnmount(() => {
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
-  border-bottom: 2px solid #eee;
+border-bottom : 2px solid #eee;
   position: relative;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
