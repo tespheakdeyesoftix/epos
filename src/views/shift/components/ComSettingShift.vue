@@ -4,10 +4,9 @@
           <ion-icon slot="icon-only" :icon="ellipsisVertical"/>
         </ion-button>
         <template #content>
-     
             <ion-list>
               <!-- Print Preview -->
-              <ion-item>
+              <ion-item button>
                <ComPopOver ref="previewPopover" :is-open="isOpen" @didDismiss="isOpen = false">
                     <ion-icon :icon="eyeOutline" style="font-size: 20px;" slot="start"></ion-icon>
                     <ion-text class="ml-2">{{ t("Print Preview") }}</ion-text>
@@ -19,6 +18,7 @@
                         :key="l.server_lang"
                         lines="full"
                         @click.stop="handlePreviewClick(l.server_lang)"
+                        button
                       >
                         <ion-icon style="height: 32px;" :icon="l.icon" slot="start"></ion-icon>
                         <ion-label>{{ l.label }}</ion-label>  
@@ -28,7 +28,7 @@
                 </ComPopOver>
               </ion-item>
               <!-- Print -->
-              <ion-item>
+              <ion-item button>
                  <ComPopOver>
           <ion-icon :icon="printOutline" style="font-size: 20px;" slot="start"></ion-icon>
           <ion-text class="ml-2">{{ t("Print") }}</ion-text>
@@ -36,6 +36,7 @@
           <template #content="{ close }">
             <ion-list>
               <ion-item
+              button
                 v-for="l in languages"
                 :key="l.server_lang"
                 lines="full"
@@ -49,14 +50,14 @@
         </ComPopOver>
               </ion-item>
               <!-- Download PDF -->
-              <ion-item>
+              <ion-item button>
                  <ComPopOver>
           <ion-icon :icon="cloudDownloadOutline" style="font-size: 20px;" slot="start"></ion-icon>
           <ion-text class="ml-2">{{ t("Download PDF") }}</ion-text>
 
           <template #content="{ close }">
             <ion-list>
-              <ion-item
+              <ion-item button
                 v-for="l in languages"
                 :key="l.server_lang"
                 lines="full"
@@ -97,7 +98,7 @@ const model = defineModel()
       
     app.printing.printPreview( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template, lang:lang,show_loading:true})
   }else {
-     app.printing.onPrint( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template,printer_name:default_printer.value, lang:lang,show_loading:true})
+     app.printing.onPrint( {doctype:model.value.props.options.doctype,docname:name.value, template:model.value.props.options.print_template,printer_name:default_printer.value, lang:lang,show_loading:true,copy:model.value.props.options.copies})
   }
 }
 

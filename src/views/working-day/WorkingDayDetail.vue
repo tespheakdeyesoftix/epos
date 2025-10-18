@@ -57,7 +57,8 @@ onMounted(() => {
             doctype: "Working Day",
             docname: app.route.params.name,
             template: d.ui_template,
-            print_template: d.print_template
+            print_template: d.print_template,
+            copies:d.copies
           }
         }
       })

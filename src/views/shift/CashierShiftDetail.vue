@@ -55,7 +55,8 @@ onMounted(() => {
             doctype: "Cashier Shift",
             docname: app.route.params.name,
             template: d.ui_template,
-            print_template: d.print_template
+            print_template: d.print_template,
+            copies:d.copies || 0
           }
         }
       })
