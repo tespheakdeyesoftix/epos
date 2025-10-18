@@ -17,7 +17,7 @@
                        
                         <ion-item  v-for="f in printFormat" @click="emit('onPrint',f)" lines="full" button>
                             <ion-icon :icon="printOutline" slot="start"/>
-                            <ion-label >{{ t(f.name) }}</ion-label>
+                            <ion-label >{{ t(f.name.trim()) }}</ion-label>
                         </ion-item>
                           <ion-item @click="emit('onDelete')" lines="full" button >
                             <ion-icon :icon="trash" slot="start" color="danger"/>

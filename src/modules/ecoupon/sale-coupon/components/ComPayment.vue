@@ -60,7 +60,7 @@ import ComPaymentList from "@/modules/ecoupon/sale-coupon/components/ComPaymentL
 import ComPaymentFooter from "@/modules/ecoupon/sale-coupon/components/ComPaymentFooter.vue"
 import ComPaymentAmountInfo from "@/modules/ecoupon/sale-coupon/components/ComPaymentAmountInfo.vue"
 import ComSelectPOSReceiptMobile from "@/modules/ecoupon/sale-coupon/components/ComSelectPOSReceiptMobile.vue"
-import ComFooterTotalpayment from "@/modules/ecoupon/sale-coupon/components/ComFooterTotalpayment.vue"
+
 import { onMounted, onUnmounted, ref } from "vue"
 const t = window.t;
 const plateform = ref(app.utils.getPlateform())

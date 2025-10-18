@@ -27,7 +27,7 @@ import { useSaleCoupon } from "@/hooks/useSaleCoupon.js"
 import { scan } from "ionicons/icons"
 import useBarcodeDetector from '@programic/vue-barcode-detector';
 const { saleDoc, couponCode, inputScanQRCode, topUpCouponInfo } = useSaleCoupon()
-const plateform = ref(app.utils.getPlateform())
+
 const bacodeDetector = useBarcodeDetector();
 const t = window.t
 let disableTextboxInput = false;
@@ -118,6 +118,7 @@ onMounted(async () => {
 onUnmounted(() => {
   window.disable_scan_check_coupon = false;
   bacodeDetector.stopListening();
+   
 })
 
 </script>

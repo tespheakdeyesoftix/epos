@@ -1,14 +1,15 @@
 <template>
   <ion-app>
     <DrawerMenu v-if="isAuthenticated && !hideDrawerRoutes.includes(currentRoute)" />
-    <ion-router-outlet id="main-content" />
+ 
+<ion-router-outlet id="main-content" :swipe-gesture="false" :animated="false" ></ion-router-outlet>
 
   </ion-app>
   <Toast />
 </template>
 
 <script setup lang="ts">
-import { watch, ref, onMounted, onBeforeUnmount } from "vue"
+import { watch, ref, onMounted } from "vue"
 import { useRoute } from 'vue-router';
 import { IonApp, IonRouterOutlet, useIonRouter } from '@ionic/vue';
 import { useRouter } from 'vue-router';
@@ -16,13 +17,11 @@ import { useAuth } from '@/hooks/useAuth';
 import DrawerMenu from "@/views/layouts/DrawerMenu.vue"
 import { Capacitor } from '@capacitor/core';
 import { initializeScanner } from '@/helpers/scan-barcode.js'
-import { StatusBar, Style } from '@capacitor/status-bar';
+import { StatusBar } from '@capacitor/status-bar';
 import { Fullscreen } from '@boengli/capacitor-fullscreen';
 import Toast from 'primevue/toast';
 import { useToast } from "primevue/usetoast";
- import useBarcodeDetector from '@programic/vue-barcode-detector';
- 
-const barcodeDetector = useBarcodeDetector();
+  
 const toast = useToast();
  
  
@@ -55,43 +54,21 @@ watch(() => route.meta.title, (newTitle) => {
 });
 
 
-function onListeningScanBarCode() {
-  
-  barcodeDetector.listen(async (barcodeData) => {
-      if(!barcodeData.value) return;
-    if (barcodeData.value && !window.disable_scan_check_coupon) {
-      app.utils.checkCouponCodeModal(barcodeData.value)
-    }
-
-  });
-}
+ 
 
 onMounted(async () => {
  
-  barcodeDetector.stopListening();
   
-  onListeningScanBarCode();
-
   window.toast = toast;
   if (Capacitor.getPlatform() !== "web") {
-    
-    // const toolbarColor = getComputedStyle(document.documentElement)
-    //   .getPropertyValue('--ion-toolbar-background')
-    //   .trim();
-     
-    // await StatusBar.setOverlaysWebView({ overlay: false }); // Optional: ensures webview doesn't go under status bar
-    // await StatusBar.setStyle({ style: Style.Light }); // Use white icons for dark background
-    // await StatusBar.setBackgroundColor({ color: "green" }); // Use white icons for dark background
-
-    StatusBar.hide().catch(() => {
-    console.log('Failed to hide status bar');
-  });
+   
+    StatusBar.hide();
 
     try {
     await Fullscreen.activateImmersiveMode();
-    console.log('Fullscreen enabled');
+    
   } catch (error) {
-    console.error('Error enabling fullscreen:', error);
+    
   }
 
 
@@ -100,7 +77,7 @@ onMounted(async () => {
     await initializeScanner();
   }
 })
-
+ 
 </script>
 
 <style>

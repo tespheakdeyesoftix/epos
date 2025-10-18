@@ -740,7 +740,7 @@ export async function onInputPinCode(title="Enter Pin Code"){
     componentProps:{title:title},
      cssClass:getPlateform() =="desktop"?"keypad-modal":""
   })
-
+   
   return result;
 }
 
@@ -766,11 +766,14 @@ export async function hasPermission(key,operation=""){
     if(operation){
       if(app.setting.pos_config[operation] ==1){
           const result = await onInputPinCode()
+
           if(result){
          
             user.full_name = result.full_name
             user.username = result.username;
             posPermission = result.permission;
+          }else {
+            return  false;
           }
       }
       

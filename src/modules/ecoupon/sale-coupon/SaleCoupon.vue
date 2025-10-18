@@ -123,6 +123,7 @@ onIonViewWillEnter(async () => {
 })
 
 onBeforeRouteLeave(async (to, from, next) => {
+   window.removeEventListener("resize", handleUpdateScreenMode);
   if (saleDoc.value.sale_products.length > 0) {
     const confirm = await app.onConfirm("Confirm", "You have pending order. Do you want to continue?")
     if (!confirm) {
@@ -138,7 +139,7 @@ onBeforeRouteLeave(async (to, from, next) => {
   }
 
   window.disable_scan_check_coupon = false;
-  window.removeEventListener("resize", handleUpdateScreenMode);
+ 
 
 })
 </script>
