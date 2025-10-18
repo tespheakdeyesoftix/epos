@@ -2,6 +2,7 @@
  
     <ion-card button @click="openLink" class="ion-no-padding">
         <ion-card-content class="ion-no-padding">
+          
            <ion-item lines="none" class="compact-item" >
             <ion-text class="ion-no-margin"><h2> <strong>{{ getTitle() }} </strong><ComStatus  v-if="getStatus() && getAmountField()"  :status="getStatus()"/></h2></ion-text>
             <strong slot="end" v-if="getAmountField()"  ><ComCurrency :value="data[getAmountField()]" /></strong>
@@ -36,10 +37,13 @@ function getTitle(){
     if(props.data.name) return props.data.name
 }
 function openLink(){
-    app.ionRouter.navigate(`/sale-coupon/${props.data.name}` ,"forward","push")
+    const route_field = props.fields.find(x=>x.url);
+    if (route_field){
+        app.ionRouter.navigate(`${route_field.url}/${props.data.name}` ,"forward","push")
+    
+    }
     modalController.dismiss();
-    // const link = props.fields.find(x=>x?.url)
-    // app.ionRouter.navigate(`${link?.url}/${props?.data?.name}` ,"forward","push")
+    
 }
 
 function getCreatedBy(){

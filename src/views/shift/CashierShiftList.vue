@@ -54,6 +54,6 @@ const options = {
 }
 
 function onRowDblClick(data){
-    app.ionRouter.navigate("/sale-detail/" + data.name, "forward", "push");
+    app.ionRouter.navigate("/shift-detail/" + data.name, "forward", "push");
 }
 </script>
